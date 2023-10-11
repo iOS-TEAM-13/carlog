@@ -37,6 +37,7 @@
 		FF5071722AD6BC6000713A81 /* Driving.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071712AD6BC6000713A81 /* Driving.swift */; };
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
+		FF5071782AD6E0DF00713A81 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyPageTableViewCell.swift */; };
 		FFF64C3C2AD690AA00B9043A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3B2AD690AA00B9043A /* FirebaseAuth */; };
 		FFF64C3E2AD690AA00B9043A /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3D2AD690AA00B9043A /* FirebaseDatabase */; };
 		FFF64C402AD690AA00B9043A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3F2AD690AA00B9043A /* FirebaseFirestore */; };
@@ -74,6 +75,7 @@
 		FF5071712AD6BC6000713A81 /* Driving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driving.swift; sourceTree = "<group>"; };
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
+		FF5071772AD6E0DF00713A81 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
+				FF5071772AD6E0DF00713A81 /* MyPageTableViewCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
+				FF5071782AD6E0DF00713A81 /* MyPageTableViewCell.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
