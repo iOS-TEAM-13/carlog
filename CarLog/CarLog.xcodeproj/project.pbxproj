@@ -19,6 +19,7 @@
 		FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */; };
 		FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B422AD586DB00CC6A1F /* SnapKit */; };
 		FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B452AD586EE00CC6A1F /* Alamofire */; };
+		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE051762AD62C9600F39E7F /* Jua.ttf */; };
 		FBE051792AD652D800F39E7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051782AD652D800F39E7F /* Constants.swift */; };
 		FBE0517B2AD653AE00F39E7F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517A2AD653AE00F39E7F /* Model.swift */; };
@@ -33,7 +34,6 @@
 		FFF64C3E2AD690AA00B9043A /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3D2AD690AA00B9043A /* FirebaseDatabase */; };
 		FFF64C402AD690AA00B9043A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3F2AD690AA00B9043A /* FirebaseFirestore */; };
 		FFF64C422AD690AA00B9043A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C412AD690AA00B9043A /* FirebaseStorage */; };
-		FFF64C442AD6915500B9043A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFF64C432AD6915500B9043A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +49,7 @@
 		FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBE051762AD62C9600F39E7F /* Jua.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Jua.ttf; sourceTree = "<group>"; };
 		FBE051782AD652D800F39E7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FBE0517A2AD653AE00F39E7F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -59,7 +60,6 @@
 		FBE051852AD6671200F39E7F /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		FBE051872AD6672F00F39E7F /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		FBE051892AD6678E00F39E7F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
-		FFF64C432AD6915500B9043A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +105,7 @@
 				FB748B342AD53B9C00CC6A1F /* Controllers */,
 				FB748B332AD53B7B00CC6A1F /* Resources */,
 				FB748B2D2AD53B5F00CC6A1F /* Info.plist */,
-				FFF64C432AD6915500B9043A /* GoogleService-Info.plist */,
+				FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */,
 			);
 			path = CarLog;
 			sourceTree = "<group>";
@@ -236,9 +236,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */,
-				FFF64C442AD6915500B9043A /* GoogleService-Info.plist in Resources */,
 				FB748B2C2AD53B5F00CC6A1F /* LaunchScreen.storyboard in Resources */,
 				FB748B292AD53B5F00CC6A1F /* Assets.xcassets in Resources */,
+				FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
