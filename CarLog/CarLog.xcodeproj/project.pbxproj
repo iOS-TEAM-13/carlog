@@ -20,6 +20,9 @@
 		FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B422AD586DB00CC6A1F /* SnapKit */; };
 		FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B452AD586EE00CC6A1F /* Alamofire */; };
 		FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE051762AD62C9600F39E7F /* Jua.ttf */; };
+		FBE051792AD652D800F39E7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051782AD652D800F39E7F /* Constants.swift */; };
+		FBE0517B2AD653AE00F39E7F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517A2AD653AE00F39E7F /* Model.swift */; };
+		FBE0517D2AD653E700F39E7F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517C2AD653E700F39E7F /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		FBE051762AD62C9600F39E7F /* Jua.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Jua.ttf; sourceTree = "<group>"; };
+		FBE051782AD652D800F39E7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FBE0517A2AD653AE00F39E7F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		FBE0517C2AD653E700F39E7F /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,7 @@
 		FB748B1E2AD53B5E00CC6A1F /* CarLog */ = {
 			isa = PBXGroup;
 			children = (
+				FBE051782AD652D800F39E7F /* Constants.swift */,
 				FB748B362AD53BB500CC6A1F /* Models */,
 				FB748B352AD53BAD00CC6A1F /* Views */,
 				FB748B342AD53B9C00CC6A1F /* Controllers */,
@@ -107,6 +114,7 @@
 		FB748B352AD53BAD00CC6A1F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FBE0517C2AD653E700F39E7F /* TableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -114,6 +122,7 @@
 		FB748B362AD53BB500CC6A1F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FBE0517A2AD653AE00F39E7F /* Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -202,9 +211,12 @@
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
+				FBE0517B2AD653AE00F39E7F /* Model.swift in Sources */,
+				FBE0517D2AD653E700F39E7F /* TableViewCell.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
+				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
