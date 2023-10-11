@@ -20,10 +20,10 @@
 		FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B422AD586DB00CC6A1F /* SnapKit */; };
 		FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B452AD586EE00CC6A1F /* Alamofire */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
+		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
 		FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE051762AD62C9600F39E7F /* Jua.ttf */; };
 		FBE051792AD652D800F39E7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051782AD652D800F39E7F /* Constants.swift */; };
 		FBE0517B2AD653AE00F39E7F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517A2AD653AE00F39E7F /* User.swift */; };
-		FBE0517D2AD653E700F39E7F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517C2AD653E700F39E7F /* TableViewCell.swift */; };
 		FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517F2AD660D900F39E7F /* UIColor+.swift */; };
 		FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051812AD6665300F39E7F /* UIStackView+.swift */; };
 		FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051832AD666FF00F39E7F /* UILabel+.swift */; };
@@ -57,10 +57,10 @@
 		FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		FBE051762AD62C9600F39E7F /* Jua.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Jua.ttf; sourceTree = "<group>"; };
 		FBE051782AD652D800F39E7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FBE0517A2AD653AE00F39E7F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FBE0517C2AD653E700F39E7F /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		FBE0517F2AD660D900F39E7F /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		FBE051812AD6665300F39E7F /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		FBE051832AD666FF00F39E7F /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -115,8 +115,7 @@
 				FBE051782AD652D800F39E7F /* Constants.swift */,
 				FBE0517E2AD660BC00F39E7F /* Extension */,
 				FB748B362AD53BB500CC6A1F /* Models */,
-				FB748B352AD53BAD00CC6A1F /* Views */,
-				FB748B342AD53B9C00CC6A1F /* Controllers */,
+				FB748B352AD53BAD00CC6A1F /* Pages */,
 				FB748B332AD53B7B00CC6A1F /* Resources */,
 				FB748B2D2AD53B5F00CC6A1F /* Info.plist */,
 				FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */,
@@ -136,25 +135,18 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		FB748B342AD53B9C00CC6A1F /* Controllers */ = {
+		FB748B352AD53BAD00CC6A1F /* Pages */ = {
 			isa = PBXGroup;
 			children = (
 				FB748B372AD5703C00CC6A1F /* TabBarController.swift */,
-				FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */,
-				FB748B392AD571D900CC6A1F /* HistoryPageViewController.swift */,
-				FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */,
-				FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */,
-				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
+				FBC712922AD6C8D8006C2BB0 /* MyPage */,
+				FBC712912AD6C8D1006C2BB0 /* CommunityPage */,
+				FBC712902AD6C8C9006C2BB0 /* MapPage */,
+				FBC7128F2AD6C8B4006C2BB0 /* HistoryPage */,
+				FBC7128C2AD6C87D006C2BB0 /* MyCarPage */,
+				FBC7128B2AD6C872006C2BB0 /* LoginPage */,
 			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		FB748B352AD53BAD00CC6A1F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				FBE0517C2AD653E700F39E7F /* TableViewCell.swift */,
-			);
-			path = Views;
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		FB748B362AD53BB500CC6A1F /* Models */ = {
@@ -170,6 +162,54 @@
 				FF5071752AD6BC7000713A81 /* GasStation.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		FBC7128B2AD6C872006C2BB0 /* LoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */,
+			);
+			path = LoginPage;
+			sourceTree = "<group>";
+		};
+		FBC7128C2AD6C87D006C2BB0 /* MyCarPage */ = {
+			isa = PBXGroup;
+			children = (
+				FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */,
+			);
+			path = MyCarPage;
+			sourceTree = "<group>";
+		};
+		FBC7128F2AD6C8B4006C2BB0 /* HistoryPage */ = {
+			isa = PBXGroup;
+			children = (
+				FB748B392AD571D900CC6A1F /* HistoryPageViewController.swift */,
+			);
+			path = HistoryPage;
+			sourceTree = "<group>";
+		};
+		FBC712902AD6C8C9006C2BB0 /* MapPage */ = {
+			isa = PBXGroup;
+			children = (
+				FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */,
+			);
+			path = MapPage;
+			sourceTree = "<group>";
+		};
+		FBC712912AD6C8D1006C2BB0 /* CommunityPage */ = {
+			isa = PBXGroup;
+			children = (
+				FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */,
+			);
+			path = CommunityPage;
+			sourceTree = "<group>";
+		};
+		FBC712922AD6C8D8006C2BB0 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		FBE0517E2AD660BC00F39E7F /* Extension */ = {
@@ -278,6 +318,7 @@
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
+				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
@@ -285,7 +326,6 @@
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
-				FBE0517D2AD653E700F39E7F /* TableViewCell.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
