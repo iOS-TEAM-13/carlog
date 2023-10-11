@@ -1,10 +1,10 @@
 import UIKit
 
 extension UIButton {
-    func customButton(text: String, fontSize: CGFloat,titleColor: UIColor, backgroundColor: UIColor){
+    func customButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor){
         self.setTitleColor(titleColor, for: .normal)
         self.setTitle(text, for: .normal)
-        self.titleLabel?.font = UIFont(name: "Jua", size: fontSize)
+        self.titleLabel?.font = font
         self.backgroundColor = backgroundColor
         self.layer.borderColor = UIColor.clear.cgColor
         self.layer.borderWidth = 0

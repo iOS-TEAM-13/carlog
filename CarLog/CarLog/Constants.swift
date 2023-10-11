@@ -4,9 +4,9 @@ struct Constants {
     static let horizontalMargin: CGFloat = 20.0
     static let verticalMargin: CGFloat = 10.0
 
-    static let fontSize10: CGFloat = 10.0
-    static let fontSize16: CGFloat = 16.0
-    static let fontSize20: CGFloat = 20.0
-    static let fontSize24: CGFloat = 24.0
-    static let fontSize36: CGFloat = 36.0
+    static let fontJua10 = UIFont(name: "Jua", size: 10)
+    static let fontJua16 = UIFont(name: "Jua", size: 16)
+    static let fontJua20 = UIFont(name: "Jua", size: 20)
+    static let fontJua24 = UIFont(name: "Jua", size: 24)
+    static let fontJua36 = UIFont(name: "Jua", size: 36)
 }

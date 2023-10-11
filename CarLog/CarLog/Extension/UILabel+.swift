@@ -1,9 +1,9 @@
 import UIKit
 
 extension UILabel {
-    func customLabel(text: String, textColor: UIColor, fontSize: CGFloat, alignment: NSTextAlignment){
+    func customLabel(text: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment){
         self.text = text
-        self.font = UIFont(name: "Jua", size: fontSize)
+        self.font = font
         self.sizeToFit()
         self.textAlignment = alignment
         self.textColor = textColor
