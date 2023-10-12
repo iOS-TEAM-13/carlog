@@ -12,7 +12,7 @@ class AddFuelingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.white
     }
     
 

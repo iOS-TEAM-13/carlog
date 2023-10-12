@@ -26,9 +26,7 @@ class FloatingButtonStackView: UIView {
         floatingButton.configuration = config
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
-        
         floatingButton.addTarget(self, action: #selector(didTapFloatingButton), for: .touchUpInside)
-        
         return floatingButton
     }()
     
