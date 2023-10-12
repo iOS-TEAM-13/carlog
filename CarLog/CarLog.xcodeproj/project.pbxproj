@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
+		B85A0F292AD78E6A009E0A00 /* DrivingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */; };
+		B85A0F2B2AD78E7B009E0A00 /* FuelingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */; };
+		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
+		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
 		FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */; };
@@ -19,8 +24,16 @@
 		FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */; };
 		FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B422AD586DB00CC6A1F /* SnapKit */; };
 		FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B452AD586EE00CC6A1F /* Alamofire */; };
+		FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */; };
+		FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7142AD7A2350031C17B /* JoinupView.swift */; };
+		FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */; };
+		FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7192AD7E55A0031C17B /* CarModelView.swift */; };
+		FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */; };
+		FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */; };
+		FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7212AD7ED480031C17B /* OilModelView.swift */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
+		FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginView.swift */; };
 		FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE051762AD62C9600F39E7F /* Jua.ttf */; };
 		FBE051792AD652D800F39E7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051782AD652D800F39E7F /* Constants.swift */; };
 		FBE0517B2AD653AE00F39E7F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517A2AD653AE00F39E7F /* User.swift */; };
@@ -49,6 +62,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
+		B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingCell.swift; sourceTree = "<group>"; };
+		B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingCell.swift; sourceTree = "<group>"; };
+		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
+		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,8 +79,16 @@
 		FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageViewController.swift; sourceTree = "<group>"; };
+		FBBDA7142AD7A2350031C17B /* JoinupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupView.swift; sourceTree = "<group>"; };
+		FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarNumberView.swift; sourceTree = "<group>"; };
+		FBBDA7192AD7E55A0031C17B /* CarModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModelView.swift; sourceTree = "<group>"; };
+		FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameView.swift; sourceTree = "<group>"; };
+		FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDistanceView.swift; sourceTree = "<group>"; };
+		FBBDA7212AD7ED480031C17B /* OilModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OilModelView.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
+		FBC712932AD6FC34006C2BB0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		FBE051762AD62C9600F39E7F /* Jua.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Jua.ttf; sourceTree = "<group>"; };
 		FBE051782AD652D800F39E7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FBE0517A2AD653AE00F39E7F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -103,6 +129,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B85A0F262AD77E65009E0A00 /* HistoryViews */ = {
+			isa = PBXGroup;
+			children = (
+				B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */,
+				B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */,
+			);
+			path = HistoryViews;
+			sourceTree = "<group>";
+		};
+		B85A0F272AD77E70009E0A00 /* AddViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddViews;
+			sourceTree = "<group>";
+		};
 		FB748B132AD53B5E00CC6A1F = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +197,7 @@
 				FBC7128F2AD6C8B4006C2BB0 /* HistoryPage */,
 				FBC7128C2AD6C87D006C2BB0 /* MyCarPage */,
 				FBC7128B2AD6C872006C2BB0 /* LoginPage */,
+				FBBDA7112AD79CE30031C17B /* JoinPage */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -174,10 +217,25 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		FBBDA7112AD79CE30031C17B /* JoinPage */ = {
+			isa = PBXGroup;
+			children = (
+				FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */,
+				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
+				FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */,
+				FBBDA7192AD7E55A0031C17B /* CarModelView.swift */,
+				FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */,
+				FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */,
+				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
+			);
+			path = JoinPage;
+			sourceTree = "<group>";
+		};
 		FBC7128B2AD6C872006C2BB0 /* LoginPage */ = {
 			isa = PBXGroup;
 			children = (
 				FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */,
+				FBC712932AD6FC34006C2BB0 /* LoginView.swift */,
 			);
 			path = LoginPage;
 			sourceTree = "<group>";
@@ -196,6 +254,10 @@
 			isa = PBXGroup;
 			children = (
 				FB748B392AD571D900CC6A1F /* HistoryPageViewController.swift */,
+				B85A0F262AD77E65009E0A00 /* HistoryViews */,
+				B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */,
+				B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */,
+				B85A0F272AD77E70009E0A00 /* AddViews */,
 			);
 			path = HistoryPage;
 			sourceTree = "<group>";
@@ -220,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
+				7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -338,15 +401,24 @@
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarInfo.swift in Sources */,
+				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
+				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
+				B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */,
+				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
+				B85A0F292AD78E6A009E0A00 /* DrivingCell.swift in Sources */,
+				B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */,
+				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
+				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				FF0287E52AD78A83006657C1 /* CheckingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
+				B85A0F2B2AD78E7B009E0A00 /* FuelingCell.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
@@ -354,14 +426,19 @@
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				FF0287E72AD7C91D006657C1 /* CarouselView.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
+				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
+				FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
+				7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
 				FF5071782AD6E0DF00713A81 /* MyCarTableViewCell.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
+				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
+				FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
