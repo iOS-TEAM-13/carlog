@@ -16,27 +16,27 @@ class JoinupPageViewController: UIViewController {
         joinInproperties.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
-        joinInproperties.showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
-        joinInproperties.showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibility), for: .touchUpInside)
+        joinInproperties.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
+        joinInproperties.showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
+        joinInproperties.showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
+    }
+    
+    @objc func joinInButtonTapped(){
+        
     }
 
-    @objc func togglePasswordVisibility() {
-        // 버튼 이미지를 토글
-        let imageName = joinInproperties.isSecure ? "eye.fill" : "eye"
-        joinInproperties.showPasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
+    @objc func togglePasswordVisibilityTapped() {
+        let imageName = joinInproperties.isSecure ? "invisible" : "eye"
+        joinInproperties.showPasswordButton.setImage(UIImage(named: imageName), for: .normal)
 
-        // 비밀번호 필드의 가시성을 업데이트
         joinInproperties.isSecure.toggle()
         joinInproperties.passwordTextField.isSecureTextEntry = joinInproperties.isSecure
     }
 
-    @objc func toggleConfirmVisibility() {
-        // 버튼 이미지를 토글
-        let imageName = joinInproperties.isSecure ? "eye.fill" : "eye"
-        joinInproperties.showConfirmPasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
+    @objc func toggleConfirmVisibilityTapped() {
+        let imageName = joinInproperties.isSecure ? "invisible" : "eye"
+        joinInproperties.showConfirmPasswordButton.setImage(UIImage(named: imageName), for: .normal)
 
-        // 비밀번호 확인 필드의 가시성을 업데이트
         joinInproperties.isSecure.toggle()
         joinInproperties.confirmPasswordTextField.isSecureTextEntry = joinInproperties.isSecure
     }

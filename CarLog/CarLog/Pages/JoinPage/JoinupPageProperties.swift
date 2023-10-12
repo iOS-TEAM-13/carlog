@@ -19,7 +19,7 @@ class JoinupPageProperties: UIView {
     
     lazy var emailAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영소문자와 숫자를 조합하여 6~12글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "영소문자와 숫자를 조합하여 6~12글자 이내로 작성하세요", textColor: .black, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -45,7 +45,7 @@ class JoinupPageProperties: UIView {
     
     lazy var passwordAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .black, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -71,7 +71,7 @@ class JoinupPageProperties: UIView {
     
     lazy var confirmPasswordAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .black, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -81,23 +81,8 @@ class JoinupPageProperties: UIView {
         return stackView
     }()
     
-    lazy var showPasswordButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "eye"), for: .normal)
-        button.tintColor = .black
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        return button
-    }()
-    
-    lazy var showConfirmPasswordButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "eye"), for: .normal)
-        button.tintColor = .black
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        return button
-    }()
+    lazy var showPasswordButton: UIButton = makeToggleButton()
+    lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
     
     lazy var joinInButton: UIButton = {
         let button = UIButton()
@@ -105,7 +90,22 @@ class JoinupPageProperties: UIView {
         return button
     }()
     
-    func setupUI(){
+    //showPasswordButton, showConfirmPasswordButton 공통부분
+    func makeToggleButton() -> UIButton {
+        var configuration = UIButton.Configuration.tinted()
+        configuration.image = UIImage(named: "invisible")
+        configuration.imagePlacement = .trailing
+        configuration.baseBackgroundColor = .white
+        configuration.imagePadding = 10
+
+        let button = UIButton(configuration: configuration)
+        button.setImage(UIImage(named: "invisible"), for: .normal)
+        button.tintColor = .black
+        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        return button
+    }
+    
+    func setupUI() {
         let safeArea = safeAreaLayoutGuide
         addSubview(emailStackView)
         addSubview(passwordStackView)
@@ -144,8 +144,8 @@ class JoinupPageProperties: UIView {
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
