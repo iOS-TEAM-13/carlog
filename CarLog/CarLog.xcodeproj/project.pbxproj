@@ -22,6 +22,7 @@
 		FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */; };
 		FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7142AD7A2350031C17B /* JoinupView.swift */; };
 		FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */; };
+		FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7192AD7E55A0031C17B /* CarModelView.swift */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
 		FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginView.swift */; };
@@ -63,6 +64,7 @@
 		FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageViewController.swift; sourceTree = "<group>"; };
 		FBBDA7142AD7A2350031C17B /* JoinupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupView.swift; sourceTree = "<group>"; };
 		FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarNumberView.swift; sourceTree = "<group>"; };
+		FBBDA7192AD7E55A0031C17B /* CarModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModelView.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		FBC712932AD6FC34006C2BB0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */,
 				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
 				FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */,
+				FBBDA7192AD7E55A0031C17B /* CarModelView.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarInfo.swift in Sources */,
+				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,

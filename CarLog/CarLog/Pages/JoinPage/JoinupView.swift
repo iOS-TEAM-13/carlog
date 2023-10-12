@@ -112,6 +112,9 @@ class JoinupView: UIView {
         addSubview(confirmPasswordStackView)
         addSubview(joinInButton)
         
+        showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
+        showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
+        
         emailStackView.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(10)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
@@ -137,6 +140,21 @@ class JoinupView: UIView {
             make.width.equalTo(100)
             make.height.equalTo(50)
         }
+    }
+    
+    @objc func togglePasswordVisibilityTapped() {
+        toggleVisibility(button: showPasswordButton, textField: passwordTextField)
+    }
+
+    @objc func toggleConfirmVisibilityTapped() {
+        toggleVisibility(button: showConfirmPasswordButton, textField: confirmPasswordTextField)
+    }
+    
+    private func toggleVisibility(button: UIButton, textField: UITextField){
+        let imageName = isSecure ? "invisible" : "eye"
+        button.setImage(UIImage(named: imageName), for: .normal)
+        isSecure.toggle()
+        textField.isSecureTextEntry = isSecure
     }
     
     override init(frame: CGRect) {
