@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
 		FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
+				7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
+				7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
