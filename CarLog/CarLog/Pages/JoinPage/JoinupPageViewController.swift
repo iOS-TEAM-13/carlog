@@ -83,6 +83,9 @@ class JoinupPageViewController: UIViewController {
         nickNameView.isHidden = false
         totalDistanceView.isHidden = true
     }
-    @objc func totalDistanceViewNextButtonTapped(){}
+    @objc func totalDistanceViewNextButtonTapped(){
+        let loginPageViewController = LoginPageViewController()
+        navigationController?.setViewControllers([loginPageViewController], animated: true)
+    }
     
 }
