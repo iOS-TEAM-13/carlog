@@ -1,66 +1,31 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class HistoryPageViewController: UIViewController {
     
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
-        
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         return segmentedControl
     }()
     
-    lazy var drivingListView: UIView = {
-        let drivingListView = UIView()
-        drivingListView.backgroundColor = .gray
-        return drivingListView
+    lazy var drivingTableView: DrivingView = {
+        let drivingTableView = DrivingView()
+        return drivingTableView
     }()
     
-    lazy var fuelingListView: UIView = {
-        let fuelingListView = UIView()
-        fuelingListView.backgroundColor = .orange
-        return fuelingListView
+    lazy var fuelingTableView: FuelingView = {
+        let fuelingTableView = FuelingView()
+        return fuelingTableView
     }()
     
     var shouldHideFirstView: Bool? {
         didSet {
             guard let shouldHideFirstView = self.shouldHideFirstView else { return }
-            self.drivingListView.isHidden = shouldHideFirstView
-            self.fuelingListView.isHidden = !self.drivingListView.isHidden
+            self.drivingTableView.isHidden = shouldHideFirstView
+            self.fuelingTableView.isHidden = !self.drivingTableView.isHidden
         }
-    }
-    
-    @objc private func didChangeValue(segment: UISegmentedControl) {
-        self.shouldHideFirstView = segment.selectedSegmentIndex != 0
-    }
-    
-    func setupUI() {
-        view.addSubview(segmentedControl)
-        view.addSubview(drivingListView)
-        view.addSubview(fuelingListView)
-        
-        segmentedControl.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-(Constants.verticalMargin))
-            make.height.equalTo(40)
-        }
-        
-        drivingListView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(segmentedControl.snp.leading)
-            make.trailing.equalTo(segmentedControl.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        fuelingListView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(segmentedControl.snp.leading)
-            make.trailing.equalTo(segmentedControl.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-
     }
     
     override func viewDidLoad() {
@@ -71,4 +36,38 @@ class HistoryPageViewController: UIViewController {
         
         self.didChangeValue(segment: self.segmentedControl)
     }
+    
+    @objc private func didChangeValue(segment: UISegmentedControl) {
+        self.shouldHideFirstView = segment.selectedSegmentIndex != 0
+    }
+    
+    func setupUI() {
+        view.addSubview(segmentedControl)
+        view.addSubview(drivingTableView)
+        view.addSubview(fuelingTableView)
+        
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-(Constants.verticalMargin))
+            make.height.equalTo(40)
+        }
+        
+        drivingTableView.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
+            make.leading.equalTo(segmentedControl.snp.leading)
+            make.trailing.equalTo(segmentedControl.snp.trailing)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        fuelingTableView.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
+            make.leading.equalTo(segmentedControl.snp.leading)
+            make.trailing.equalTo(segmentedControl.snp.trailing)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+    }
+    
+    
 }
