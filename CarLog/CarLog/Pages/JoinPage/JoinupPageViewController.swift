@@ -3,7 +3,8 @@ import UIKit
 import SnapKit
 
 class JoinupPageViewController: UIViewController {
-    let joinInproperties = JoinupPageProperties()
+    let joinupView = JoinupView()
+    let carNumberView = CarNumberView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,31 +13,39 @@ class JoinupPageViewController: UIViewController {
     }
 
     func setupUI() {
-        view.addSubview(joinInproperties)
-        joinInproperties.snp.makeConstraints { make in
+        view.addSubview(joinupView)
+        
+        joinupView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        joinInproperties.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
-        joinInproperties.showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
-        joinInproperties.showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
+        
+        
+        joinupView.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
+        joinupView.showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
+        joinupView.showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
     }
     
     @objc func joinInButtonTapped(){
-        joinInproperties.isHidden = true
+        joinupView.isHidden = true
+        view.addSubview(carNumberView)
+        carNumberView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        carNumberView.isHidden = false
     }
 
     @objc func togglePasswordVisibilityTapped() {
-        toggleVisibility(button: joinInproperties.showPasswordButton, textField: joinInproperties.passwordTextField)
+        toggleVisibility(button: joinupView.showPasswordButton, textField: joinupView.passwordTextField)
     }
 
     @objc func toggleConfirmVisibilityTapped() {
-        toggleVisibility(button: joinInproperties.showConfirmPasswordButton, textField: joinInproperties.confirmPasswordTextField)
+        toggleVisibility(button: joinupView.showConfirmPasswordButton, textField: joinupView.confirmPasswordTextField)
     }
     
     private func toggleVisibility(button: UIButton, textField: UITextField){
-        let imageName = joinInproperties.isSecure ? "invisible" : "eye"
+        let imageName = joinupView.isSecure ? "invisible" : "eye"
         button.setImage(UIImage(named: imageName), for: .normal)
-        joinInproperties.isSecure.toggle()
-        textField.isSecureTextEntry = joinInproperties.isSecure
+        joinupView.isSecure.toggle()
+        textField.isSecureTextEntry = joinupView.isSecure
     }
 }

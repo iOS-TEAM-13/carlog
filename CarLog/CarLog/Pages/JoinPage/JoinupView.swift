@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class JoinupPageProperties: UIView {
+class JoinupView: UIView {
     var isSecure = false
     
     lazy var emailLabel: UILabel = {
@@ -91,7 +91,7 @@ class JoinupPageProperties: UIView {
     }()
     
     //showPasswordButton, showConfirmPasswordButton 공통부분
-    func makeToggleButton() -> UIButton {
+    private func makeToggleButton() -> UIButton {
         var configuration = UIButton.Configuration.tinted()
         configuration.image = UIImage(named: "invisible")
         configuration.imagePlacement = .trailing
@@ -105,7 +105,7 @@ class JoinupPageProperties: UIView {
         return button
     }
     
-    func setupUI() {
+    private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         addSubview(emailStackView)
         addSubview(passwordStackView)

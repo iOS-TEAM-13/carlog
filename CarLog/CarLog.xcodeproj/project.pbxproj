@@ -20,10 +20,11 @@
 		FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B422AD586DB00CC6A1F /* SnapKit */; };
 		FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B452AD586EE00CC6A1F /* Alamofire */; };
 		FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */; };
-		FBBDA7152AD7A2350031C17B /* JoinupPageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7142AD7A2350031C17B /* JoinupPageProperties.swift */; };
+		FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7142AD7A2350031C17B /* JoinupView.swift */; };
+		FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
-		FBC712942AD6FC34006C2BB0 /* LoginPageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginPageProperties.swift */; };
+		FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginView.swift */; };
 		FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE051762AD62C9600F39E7F /* Jua.ttf */; };
 		FBE051792AD652D800F39E7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051782AD652D800F39E7F /* Constants.swift */; };
 		FBE0517B2AD653AE00F39E7F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0517A2AD653AE00F39E7F /* User.swift */; };
@@ -60,10 +61,11 @@
 		FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageViewController.swift; sourceTree = "<group>"; };
-		FBBDA7142AD7A2350031C17B /* JoinupPageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageProperties.swift; sourceTree = "<group>"; };
+		FBBDA7142AD7A2350031C17B /* JoinupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupView.swift; sourceTree = "<group>"; };
+		FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarNumberView.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
-		FBC712932AD6FC34006C2BB0 /* LoginPageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageProperties.swift; sourceTree = "<group>"; };
+		FBC712932AD6FC34006C2BB0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		FBE051762AD62C9600F39E7F /* Jua.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Jua.ttf; sourceTree = "<group>"; };
 		FBE051782AD652D800F39E7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FBE0517A2AD653AE00F39E7F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -175,7 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */,
-				FBBDA7142AD7A2350031C17B /* JoinupPageProperties.swift */,
+				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
+				FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -184,7 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */,
-				FBC712932AD6FC34006C2BB0 /* LoginPageProperties.swift */,
+				FBC712932AD6FC34006C2BB0 /* LoginView.swift */,
 			);
 			path = LoginPage;
 			sourceTree = "<group>";
@@ -333,8 +336,8 @@
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
-				FBBDA7152AD7A2350031C17B /* JoinupPageProperties.swift in Sources */,
-				FBC712942AD6FC34006C2BB0 /* LoginPageProperties.swift in Sources */,
+				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
+				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
@@ -347,6 +350,7 @@
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
+				FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,

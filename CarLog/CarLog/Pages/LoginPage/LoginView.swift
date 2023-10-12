@@ -1,6 +1,6 @@
 import UIKit
 
-final class LoginPageProperties: UIView {
+final class LoginView: UIView {
     lazy var logo: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
         imageView.contentMode = .scaleAspectFit
