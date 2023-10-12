@@ -5,29 +5,29 @@ import SnapKit
 class LoginPageViewController: UIViewController {
     let loginView = LoginView()
     var isChecked = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.primaryColor
         setupUI()
     }
-    
+
     func setupUI() {
         view.addSubview(loginView)
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview() // LoginPageProperties 뷰를 슈퍼뷰에 맞게 설정
         }
-        
-        // MARK - addTarget
+
+        // MARK: - addTarget
+
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginView.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
         loginView.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
     }
-    
+
     @objc func loginButtonTapped() {
-        let tabBarController = TabBarController()
-        navigationController?.setViewControllers([tabBarController], animated: false)
-        
+        let tabBarController = UITabBarController()
+
         let tabs: [(root: UIViewController, icon: String)] = [
             (MyCarPageViewController(), "car"),
             (HistoryPageViewController(), "book"),
@@ -35,20 +35,28 @@ class LoginPageViewController: UIViewController {
             (CommunityPageViewController(), "play"),
             (MyPageViewController(), "person")
         ]
-        
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
+
+        let viewControllers = tabs.map { root, icon in
             let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
+            root.tabBarItem = tabBarItem
+            return root
+        }
+
+        tabBarController.setViewControllers(viewControllers, animated: false)
+        let scenes = UIApplication.shared.connectedScenes
+
+        if let windowScene = scenes.first as? UIWindowScene,
+           let window = windowScene.windows.first
+        {
+            window.rootViewController = tabBarController
+        }
     }
-    
+
     @objc func signupButtonTapped() {
         let joinPage = JoinupPageViewController()
         navigationController?.pushViewController(joinPage, animated: false)
     }
-    
+
     @objc func checkboxTapped() {
         isChecked = !isChecked
         if isChecked {
