@@ -70,6 +70,7 @@ extension MyCarCheckViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView,cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselViewCell.identifier,for: indexPath) as? CarouselViewCell else { return UICollectionViewCell() }
         cell.bind(view: checkingList[indexPath.row])
+        
         return cell
     }
     

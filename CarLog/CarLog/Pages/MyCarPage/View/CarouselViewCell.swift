@@ -22,7 +22,11 @@ class CarouselViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setLayout()
+        setupUI()
+    }
+    
+    override func prepareForReuse() {
+        
     }
     
     func bind(view: UIView) {
@@ -34,7 +38,7 @@ class CarouselViewCell: UICollectionViewCell {
         }
     }
     
-    private func setLayout() {
+    private func setupUI() {
         contentView.addSubview(customView)
         
         customView.snp.makeConstraints {
