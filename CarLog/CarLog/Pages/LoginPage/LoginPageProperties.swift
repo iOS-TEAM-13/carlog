@@ -45,4 +45,38 @@ final class LoginPageProperties: UIView {
         stackView.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
         return stackView
     }()
+    
+    lazy var leftDivider: UIView = {
+        let divider = UIView()
+        divider.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        divider.backgroundColor = .white
+        return divider
+    }()
+    
+    lazy var socialLoginDesignLabel: UILabel = {
+        let label = UILabel()
+        label.customLabel(text: "SNS 계정으로 로그인", textColor: .white, font: Constants.fontJua16 ?? UIFont(), alignment: .center)
+        return label
+    }()
+    
+    lazy var rightDivider: UIView = {
+        let divider = UIView()
+        divider.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        divider.backgroundColor = .white
+        return divider
+    }()
+    
+    lazy var socialLoginDesignStackView = {
+        let stackView = UIStackView(arrangedSubviews: [leftDivider, socialLoginDesignLabel, rightDivider])
+        stackView.customStackView(spacing: 2, axis: .horizontal, alignment: .center)
+        return stackView
+    }()
+    
+    lazy var appleLoginButton: UIButton = {
+        let button = UIButton()
+        button.customButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
+        return button
+    }()
 }

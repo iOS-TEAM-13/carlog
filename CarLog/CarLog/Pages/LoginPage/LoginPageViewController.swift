@@ -1,5 +1,7 @@
 import UIKit
 
+import SnapKit
+
 class LoginPageViewController: UIViewController {
     let properties = LoginPageProperties()
     var isChecked = false
@@ -18,6 +20,8 @@ class LoginPageViewController: UIViewController {
         view.addSubview(properties.passwordTextField)
         view.addSubview(properties.loginStatusStackView)
         view.addSubview(properties.loginButton)
+        view.addSubview(properties.socialLoginDesignStackView)
+        view.addSubview(properties.appleLoginButton)
         
         properties.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         properties.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
@@ -27,6 +31,8 @@ class LoginPageViewController: UIViewController {
         properties.passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         properties.loginStatusStackView.translatesAutoresizingMaskIntoConstraints = false
         properties.loginButton.translatesAutoresizingMaskIntoConstraints = false
+        properties.socialLoginDesignStackView.translatesAutoresizingMaskIntoConstraints = false
+        properties.appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             properties.logo.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
@@ -61,6 +67,22 @@ class LoginPageViewController: UIViewController {
             properties.loginButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
             properties.loginButton.widthAnchor.constraint(equalToConstant: 100),
             properties.loginButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            properties.socialLoginDesignStackView.topAnchor.constraint(equalTo: properties.loginButton.bottomAnchor, constant: 10),
+            properties.socialLoginDesignStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
+            properties.socialLoginDesignStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
+            properties.socialLoginDesignStackView.widthAnchor.constraint(equalToConstant: 100),
+            properties.socialLoginDesignStackView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            properties.appleLoginButton.topAnchor.constraint(equalTo: properties.socialLoginDesignStackView.bottomAnchor, constant: 10),
+            properties.appleLoginButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
+            properties.appleLoginButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
+            properties.appleLoginButton.widthAnchor.constraint(equalToConstant: 100),
+            properties.appleLoginButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
