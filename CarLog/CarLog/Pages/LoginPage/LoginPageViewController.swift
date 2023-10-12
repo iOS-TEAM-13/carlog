@@ -21,6 +21,7 @@ class LoginPageViewController: UIViewController {
         // MARK - addTarget
         properties.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         properties.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
+        properties.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
     }
     
     @objc func loginButtonTapped() {
@@ -41,6 +42,11 @@ class LoginPageViewController: UIViewController {
             navigationController.tabBarItem = tabBarItem
             return navigationController
         }, animated: false)
+    }
+    
+    @objc func signupButtonTapped() {
+        let joinPage = JoinupPageViewController()
+        navigationController?.pushViewController(joinPage, animated: false)
     }
     
     @objc func checkboxTapped() {

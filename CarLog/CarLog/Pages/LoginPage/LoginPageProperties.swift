@@ -46,7 +46,7 @@ final class LoginPageProperties: UIView {
         return button
     }()
     
-    lazy var signupButton: UIButton = {
+    lazy var joinupButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "회원가입", font: Constants.fontJua16 ?? UIFont(), titleColor: .white, backgroundColor: .clear)
         return button
@@ -64,7 +64,7 @@ final class LoginPageProperties: UIView {
     }()
     
     lazy var signupStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [signupButton, spaceView, findIdPassword])
+        let stackView = UIStackView(arrangedSubviews: [joinupButton, spaceView, findIdPassword])
         stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .fill)
         return stackView
     }()

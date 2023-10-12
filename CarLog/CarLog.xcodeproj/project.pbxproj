@@ -19,6 +19,8 @@
 		FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */; };
 		FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B422AD586DB00CC6A1F /* SnapKit */; };
 		FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FB748B452AD586EE00CC6A1F /* Alamofire */; };
+		FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */; };
+		FBBDA7152AD7A2350031C17B /* JoinupPageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7142AD7A2350031C17B /* JoinupPageProperties.swift */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
 		FBC712942AD6FC34006C2BB0 /* LoginPageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginPageProperties.swift */; };
@@ -57,6 +59,8 @@
 		FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewController.swift; sourceTree = "<group>"; };
 		FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageViewController.swift; sourceTree = "<group>"; };
+		FBBDA7142AD7A2350031C17B /* JoinupPageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageProperties.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		FBC712932AD6FC34006C2BB0 /* LoginPageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageProperties.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 				FBC7128F2AD6C8B4006C2BB0 /* HistoryPage */,
 				FBC7128C2AD6C87D006C2BB0 /* MyCarPage */,
 				FBC7128B2AD6C872006C2BB0 /* LoginPage */,
+				FBBDA7112AD79CE30031C17B /* JoinPage */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -164,6 +169,15 @@
 				FF5071752AD6BC7000713A81 /* GasStation.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		FBBDA7112AD79CE30031C17B /* JoinPage */ = {
+			isa = PBXGroup;
+			children = (
+				FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */,
+				FBBDA7142AD7A2350031C17B /* JoinupPageProperties.swift */,
+			);
+			path = JoinPage;
 			sourceTree = "<group>";
 		};
 		FBC7128B2AD6C872006C2BB0 /* LoginPage */ = {
@@ -319,6 +333,7 @@
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
+				FBBDA7152AD7A2350031C17B /* JoinupPageProperties.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginPageProperties.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
@@ -331,6 +346,7 @@
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
+				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
