@@ -30,6 +30,7 @@ class HistoryPageViewController: UIViewController {
     
     lazy var floatingButtonStackView: FloatingButtonStackView = {
         let floatingButtonStackView = FloatingButtonStackView()
+        floatingButtonStackView.navigationController = self.navigationController
         return floatingButtonStackView
     }()
     
