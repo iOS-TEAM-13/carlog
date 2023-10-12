@@ -22,22 +22,21 @@ class JoinupPageViewController: UIViewController {
     }
     
     @objc func joinInButtonTapped(){
-        
+        joinInproperties.isHidden = true
     }
 
     @objc func togglePasswordVisibilityTapped() {
-        let imageName = joinInproperties.isSecure ? "invisible" : "eye"
-        joinInproperties.showPasswordButton.setImage(UIImage(named: imageName), for: .normal)
-
-        joinInproperties.isSecure.toggle()
-        joinInproperties.passwordTextField.isSecureTextEntry = joinInproperties.isSecure
+        toggleVisibility(button: joinInproperties.showPasswordButton, textField: joinInproperties.passwordTextField)
     }
 
     @objc func toggleConfirmVisibilityTapped() {
+        toggleVisibility(button: joinInproperties.showConfirmPasswordButton, textField: joinInproperties.confirmPasswordTextField)
+    }
+    
+    private func toggleVisibility(button: UIButton, textField: UITextField){
         let imageName = joinInproperties.isSecure ? "invisible" : "eye"
-        joinInproperties.showConfirmPasswordButton.setImage(UIImage(named: imageName), for: .normal)
-
+        button.setImage(UIImage(named: imageName), for: .normal)
         joinInproperties.isSecure.toggle()
-        joinInproperties.confirmPasswordTextField.isSecureTextEntry = joinInproperties.isSecure
+        textField.isSecureTextEntry = joinInproperties.isSecure
     }
 }
