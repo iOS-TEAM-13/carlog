@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CheckEngineOilView: UIView {
+class CheckingView: UIView {
     private let CheckScrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
@@ -18,6 +18,7 @@ class CheckEngineOilView: UIView {
     private let checkTitle: UILabel = {
         let label = UILabel()
         label.customLabel(text: "타이틀", textColor: .primaryColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -28,46 +29,51 @@ class CheckEngineOilView: UIView {
         return view
     }()
     
-    private let firstAnswerButton: UIButton = {
+    lazy private var firstAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
-        btn.addTarget(self, action: #selector(firstButtonTapped), for: .touchUpInside)
+        btn.tag = 1
+        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
     }()
     
     private let secondAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
-        btn.addTarget(self, action: #selector(secondButtonTapped), for: .touchUpInside)
+        btn.tag = 2
+        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
     }()
     
     private let thirdAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
-        btn.addTarget(self, action: #selector(thirdButtonTapped), for: .touchUpInside)
+        btn.tag = 3
+        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
     }()
     
     private let fourthAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
-        btn.addTarget(self, action: #selector(fourthButtonTapped), for: .touchUpInside)
+        btn.tag = 4
+        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
     }()
     
     private let fifthAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
-        btn.addTarget(self, action: #selector(fifthButtonTapped), for: .touchUpInside)
+        btn.tag = 5
+        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .thirdColor
-        
+    init(title: String, firstButton: String, secondButton: String, thirdbutton: String, fourthButton: String, fifthButton: String) {
+        super.init(frame: .zero)
         setupUI()
+        setupTitle(title: title)
+        setupButton(firstButton: firstButton, secondButton: secondButton, thirdButton: thirdbutton, fourthButton: fourthButton, fifthbutton: fifthButton)
     }
     
     required init?(coder: NSCoder) {
@@ -75,6 +81,8 @@ class CheckEngineOilView: UIView {
     }
     
     private func setupUI() {
+        self.backgroundColor = .thirdColor
+        
         addSubview(checkTitle)
         addSubview(CheckScrollView)
         CheckScrollView.addSubview(answerStackView)
@@ -102,27 +110,33 @@ class CheckEngineOilView: UIView {
         }
     }
     
-    private func checkButtonTapped() {
-        
+    private func setupTitle(title: String) {
+        checkTitle.text = title
     }
     
-    @objc func firstButtonTapped() {
-        
+    private func setupButton(firstButton: String, secondButton: String, thirdButton: String, fourthButton: String, fifthbutton: String) {
+        firstAnswerButton.setTitle(firstButton, for: .normal)
+        secondAnswerButton.setTitle(secondButton, for: .normal)
+        thirdAnswerButton.setTitle(thirdButton, for: .normal)
+        fourthAnswerButton.setTitle(fourthButton, for: .normal)
+        fifthAnswerButton.setTitle(fifthbutton, for: .normal)
     }
     
-    @objc func secondButtonTapped() {
+    @objc func checkButtonTapped(sender: UIButton) {
+        firstAnswerButton.backgroundColor = .primaryColor
+        secondAnswerButton.backgroundColor = .primaryColor
+        thirdAnswerButton.backgroundColor = .primaryColor
+        fourthAnswerButton.backgroundColor = .primaryColor
+        fifthAnswerButton.backgroundColor = .primaryColor
         
-    }
-    
-    @objc func thirdButtonTapped() {
-        
-    }
-    
-    @objc func fourthButtonTapped() {
-        
-    }
-    
-    @objc func fifthButtonTapped() {
-        
+        switch sender.tag {
+        case 1: firstAnswerButton.backgroundColor = .secondColor
+        case 2: secondAnswerButton.backgroundColor = .secondColor
+        case 3: thirdAnswerButton.backgroundColor = .secondColor
+        case 4: fourthAnswerButton.backgroundColor = .secondColor
+        case 5: fifthAnswerButton.backgroundColor = .secondColor
+        default:
+            break
+        }
     }
 }

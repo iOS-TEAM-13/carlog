@@ -31,7 +31,7 @@
 		FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051872AD6672F00F39E7F /* DateFormatter.swift */; };
 		FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051892AD6678E00F39E7F /* UITextField+.swift */; };
 		FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */; };
-		FF0287E52AD78A83006657C1 /* CheckEngineOilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E42AD78A83006657C1 /* CheckEngineOilView.swift */; };
+		FF0287E52AD78A83006657C1 /* CheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E42AD78A83006657C1 /* CheckingView.swift */; };
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
 		FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716B2AD6BC4800713A81 /* Comment.swift */; };
 		FF50716E2AD6BC5100713A81 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716D2AD6BC5100713A81 /* Car.swift */; };
@@ -71,7 +71,7 @@
 		FBE051872AD6672F00F39E7F /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		FBE051892AD6678E00F39E7F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCheckViewController.swift; sourceTree = "<group>"; };
-		FF0287E42AD78A83006657C1 /* CheckEngineOilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEngineOilView.swift; sourceTree = "<group>"; };
+		FF0287E42AD78A83006657C1 /* CheckingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingView.swift; sourceTree = "<group>"; };
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FF50716B2AD6BC4800713A81 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FF50716D2AD6BC5100713A81 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 		FF0287E32AD789E4006657C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FF0287E42AD78A83006657C1 /* CheckEngineOilView.swift */,
+				FF0287E42AD78A83006657C1 /* CheckingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -335,7 +335,7 @@
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
-				FF0287E52AD78A83006657C1 /* CheckEngineOilView.swift in Sources */,
+				FF0287E52AD78A83006657C1 /* CheckingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
