@@ -23,6 +23,8 @@
 		FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7142AD7A2350031C17B /* JoinupView.swift */; };
 		FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */; };
 		FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7192AD7E55A0031C17B /* CarModelView.swift */; };
+		FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */; };
+		FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
 		FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginView.swift */; };
@@ -65,6 +67,8 @@
 		FBBDA7142AD7A2350031C17B /* JoinupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupView.swift; sourceTree = "<group>"; };
 		FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarNumberView.swift; sourceTree = "<group>"; };
 		FBBDA7192AD7E55A0031C17B /* CarModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModelView.swift; sourceTree = "<group>"; };
+		FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameView.swift; sourceTree = "<group>"; };
+		FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDistanceView.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		FBC712932AD6FC34006C2BB0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
 				FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */,
 				FBBDA7192AD7E55A0031C17B /* CarModelView.swift */,
+				FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */,
+				FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -339,6 +345,7 @@
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
+				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
@@ -362,6 +369,7 @@
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
+				FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

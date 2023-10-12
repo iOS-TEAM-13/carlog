@@ -6,6 +6,8 @@ class JoinupPageViewController: UIViewController {
     let joinupView = JoinupView()
     let carNumberView = CarNumberView()
     let carModelView = CarModelView()
+    let nickNameView = NickNameView()
+    let totalDistanceView = TotalDistanceView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,11 @@ class JoinupPageViewController: UIViewController {
         carNumberView.nextButton.addTarget(self, action: #selector(carNumberViewPopNextButtonTapped), for: .touchUpInside)
         carModelView.popButton.addTarget(self, action: #selector(carModelViewPopButtonTapped), for: .touchUpInside)
         carModelView.nextButton.addTarget(self, action: #selector(carModelViewNextButtonTapped), for: .touchUpInside)
+        nickNameView.popButton.addTarget(self, action: #selector(nickNameViewPopButtonTapped), for: .touchUpInside)
+        nickNameView.nextButton.addTarget(self, action: #selector(nickNameViewNextButtonTapped), for: .touchUpInside)
+        totalDistanceView.popButton.addTarget(self, action: #selector(totalDistanceViewPopButtonTapped), for: .touchUpInside)
+        totalDistanceView.nextButton.addTarget(self, action: #selector(totalDistanceViewNextButtonTapped), for: .touchUpInside)
+        
     }
 
     @objc func joinInButtonTapped() {
@@ -52,5 +59,30 @@ class JoinupPageViewController: UIViewController {
         carNumberView.isHidden = false
         carModelView.isHidden = true
     }
-    @objc func carModelViewNextButtonTapped(){}
+    @objc func carModelViewNextButtonTapped(){
+        view.addSubview(nickNameView)
+        carModelView.isHidden = true
+        nickNameView.isHidden = false
+        nickNameView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    @objc func nickNameViewPopButtonTapped(){
+        carModelView.isHidden = false
+        nickNameView.isHidden = true
+    }
+    @objc func nickNameViewNextButtonTapped(){
+        view.addSubview(totalDistanceView)
+        nickNameView.isHidden = true
+        totalDistanceView.isHidden = false
+        totalDistanceView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    @objc func totalDistanceViewPopButtonTapped(){
+        nickNameView.isHidden = false
+        totalDistanceView.isHidden = true
+    }
+    @objc func totalDistanceViewNextButtonTapped(){}
+    
 }

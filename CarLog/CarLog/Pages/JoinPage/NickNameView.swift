@@ -2,17 +2,17 @@ import UIKit
 
 import SnapKit
 
-class CarModelView: UIView {
+class NickNameView: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "차량종류를\n입력해주세요", textColor: .white, font: Constants.fontJua36 ?? UIFont(), alignment: .left)
+        label.customLabel(text: "차량 별명(닉네임)을\n입력해주세요", textColor: .white, font: Constants.fontJua36 ?? UIFont(), alignment: .left)
         label.numberOfLines = 2
         return label
     }()
     
-    lazy var carModelTextField: UITextField = {
+    lazy var carNickNameTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "차종 입력", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "차 별명 입력", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }()
     
@@ -42,15 +42,15 @@ class CarModelView: UIView {
         let safeArea = safeAreaLayoutGuide
         
         addSubview(label)
-        addSubview(carModelTextField)
+        addSubview(carNickNameTextField)
         addSubview(buttonStackView)
         
         label.snp.makeConstraints { make in
-            make.top.equalTo(carModelTextField.snp.top).offset(-100)
+            make.top.equalTo(carNickNameTextField.snp.top).offset(-100)
             make.leading.equalTo(safeArea.snp.leading).offset(20)
         }
 
-        carModelTextField.snp.makeConstraints { make in
+        carNickNameTextField.snp.makeConstraints { make in
             make.centerX.equalTo(safeArea.snp.centerX)
             make.centerY.equalTo(safeArea.snp.centerY).offset(-40)
             make.leading.equalTo(safeArea.snp.leading).offset(20)
@@ -58,7 +58,7 @@ class CarModelView: UIView {
         }
 
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(carModelTextField.snp.bottom).offset(50)
+            make.top.equalTo(carNickNameTextField.snp.bottom).offset(50)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(20)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-20)
@@ -75,4 +75,5 @@ class CarModelView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
