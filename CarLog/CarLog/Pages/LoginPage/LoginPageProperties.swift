@@ -79,4 +79,71 @@ final class LoginPageProperties: UIView {
         button.customButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
         return button
     }()
+    
+    func setupUI() {
+           let safeArea = self.safeAreaLayoutGuide
+           addSubview(logo)
+           addSubview(emailTextField)
+           addSubview(passwordTextField)
+           addSubview(loginStatusStackView)
+           addSubview(loginButton)
+           addSubview(socialLoginDesignStackView)
+           addSubview(appleLoginButton)
+
+           logo.snp.makeConstraints { make in
+               make.top.equalTo(safeArea.snp.top).offset(10)
+               make.leading.equalTo(safeArea.snp.leading).offset(85)
+               make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+           }
+
+           emailTextField.snp.makeConstraints { make in
+               make.top.equalTo(logo.snp.bottom).offset(10)
+               make.leading.equalTo(safeArea.snp.leading).offset(10)
+               make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+           }
+
+           passwordTextField.snp.makeConstraints { make in
+               make.top.equalTo(emailTextField.snp.bottom).offset(10)
+               make.leading.equalTo(safeArea.snp.leading).offset(10)
+               make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+           }
+
+           loginStatusStackView.snp.makeConstraints { make in
+               make.top.equalTo(passwordTextField.snp.bottom).offset(15)
+               make.leading.equalTo(safeArea.snp.leading).offset(15)
+           }
+
+           loginButton.snp.makeConstraints { make in
+               make.top.equalTo(passwordTextField.snp.bottom).offset(60)
+               make.leading.equalTo(safeArea.snp.leading).offset(10)
+               make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+               make.width.equalTo(100)
+               make.height.equalTo(50)
+           }
+
+           socialLoginDesignStackView.snp.makeConstraints { make in
+               make.top.equalTo(loginButton.snp.bottom).offset(10)
+               make.leading.equalTo(safeArea.snp.leading).offset(10)
+               make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+               make.width.equalTo(100)
+               make.height.equalTo(50)
+           }
+
+           appleLoginButton.snp.makeConstraints { make in
+               make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(10)
+               make.leading.equalTo(safeArea.snp.leading).offset(10)
+               make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+               make.width.equalTo(100)
+               make.height.equalTo(50)
+           }
+       }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

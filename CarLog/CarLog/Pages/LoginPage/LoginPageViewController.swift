@@ -13,77 +13,14 @@ class LoginPageViewController: UIViewController {
     }
     
     func setupUI() {
-        let safeArea = view.safeAreaLayoutGuide
+        view.addSubview(properties)
+        properties.snp.makeConstraints { make in
+            make.edges.equalToSuperview() // LoginPageProperties 뷰를 슈퍼뷰에 맞게 설정
+        }
         
-        view.addSubview(properties.logo)
-        view.addSubview(properties.emailTextField)
-        view.addSubview(properties.passwordTextField)
-        view.addSubview(properties.loginStatusStackView)
-        view.addSubview(properties.loginButton)
-        view.addSubview(properties.socialLoginDesignStackView)
-        view.addSubview(properties.appleLoginButton)
-        
+        // MARK - addTarget
         properties.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         properties.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
-        
-        properties.logo.translatesAutoresizingMaskIntoConstraints = false
-        properties.emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        properties.passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        properties.loginStatusStackView.translatesAutoresizingMaskIntoConstraints = false
-        properties.loginButton.translatesAutoresizingMaskIntoConstraints = false
-        properties.socialLoginDesignStackView.translatesAutoresizingMaskIntoConstraints = false
-        properties.appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            properties.logo.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
-            properties.logo.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 85),
-            properties.logo.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10)
-        ])
-        
-        // emailTextField 설정
-        NSLayoutConstraint.activate([
-            properties.emailTextField.topAnchor.constraint(equalTo: properties.logo.bottomAnchor, constant: 10),
-            properties.emailTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            properties.emailTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10)
-        ])
-            
-        // passwordTextField 설정
-        NSLayoutConstraint.activate([
-            properties.passwordTextField.topAnchor.constraint(equalTo: properties.emailTextField.bottomAnchor, constant: 10),
-            properties.passwordTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            properties.passwordTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10)
-        ])
-        
-        // checkbox
-        NSLayoutConstraint.activate([
-            properties.loginStatusStackView.topAnchor.constraint(equalTo: properties.passwordTextField.bottomAnchor, constant: 15),
-            properties.loginStatusStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 15)
-        ])
-            
-        // loginButton 설정
-        NSLayoutConstraint.activate([
-            properties.loginButton.topAnchor.constraint(equalTo: properties.passwordTextField.bottomAnchor, constant: 60),
-            properties.loginButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            properties.loginButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            properties.loginButton.widthAnchor.constraint(equalToConstant: 100),
-            properties.loginButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            properties.socialLoginDesignStackView.topAnchor.constraint(equalTo: properties.loginButton.bottomAnchor, constant: 10),
-            properties.socialLoginDesignStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            properties.socialLoginDesignStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            properties.socialLoginDesignStackView.widthAnchor.constraint(equalToConstant: 100),
-            properties.socialLoginDesignStackView.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            properties.appleLoginButton.topAnchor.constraint(equalTo: properties.socialLoginDesignStackView.bottomAnchor, constant: 10),
-            properties.appleLoginButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            properties.appleLoginButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            properties.appleLoginButton.widthAnchor.constraint(equalToConstant: 100),
-            properties.appleLoginButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
     }
     
     @objc func loginButtonTapped() {
