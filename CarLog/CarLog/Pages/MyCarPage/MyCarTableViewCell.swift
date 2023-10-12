@@ -64,23 +64,26 @@ class MyCarTableViewCell: UITableViewCell {
         
         tableViewImage.snp.makeConstraints {
             $0.top.leading.bottom.equalTo(contentView)
-            $0.width.height.equalTo(80)
+            $0.width.height.equalTo(100)
         }
         
         tableViewTitle.snp.makeConstraints {
             $0.top.trailing.equalTo(contentView).inset(Constants.verticalMargin)
             $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.height.equalTo(30)
         }
         
         progressView.snp.makeConstraints {
             $0.top.equalTo(tableViewTitle.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.height.equalTo(10)
         }
         
         tableViewPeriod.snp.makeConstraints {
             $0.top.equalTo(progressView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.bottom.trailing.equalTo(contentView).inset(Constants.verticalMargin)
+            $0.height.equalTo(20)
         }
     }
     

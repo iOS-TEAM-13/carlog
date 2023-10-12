@@ -42,11 +42,16 @@ extension MyCarPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyCarTableViewCell.identifier, for: indexPath) as? MyCarTableViewCell else { return UITableViewCell() }
-        cell.bind(text: "제목1", period: "기간1")
+        let mirror = Mirror(reflecting: dummy)
+        let temp = mirror.children.compactMap{$0.value as? String}[indexPath.row]
+        cell.bind(text: temp, period: "기간1")
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = MyCarCheckViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // SwiftUI를 활용한 미리보기
