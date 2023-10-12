@@ -55,11 +55,11 @@ class JoinupPageViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    @objc func carModelViewPopButtonTapped(){
+    @objc func carModelViewPopButtonTapped() {
         carNumberView.isHidden = false
         carModelView.isHidden = true
     }
-    @objc func carModelViewNextButtonTapped(){
+    @objc func carModelViewNextButtonTapped() {
         view.addSubview(nickNameView)
         carModelView.isHidden = true
         nickNameView.isHidden = false
