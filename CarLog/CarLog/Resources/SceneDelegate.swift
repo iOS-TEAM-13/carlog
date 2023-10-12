@@ -12,29 +12,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        window?.makeKeyAndVisible()
+        guard let windowScene = scene as? UIWindowScene else { return }
+        self.window = UIWindow(windowScene: windowScene)
         
-        let tabBarController = TabBarController()
+        let rootViewController = LoginPageViewController()
+        let rootNavigationController = UINavigationController(rootViewController: rootViewController)
         
-        let tabs: [(root: UIViewController, icon: String)] = [
-            (MyCarPageViewController(), "car"),
-            (HistoryPageViewController(), "book"),
-            (MapPageViewController(), "map"),
-            (CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person"),
-            
-        ]
-        
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
-            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
-        
-        window?.rootViewController = tabBarController
+        self.window?.rootViewController = rootNavigationController
+        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
