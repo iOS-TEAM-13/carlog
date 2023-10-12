@@ -19,6 +19,8 @@ class CheckingView: UIView {
         let label = UILabel()
         label.customLabel(text: "타이틀", textColor: .primaryColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
         label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -82,6 +84,7 @@ class CheckingView: UIView {
     
     private func setupUI() {
         self.backgroundColor = .thirdColor
+        self.layer.cornerRadius = 20
         
         addSubview(checkTitle)
         addSubview(CheckScrollView)
