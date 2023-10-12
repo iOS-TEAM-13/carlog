@@ -18,14 +18,13 @@ class FloatingButtonStackView: UIView {
     
     lazy var floatingButton: UIButton = {
         let floatingButton = UIButton()
-        
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemPink
         config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        config.image = UIImage(systemName: "plus.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
         floatingButton.configuration = config
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
+        
 //        floatingButton.addTarget(self, action: #selector(didTapFloatingButton), for: .touchUpInside)
         
         return floatingButton
@@ -35,12 +34,12 @@ class FloatingButtonStackView: UIView {
         let fuelingButton = UIButton()
         
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemPink
         config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        config.image = UIImage(systemName: "fuelpump.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
         fuelingButton.configuration = config
         fuelingButton.layer.shadowRadius = 10
         fuelingButton.layer.shadowOpacity = 0.3
+
 //        fuelingButton.addTarget(self, action: #selector(didTapFloatingButton), for: .touchUpInside)
         
         return fuelingButton
@@ -50,12 +49,12 @@ class FloatingButtonStackView: UIView {
         let drivingButton = UIButton()
         
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemPink
         config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        config.image = UIImage(systemName: "steeringwheel")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
         drivingButton.configuration = config
         drivingButton.layer.shadowRadius = 10
         drivingButton.layer.shadowOpacity = 0.3
+
 //        drivingButton.addTarget(self, action: #selector(didTapFloatingButton), for: .touchUpInside)
         
         return drivingButton
