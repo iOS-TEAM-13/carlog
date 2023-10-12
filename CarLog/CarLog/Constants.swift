@@ -9,4 +9,17 @@ struct Constants {
     static let fontJua20 = UIFont(name: "Jua", size: 20)
     static let fontJua24 = UIFont(name: "Jua", size: 24)
     static let fontJua36 = UIFont(name: "Jua", size: 36)
+    
+    enum CheckView {
+        case engineView
+        case missionOilView
+        case brakeOilView
+        case brakePadView
+        case tireRotationView
+        case tireView
+        case filterView
+        case wiperView
+        case airconFilterView
+        case insuranceView
+    }
 }
