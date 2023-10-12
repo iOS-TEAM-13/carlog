@@ -28,6 +28,11 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    lazy var floatingButtonStackView: FloatingButtonStackView = {
+        let floatingButtonStackView = FloatingButtonStackView()
+        return floatingButtonStackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -45,11 +50,12 @@ class HistoryPageViewController: UIViewController {
         view.addSubview(segmentedControl)
         view.addSubview(drivingTableView)
         view.addSubview(fuelingTableView)
+        view.addSubview(floatingButtonStackView)
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-(Constants.verticalMargin))
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.verticalMargin)
             make.height.equalTo(40)
         }
         
@@ -65,6 +71,11 @@ class HistoryPageViewController: UIViewController {
             make.leading.equalTo(segmentedControl.snp.leading)
             make.trailing.equalTo(segmentedControl.snp.trailing)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        floatingButtonStackView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
 
     }

@@ -12,6 +12,7 @@
 		B85A0F2B2AD78E7B009E0A00 /* FuelingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
+		B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
 		FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */; };
@@ -67,6 +68,7 @@
 		B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingCell.swift; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
+		B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonStackView.swift; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			children = (
 				B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */,
 				B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */,
+				B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */,
 			);
 			path = HistoryViews;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF0287E92AD7C9A4006657C1 /* CarouselViewCell.swift in Sources */,
+				B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */,
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
