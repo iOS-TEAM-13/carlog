@@ -34,7 +34,7 @@ class CarModelView: UIView {
     
     lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [popButton, spaceView, nextButton])
-        stackView.customStackView(spacing: 40, axis: .horizontal, alignment: .fill)
+        stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .fill)
         return stackView
     }()
     

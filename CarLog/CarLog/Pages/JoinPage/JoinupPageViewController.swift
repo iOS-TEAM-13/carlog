@@ -10,12 +10,11 @@ class JoinupPageViewController: UIViewController {
     let nickNameView = NickNameView()
     let totalDistanceView = TotalDistanceView()
     
-    let dummyData = ["휘발유", "경유", "LPG", "김은병"]
+    let dummyData = ["휘발유", "경유", "LPG"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .primaryColor
-        print("oilCollectionView: \(oilModelView.oilCollectionView.bounds.width)")
         oilModelView.oilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
         oilModelView.oilCollectionView.dataSource = self
         oilModelView.oilCollectionView.delegate = self
@@ -106,8 +105,7 @@ class JoinupPageViewController: UIViewController {
         totalDistanceView.isHidden = true
     }
     @objc func totalDistanceViewNextButtonTapped(){
-        let loginPageViewController = LoginPageViewController()
-        navigationController?.setViewControllers([loginPageViewController], animated: true)
+        self.dismiss(animated: true)
     }
 }
 

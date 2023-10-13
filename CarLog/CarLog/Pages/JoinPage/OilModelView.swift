@@ -16,13 +16,6 @@ class OilModelView: UIView {
         return collection
     }()
     
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "?", textColor: .white, font: Constants.fontJua36 ?? UIFont(), alignment: .left)
-        label.numberOfLines = 2
-        return label
-    }()
-    
     lazy var popButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "이 전", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .white)
@@ -41,7 +34,7 @@ class OilModelView: UIView {
     
     lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [popButton, spaceView, nextButton])
-        stackView.customStackView(spacing: 40, axis: .horizontal, alignment: .fill)
+        stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .fill)
         return stackView
     }()
 
