@@ -5,6 +5,7 @@
 //  Created by 김지훈 on 2023/10/12.
 //
 
+import SnapKit
 import UIKit
 
 class DrivingView: UIView {
