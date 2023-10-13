@@ -9,11 +9,11 @@ import UIKit
 
 class MyPageEditViewController : UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "Edit"
-    
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        view.backgroundColor = .white
+//        title = "Edit"
+//    
+//    }
 }
 
