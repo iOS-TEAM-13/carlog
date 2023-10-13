@@ -26,35 +26,31 @@ class LoginPageViewController: UIViewController {
     }
 
     @objc func loginButtonTapped() {
-        let tabBarController = UITabBarController()
+        let tabBarController = TabBarController()
 
         let tabs: [(root: UIViewController, icon: String)] = [
             (MyCarPageViewController(), "car"),
             (HistoryPageViewController(), "book"),
             (MapPageViewController(), "map"),
             (CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person")
+            (MyPageViewController(), "person"),
         ]
 
-        let viewControllers = tabs.map { root, icon in
+        tabBarController.setViewControllers(tabs.map { root, icon in
+            let navigationController = UINavigationController(rootViewController: root)
             let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            root.tabBarItem = tabBarItem
-            return root
-        }
-
-        tabBarController.setViewControllers(viewControllers, animated: false)
-        let scenes = UIApplication.shared.connectedScenes
-
-        if let windowScene = scenes.first as? UIWindowScene,
-           let window = windowScene.windows.first
-        {
-            window.rootViewController = tabBarController
-        }
+            navigationController.tabBarItem = tabBarItem
+            return navigationController
+        }, animated: false)
+        
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
     }
 
     @objc func signupButtonTapped() {
-        let joinPage = JoinupPageViewController()
-        navigationController?.pushViewController(joinPage, animated: false)
+        let joinPageViewController = JoinupPageViewController()
+        joinPageViewController.modalPresentationStyle = .fullScreen
+        self.present(joinPageViewController, animated: true, completion: nil)
     }
 
     @objc func checkboxTapped() {
