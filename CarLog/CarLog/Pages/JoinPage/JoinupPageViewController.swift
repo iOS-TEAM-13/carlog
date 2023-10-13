@@ -15,12 +15,13 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .primaryColor
+        
         oilModelView.oilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
         oilModelView.oilCollectionView.dataSource = self
         oilModelView.oilCollectionView.delegate = self
-        setupUI()
         oilModelView.oilCollectionView.reloadData()
         
+        setupUI()
     }
 
     func setupUI() {
@@ -125,7 +126,6 @@ extension JoinupPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
-        
         return CGSize(width: collectionViewWidth, height: collectionViewHeight)
     }
 }
