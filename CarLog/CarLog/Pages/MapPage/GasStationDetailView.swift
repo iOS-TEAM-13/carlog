@@ -1,20 +1,47 @@
-//
-//  GasStationDetailView.swift
-//  CarLog
-//
-//  Created by t2023-m0075 on 10/13/23.
-//
-
 import UIKit
 
 class GasStationDetailView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    // 라벨, 이미지 등 ui 요소
+    
+    private let nameView = {
+        let view = UIView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let gasStationNameLabel = {
+        let label = UILabel()
+        
     }
-    */
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        setupUI()
+    }
+    
+    private func setupUI() {
+        self.addSubview(nameView)
+        
+        self.backgroundColor = UIColor.firstColor
+        
+        nameView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(33)
+            make.bottom.equalToSuperview().offset(-134)
+            make.width.equalTo(340)
+            make.height.equalTo(51)
+        }
+        
+    }
+    
+    
 }
