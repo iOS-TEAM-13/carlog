@@ -141,7 +141,6 @@ final class LoginView: UIView {
             make.top.equalTo(passwordTextField.snp.bottom).offset(60)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-            make.width.equalTo(100)
             make.height.equalTo(50)
         }
         
@@ -155,15 +154,12 @@ final class LoginView: UIView {
             make.top.equalTo(signupStackView.snp.bottom).offset(10)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-            make.width.equalTo(100)
-            make.height.equalTo(50)
         }
 
         appleLoginButton.snp.makeConstraints { make in
             make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(10)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-            make.width.equalTo(100)
             make.height.equalTo(50)
         }
     }

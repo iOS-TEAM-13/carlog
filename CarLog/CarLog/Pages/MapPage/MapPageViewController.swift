@@ -11,6 +11,9 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     //dummyData
     let dummyData = CLLocationCoordinate2D(latitude: 37.29611185603856, longitude: 127.05515403584008)
     
+    private var overlayView: UIView!
+    private var detailView: UIView!
+    
     private lazy var myLocationButton = {
         let button = UIButton()
         if let image = UIImage(named: "현재 위치 버튼"){
@@ -38,23 +41,19 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         return button
     }()
     
-    private lazy var dummyButton = {
-        let button = UIButton()
-        if let image = UIImage(named: "zoomout"){
-            button.setImage(image, for: .normal)
-           // button.addTarget(self, action: #selector(dummyButtonTapped), for: .touchUpInside)
-        }
-        return button
-    }()
-    
     private func addDummyPin() {
         let pin = MKPointAnnotation()
         pin.coordinate = dummyData
-        pin.title = "광교 SK 주유소"
-        pin.subtitle = "휘발유: 1804원, 경유: 1455원"
+//        pin.title = "광교 SK 주유소"
+//        pin.subtitle = "휘발유: 1804원, 경유: 1455원"
         mapView.addAnnotation(pin)
     }
-
+    
+    private lazy var mapDetailView: GasStationDetailView = {
+        let view = GasStationDetailView()
+        view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +63,10 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         locationManager.delegate = self
         
         mapView.setRegion(MKCoordinateRegion(center: dummyData, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideDetailView(_:)))
+           mapView.addGestureRecognizer(tapGesture)
+           tapGesture.delegate = self
         
         setupMapView()
         getLocationUsagePermission()
@@ -75,7 +78,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         view.addSubview(myLocationButton)
         view.addSubview(zoomInButton)
         view.addSubview(zoomOutButton)
-        //view.addSubview(dummyButton) //모달 불러오는 더미 버튼
+        self.view.addSubview(mapDetailView)
         
         
         // 나침반 표시 여부
@@ -100,9 +103,9 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
         
         zoomOutButton.snp.makeConstraints { make in
-                    make.leftMargin.equalToSuperview().offset(10)
-                    make.bottomMargin.equalToSuperview().offset(-94)
-                }
+            make.leftMargin.equalToSuperview().offset(10)
+            make.bottomMargin.equalToSuperview().offset(-94)
+        }
         
         zoomInButton.snp.makeConstraints { make in
             make.leftMargin.equalToSuperview().offset(10)
@@ -114,52 +117,134 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !annotation.isKind(of: MKUserLocation.self) else {
+        if annotation is MKUserLocation {
             return nil
         }
-        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Custom")
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Custom")
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
+        // 클러스터 어노테이션 처리
+        if let cluster = annotation as? MKClusterAnnotation {
+            let identifier = "Cluster"
+            var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            var label: UILabel?
+            
+            if clusterView == nil {
+                clusterView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                
+                // 원 형태의 뷰 생성
+                let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+                circleView.layer.cornerRadius = 15
+                circleView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.5)
+                
+                label = UILabel(frame: circleView.bounds)
+                label?.textColor = .black
+                label?.textAlignment = .center
+                label?.font = UIFont(name: "Jua", size: 20)
+                label?.text = "\(cluster.memberAnnotations.count)"
+                circleView.addSubview(label!)
+                
+                clusterView?.addSubview(circleView)
+            } else {
+                if let lbl = clusterView?.subviews.first?.subviews.first as? UILabel {
+                    lbl.text = "\(cluster.memberAnnotations.count)"
+                    label = lbl
+                }
+            }
+            
+            // 여기에서 원하는대로 label의 텍스트를 업데이트
+            label?.text = "\(cluster.memberAnnotations.count)"
+            
+            return clusterView
         }
         
-        annotationView?.image = UIImage(named: "pin")
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Custom")
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Custom")
+        }
         
+        // 어노테이션 뷰 초기 설정 (이미지 등)은 여기에서 합니다.
+        // 실제 어노테이션 뷰 업데이트는 regionDidChangeAnimated에서 처리합니다.
+        annotationView?.isUserInteractionEnabled = true
         return annotationView
     }
     
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if mapView.region.span.latitudeDelta < 0.01 {
+            for annotation in mapView.annotations {
+                if let annotationView = mapView.view(for: annotation), !(annotation is MKUserLocation) {
+                    updateAnnotationToCustomView(annotationView, annotation: annotation)
+                }
+            }
+        } else {
+            for annotation in mapView.annotations {
+                if let annotationView = mapView.view(for: annotation), !(annotation is MKUserLocation) {
+                    updateAnnotationToPin(annotationView)
+                }
+            }
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("어노테이션이 클릭되었습니다.")
+        if let _ = view.annotation as? MKPointAnnotation {
+            // 어노테이션을 클릭했을 때 detailView를 나타냅니다.
+            UIView.animate(withDuration: 0.3) {
+                self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 200 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 200) // 높이와 y 위치를 200으로 변경
+                mapView.deselectAnnotation(view.annotation, animated: false)
+            }
+        }
+        
+        
+    }
+    
+    func updateAnnotationToCustomView(_ annotationView: MKAnnotationView, annotation: MKAnnotation) {
+        annotationView.image = nil
+        let view = UIView()
+        view.backgroundColor = .white
+        view.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
+        let label = UILabel(frame: view.bounds)
+        label.text = "휘발유:2000원 \n경유: 1400원"
+        label.font = UIFont(name: "Jua", size: 10)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        view.addSubview(label)
+        
+        annotationView.addSubview(view)
+        annotationView.frame = view.frame
+    }
+    
+    func updateAnnotationToPin(_ annotationView: MKAnnotationView) {
+        for subview in annotationView.subviews {
+            subview.removeFromSuperview()
+        }
+        annotationView.image = UIImage(named: "pin")
+    }
+    
+    // 현재위치 버튼 입력 시 동작
     @objc func myLocationButtonTapped() {
         
         guard let currentLocation = locationManager.location else {
-                locationManager.requestWhenInUseAuthorization()
-                return
-            }
-            let region = MKCoordinateRegion(center: currentLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-            mapView.setRegion(region, animated: true)
+            locationManager.requestWhenInUseAuthorization()
+            return
         }
-    
+        let region = MKCoordinateRegion(center: currentLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(region, animated: true)
+    }
+    // +버튼 입력 시 동작
     @objc func zoomInButtonTapped() {
         let zoom = 0.5 // 원하는 축척 변경 비율
-         let region = mapView.region
-         let newSpan = MKCoordinateSpan(latitudeDelta: region.span.latitudeDelta * zoom, longitudeDelta: region.span.longitudeDelta * zoom)
-         let newRegion = MKCoordinateRegion(center: region.center, span: newSpan)
-         mapView.setRegion(newRegion, animated: true)
+        let region = mapView.region
+        let newSpan = MKCoordinateSpan(latitudeDelta: region.span.latitudeDelta * zoom, longitudeDelta: region.span.longitudeDelta * zoom)
+        let newRegion = MKCoordinateRegion(center: region.center, span: newSpan)
+        mapView.setRegion(newRegion, animated: true)
     }
-    
+    // -버튼 입력 시 동작
     @objc func zoomOutButtonTapped() {
         let zoom = 2.0 // 원하는 축척 변경 비율
-           let region = mapView.region
-           let newSpan = MKCoordinateSpan(latitudeDelta: region.span.latitudeDelta * zoom, longitudeDelta: region.span.longitudeDelta * zoom)
-           let newRegion = MKCoordinateRegion(center: region.center, span: newSpan)
-           mapView.setRegion(newRegion, animated: true)
+        let region = mapView.region
+        let newSpan = MKCoordinateSpan(latitudeDelta: region.span.latitudeDelta * zoom, longitudeDelta: region.span.longitudeDelta * zoom)
+        let newRegion = MKCoordinateRegion(center: region.center, span: newSpan)
+        mapView.setRegion(newRegion, animated: true)
     }
-    
-    //더미 버튼
-//    @objc func dummyButtonTapped() {
-//    }
     
     func getLocationUsagePermission() {
         //location4
@@ -184,4 +269,24 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
     }
     
+    @objc func handleTapOutsideDetailView(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: self.view)
+        if !mapDetailView.frame.contains(location) {
+            // mapDetailView 바깥 영역을 탭했을 경우
+            hideDetailView()
+        }
+    }
+
+    func hideDetailView() {
+        UIView.animate(withDuration: 0.3) {
+            self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
+        }
+    }
+    
+}
+
+extension MapPageViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+            return !(touch.view?.isDescendant(of: mapDetailView) ?? false)
+        }
 }

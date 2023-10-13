@@ -137,7 +137,6 @@ class JoinupView: UIView {
             make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(70)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-            make.width.equalTo(100)
             make.height.equalTo(50)
         }
     }
