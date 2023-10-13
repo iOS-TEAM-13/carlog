@@ -5,6 +5,7 @@
 //  Created by 김지훈 on 2023/10/13.
 //
 
+import SnapKit
 import UIKit
 
 class FloatingButtonStackView: UIView {
@@ -13,8 +14,7 @@ class FloatingButtonStackView: UIView {
     
     lazy var floatingButtonStackView: UIStackView = {
         let floatingButtonStackView = UIStackView(arrangedSubviews: [fuelingButton, drivingButton, floatingButton])
-        floatingButtonStackView.axis = .vertical
-        floatingButtonStackView.spacing = Constants.horizontalMargin
+        floatingButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .center)
         return floatingButtonStackView
     }()
     
@@ -22,7 +22,7 @@ class FloatingButtonStackView: UIView {
         let floatingButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "plus.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        config.image = UIImage(systemName: "plus.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
         floatingButton.configuration = config
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
@@ -37,7 +37,7 @@ class FloatingButtonStackView: UIView {
         }))
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "fuelpump.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        config.image = UIImage(systemName: "fuelpump.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
         fuelingButton.configuration = config
         fuelingButton.layer.shadowRadius = 10
         fuelingButton.layer.shadowOpacity = 0.3
@@ -53,7 +53,7 @@ class FloatingButtonStackView: UIView {
         }))
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "steeringwheel")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        config.image = UIImage(systemName: "steeringwheel")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
         drivingButton.configuration = config
         drivingButton.layer.shadowRadius = 10
         drivingButton.layer.shadowOpacity = 0.3
