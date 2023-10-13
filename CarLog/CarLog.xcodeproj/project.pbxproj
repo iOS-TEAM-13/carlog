@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
 		B85A0F292AD78E6A009E0A00 /* DrivingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingCell.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 		FBC712922AD6C8D8006C2BB0 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				7E08D8852AD948B500998E27 /* MyPageView.swift */,
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
 				7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */,
 			);
@@ -441,6 +444,7 @@
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
+				7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */,
 				FF0287E52AD78A83006657C1 /* CheckingView.swift in Sources */,
 				B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
