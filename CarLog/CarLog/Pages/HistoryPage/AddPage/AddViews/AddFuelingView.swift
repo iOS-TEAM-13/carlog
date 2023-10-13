@@ -12,10 +12,7 @@ class AddFuelingView: UIView {
     
     lazy var oliTypeLabel: UILabel = {
         let oliTypeLabel = UILabel()
-        oliTypeLabel.customLabel(text: "휘발유 or 경유", textColor: .white, font: Constants.fontJua36!, alignment: .center)
-        oliTypeLabel.backgroundColor = UIColor.primaryColor
-        oliTypeLabel.layer.cornerRadius = 10
-        oliTypeLabel.clipsToBounds = true
+        oliTypeLabel.customLabel(text: "휘발유 or 경유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
         return oliTypeLabel
     }()
     
@@ -30,12 +27,12 @@ class AddFuelingView: UIView {
     
     lazy var inputFuelingStackView: UIStackView = {
         let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, priceStackView, countStackView, totalPriceStackView])
-        inputFuelingStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
+        inputFuelingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .fill)
         return inputFuelingStackView
     }()
     
     lazy var totalDistanceStackView: UIStackView = {
-        let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField, kmLabel])
+        let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
         totalDistanceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
         totalDistanceStackView.distribution = .fillEqually
         return totalDistanceStackView
@@ -43,16 +40,28 @@ class AddFuelingView: UIView {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적 주행거리", textColor: .white, font: Constants.fontJua20!, alignment: .center)
+        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        totalDistanceLabel.numberOfLines = 2
         totalDistanceLabel.backgroundColor = UIColor.primaryColor
         totalDistanceLabel.layer.cornerRadius = 10
         totalDistanceLabel.clipsToBounds = true
         return totalDistanceLabel
     }()
     
+//    lazy var emailTextField: UITextField = {
+//        let textField = UITextField()
+//        textField.loginCustomTextField(placeholder: "아이디 입력", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+//        return textField
+//    }()
+    
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.placeholder = "ex) 10000"
+//        totalDistanceTextField.placeholder = "ex) 17655"
+//        
+//        totalDistanceTextField.customTextField(placeholder: "ex) 17655", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .right)
+        totalDistanceTextField.loginCustomTextField(placeholder: "ex) 17655", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.layer.borderWidth = 1
+        totalDistanceTextField.layer.cornerRadius = 4
         totalDistanceTextField.textAlignment = .right
         totalDistanceTextField.keyboardType = .decimalPad
         return totalDistanceTextField
@@ -60,7 +69,7 @@ class AddFuelingView: UIView {
     
     lazy var kmLabel: UILabel = {
         let wonLabel = UILabel()
-        wonLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20!, alignment: .center)
+        wonLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return wonLabel
     }()
     
@@ -73,7 +82,7 @@ class AddFuelingView: UIView {
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .white, font: Constants.fontJua20!, alignment: .center)
+        priceLabel.customLabel(text: "단가", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         priceLabel.backgroundColor = UIColor.primaryColor
         priceLabel.layer.cornerRadius = 10
         priceLabel.clipsToBounds = true
@@ -90,7 +99,7 @@ class AddFuelingView: UIView {
     
     lazy var wonLabel: UILabel = {
         let wonLabel = UILabel()
-        wonLabel.customLabel(text: "원", textColor: .black, font: Constants.fontJua20!, alignment: .center)
+        wonLabel.customLabel(text: "원", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return wonLabel
     }()
     
@@ -103,7 +112,7 @@ class AddFuelingView: UIView {
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .white, font: Constants.fontJua20!, alignment: .center)
+        countLabel.customLabel(text: "수량", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         countLabel.backgroundColor = UIColor.primaryColor
         countLabel.layer.cornerRadius = 10
         countLabel.clipsToBounds = true
@@ -120,7 +129,7 @@ class AddFuelingView: UIView {
     
     lazy var lLabel: UILabel = {
         let wonLabel = UILabel()
-        wonLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20!, alignment: .center)
+        wonLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return wonLabel
     }()
     
@@ -133,7 +142,7 @@ class AddFuelingView: UIView {
     
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "총액", textColor: .white, font: Constants.fontJua20!, alignment: .center)
+        totalPriceLabel.customLabel(text: "총액", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         totalPriceLabel.backgroundColor = UIColor.primaryColor
         totalPriceLabel.layer.cornerRadius = 10
         totalPriceLabel.clipsToBounds = true
@@ -150,7 +159,7 @@ class AddFuelingView: UIView {
     
     lazy var wonLabel2: UILabel = {
         let wonLabel2 = UILabel()
-        wonLabel2.customLabel(text: "원", textColor: .black, font: Constants.fontJua20!, alignment: .center)
+        wonLabel2.customLabel(text: "원", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return wonLabel2
     }()
     
@@ -162,14 +171,14 @@ class AddFuelingView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24!, titleColor: .white, backgroundColor: .primaryColor)
+        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
         saveButton.layer.cornerRadius = 10
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: Constants.fontJua24!, titleColor: .white, backgroundColor: .primaryColor)
+        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
         cancelButton.layer.cornerRadius = 10
         return cancelButton
     }()
@@ -191,26 +200,26 @@ class AddFuelingView: UIView {
         addSubview(buttonStackView)
         
         oliTypeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.verticalMargin)
-            make.height.equalTo(50)
+            make.top.equalTo(safeAreaLayoutGuide).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(oliTypeLabel.snp.bottom).offset(Constants.horizontalMargin * 2)
+            make.top.equalTo(oliTypeLabel.snp.bottom).offset(50)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
         }
         
         inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(30)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(inputFuelingStackView.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
     }
 

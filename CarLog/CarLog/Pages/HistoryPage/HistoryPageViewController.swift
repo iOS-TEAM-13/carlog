@@ -55,15 +55,15 @@ class HistoryPageViewController: UIViewController {
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.height.equalTo(40)
         }
         
         drivingTableView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(segmentedControl.snp.leading)
-            make.trailing.equalTo(segmentedControl.snp.trailing)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -75,8 +75,8 @@ class HistoryPageViewController: UIViewController {
         }
         
         floatingButtonStackView.snp.makeConstraints { make in
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
 
     }
