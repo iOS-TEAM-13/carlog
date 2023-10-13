@@ -38,6 +38,7 @@
 		FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */; };
 		FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */; };
 		FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7212AD7ED480031C17B /* OilModelView.swift */; };
+		FBBDA7242AD834570031C17B /* OilModelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBDA7232AD834570031C17B /* OilModelCollectionViewCell.swift */; };
 		FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */; };
 		FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */; };
 		FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC712932AD6FC34006C2BB0 /* LoginView.swift */; };
@@ -100,6 +101,7 @@
 		FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameView.swift; sourceTree = "<group>"; };
 		FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDistanceView.swift; sourceTree = "<group>"; };
 		FBBDA7212AD7ED480031C17B /* OilModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OilModelView.swift; sourceTree = "<group>"; };
+		FBBDA7232AD834570031C17B /* OilModelCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OilModelCollectionViewCell.swift; sourceTree = "<group>"; };
 		FBC712892AD6B895006C2BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		FBC712932AD6FC34006C2BB0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				FBBDA71B2AD7E77C0031C17B /* NickNameView.swift */,
 				FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */,
 				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
+				FBBDA7232AD834570031C17B /* OilModelCollectionViewCell.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
+				FBBDA7242AD834570031C17B /* OilModelCollectionViewCell.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
