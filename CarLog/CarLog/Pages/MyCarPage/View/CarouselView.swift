@@ -34,14 +34,14 @@ class CarouselView: UIView {
     
     init() {
         super.init(frame: .zero)
-        setLayout()
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLayout() {
+    func setupUI() {
         self.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
