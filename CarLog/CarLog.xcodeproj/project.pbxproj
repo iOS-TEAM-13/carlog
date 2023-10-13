@@ -12,6 +12,11 @@
 		B85A0F2B2AD78E7B009E0A00 /* FuelingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
+		B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */; };
+		B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F372AD86A5F009E0A00 /* AddDrivingViewController.swift */; };
+		B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */; };
+		B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */; };
+		B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
 		FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */; };
@@ -67,6 +72,11 @@
 		B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingCell.swift; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
+		B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonStackView.swift; sourceTree = "<group>"; };
+		B85A0F372AD86A5F009E0A00 /* AddDrivingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDrivingViewController.swift; sourceTree = "<group>"; };
+		B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingViewController.swift; sourceTree = "<group>"; };
+		B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDrivingView.swift; sourceTree = "<group>"; };
+		B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingView.swift; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,13 +144,26 @@
 			children = (
 				B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */,
 				B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */,
+				B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */,
 			);
 			path = HistoryViews;
 			sourceTree = "<group>";
 		};
-		B85A0F272AD77E70009E0A00 /* AddViews */ = {
+		B85A0F272AD77E70009E0A00 /* AddPage */ = {
 			isa = PBXGroup;
 			children = (
+				B85A0F372AD86A5F009E0A00 /* AddDrivingViewController.swift */,
+				B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */,
+				B85A0F3B2AD8CFA6009E0A00 /* AddViews */,
+			);
+			path = AddPage;
+			sourceTree = "<group>";
+		};
+		B85A0F3B2AD8CFA6009E0A00 /* AddViews */ = {
+			isa = PBXGroup;
+			children = (
+				B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */,
+				B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */,
 			);
 			path = AddViews;
 			sourceTree = "<group>";
@@ -257,7 +280,7 @@
 				B85A0F262AD77E65009E0A00 /* HistoryViews */,
 				B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */,
 				B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */,
-				B85A0F272AD77E70009E0A00 /* AddViews */,
+				B85A0F272AD77E70009E0A00 /* AddPage */,
 			);
 			path = HistoryPage;
 			sourceTree = "<group>";
@@ -397,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF0287E92AD7C9A4006657C1 /* CarouselViewCell.swift in Sources */,
+				B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */,
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
@@ -408,12 +432,14 @@
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
 				B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
+				B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */,
 				B85A0F292AD78E6A009E0A00 /* DrivingCell.swift in Sources */,
 				B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				FF0287E52AD78A83006657C1 /* CheckingView.swift in Sources */,
+				B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
@@ -424,6 +450,7 @@
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
+				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				FF0287E72AD7C91D006657C1 /* CarouselView.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
@@ -438,6 +465,7 @@
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
+				B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */,
 				FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
