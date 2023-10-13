@@ -10,16 +10,18 @@ class JoinupPageViewController: UIViewController {
     let nickNameView = NickNameView()
     let totalDistanceView = TotalDistanceView()
     
-    let dummyData = ["휘발유", "경유"]
+    let dummyData = ["휘발유", "경유", "LPG", "김은병"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .primaryColor
-        
-        oilModelView.OilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
-        oilModelView.OilCollectionView.dataSource = self
-        oilModelView.OilCollectionView.delegate = self
+        print("oilCollectionView: \(oilModelView.oilCollectionView.bounds.width)")
+        oilModelView.oilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
+        oilModelView.oilCollectionView.dataSource = self
+        oilModelView.oilCollectionView.delegate = self
         setupUI()
+        oilModelView.oilCollectionView.reloadData()
+        
     }
 
     func setupUI() {
@@ -115,7 +117,7 @@ extension JoinupPageViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = oilModelView.OilCollectionView.dequeueReusableCell(withReuseIdentifier: "oilModelCollectionViewCell", for: indexPath) as! OilModelCollectionViewCell
+        let cell = oilModelView.oilCollectionView.dequeueReusableCell(withReuseIdentifier: "oilModelCollectionViewCell", for: indexPath) as! OilModelCollectionViewCell
         cell.label.text = dummyData[indexPath.item]
         return cell
     }
@@ -125,7 +127,7 @@ extension JoinupPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         let collectionViewHeight = collectionView.bounds.height
-        print(collectionView.bounds.width)
-        return CGSize(width: (collectionViewWidth - 30)/4, height: (collectionViewHeight - 40)/5)
+        
+        return CGSize(width: collectionViewWidth, height: collectionViewHeight)
     }
 }

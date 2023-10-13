@@ -1,18 +1,30 @@
+
+
+
+
+
 import UIKit
 
 class OilModelCollectionViewCell: UICollectionViewCell {
-    var label: UILabel!
+    
+    
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.customLabel(text: "휘발유", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return label
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.contentView.addSubview(label)
         
-        self.frame = CGRect(x: 0, y: 0, width: 300, height: 250)
-
-        label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 250))
-        label.text = "휘발유"
-        label.textAlignment = .center
-        
-        addSubview(label)
+      
+        label.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+        self.contentView.layer.borderColor = UIColor.black.cgColor
+        self.contentView.layer.borderWidth = 2.0
     }
     
     required init?(coder: NSCoder) {
