@@ -27,74 +27,104 @@ class AddFuelingView: UIView {
     
     lazy var inputFuelingStackView: UIStackView = {
         let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, priceStackView, countStackView, totalPriceStackView])
-        inputFuelingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .fill)
+        inputFuelingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
         return inputFuelingStackView
     }()
     
     lazy var totalDistanceStackView: UIStackView = {
         let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
         totalDistanceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        totalDistanceStackView.distribution = .fillEqually
+        totalDistanceStackView.distribution = .fill
         return totalDistanceStackView
     }()
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         totalDistanceLabel.numberOfLines = 2
-        totalDistanceLabel.backgroundColor = UIColor.primaryColor
-        totalDistanceLabel.layer.cornerRadius = 10
-        totalDistanceLabel.clipsToBounds = true
         return totalDistanceLabel
     }()
     
-//    lazy var emailTextField: UITextField = {
-//        let textField = UITextField()
-//        textField.loginCustomTextField(placeholder: "아이디 입력", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
-//        return textField
-//    }()
-    
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-//        totalDistanceTextField.placeholder = "ex) 17655"
-//        
-//        totalDistanceTextField.customTextField(placeholder: "ex) 17655", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .right)
-        totalDistanceTextField.loginCustomTextField(placeholder: "ex) 17655", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
         totalDistanceTextField.layer.borderWidth = 1
         totalDistanceTextField.layer.cornerRadius = 4
-        totalDistanceTextField.textAlignment = .right
         totalDistanceTextField.keyboardType = .decimalPad
         return totalDistanceTextField
     }()
     
-    lazy var kmLabel: UILabel = {
-        let wonLabel = UILabel()
-        wonLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
-        return wonLabel
-    }()
-    
     lazy var priceStackView: UIStackView = {
-        let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField, wonLabel])
+        let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField])
         priceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        priceStackView.distribution = .fillEqually
+        priceStackView.distribution = .fill
         return priceStackView
     }()
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
-        priceLabel.backgroundColor = UIColor.primaryColor
-        priceLabel.layer.cornerRadius = 10
-        priceLabel.clipsToBounds = true
+        priceLabel.customLabel(text: "단가", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return priceLabel
     }()
     
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
-        priceTextField.placeholder = "ex) 1766"
-        priceTextField.textAlignment = .right
+        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
+        priceTextField.layer.borderWidth = 1
+        priceTextField.layer.cornerRadius = 4
         priceTextField.keyboardType = .decimalPad
         return priceTextField
+    }()
+    
+    lazy var countStackView: UIStackView = {
+        let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField])
+        countStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        countStackView.distribution = .fill
+        return countStackView
+    }()
+    
+    lazy var countLabel: UILabel = {
+        let countLabel = UILabel()
+        countLabel.customLabel(text: "수량", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return countLabel
+    }()
+    
+    lazy var countTextField: UITextField = {
+        let countTextField = UITextField()
+        countTextField.historyCustomTextField(placeholder: "ex) 55.12 / 55", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
+        countTextField.layer.borderWidth = 1
+        countTextField.layer.cornerRadius = 4
+        countTextField.keyboardType = .decimalPad
+        return countTextField
+    }()
+    
+    lazy var totalPriceStackView: UIStackView = {
+        let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField])
+        totalPriceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        totalPriceStackView.distribution = .fill
+        return totalPriceStackView
+    }()
+    
+    lazy var totalPriceLabel: UILabel = {
+        let totalPriceLabel = UILabel()
+        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return totalPriceLabel
+    }()
+    
+    lazy var totalPriceTextField: UITextField = {
+        let totalPriceTextField = UITextField()
+        totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
+        totalPriceTextField.layer.borderWidth = 1
+        totalPriceTextField.layer.cornerRadius = 4
+        totalPriceTextField.keyboardType = .decimalPad
+        return totalPriceTextField
+    }()
+    
+    //MARK: - 단위 Label
+    lazy var kmLabel: UILabel = {
+        let kmLabel = UILabel()
+        kmLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return kmLabel
     }()
     
     lazy var wonLabel: UILabel = {
@@ -103,58 +133,10 @@ class AddFuelingView: UIView {
         return wonLabel
     }()
     
-    lazy var countStackView: UIStackView = {
-        let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField, lLabel])
-        countStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        countStackView.distribution = .fillEqually
-        return countStackView
-    }()
-    
-    lazy var countLabel: UILabel = {
-        let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
-        countLabel.backgroundColor = UIColor.primaryColor
-        countLabel.layer.cornerRadius = 10
-        countLabel.clipsToBounds = true
-        return countLabel
-    }()
-    
-    lazy var countTextField: UITextField = {
-        let countTextField = UITextField()
-        countTextField.placeholder = "ex) 55.12"
-        countTextField.textAlignment = .right
-        countTextField.keyboardType = .decimalPad
-        return countTextField
-    }()
-    
     lazy var lLabel: UILabel = {
-        let wonLabel = UILabel()
-        wonLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
-        return wonLabel
-    }()
-    
-    lazy var totalPriceStackView: UIStackView = {
-        let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField, wonLabel2])
-        totalPriceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        totalPriceStackView.distribution = .fillEqually
-        return totalPriceStackView
-    }()
-    
-    lazy var totalPriceLabel: UILabel = {
-        let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "총액", textColor: .white, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
-        totalPriceLabel.backgroundColor = UIColor.primaryColor
-        totalPriceLabel.layer.cornerRadius = 10
-        totalPriceLabel.clipsToBounds = true
-        return totalPriceLabel
-    }()
-    
-    lazy var totalPriceTextField: UITextField = {
-        let totalPriceTextField = UITextField()
-        totalPriceTextField.placeholder = "ex) 100000"
-        totalPriceTextField.textAlignment = .right
-        totalPriceTextField.keyboardType = .decimalPad
-        return totalPriceTextField
+        let lLabel = UILabel()
+        lLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return lLabel
     }()
     
     lazy var wonLabel2: UILabel = {
@@ -163,6 +145,7 @@ class AddFuelingView: UIView {
         return wonLabel2
     }()
     
+    //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [saveButton, cancelButton])
         buttonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
@@ -199,6 +182,11 @@ class AddFuelingView: UIView {
         addSubview(inputFuelingStackView)
         addSubview(buttonStackView)
         
+        totalDistanceStackView.addSubview(kmLabel)
+        priceStackView.addSubview(wonLabel)
+        countStackView.addSubview(lLabel)
+        totalPriceStackView.addSubview(wonLabel2)
+        
         oliTypeLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
@@ -214,6 +202,26 @@ class AddFuelingView: UIView {
             make.top.equalTo(addPhotoButton.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+        }
+        
+        kmLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(totalDistanceStackView).offset(-16)
+            make.centerY.equalTo(totalDistanceStackView)
+        }
+        
+        wonLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(priceStackView).offset(-16)
+            make.centerY.equalTo(priceStackView)
+        }
+        
+        lLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(countStackView).offset(-16)
+            make.centerY.equalTo(countStackView)
+        }
+        
+        wonLabel2.snp.makeConstraints { make in
+            make.trailing.equalTo(totalPriceStackView).offset(-16)
+            make.centerY.equalTo(totalPriceStackView)
         }
         
         buttonStackView.snp.makeConstraints { make in
