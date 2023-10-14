@@ -87,7 +87,7 @@ class AddFuelingView: UIView {
     
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
-        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
+        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: priceTextField.frame.size.height)))
         priceTextField.layer.borderWidth = 1
         priceTextField.layer.cornerRadius = 4
         priceTextField.keyboardType = .decimalPad

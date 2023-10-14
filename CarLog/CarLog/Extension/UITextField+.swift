@@ -43,7 +43,7 @@ extension UITextField {
         self.textColor = textColor
         self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.layer.cornerRadius = 15
-        self.backgroundColor = .thirdColor
+        self.backgroundColor = .white
         self.rightView = paddingView
         self.rightViewMode = .always
     }
