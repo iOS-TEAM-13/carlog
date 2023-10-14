@@ -7,9 +7,16 @@
 
 import Foundation
 
+//struct Fueling {
+//    let price: Int
+//    let count: Double
+//    let totalPrice: Int
+//    let timeStamp: String
+//}
+
 struct Fueling {
+    let totalDistance: Int
     let price: Int
     let count: Double
     let totalPrice: Int
-    let timeStamp: String
 }

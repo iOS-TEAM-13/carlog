@@ -10,10 +10,10 @@ import UIKit
 
 class AddFuelingView: UIView {
     
-    lazy var oliTypeLabel: UILabel = {
-        let oliTypeLabel = UILabel()
-        oliTypeLabel.customLabel(text: "휘발유 or 경유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
-        return oliTypeLabel
+    lazy var addFuelingPageLabel: UILabel = {
+        let addFuelingPageLabel = UILabel()
+        addFuelingPageLabel.customLabel(text: "휘발유 or 경유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
+        return addFuelingPageLabel
     }()
     
     lazy var addPhotoButton: UIButton = {
@@ -52,8 +52,25 @@ class AddFuelingView: UIView {
         totalDistanceTextField.layer.borderWidth = 1
         totalDistanceTextField.layer.cornerRadius = 4
         totalDistanceTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextPriceTextField))
+        nextTextField.setItems([flexibleSpace, nextButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        totalDistanceTextField.inputAccessoryView = nextTextField
+        //
         return totalDistanceTextField
     }()
+    
+    //
+    @objc func nextPriceTextField() {
+        self.priceTextField.becomeFirstResponder()
+    }
+    //
     
     lazy var priceStackView: UIStackView = {
         let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField])
@@ -74,8 +91,30 @@ class AddFuelingView: UIView {
         priceTextField.layer.borderWidth = 1
         priceTextField.layer.cornerRadius = 4
         priceTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalDistanceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextCountTextField))
+        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        priceTextField.inputAccessoryView = nextTextField
+        //
         return priceTextField
     }()
+    
+    //
+    @objc func beforeTotalDistanceTextField() {
+        self.totalDistanceTextField.becomeFirstResponder()
+    }
+    
+    @objc func nextCountTextField() {
+        self.countTextField.becomeFirstResponder()
+    }
+    //
     
     lazy var countStackView: UIStackView = {
         let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField])
@@ -92,12 +131,34 @@ class AddFuelingView: UIView {
     
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
-        countTextField.historyCustomTextField(placeholder: "ex) 55.12 / 55", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
+        countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
         countTextField.layer.borderWidth = 1
         countTextField.layer.cornerRadius = 4
         countTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalPriceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextTotalPriceTextField))
+        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        countTextField.inputAccessoryView = nextTextField
+        //
         return countTextField
     }()
+    
+    //
+    @objc func beforeTotalPriceTextField() {
+        self.priceTextField.becomeFirstResponder()
+    }
+    
+    @objc func nextTotalPriceTextField() {
+        self.totalPriceTextField.becomeFirstResponder()
+    }
+    //
     
     lazy var totalPriceStackView: UIStackView = {
         let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField])
@@ -118,8 +179,24 @@ class AddFuelingView: UIView {
         totalPriceTextField.layer.borderWidth = 1
         totalPriceTextField.layer.cornerRadius = 4
         totalPriceTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeCountTextField))
+        nextTextField.setItems([beforeButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        totalPriceTextField.inputAccessoryView = nextTextField
+        //
         return totalPriceTextField
     }()
+    
+    //
+    @objc func beforeCountTextField() {
+        self.countTextField.becomeFirstResponder()
+    }
+    //
     
     //MARK: - 단위 Label
     lazy var kmLabel: UILabel = {
@@ -179,7 +256,7 @@ class AddFuelingView: UIView {
     }
     
     private func setupUI() {
-        addSubview(oliTypeLabel)
+        addSubview(addFuelingPageLabel)
         addSubview(addPhotoButton)
         addSubview(inputFuelingStackView)
         addSubview(buttonStackView)
@@ -189,16 +266,15 @@ class AddFuelingView: UIView {
         countStackView.addSubview(lLabel)
         totalPriceStackView.addSubview(wonLabel2)
         
-        oliTypeLabel.snp.makeConstraints { make in
+        addFuelingPageLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(oliTypeLabel.snp.bottom).offset(20)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-//            make.height.equalTo(80)
+            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
         }
         
         totalDistanceLabel.snp.makeConstraints { make in

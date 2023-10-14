@@ -9,8 +9,6 @@ import SnapKit
 import UIKit
 
 class AddFuelingViewController: UIViewController {
-    
-//    let addFuelingView = AddFuelingView()
 
     lazy var addFuelingView: AddFuelingView = {
         let addFuelingView = AddFuelingView()
@@ -32,7 +30,7 @@ class AddFuelingViewController: UIViewController {
         
         addFuelingView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
         addFuelingView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
-
+        
     }
     
     @objc func didSaveButton() {
@@ -44,4 +42,8 @@ class AddFuelingViewController: UIViewController {
         print("---> addFuelingPage 취소 버튼 눌렀어요")
         dismiss(animated: true)
     }
+    
+    
+    
+    
 }
