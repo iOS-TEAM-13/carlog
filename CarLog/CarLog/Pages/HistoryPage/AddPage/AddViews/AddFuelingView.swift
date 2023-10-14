@@ -19,8 +19,9 @@ class AddFuelingView: UIView {
     lazy var addPhotoButton: UIButton = {
         let addPhotoButton = UIButton()
         var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 60, weight: .regular))
+        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 50, weight: .regular))
         addPhotoButton.configuration = config
+        addPhotoButton.backgroundColor = .primaryColor
         addPhotoButton.layer.cornerRadius = 10
         return addPhotoButton
     }()
@@ -147,8 +148,9 @@ class AddFuelingView: UIView {
     
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
-        let buttonStackView = UIStackView(arrangedSubviews: [saveButton, cancelButton])
-        buttonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
+        let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
+        buttonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .fill)
+        buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
     
@@ -194,40 +196,58 @@ class AddFuelingView: UIView {
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(oliTypeLabel.snp.bottom).offset(50)
+            make.top.equalTo(oliTypeLabel.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
+//            make.height.equalTo(80)
+        }
+        
+        totalDistanceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
+        }
+        
+        priceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
+        }
+        
+        countLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
+        }
+        
+        totalPriceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
         }
         
         inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(30)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         kmLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(totalDistanceStackView).offset(-16)
+            make.trailing.equalTo(totalDistanceStackView).offset(-Constants.horizontalMargin)
             make.centerY.equalTo(totalDistanceStackView)
         }
         
         wonLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(priceStackView).offset(-16)
+            make.trailing.equalTo(priceStackView).offset(-Constants.horizontalMargin)
             make.centerY.equalTo(priceStackView)
         }
         
         lLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(countStackView).offset(-16)
+            make.trailing.equalTo(countStackView).offset(-Constants.horizontalMargin)
             make.centerY.equalTo(countStackView)
         }
         
         wonLabel2.snp.makeConstraints { make in
-            make.trailing.equalTo(totalPriceStackView).offset(-16)
+            make.trailing.equalTo(totalPriceStackView).offset(-Constants.horizontalMargin)
             make.centerY.equalTo(totalPriceStackView)
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(inputFuelingStackView.snp.bottom).offset(Constants.horizontalMargin)
+            make.top.equalTo(inputFuelingStackView.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.height.equalTo(50)
         }
     }
 
