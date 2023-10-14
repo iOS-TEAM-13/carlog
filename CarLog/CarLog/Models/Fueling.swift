@@ -15,6 +15,7 @@ import Foundation
 //}
 
 struct Fueling {
+    let timeStamp: String
     let totalDistance: Int
     let price: Int
     let count: Double
