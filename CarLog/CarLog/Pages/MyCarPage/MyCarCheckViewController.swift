@@ -19,6 +19,7 @@ class MyCarCheckViewController: UIViewController {
         CheckingView(title: "연료 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"),
         CheckingView(title: "와이퍼 블레이드는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"),
         CheckingView(title: "에어컨 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"),
+        CheckingView(title: "보험 가입 시기는 언제쯤인가요?", firstButton: "", secondButton: "", thirdbutton: "", fourthButton: "", fifthButton: ""),
     ]
 //    private let checkEngineOilView = CheckingView(title: "엔진 오일은 언제 교체하셨나요?", firstButton: "6개월 전", secondButton: "3개월 전", thirdbutton: "1개월 전", fourthButton: "최근", fifthButton: "모르겠어요")
     
@@ -31,8 +32,7 @@ class MyCarCheckViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         configure()
-        setLayout()
-//        setupUI()
+        setupUI()
     }
     
     private func configure() {
@@ -41,15 +41,7 @@ class MyCarCheckViewController: UIViewController {
         carouselView.collectionView.prefetchDataSource = self
     }
     
-//    private func setupUI() {
-//        view.addSubview(checkEngineOilView)
-//
-//        checkEngineOilView.snp.makeConstraints {
-//            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-//        }
-//    }
-    
-    private func setLayout() {
+    private func setupUI() {
         view.addSubview(carouselView)
         
         carouselView.snp.makeConstraints {
@@ -69,8 +61,16 @@ extension MyCarCheckViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView,cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselViewCell.identifier,for: indexPath) as? CarouselViewCell else { return UICollectionViewCell() }
-        cell.bind(view: checkingList[indexPath.row])
-        
+        if indexPath.row == checkingList.count - 1 {
+            collectionView.register(CustomCarouselViewCell.self, forCellWithReuseIdentifier: CustomCarouselViewCell.identifier)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCarouselViewCell.identifier,for: indexPath) as? CustomCarouselViewCell else { return UICollectionViewCell() }
+            let data = checkingList[indexPath.row].title
+            cell.bind(title: data)
+            return cell
+        }
+//        let cell = CarouselViewCell()
+        let data = checkingList[indexPath.row]
+        cell.bind(checkingView: data)
         return cell
     }
     

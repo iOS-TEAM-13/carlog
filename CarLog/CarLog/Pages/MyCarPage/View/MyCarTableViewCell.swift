@@ -26,9 +26,9 @@ class MyCarTableViewCell: UITableViewCell {
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
         /// progress 배경 색상
-        view.trackTintColor = .lightGray
+        view.trackTintColor = .secondColor
         /// progress 진행 색상
-        view.progressTintColor = .systemBlue
+        view.progressTintColor = .primaryColor
         view.progress = 0.1
         return view
     }()
@@ -46,14 +46,6 @@ class MyCarTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
     
     private func setupUI() {
