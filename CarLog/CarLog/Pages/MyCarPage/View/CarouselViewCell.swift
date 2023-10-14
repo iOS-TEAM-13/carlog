@@ -160,18 +160,28 @@ class CarouselViewCell: UICollectionViewCell {
 //    }
     
     @objc func checkButtonTapped(sender: UIButton) {
-        firstAnswerButton.backgroundColor = .primaryColor
-        secondAnswerButton.backgroundColor = .primaryColor
-        thirdAnswerButton.backgroundColor = .primaryColor
-        fourthAnswerButton.backgroundColor = .primaryColor
-        fifthAnswerButton.backgroundColor = .primaryColor
+        let temp = [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton]
+        temp.forEach { item in
+            item.backgroundColor = .thirdColor
+            item.setTitleColor(.black, for: .normal)
+        }
         
         switch sender.tag {
-        case 1: firstAnswerButton.backgroundColor = .thirdColor
-        case 2: secondAnswerButton.backgroundColor = .thirdColor
-        case 3: thirdAnswerButton.backgroundColor = .thirdColor
-        case 4: fourthAnswerButton.backgroundColor = .thirdColor
-        case 5: fifthAnswerButton.backgroundColor = .thirdColor
+        case 1:
+            firstAnswerButton.backgroundColor = .primaryColor
+            firstAnswerButton.setTitleColor(.white, for: .normal)
+        case 2:
+            secondAnswerButton.backgroundColor = .primaryColor
+            secondAnswerButton.setTitleColor(.white, for: .normal)
+        case 3:
+            thirdAnswerButton.backgroundColor = .primaryColor
+            thirdAnswerButton.setTitleColor(.white, for: .normal)
+        case 4:
+            fourthAnswerButton.backgroundColor = .primaryColor
+            fourthAnswerButton.setTitleColor(.white, for: .normal)
+        case 5:
+            fifthAnswerButton.backgroundColor = .primaryColor
+            fifthAnswerButton.setTitleColor(.white, for: .normal)
         default:
             break
         }
