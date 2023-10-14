@@ -7,7 +7,7 @@ class JoinupView: UIView {
     
     lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "아이디", textColor: .white, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        label.customLabel(text: "아이디", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
         return label
     }()
 
@@ -19,7 +19,7 @@ class JoinupView: UIView {
     
     lazy var emailAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영소문자와 숫자를 조합하여 6~12글자 이내로 작성하세요", textColor: .black, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "영소문자와 숫자를 조합하여 6~12글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -31,7 +31,7 @@ class JoinupView: UIView {
     
     lazy var passwordLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "비밀번호", textColor: .white, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        label.customLabel(text: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -45,7 +45,7 @@ class JoinupView: UIView {
     
     lazy var passwordAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .black, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -57,7 +57,7 @@ class JoinupView: UIView {
 
     lazy var confirmPasswordLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "비밀번호 재확인", textColor: .white, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        label.customLabel(text: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -71,7 +71,7 @@ class JoinupView: UIView {
     
     lazy var confirmPasswordAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .black, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
         return label
     }()
     
@@ -86,7 +86,7 @@ class JoinupView: UIView {
     
     lazy var joinInButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "회 원 가 입", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .white)
+        button.customButton(text: "회 원 가 입", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
         return button
     }()
     
@@ -116,7 +116,7 @@ class JoinupView: UIView {
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
         emailStackView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(10)
+            make.top.equalTo(safeArea.snp.top).offset(70)
             make.leading.equalTo(safeArea.snp.leading).offset(10)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
         }

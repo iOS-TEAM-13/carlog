@@ -24,13 +24,15 @@ final class LoginView: UIView {
         button.widthAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
         button.heightAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
         button.layer.cornerRadius = 5
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.0
         button.backgroundColor = .white
         return button
     }()
     
     lazy var loginStatusLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "로그인 상태 유지", textColor: .white, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        label.customLabel(text: "로그인 상태 유지", textColor: .black, font: UIFont(name: "Jua", size: 17) ?? UIFont(), alignment: .center)
         return label
     }()
     
@@ -42,13 +44,13 @@ final class LoginView: UIView {
     
     lazy var loginButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "로 그 인", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .white)
+        button.customButton(text: "로 그 인", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
         return button
     }()
     
     lazy var joinupButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "회원가입", font: Constants.fontJua16 ?? UIFont(), titleColor: .white, backgroundColor: .clear)
+        button.customButton(text: "회원가입", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
         return button
     }()
     
@@ -59,7 +61,7 @@ final class LoginView: UIView {
     
     lazy var findIdPassword: UIButton = {
         let button = UIButton()
-        button.customButton(text: "아이디 · 비밀번호 찾기", font: Constants.fontJua16 ?? UIFont(), titleColor: .white, backgroundColor: .clear)
+        button.customButton(text: "아이디 · 비밀번호 찾기", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
         return button
     }()
     
@@ -73,13 +75,13 @@ final class LoginView: UIView {
         let divider = UIView()
         divider.widthAnchor.constraint(equalToConstant: 100).isActive = true
         divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        divider.backgroundColor = .white
+        divider.backgroundColor = .black
         return divider
     }()
     
     lazy var socialLoginDesignLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "SNS 계정으로 로그인", textColor: .white, font: Constants.fontJua16 ?? UIFont(), alignment: .center)
+        label.customLabel(text: "SNS 계정으로 로그인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .center)
         return label
     }()
     
@@ -87,7 +89,7 @@ final class LoginView: UIView {
         let divider = UIView()
         divider.widthAnchor.constraint(equalToConstant: 100).isActive = true
         divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        divider.backgroundColor = .white
+        divider.backgroundColor = .black
         return divider
     }()
     

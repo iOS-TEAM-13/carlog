@@ -14,7 +14,7 @@ class JoinupPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .primaryColor
+        view.backgroundColor = .white
         
         oilModelView.oilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
         oilModelView.oilCollectionView.dataSource = self
