@@ -90,9 +90,10 @@ class MyCarTableViewCell: UITableViewCell {
         }
     }
     
-    func bind(text: String, period: String) {
+    func bind(text: String, period: String, icon: UIImage) {
         tableViewTitle.text = text
         tableViewPeriod.text = period
+        tableViewImage.image = icon
     }
 
 }

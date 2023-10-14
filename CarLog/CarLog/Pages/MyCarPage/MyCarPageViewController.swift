@@ -8,7 +8,7 @@ class MyCarPageViewController: UIViewController {
     private let myCarTableView = UITableView()
     
     private let dummy = CarInfo(engineOil: "엔진 오일", missionOil: "미션 오일", brakeOil: "브레이크 오일", brakePad: "브레이크 패드", tire: "타이어", tireRotation: "로테이션", fuelFilter: "연료 필터", wiper: "와이퍼", airconFilter: "에어컨 필터", insurance: "보험")
-    
+    private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tire"), UIImage(named: "tireRotation"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
     //MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +44,11 @@ extension MyCarPageViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyCarTableViewCell.identifier, for: indexPath) as? MyCarTableViewCell else { return UITableViewCell() }
         let mirror = Mirror(reflecting: dummy)
         let temp = mirror.children.compactMap{$0.value as? String}[indexPath.row]
-        cell.bind(text: temp, period: "기간1")
-//        cell.layer.cornerRadius = 20
+        if let icon = menuIcon[indexPath.row] {
+            cell.bind(text: temp, period: "기간1", icon: icon)
+    //
+        }
+        cell.layer.cornerRadius = 20
 //        cell.backgroundColor = .thirdColor
         cell.accessoryType = .disclosureIndicator
         return cell
