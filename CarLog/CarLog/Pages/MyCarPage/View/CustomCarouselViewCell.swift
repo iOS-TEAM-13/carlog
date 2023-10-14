@@ -11,7 +11,7 @@ import UIKit
 class CustomCarouselViewCell: UICollectionViewCell {
     private lazy var customView: UIView = {
         let view = UIView()
-        view.backgroundColor = .thirdColor
+        view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         return view
