@@ -7,7 +7,7 @@ class MyCarPageViewController: UIViewController {
     //MARK: Properties
     private let myCarTableView = UITableView()
     
-    private let dummy = CarInfo(engineOil: "엔진 오일", missionOil: "미션 오일", brakeOil: "브레이크 오일", brakePad: "브레이크 패드", tire: "타이어", tireRotation: "로테이션", fuelFilter: "연료 필터", wiper: "와이퍼", airconFilter: "에어컨 필터")
+    private let dummy = CarInfo(engineOil: "엔진 오일", missionOil: "미션 오일", brakeOil: "브레이크 오일", brakePad: "브레이크 패드", tire: "타이어", tireRotation: "로테이션", fuelFilter: "연료 필터", wiper: "와이퍼", airconFilter: "에어컨 필터", insurance: "보험")
     
     //MARK: LifeCycle
     override func viewDidLoad() {
@@ -37,7 +37,7 @@ class MyCarPageViewController: UIViewController {
 
 extension MyCarPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,12 +45,23 @@ extension MyCarPageViewController: UITableViewDelegate, UITableViewDataSource {
         let mirror = Mirror(reflecting: dummy)
         let temp = mirror.children.compactMap{$0.value as? String}[indexPath.row]
         cell.bind(text: temp, period: "기간1")
+//        cell.layer.cornerRadius = 20
+//        cell.backgroundColor = .thirdColor
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MyCarCheckViewController()
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+           return 100
+       }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: cell.bounds.size.width)
     }
 }
 

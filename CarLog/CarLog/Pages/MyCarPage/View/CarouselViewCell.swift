@@ -167,11 +167,11 @@ class CarouselViewCell: UICollectionViewCell {
         fifthAnswerButton.backgroundColor = .primaryColor
         
         switch sender.tag {
-        case 1: firstAnswerButton.backgroundColor = .secondColor
-        case 2: secondAnswerButton.backgroundColor = .secondColor
-        case 3: thirdAnswerButton.backgroundColor = .secondColor
-        case 4: fourthAnswerButton.backgroundColor = .secondColor
-        case 5: fifthAnswerButton.backgroundColor = .secondColor
+        case 1: firstAnswerButton.backgroundColor = .thirdColor
+        case 2: secondAnswerButton.backgroundColor = .thirdColor
+        case 3: thirdAnswerButton.backgroundColor = .thirdColor
+        case 4: fourthAnswerButton.backgroundColor = .thirdColor
+        case 5: fifthAnswerButton.backgroundColor = .thirdColor
         default:
             break
         }

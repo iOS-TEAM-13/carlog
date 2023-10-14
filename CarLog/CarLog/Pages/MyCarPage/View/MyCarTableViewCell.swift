@@ -26,7 +26,7 @@ class MyCarTableViewCell: UITableViewCell {
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
         /// progress 배경 색상
-        view.trackTintColor = .secondColor
+        view.trackTintColor = .thirdColor
         /// progress 진행 색상
         view.progressTintColor = .primaryColor
         view.progress = 0.1
@@ -48,34 +48,45 @@ class MyCarTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+    }
+    
     private func setupUI() {
         contentView.addSubview(tableViewImage)
         contentView.addSubview(tableViewTitle)
         contentView.addSubview(progressView)
         contentView.addSubview(tableViewPeriod)
         
+        contentView.layer.cornerRadius = 20
+        contentView.backgroundColor = .thirdColor
+        
         tableViewImage.snp.makeConstraints {
-            $0.top.leading.bottom.equalTo(contentView)
-            $0.width.height.equalTo(100)
+            $0.leading.equalTo(contentView).inset(Constants.horizontalMargin)
+            $0.width.height.equalTo(60)
+            $0.centerY.equalTo(contentView)
         }
         
         tableViewTitle.snp.makeConstraints {
             $0.top.trailing.equalTo(contentView).inset(Constants.verticalMargin)
             $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
-            $0.height.equalTo(30)
+//            $0.height.equalTo(20)
         }
         
         progressView.snp.makeConstraints {
             $0.top.equalTo(tableViewTitle.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
-            $0.height.equalTo(10)
+//            $0.height.equalTo(10)
+            $0.centerY.equalTo(contentView)
         }
         
         tableViewPeriod.snp.makeConstraints {
             $0.top.equalTo(progressView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.bottom.trailing.equalTo(contentView).inset(Constants.verticalMargin)
-            $0.height.equalTo(20)
+//            $0.height.equalTo(20)
         }
     }
     
