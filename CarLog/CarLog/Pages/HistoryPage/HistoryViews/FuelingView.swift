@@ -50,11 +50,6 @@ extension FuelingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FuelingCell.identifier, for: indexPath) as! FuelingCell
         
-        print(dummy[indexPath.row].timeStamp)
-        print(dummy[indexPath.row].price)
-        print(dummy[indexPath.row].totalPrice)
-        print(dummy[indexPath.row].count)
-        
         cell.writeDateLabel.text = dummy[indexPath.row].timeStamp
         cell.priceLabel.text = String("\(dummy[indexPath.row].price)원")
         cell.totalPriceLabel.text = String("\(dummy[indexPath.row].totalPrice)원")
