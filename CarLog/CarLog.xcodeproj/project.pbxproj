@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
+		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
 		B85A0F292AD78E6A009E0A00 /* DrivingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */; };
 		B85A0F2B2AD78E7B009E0A00 /* FuelingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */; };
@@ -19,6 +19,7 @@
 		B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */; };
 		B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */; };
 		B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */; };
+		FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
 		FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */; };
@@ -72,8 +73,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
+		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		B85A0F282AD78E6A009E0A00 /* DrivingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingCell.swift; sourceTree = "<group>"; };
 		B85A0F2A2AD78E7B009E0A00 /* FuelingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingCell.swift; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 		B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingViewController.swift; sourceTree = "<group>"; };
 		B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDrivingView.swift; sourceTree = "<group>"; };
 		B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingView.swift; sourceTree = "<group>"; };
+		FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateComponents.swift; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */,
 				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
 				FBBDA7232AD834570031C17B /* OilModelCollectionViewCell.swift */,
+				FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -456,7 +459,6 @@
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */,
-				FF0287E52AD78A83006657C1 /* CheckingView.swift in Sources */,
 				B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
@@ -474,6 +476,7 @@
 				FF0287E72AD7C91D006657C1 /* CarouselView.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
+				FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */,
 				FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,

@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 
 class OilModelView: UIView {
-    
+    let duplicateComponents = DuplicateComponents()
     let categoryCollectionHorizontal = UICollectionViewFlowLayout()
 
     lazy var oilCollectionView: UICollectionView = {
@@ -16,27 +16,10 @@ class OilModelView: UIView {
         return collection
     }()
     
-    lazy var popButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "이 전", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .white)
-        button.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        return button
-    }()
-    
-    lazy var nextButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .white)
-        button.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        return button
-    }()
-    
+    lazy var popButton: UIButton = duplicateComponents.popButton()
+    lazy var nextButton: UIButton = duplicateComponents.nextButton()
     lazy var spaceView = UIView()
-    
-    lazy var buttonStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [popButton, spaceView, nextButton])
-        stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .fill)
-        return stackView
-    }()
+    lazy var buttonStackView: UIStackView = duplicateComponents.buttonStackView(list: [popButton, spaceView, nextButton])
 
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
@@ -46,7 +29,7 @@ class OilModelView: UIView {
         
         oilCollectionView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeArea.snp.top).offset(200)
+            make.top.equalTo(safeArea.snp.top).offset(155)
             make.width.equalTo(300)
             make.height.equalTo(250)
         }

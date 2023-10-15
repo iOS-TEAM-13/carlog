@@ -3,7 +3,7 @@ import UIKit
 final class LoginView: UIView {
     lazy var logo: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .bottom
         return imageView
     }()
     lazy var emailTextField = loginTextField(placeholder: "아이디 입력")
@@ -45,7 +45,7 @@ final class LoginView: UIView {
 
         logo.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(10)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.leading.equalTo(safeArea.snp.leading).offset(85)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 

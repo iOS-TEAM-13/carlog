@@ -86,7 +86,7 @@ class JoinupView: UIView {
     
     lazy var joinInButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "회 원 가 입", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.customButton(text: "다음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
         return button
     }()
     
