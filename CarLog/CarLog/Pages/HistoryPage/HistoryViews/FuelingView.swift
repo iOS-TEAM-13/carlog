@@ -40,6 +40,7 @@ class FuelingView: UIView {
             make.edges.equalToSuperview()
         }
     }
+    
 }
 
 extension FuelingView: UITableViewDelegate, UITableViewDataSource {

@@ -62,15 +62,15 @@ class HistoryPageViewController: UIViewController {
         
         drivingTableView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin  * 2)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin  * 2)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         fuelingTableView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin * 2)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         

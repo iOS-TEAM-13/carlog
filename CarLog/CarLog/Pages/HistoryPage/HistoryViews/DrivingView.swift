@@ -40,6 +40,7 @@ class DrivingView: UIView {
             make.edges.equalToSuperview()
         }
     }
+
 }
 
 extension DrivingView: UITableViewDelegate, UITableViewDataSource {
@@ -49,6 +50,9 @@ extension DrivingView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DrivingCell.identifier, for: indexPath) as! DrivingCell
+        
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 5
         
         cell.writeDateLabel.text = dummy[indexPath.row].timeStamp
         cell.driveDistenceLabel.text = String("\(dummy[indexPath.row].driveDistance)km")
@@ -60,6 +64,5 @@ extension DrivingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
-    
     
 }
