@@ -4,19 +4,9 @@ import SnapKit
 
 class NickNameView: UIView {
     let duplicateComponents = DuplicateComponents()
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "차량 별명(닉네임)을\n입력해주세요", textColor: .black, font: Constants.fontJua36 ?? UIFont(), alignment: .left)
-        label.numberOfLines = 2
-        return label
-    }()
     
-    lazy var carNickNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "차 별명 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
-        return textField
-    }()
-    
+    lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량 별명(닉네임)을\n입력해주세요")
+    lazy var carNickNameTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차 별명 입력")
     lazy var popButton: UIButton = duplicateComponents.popButton()
     lazy var nextButton: UIButton = duplicateComponents.nextButton()
     lazy var spaceView = UIView()

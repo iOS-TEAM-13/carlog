@@ -15,7 +15,6 @@ class OilModelView: UIView {
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
-    
     lazy var popButton: UIButton = duplicateComponents.popButton()
     lazy var nextButton: UIButton = duplicateComponents.nextButton()
     lazy var spaceView = UIView()
