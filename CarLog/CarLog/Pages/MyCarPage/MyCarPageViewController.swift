@@ -50,15 +50,14 @@ extension MyCarPageViewController: UITableViewDelegate, UITableViewDataSource {
         let temp = mirror.children.compactMap{$0.value as? String}[indexPath.row]
         if let icon = menuIcon[indexPath.row] {
             cell.bind(text: temp, period: "기간1", icon: icon)
-    //
         }
         cell.layer.cornerRadius = 20
 //        cell.backgroundColor = .thirdColor
-        cell.accessoryType = .disclosureIndicator
+//        cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
         return cell
     }
-    
+//    pageview
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MyCarCheckViewController()
         navigationController?.pushViewController(vc, animated: true)
