@@ -18,6 +18,8 @@
 		B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */; };
 		B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */; };
 		B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */; };
+		FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */; };
+		FB6311C62ADCEBB80038929A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C52ADCEBB80038929A /* String+.swift */; };
 		B85A0F452ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
@@ -83,6 +85,8 @@
 		B85A0F392AD86A6E009E0A00 /* AddFuelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingViewController.swift; sourceTree = "<group>"; };
 		B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDrivingView.swift; sourceTree = "<group>"; };
 		B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingView.swift; sourceTree = "<group>"; };
+		FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateComponents.swift; sourceTree = "<group>"; };
+		FB6311C52ADCEBB80038929A /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingCollectionViewCell.swift; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 				FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */,
 				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
 				FBBDA7232AD834570031C17B /* OilModelCollectionViewCell.swift */,
+				FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -333,6 +338,7 @@
 				FBE051852AD6671200F39E7F /* UIButton+.swift */,
 				FBE051872AD6672F00F39E7F /* DateFormatter.swift */,
 				FBE051892AD6678E00F39E7F /* UITextField+.swift */,
+				FB6311C52ADCEBB80038929A /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -441,6 +447,7 @@
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarInfo.swift in Sources */,
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
+				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
@@ -472,6 +479,7 @@
 				FF0287E72AD7C91D006657C1 /* CarouselView.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
+				FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */,
 				FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,

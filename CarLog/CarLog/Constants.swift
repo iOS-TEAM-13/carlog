@@ -3,6 +3,7 @@ import UIKit
 struct Constants {
     static let horizontalMargin: CGFloat = 16.0
     static let verticalMargin: CGFloat = 12.0
+    static let cornerRadius: CGFloat = 5.0
 
     static let fontJua10 = UIFont(name: "Jua", size: 10)
     static let fontJua14 = UIFont(name: "Jua", size: 14)
