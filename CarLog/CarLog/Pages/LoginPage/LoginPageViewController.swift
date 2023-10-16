@@ -20,7 +20,6 @@ class LoginPageViewController: UIViewController {
         }
 
         // MARK: - addTarget
-
         loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)

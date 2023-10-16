@@ -32,6 +32,7 @@ class JoinupPageViewController: UIViewController {
         }
 
         joinupView.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
+        joinupView.popButton.addTarget(self, action: #selector(joininPopButtonTapped), for: .touchUpInside)
         carNumberView.popButton.addTarget(self, action: #selector(carNumberViewPopButtonTapped), for: .touchUpInside)
         carNumberView.nextButton.addTarget(self, action: #selector(carNumberViewPopNextButtonTapped), for: .touchUpInside)
         carModelView.popButton.addTarget(self, action: #selector(carModelViewPopButtonTapped), for: .touchUpInside)
@@ -53,6 +54,10 @@ class JoinupPageViewController: UIViewController {
         }
     } //회원가입 페이지 버튼
 
+    @objc func joininPopButtonTapped() {
+        self.dismiss(animated: true)
+    }
+    
     @objc func carNumberViewPopButtonTapped() {
         joinupView.isHidden = false
         carNumberView.isHidden = true

@@ -7,8 +7,8 @@ class CarModelView: UIView {
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량종류를\n입력해주세요")
     lazy var carModelTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차종 입력")
-    lazy var popButton: UIButton = duplicateComponents.popButton()
-    lazy var nextButton: UIButton = duplicateComponents.nextButton()
+    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
+    lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
     lazy var spaceView = UIView()
     lazy var buttonStackView: UIStackView = duplicateComponents.buttonStackView(list: [popButton, spaceView, nextButton])
     
@@ -21,21 +21,21 @@ class CarModelView: UIView {
         
         label.snp.makeConstraints { make in
             make.top.equalTo(carModelTextField.snp.top).offset(-100)
-            make.leading.equalTo(safeArea.snp.leading).offset(20)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
         }
 
         carModelTextField.snp.makeConstraints { make in
             make.centerX.equalTo(safeArea.snp.centerX)
             make.centerY.equalTo(safeArea.snp.centerY).offset(-40)
-            make.leading.equalTo(safeArea.snp.leading).offset(20)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-20)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(carModelTextField.snp.bottom).offset(50)
             make.centerX.equalTo(safeArea.snp.centerX)
-            make.leading.equalTo(safeArea.snp.leading).offset(20)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-20)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)
         }
     }

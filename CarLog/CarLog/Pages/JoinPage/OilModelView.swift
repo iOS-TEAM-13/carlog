@@ -15,8 +15,8 @@ class OilModelView: UIView {
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
-    lazy var popButton: UIButton = duplicateComponents.popButton()
-    lazy var nextButton: UIButton = duplicateComponents.nextButton()
+    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
+    lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
     lazy var spaceView = UIView()
     lazy var buttonStackView: UIStackView = duplicateComponents.buttonStackView(list: [popButton, spaceView, nextButton])
 
@@ -35,8 +35,8 @@ class OilModelView: UIView {
 
         buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(oilCollectionView.snp.bottom).offset(50)
-            make.leading.equalTo(safeArea.snp.leading).offset(20)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-20)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)
         }
     }

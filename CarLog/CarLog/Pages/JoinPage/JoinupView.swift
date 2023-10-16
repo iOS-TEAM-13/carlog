@@ -3,6 +3,7 @@ import UIKit
 import SnapKit
 
 class JoinupView: UIView {
+    let duplicateComponents = DuplicateComponents()
     var isSecure = false
     
     lazy var emailLabel: UILabel = {
@@ -11,11 +12,7 @@ class JoinupView: UIView {
         return label
     }()
 
-    lazy var emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "아이디 입력", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
-        return textField
-    }()
+    lazy var emailTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "아이디")
     
     lazy var emailAlertLabel: UILabel = {
         let label = UILabel()
@@ -35,13 +32,7 @@ class JoinupView: UIView {
         return label
     }()
     
-    lazy var passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "비밀번호 입력", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
-        textField.rightView = showPasswordButton
-        textField.rightViewMode = .always
-        return textField
-    }()
+    lazy var passwordTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "비밀번호")
     
     lazy var passwordAlertLabel: UILabel = {
         let label = UILabel()
@@ -83,12 +74,8 @@ class JoinupView: UIView {
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-    
-    lazy var joinInButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "다음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
-        return button
-    }()
+    lazy var joinInButton: UIButton = duplicateComponents.joininButton(text: "다 음")
+    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "취 소")
     
     //showPasswordButton, showConfirmPasswordButton 공통부분
     private func makeToggleButton() -> UIButton {
@@ -111,32 +98,40 @@ class JoinupView: UIView {
         addSubview(passwordStackView)
         addSubview(confirmPasswordStackView)
         addSubview(joinInButton)
+        addSubview(popButton)
         
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
         emailStackView.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(70)
-            make.leading.equalTo(safeArea.snp.leading).offset(10)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         passwordStackView.snp.makeConstraints { make in
             make.top.equalTo(emailAlertLabel.snp.bottom).offset(15)
-            make.leading.equalTo(safeArea.snp.leading).offset(10)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         confirmPasswordStackView.snp.makeConstraints { make in
             make.top.equalTo(passwordAlertLabel.snp.bottom).offset(15)
-            make.leading.equalTo(safeArea.snp.leading).offset(10)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         joinInButton.snp.makeConstraints { make in
             make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(70)
-            make.leading.equalTo(safeArea.snp.leading).offset(10)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.height.equalTo(50)
+        }
+        
+        popButton.snp.makeConstraints { make in
+            make.top.equalTo(joinInButton.snp.bottom).offset(10)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)
         }
     }
