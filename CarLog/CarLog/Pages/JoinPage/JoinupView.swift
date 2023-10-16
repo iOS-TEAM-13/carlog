@@ -32,7 +32,13 @@ class JoinupView: UIView {
         return label
     }()
     
-    lazy var passwordTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "비밀번호")
+    lazy var passwordTextField: UITextField = {
+        let textField = UITextField()
+        textField.loginCustomTextField(placeholder: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.rightView = showPasswordButton
+        textField.rightViewMode = .always
+        return textField
+    }()
     
     lazy var passwordAlertLabel: UILabel = {
         let label = UILabel()
@@ -54,7 +60,7 @@ class JoinupView: UIView {
     
     lazy var confirmPasswordTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "비밀번호 재확인", textColor: .lightGray, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         textField.rightView = showConfirmPasswordButton
         textField.rightViewMode = .always
         return textField

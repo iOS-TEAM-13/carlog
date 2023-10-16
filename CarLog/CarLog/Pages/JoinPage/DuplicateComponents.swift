@@ -7,13 +7,13 @@ class DuplicateComponents {
         label.numberOfLines = 2
         return label
     }
-    
+
     func joinupTextField(placeholder: String) -> UITextField {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: placeholder, textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }
-    
+
     func joininButton(text: String) -> UIButton {
         let button = UIButton()
         button.customButton(text: text, font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
@@ -27,4 +27,3 @@ class DuplicateComponents {
         return stackView
     }
 }
-
