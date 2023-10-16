@@ -39,6 +39,12 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private let clickedIcon: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(systemName: "arrowtriangle.right.fill")
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -50,6 +56,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         contentView.addSubview(collectionViewImage)
+        contentView.addSubview(clickedIcon)
         contentView.addSubview(collectionViewTitle)
         contentView.addSubview(progressView)
         contentView.addSubview(collectionViewPeriod)
@@ -72,21 +79,29 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         collectionViewTitle.snp.makeConstraints {
             $0.top.trailing.equalTo(contentView).inset(Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
-//            $0.height.equalTo(20)
+            $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
         }
         
         progressView.snp.makeConstraints {
             $0.top.equalTo(collectionViewTitle.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
-//            $0.height.equalTo(10)
+            $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
             $0.centerY.equalTo(contentView)
         }
         
         collectionViewPeriod.snp.makeConstraints {
             $0.top.equalTo(progressView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
-            $0.bottom.trailing.equalTo(contentView).inset(Constants.verticalMargin)
+            $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
+            $0.bottom.equalTo(contentView).inset(Constants.verticalMargin)
 //            $0.height.equalTo(20)
+        }
+        
+        clickedIcon.snp.makeConstraints {
+            $0.trailing.equalTo(contentView).inset(Constants.horizontalMargin)
+            $0.centerY.equalTo(contentView)
+            $0.width.equalTo(15)
+            $0.height.equalTo(20)
         }
     }
     
