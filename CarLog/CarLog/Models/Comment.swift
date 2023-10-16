@@ -12,13 +12,4 @@ struct Comment: Codable {
     let content: String
     let userId: String
     let userName: String
-    
-    func toDictionary() -> [String: Any] {
-           return [
-               "id": id,
-               "content": content,
-               "userId": userId,
-               "userName": userName
-           ]
-       }
 }

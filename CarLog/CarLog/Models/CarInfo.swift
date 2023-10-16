@@ -18,15 +18,3 @@ struct CarInfo {
     let wiper: String
     let airconFilter: String
 }
-
-//enum CarInfo: CaseIterable {
-//    case engineOil
-//    case missionOil
-//    case brakeOil
-//    case brakePad
-//    case tire
-//    case tireRotation
-//    case fuelFilter
-//    case wiper
-//    case airconFilter
-//}

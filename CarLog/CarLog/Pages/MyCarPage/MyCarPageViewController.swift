@@ -17,12 +17,21 @@ class MyCarPageViewController: UIViewController {
         registerTableview()
         setupUI()
         
-        FirestoreService.getComments() { result in
-            print("##########\(result)")
-        }
         
-//        FirestoreService.addPost(post: Post(id: UUID(), title: "제목", content: "내용", image: ["이미지"], comment: [Comment(id: UUID(), content: "댓글", userId: UUID(), userName: "이름")])) { error in
-//            print(error)
+//        FirestoreService.firestoreService.saveComment(comment: Comment(id: "id5", content: "content5", userId: "userId5", userName: "userName")) { error in
+//            print("###### comments: \(error)")
+//        }
+//
+//        FirestoreService.firestoreService.loadComments() { result in
+//            print("################# comments: \(result)")
+//        }
+//
+//        FirestoreService.firestoreService.savePosts(post: Post(id: "id7", title: "title7", content: "content7", image: ["image1", "image2"], comment: [Comment(id: "id8", content: "content8", userId: "userId8", userName: "userName8"), Comment(id: "id9", content: "content9", userId: "userId9", userName: "userName9")])) { error in
+//            print("###### posts:  \(error)")
+//        }
+//
+//        FirestoreService.firestoreService.loadPosts() { result in
+//            print("########## posts: \(result)")
 //        }
     }
     

@@ -13,12 +13,4 @@ struct Post: Codable {
     let content: String
     let image: [String?]
     let comment: [Comment]
-
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case title
-//        case content
-//        case image
-//        case comment
-//    }
 }
