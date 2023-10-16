@@ -10,166 +10,237 @@ import UIKit
 
 class AddFuelingView: UIView {
     
-    lazy var oliTypeLabel: UILabel = {
-        let oliTypeLabel = UILabel()
-        oliTypeLabel.customLabel(text: "휘발유 or 경유", textColor: .white, font: Constants.fontJua36!, alignment: .center)
-        oliTypeLabel.backgroundColor = UIColor.primaryColor
-        oliTypeLabel.layer.cornerRadius = 10
-        oliTypeLabel.clipsToBounds = true
-        return oliTypeLabel
+    lazy var addFuelingPageLabel: UILabel = {
+        let addFuelingPageLabel = UILabel()
+        addFuelingPageLabel.customLabel(text: "휘발유 or 경유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
+        return addFuelingPageLabel
     }()
     
     lazy var addPhotoButton: UIButton = {
         let addPhotoButton = UIButton()
         var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 60, weight: .regular))
+        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 50, weight: .regular))
         addPhotoButton.configuration = config
+        addPhotoButton.backgroundColor = .primaryColor
         addPhotoButton.layer.cornerRadius = 10
         return addPhotoButton
     }()
     
     lazy var inputFuelingStackView: UIStackView = {
         let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, priceStackView, countStackView, totalPriceStackView])
-        inputFuelingStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
+        inputFuelingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
         return inputFuelingStackView
     }()
     
     lazy var totalDistanceStackView: UIStackView = {
-        let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField, kmLabel])
+        let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
         totalDistanceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        totalDistanceStackView.distribution = .fillEqually
+        totalDistanceStackView.distribution = .fill
         return totalDistanceStackView
     }()
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적 주행거리", textColor: .white, font: Constants.fontJua20!, alignment: .center)
-        totalDistanceLabel.backgroundColor = UIColor.primaryColor
-        totalDistanceLabel.layer.cornerRadius = 10
-        totalDistanceLabel.clipsToBounds = true
+        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        totalDistanceLabel.numberOfLines = 2
         return totalDistanceLabel
     }()
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.placeholder = "ex) 10000"
-        totalDistanceTextField.textAlignment = .right
+        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.layer.borderWidth = 1
+        totalDistanceTextField.layer.cornerRadius = 4
         totalDistanceTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextPriceTextField))
+        nextTextField.setItems([flexibleSpace, nextButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        totalDistanceTextField.inputAccessoryView = nextTextField
+        //
         return totalDistanceTextField
     }()
     
-    lazy var kmLabel: UILabel = {
-        let wonLabel = UILabel()
-        wonLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20!, alignment: .center)
-        return wonLabel
-    }()
+    //
+    @objc func nextPriceTextField() {
+        self.priceTextField.becomeFirstResponder()
+    }
+    //
     
     lazy var priceStackView: UIStackView = {
-        let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField, wonLabel])
+        let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField])
         priceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        priceStackView.distribution = .fillEqually
+        priceStackView.distribution = .fill
         return priceStackView
     }()
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .white, font: Constants.fontJua20!, alignment: .center)
-        priceLabel.backgroundColor = UIColor.primaryColor
-        priceLabel.layer.cornerRadius = 10
-        priceLabel.clipsToBounds = true
+        priceLabel.customLabel(text: "단가", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return priceLabel
     }()
     
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
-        priceTextField.placeholder = "ex) 1766"
-        priceTextField.textAlignment = .right
+        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: priceTextField.frame.size.height)))
+        priceTextField.layer.borderWidth = 1
+        priceTextField.layer.cornerRadius = 4
         priceTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalDistanceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextCountTextField))
+        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        priceTextField.inputAccessoryView = nextTextField
+        //
         return priceTextField
     }()
     
-    lazy var wonLabel: UILabel = {
-        let wonLabel = UILabel()
-        wonLabel.customLabel(text: "원", textColor: .black, font: Constants.fontJua20!, alignment: .center)
-        return wonLabel
-    }()
+    //
+    @objc func beforeTotalDistanceTextField() {
+        self.totalDistanceTextField.becomeFirstResponder()
+    }
+    
+    @objc func nextCountTextField() {
+        self.countTextField.becomeFirstResponder()
+    }
+    //
     
     lazy var countStackView: UIStackView = {
-        let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField, lLabel])
+        let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField])
         countStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        countStackView.distribution = .fillEqually
+        countStackView.distribution = .fill
         return countStackView
     }()
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .white, font: Constants.fontJua20!, alignment: .center)
-        countLabel.backgroundColor = UIColor.primaryColor
-        countLabel.layer.cornerRadius = 10
-        countLabel.clipsToBounds = true
+        countLabel.customLabel(text: "수량", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return countLabel
     }()
     
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
-        countTextField.placeholder = "ex) 55.12"
-        countTextField.textAlignment = .right
+        countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
+        countTextField.layer.borderWidth = 1
+        countTextField.layer.cornerRadius = 4
         countTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalPriceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextTotalPriceTextField))
+        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        countTextField.inputAccessoryView = nextTextField
+        //
         return countTextField
     }()
     
-    lazy var lLabel: UILabel = {
-        let wonLabel = UILabel()
-        wonLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20!, alignment: .center)
-        return wonLabel
-    }()
+    //
+    @objc func beforeTotalPriceTextField() {
+        self.priceTextField.becomeFirstResponder()
+    }
+    
+    @objc func nextTotalPriceTextField() {
+        self.totalPriceTextField.becomeFirstResponder()
+    }
+    //
     
     lazy var totalPriceStackView: UIStackView = {
-        let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField, wonLabel2])
+        let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField])
         totalPriceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        totalPriceStackView.distribution = .fillEqually
+        totalPriceStackView.distribution = .fill
         return totalPriceStackView
     }()
     
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "총액", textColor: .white, font: Constants.fontJua20!, alignment: .center)
-        totalPriceLabel.backgroundColor = UIColor.primaryColor
-        totalPriceLabel.layer.cornerRadius = 10
-        totalPriceLabel.clipsToBounds = true
+        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return totalPriceLabel
     }()
     
     lazy var totalPriceTextField: UITextField = {
         let totalPriceTextField = UITextField()
-        totalPriceTextField.placeholder = "ex) 100000"
-        totalPriceTextField.textAlignment = .right
+        totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
+        totalPriceTextField.layer.borderWidth = 1
+        totalPriceTextField.layer.cornerRadius = 4
         totalPriceTextField.keyboardType = .decimalPad
+        //
+        let nextTextField = UIToolbar()
+        nextTextField.barStyle = UIBarStyle.default
+        nextTextField.isTranslucent = true
+        nextTextField.sizeToFit()
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeCountTextField))
+        nextTextField.setItems([beforeButton], animated: false)
+        nextTextField.isUserInteractionEnabled = true
+        totalPriceTextField.inputAccessoryView = nextTextField
+        //
         return totalPriceTextField
+    }()
+    
+    //
+    @objc func beforeCountTextField() {
+        self.countTextField.becomeFirstResponder()
+    }
+    //
+    
+    //MARK: - 단위 Label
+    lazy var kmLabel: UILabel = {
+        let kmLabel = UILabel()
+        kmLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return kmLabel
+    }()
+    
+    lazy var wonLabel: UILabel = {
+        let wonLabel = UILabel()
+        wonLabel.customLabel(text: "원", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return wonLabel
+    }()
+    
+    lazy var lLabel: UILabel = {
+        let lLabel = UILabel()
+        lLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        return lLabel
     }()
     
     lazy var wonLabel2: UILabel = {
         let wonLabel2 = UILabel()
-        wonLabel2.customLabel(text: "원", textColor: .black, font: Constants.fontJua20!, alignment: .center)
+        wonLabel2.customLabel(text: "원", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
         return wonLabel2
     }()
     
+    //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
-        let buttonStackView = UIStackView(arrangedSubviews: [saveButton, cancelButton])
-        buttonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
+        let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
+        buttonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .fill)
+        buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24!, titleColor: .white, backgroundColor: .primaryColor)
+        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
         saveButton.layer.cornerRadius = 10
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: Constants.fontJua24!, titleColor: .white, backgroundColor: .primaryColor)
+        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
         cancelButton.layer.cornerRadius = 10
         return cancelButton
     }()
@@ -185,32 +256,74 @@ class AddFuelingView: UIView {
     }
     
     private func setupUI() {
-        addSubview(oliTypeLabel)
+        addSubview(addFuelingPageLabel)
         addSubview(addPhotoButton)
         addSubview(inputFuelingStackView)
         addSubview(buttonStackView)
         
-        oliTypeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.verticalMargin)
-            make.height.equalTo(50)
+        totalDistanceStackView.addSubview(kmLabel)
+        priceStackView.addSubview(wonLabel)
+        countStackView.addSubview(lLabel)
+        totalPriceStackView.addSubview(wonLabel2)
+        
+        addFuelingPageLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(oliTypeLabel.snp.bottom).offset(Constants.horizontalMargin * 2)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
+            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+        }
+        
+        totalDistanceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
+        }
+        
+        priceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
+        }
+        
+        countLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
+        }
+        
+        totalPriceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addPhotoButton.snp.trailing)
         }
         
         inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+        }
+        
+        kmLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(totalDistanceStackView).offset(-Constants.horizontalMargin)
+            make.centerY.equalTo(totalDistanceStackView)
+        }
+        
+        wonLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(priceStackView).offset(-Constants.horizontalMargin)
+            make.centerY.equalTo(priceStackView)
+        }
+        
+        lLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(countStackView).offset(-Constants.horizontalMargin)
+            make.centerY.equalTo(countStackView)
+        }
+        
+        wonLabel2.snp.makeConstraints { make in
+            make.trailing.equalTo(totalPriceStackView).offset(-Constants.horizontalMargin)
+            make.centerY.equalTo(totalPriceStackView)
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(inputFuelingStackView.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.top.equalTo(inputFuelingStackView.snp.bottom).offset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.height.equalTo(50)
         }
     }
 
