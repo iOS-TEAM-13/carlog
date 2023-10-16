@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "yellowoil.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "yellowoil@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group 15.png",
+      "filename" : "yellowoil@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
