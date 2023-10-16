@@ -9,9 +9,9 @@ class HistoryPageViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentTintColor = .primaryColor
         
-        let font = UIFont(name: "Jua", size: 18)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font ?? UIFont(), NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font ?? UIFont(), NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: Constants.fontJua20 ?? UIFont(), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: Constants.fontJua20 ?? UIFont(), .foregroundColor: UIColor.white], for: .selected)
+        
         return segmentedControl
     }()
     
