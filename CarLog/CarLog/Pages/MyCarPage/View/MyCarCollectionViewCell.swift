@@ -25,9 +25,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
 
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
-        /// progress 배경 색상
         view.trackTintColor = .thirdColor
-        /// progress 진행 색상
         view.progressTintColor = .primaryColor
         view.progress = 0.1
         return view
@@ -42,6 +40,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     private let clickedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "arrowtriangle.right.fill")
+        view.tintColor = .primaryColor
         return view
     }()
     
@@ -94,7 +93,6 @@ class MyCarCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
             $0.bottom.equalTo(contentView).inset(Constants.verticalMargin)
-//            $0.height.equalTo(20)
         }
         
         clickedIcon.snp.makeConstraints {
