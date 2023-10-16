@@ -6,8 +6,8 @@ final class LoginView: UIView {
         imageView.contentMode = .bottom
         return imageView
     }()
-    lazy var emailTextField = loginTextField(placeholder: "아이디 입력")
-    lazy var passwordTextField = loginTextField(placeholder: "비밀번호 입력")
+    lazy var emailTextField = loginTextField(placeholder: "user@example.com")
+    lazy var passwordTextField = loginTextField(placeholder: "비밀번호")
     lazy var checkboxButton: UIButton = {
         let button = UIButton()
         button.widthAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true

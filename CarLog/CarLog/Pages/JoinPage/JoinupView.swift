@@ -4,7 +4,7 @@ import SnapKit
 
 class JoinupView: UIView {
     let duplicateComponents = DuplicateComponents()
-    var isSecure = false
+    var isSecure = true
     
     lazy var emailLabel: UILabel = {
         let label = UILabel()
@@ -35,6 +35,7 @@ class JoinupView: UIView {
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.isSecureTextEntry = isSecure
         textField.rightView = showPasswordButton
         textField.rightViewMode = .always
         return textField
@@ -61,6 +62,7 @@ class JoinupView: UIView {
     lazy var confirmPasswordTextField: UITextField = {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.isSecureTextEntry = isSecure
         textField.rightView = showConfirmPasswordButton
         textField.rightViewMode = .always
         return textField
@@ -80,8 +82,16 @@ class JoinupView: UIView {
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-    lazy var joinInButton: UIButton = duplicateComponents.joininButton(text: "다 음")
-    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "취 소")
+    lazy var joinInButton: UIButton = {
+        let button = UIButton()
+        button.customButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        return button
+    }()
+    lazy var popButton: UIButton = {
+        let button = UIButton()
+        button.customButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        return button
+    }()
     
     //showPasswordButton, showConfirmPasswordButton 공통부분
     private func makeToggleButton() -> UIButton {
@@ -151,7 +161,7 @@ class JoinupView: UIView {
     }
     
     private func toggleVisibility(button: UIButton, textField: UITextField){
-        let imageName = isSecure ? "invisible" : "eye"
+        let imageName = isSecure ? "eye" : "invisible"
         button.setImage(UIImage(named: imageName), for: .normal)
         isSecure.toggle()
         textField.isSecureTextEntry = isSecure
