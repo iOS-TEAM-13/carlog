@@ -16,6 +16,14 @@ class MyCarPageViewController: UIViewController {
         
         registerTableview()
         setupUI()
+        
+        FirestoreService().getPostData { result in
+            print("##########\(result)")
+        }
+        
+//        FirestoreService.addPost(post: Post(id: UUID(), title: "제목", content: "내용", image: ["이미지"], comment: [Comment(id: UUID(), content: "댓글", userId: UUID(), userName: "이름")])) { error in
+//            print(error)
+//        }
     }
     
     //MARK: Method

@@ -7,10 +7,18 @@
 
 import Foundation
 
-struct Post {
-    let id: UUID
+struct Post: Codable {
+    let id: String
     let title: String
     let content: String
     let image: [String?]
     let comment: [Comment]
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case content
+        case image
+        case comment
+    }
 }

@@ -7,9 +7,18 @@
 
 import Foundation
 
-struct Comment {
+struct Comment: Codable {
     let id: UUID
     let content: String
     let userId: UUID
     let userName: String
+    
+    func toDictionary() -> [String: Any] {
+           return [
+               "id": id,
+               "content": content,
+               "userId": userId,
+               "userName": userName
+           ]
+       }
 }
