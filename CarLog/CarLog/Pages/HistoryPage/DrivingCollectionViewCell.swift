@@ -1,15 +1,16 @@
 //
-//  DrivingCell.swift
+//  DrivingCollectionViewCell.swift
 //  CarLog
 //
-//  Created by 김지훈 on 2023/10/12.
+//  Created by 김지훈 on 2023/10/16.
 //
 
+import SnapKit
 import UIKit
 
-class DrivingCell: UITableViewCell {
+class DrivingCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "DrivingCell"
+    static let identifier = "DrivingCollectionViewCell"
     
     lazy var cellLabelStackView: UIStackView = {
         let cellLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, cellBottomLabelStackView])
@@ -46,25 +47,14 @@ class DrivingCell: UITableViewCell {
         departDistenceLabel.font = Constants.fontJua20 ?? UIFont()
         return departDistenceLabel
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("Not implemented required init?(coder: NSCoder)")
     }
     
     func setupUI() {
@@ -77,5 +67,5 @@ class DrivingCell: UITableViewCell {
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
     }
-
+    
 }

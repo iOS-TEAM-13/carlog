@@ -10,9 +10,9 @@ class HistoryPageViewController: UIViewController {
         return segmentedControl
     }()
     
-    lazy var drivingTableView: DrivingView = {
-        let drivingTableView = DrivingView()
-        return drivingTableView
+    lazy var drivingCollectionView: DrivingView = {
+        let drivingCollectionView = DrivingView()
+        return drivingCollectionView
     }()
     
     lazy var fuelingTableView: FuelingView = {
@@ -23,8 +23,8 @@ class HistoryPageViewController: UIViewController {
     var shouldHideFirstView: Bool? {
         didSet {
             guard let shouldHideFirstView = self.shouldHideFirstView else { return }
-            self.drivingTableView.isHidden = shouldHideFirstView
-            self.fuelingTableView.isHidden = !self.drivingTableView.isHidden
+            self.drivingCollectionView.isHidden = shouldHideFirstView
+            self.fuelingTableView.isHidden = !self.drivingCollectionView.isHidden
         }
     }
     
@@ -49,7 +49,7 @@ class HistoryPageViewController: UIViewController {
     
     func setupUI() {
         view.addSubview(segmentedControl)
-        view.addSubview(drivingTableView)
+        view.addSubview(drivingCollectionView)
         view.addSubview(fuelingTableView)
         view.addSubview(floatingButtonStackView)
         
@@ -60,10 +60,10 @@ class HistoryPageViewController: UIViewController {
             make.height.equalTo(40)
         }
         
-        drivingTableView.snp.makeConstraints { make in
+        drivingCollectionView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin  * 2)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin  * 2)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
