@@ -10,28 +10,42 @@ import UIKit
 
 class PageViewController: UIViewController {
     
-    private var customView: CarouselView?
+    private var carouselView: CarouselView?
+    private var customCarouselView: CustomCarouselView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupUI()
     }
     
-    init(view: CheckingView) {
+    init(view: CheckingView, checkingView: Constants.CheckView) {
         super.init(nibName: nil, bundle: nil)
-        customView = CarouselView(view: view)
+        if checkingView == .normalView {
+            carouselView = CarouselView(view: view)
+            setupCarouselView()
+        } else {
+            customCarouselView = CustomCarouselView(view: view)
+            setupCustomCarouselView()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    private func setupUI() {
-        view.addSubview(customView!)
+    private func setupCarouselView() {
+        view.addSubview(carouselView!)
         
-        customView!.snp.makeConstraints {
+        carouselView!.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func setupCustomCarouselView() {
+        view.addSubview(customCarouselView!)
+        
+        customCarouselView!.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.centerY.equalToSuperview()
         }
     }
     

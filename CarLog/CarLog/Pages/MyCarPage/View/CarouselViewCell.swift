@@ -83,13 +83,8 @@ class CarouselView: UIView {
     
     init(view: CheckingView) {
         super.init(frame: .zero)
-        self.checkTitle.text = view.title
-        self.firstAnswerButton.setTitle(view.firstButton, for: .normal)
-        self.secondAnswerButton.setTitle(view.secondButton, for: .normal)
-        self.thirdAnswerButton.setTitle(view.thirdbutton, for: .normal)
-        self.fourthAnswerButton.setTitle(view.fourthButton, for: .normal)
-        self.fifthAnswerButton.setTitle(view.fifthButton, for: .normal)
         setupUI()
+        configureUI(view: view)
     }
     
     required init?(coder: NSCoder) {
@@ -97,19 +92,12 @@ class CarouselView: UIView {
     }
     
     private func setupUI() {
-        //        contentView.backgroundColor = .thirdColor
-        //        contentView.layer.cornerRadius = 20
         self.addSubview(customView)
         
         customView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
-            //            $0.center.equalToSuperview()
-            //            $0.width.equalTo(300)
-            //            $0.height.equalTo(600)
         }
-        
-        
-        
+
         customView.addSubview(checkTitle)
         customView.addSubview(CheckScrollView)
         CheckScrollView.addSubview(answerStackView)
@@ -137,13 +125,16 @@ class CarouselView: UIView {
         }
     }
     
+    private func configureUI(view: CheckingView) {
+        self.checkTitle.text = view.title
+        self.firstAnswerButton.setTitle(view.firstButton, for: .normal)
+        self.secondAnswerButton.setTitle(view.secondButton, for: .normal)
+        self.thirdAnswerButton.setTitle(view.thirdbutton, for: .normal)
+        self.fourthAnswerButton.setTitle(view.fourthButton, for: .normal)
+        self.fifthAnswerButton.setTitle(view.fifthButton, for: .normal)
+    }
+    
     func bind(checkingView: CheckingView) {
-        //           addSubview(customView)
-        //           customView = view
-        //           view.snp.makeConstraints {
-        //               $0.width.equalTo(300)
-        //               $0.height.equalTo(600)
-        //           }
         
         checkTitle.text = checkingView.title
         firstAnswerButton.setTitle(checkingView.firstButton, for: .normal)
@@ -152,18 +143,6 @@ class CarouselView: UIView {
         fourthAnswerButton.setTitle(checkingView.fourthButton, for: .normal)
         fifthAnswerButton.setTitle(checkingView.fifthButton, for: .normal)
     }
-    
-    //    private func setupTitle(title: String) {
-    //        checkTitle.text = title
-    //    }
-    //
-    //    private func setupButton(firstButton: String, secondButton: String, thirdButton: String, fourthButton: String, fifthbutton: String) {
-    //        firstAnswerButton.setTitle(firstButton, for: .normal)
-    //        secondAnswerButton.setTitle(secondButton, for: .normal)
-    //        thirdAnswerButton.setTitle(thirdButton, for: .normal)
-    //        fourthAnswerButton.setTitle(fourthButton, for: .normal)
-    //        fifthAnswerButton.setTitle(fifthbutton, for: .normal)
-    //    }
     
     @objc func checkButtonTapped(sender: UIButton) {
         let temp = [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton]
@@ -193,45 +172,3 @@ class CarouselView: UIView {
         }
     }
 }
-
-//class CarouselViewCell: UICollectionViewCell {
-//    static let identifier = "CarouselViewCell"
-//    
-//    private lazy var customView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .primaryColor
-//        view.layer.cornerRadius = 20
-//        view.clipsToBounds = true
-//        return view
-//    }()
-//    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        
-//        setupUI()
-//    }
-//    
-//    func bind(view: UIView) {
-//        addSubview(customView)
-//        customView = view
-//        view.snp.makeConstraints {
-//            $0.width.equalTo(300)
-//            $0.height.equalTo(600)
-//        }
-//    }
-//    
-//    private func setupUI() {
-//        contentView.addSubview(customView)
-//        
-//        customView.snp.makeConstraints {
-//            $0.center.equalToSuperview()
-//            $0.width.equalTo(300)
-//            $0.height.equalTo(600)
-//        }
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
-

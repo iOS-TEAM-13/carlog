@@ -30,16 +30,17 @@ class CustomCarouselView: UIView {
     
     static let identifier = "CustomCarouselViewCell"
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(view: CheckingView) {
+        super.init(frame: .zero)
         setupUI()
+        configureUI(view: view)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    private func setupUI() {
         self.addSubview(customView)
         customView.addSubview(checkTitle)
         customView.addSubview(calendarView)
@@ -49,13 +50,17 @@ class CustomCarouselView: UIView {
         }
         
         checkTitle.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)
+            $0.top.leading.trailing.equalTo(customView).inset(Constants.horizontalMargin)
         }
         
         calendarView.snp.makeConstraints {
-            $0.top.equalTo(checkTitle.snp.bottom).inset(Constants.verticalMargin)
+            $0.top.equalTo(checkTitle.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
         }
+    }
+    
+    private func configureUI(view: CheckingView) {
+        self.checkTitle.text = view.title
     }
     
     func bind(title: String) {
