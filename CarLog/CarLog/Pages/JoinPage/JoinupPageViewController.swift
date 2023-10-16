@@ -82,7 +82,6 @@ extension JoinupPageViewController {
                  let password = joinupView.passwordTextField.text,
                  let confirmPassword = joinupView.confirmPasswordTextField.text
            else {
-               showAlert(message: "모든 빈칸을 채워주세요.")
                return
            }
 
@@ -102,17 +101,15 @@ extension JoinupPageViewController {
                // 조건을 만족하지 않을 때 경고 표시
                var alertMessage = ""
                if !isEmailValid {
-                   alertMessage += "유효한 이메일이 아닙니다. "
-               }
-               if !isPasswordValid {
-                   alertMessage += "유효한 비밀번호가 아닙니다. "
-               }
-               if !isConfirmPasswordValid {
-                   alertMessage += "비밀번호와 비밀번호 확인이 다릅니다. "
+                   alertMessage = "올바른 이메일 형식으로 써주세요"
+               } else if !isPasswordValid {
+                   alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
+               } else if !isConfirmPasswordValid {
+                   alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
                }
                showAlert(message: alertMessage)
            }
-    } // 회원가입 페이지 버튼
+    }
 
     func showAlert(message: String) {
         let alert = UIAlertController(title: "경고", message: message, preferredStyle: .alert)
