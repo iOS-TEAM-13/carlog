@@ -10,11 +10,9 @@ import UIKit
 
 class AddDrivingViewController: UIViewController {
     
-    lazy var dtitle: UILabel = {
-        let dtitle = UILabel()
-        dtitle.font = .systemFont(ofSize: 20, weight: .regular)
-        dtitle.text = "주행기록 등록 페이지"
-        return dtitle
+    lazy var addDrivingView: AddDrivingView = {
+        let addDrivingView = AddDrivingView()
+        return addDrivingView
     }()
 
     override func viewDidLoad() {
@@ -22,12 +20,30 @@ class AddDrivingViewController: UIViewController {
 
         self.view.backgroundColor = UIColor.white
         
-        view.addSubview(dtitle)
-        dtitle.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.centerY.equalTo(view.safeAreaLayoutGuide)
+        view.addSubview(addDrivingView)
+        addDrivingView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        addDrivingView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
+        addDrivingView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
+        
     }
     
-
+    @objc func didSaveButton() {
+        print("---> addDrivingView 저장 버튼 눌렀어요")
+        dismiss(animated: true)
+    }
+    
+    @objc func didCancelButton() {
+        print("---> addDrivingView 취소 버튼 눌렀어요")
+        dismiss(animated: true)
+    }
+    
+    
+    
+    
 }

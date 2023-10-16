@@ -6,6 +6,7 @@ struct Constants {
     static let cornerRadius: CGFloat = 5.0
 
     static let fontJua10 = UIFont(name: "Jua", size: 10)
+    static let fontJua14 = UIFont(name: "Jua", size: 14)
     static let fontJua16 = UIFont(name: "Jua", size: 16)
     static let fontJua20 = UIFont(name: "Jua", size: 20)
     static let fontJua24 = UIFont(name: "Jua", size: 24)

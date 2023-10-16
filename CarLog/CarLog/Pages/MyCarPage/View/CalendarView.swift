@@ -15,8 +15,8 @@ class CalendarView: UIView {
         let view = UIStackView(arrangedSubviews: [firstStackView, secondStackView, thirdStackView])
         view.customStackView(spacing: 10, axis: .vertical, alignment: .fill)
         view.distribution = .fillEqually
-        view.backgroundColor = .thirdColor
-        view.layer.cornerRadius = 20
+//        view.backgroundColor = .thirdColor
+//        view.layer.cornerRadius = 20
         return view
     }()
     
@@ -46,72 +46,108 @@ class CalendarView: UIView {
     private let january: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Jan", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let february: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Feb", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let march: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Mar", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let april: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Apr", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let may: UILabel = {
         let label = UILabel()
         label.customLabel(text: "May", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let june: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Jun", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let july: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Jul", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let august: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Aug", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let september: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Sep", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let october: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Oct", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let november: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Nov", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
     private let december: UILabel = {
         let label = UILabel()
         label.customLabel(text: "Dec", textColor: .primaryColor, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .center)
+        label.backgroundColor = .thirdColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
         return label
     }()
     
@@ -130,7 +166,7 @@ class CalendarView: UIView {
         
         totalStackView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(300)
+            $0.height.equalTo(200)
         }
         
         spacingView.snp.makeConstraints {

@@ -33,7 +33,7 @@ class CarouselViewCell: UICollectionViewCell {
     
     lazy private var firstAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
+        btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 1
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
@@ -41,7 +41,7 @@ class CarouselViewCell: UICollectionViewCell {
     
     private let secondAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
+        btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 2
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
@@ -49,7 +49,7 @@ class CarouselViewCell: UICollectionViewCell {
     
     private let thirdAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
+        btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 3
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
@@ -57,7 +57,7 @@ class CarouselViewCell: UICollectionViewCell {
     
     private let fourthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
+        btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 4
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
@@ -65,7 +65,7 @@ class CarouselViewCell: UICollectionViewCell {
     
     private let fifthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .white, backgroundColor: .primaryColor)
+        btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 5
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return btn
@@ -75,7 +75,7 @@ class CarouselViewCell: UICollectionViewCell {
    
        private lazy var customView: UIView = {
            let view = UIView()
-           view.backgroundColor = .thirdColor
+           view.backgroundColor = .systemBackground
            view.layer.cornerRadius = 20
            view.clipsToBounds = true
            return view

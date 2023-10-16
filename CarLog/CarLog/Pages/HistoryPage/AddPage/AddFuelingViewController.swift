@@ -9,8 +9,6 @@ import SnapKit
 import UIKit
 
 class AddFuelingViewController: UIViewController {
-    
-//    let addFuelingView = AddFuelingView()
 
     lazy var addFuelingView: AddFuelingView = {
         let addFuelingView = AddFuelingView()
@@ -24,15 +22,15 @@ class AddFuelingViewController: UIViewController {
         
         view.addSubview(addFuelingView)
         addFuelingView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         addFuelingView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
         addFuelingView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
-
+        
     }
     
     @objc func didSaveButton() {
@@ -44,4 +42,8 @@ class AddFuelingViewController: UIViewController {
         print("---> addFuelingPage 취소 버튼 눌렀어요")
         dismiss(animated: true)
     }
+    
+    
+    
+    
 }

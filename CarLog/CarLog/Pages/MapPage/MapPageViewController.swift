@@ -11,12 +11,12 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     //dummyData
     let dummyData = CLLocationCoordinate2D(latitude: 37.29611185603856, longitude: 127.05515403584008)
     
-    private var overlayView: UIView!
+        //  private var overlayView: UIView!
     private var detailView: UIView!
     
     private lazy var myLocationButton = {
         let button = UIButton()
-        if let image = UIImage(named: "현재 위치 버튼"){
+        if let image = UIImage(named: "currentLocate"){
             button.setImage(image, for: .normal)
             button.addTarget(self, action: #selector(myLocationButtonTapped), for: .touchUpInside)
         }
@@ -51,7 +51,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     private lazy var mapDetailView: GasStationDetailView = {
         let view = GasStationDetailView()
-        view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
+        view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 300)
+        view.clipsToBounds = true
         return view
     }()
     
@@ -63,7 +64,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         locationManager.delegate = self
         
         mapView.setRegion(MKCoordinateRegion(center: dummyData, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
-        
+   
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideDetailView(_:)))
            mapView.addGestureRecognizer(tapGesture)
            tapGesture.delegate = self
@@ -181,15 +182,25 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-    
+     //디테일 뷰 상단만 코너래디우스 주기
+    func applyTopCornersRadius(to view: UIView, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius))
+        
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        
+        view.layer.mask = mask
+    }
+    // 어노테이션 클릭 시 관련 ㅋ
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("어노테이션이 클릭되었습니다.")
         if let _ = view.annotation as? MKPointAnnotation {
             // 어노테이션을 클릭했을 때 detailView를 나타냅니다.
-            UIView.animate(withDuration: 0.3) {
-                self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 200 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 200) // 높이와 y 위치를 200으로 변경
+            UIView.animate(withDuration: 0.1) {
+                self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 300 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 300) // 높이와 y 위치를 200으로 변경
                 mapView.deselectAnnotation(view.annotation, animated: false)
             }
+            self.applyTopCornersRadius(to: self.mapDetailView, radius: 15)
         }
         
         
