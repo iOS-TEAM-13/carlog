@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 final class FirestoreService {
     let db = Firestore.firestore()
@@ -22,49 +22,67 @@ final class FirestoreService {
 //        }
 //    }
 //
-//    static func getPosts(completion: @escaping ([Post]?, Error?) -> Void) {
-//        Firestore.firestore().collection("posts").getDocuments { querySnapshot, error in
-//            if let error = error {
-//                completion(nil, error)
-//            } else {
-//                var posts: [Post] = []
-//                for document in querySnapshot?.documents ?? [] {
-//                    do {
-//                        var post = try Firestore.Decoder().decode(Post.self, from: document.data())
-//                        post.id = document.documentID // Set the ID from the Firestore document ID
-//                        posts.append(post)
-//                    } catch {
-//                        completion(nil, error)
-//                        return
-//                    }
-//                }
-//                completion(posts, nil)
-//            }
-//        }
-//    }
-    
-    func getPostData(completion: @escaping ([Post]?) -> Void) {
-        var names: [[String:Any]] = [[:]]
-        var posts: [Post]?
-        
-        db.collection("posts").getDocuments { (querySnapshot, error) in
+    static func getComments(completion: @escaping ([Comment]?) -> Void) {
+        Firestore.firestore().collection("comment").getDocuments() { querySnapshot, error in
             if let error = error {
-                print("Error getting documents: \(error)")
-                completion(posts) // 호출하는 쪽에 빈 배열 전달
-                return
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var posts: [Comment] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        print("@@@@@@@@ data: \(document.data())")
+                        
+//                        posts.append(Comment(id: UUID(uuidString: document.data()["id"] as! String) ?? UUID(), content: document.data()["content"]  as! String, userId: UUID(uuidString: document.data()["id"] as! String) ?? UUID(), userName: document.data()["userName"] as! String))
+                        
+                        let post = try Firestore.Decoder().decode(Comment.self, from: document.data())
+                        
+                        print("@@@@@@@@ post: \(posts)")
+//                        posts.append(post)
+                    } catch {
+                        print("@@@@@@@ catch: \(document.data())")
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(posts)
             }
-            
-            for document in querySnapshot!.documents {
-                print("@@@@@@@@ \(document.data())")
-                names.append(document.data())
-            }
-            print("@@@@@@@@ \(names)")
-            names.remove(at: 0)
-            posts = self.dictionaryToObject(objectType: Post.self, dictionary: names)
-            print("@@@@@@@@@@@@ \(posts)")
-            completion(posts) // 성공 시 이름 배열 전달
         }
     }
+    
+//    func getPostData(completion: @escaping ([Post]?) -> Void) {
+//        var posts: [Post] = [] // 빈 배열로 초기화
+//
+//        db.collection("posts").getDocuments { (querySnapshot, error) in
+//            if let error = error {
+//                print("Error getting documents: \(error)")
+//                completion(posts) // 호출하는 쪽에 빈 배열 전달
+//                return
+//            }
+//
+//            for document in querySnapshot!.documents {
+//                        // Firestore 문서 데이터를 Post 타입으로 변환
+//
+//                if let data = document.data() as? [String: Any],
+//                   let jsonData = try? JSONSerialization.data(withJSONObject: data, options: []),
+//                   let post = try? JSONDecoder().decode(Post.self, from: jsonData) {
+//                    print("@@@@@@@@@@@@ data: \(data)")
+//                    print("@@@@@@@@@@@@ jsonData: \(jsonData)")
+//                    print("@@@@@@@@@@@@ post: \(post)")
+//                    posts.append(post)
+//                }
+////                        if let data = document.data() as? [String: Any],
+////                           let jsonData = try? JSONSerialization.data(withJSONObject: data, options: []),
+////                           let post = try? JSONDecoder().decode(Post.self, from: jsonData) {
+////                            print("@@@@@@@@@@@@ data: \(data)")
+////                            print("@@@@@@@@@@@@ jsonData: \(jsonData)")
+////                            print("@@@@@@@@@@@@ post: \(post)")
+////                            posts.append(post)
+////                        }
+//                    }
+//            completion(posts) // 성공 시 이름 배열 전달
+//        }
+//    }
     
 //    func editUserData(post: Post, completion: @escaping (Post?) -> Void) {
 //            var result: UserModel?

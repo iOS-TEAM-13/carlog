@@ -102,8 +102,6 @@ class CarouselViewCell: UICollectionViewCell {
 //            $0.height.equalTo(600)
         }
         
-       
-        
         customView.addSubview(checkTitle)
         customView.addSubview(CheckScrollView)
         CheckScrollView.addSubview(answerStackView)

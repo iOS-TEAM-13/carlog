@@ -8,9 +8,9 @@
 import Foundation
 
 struct Comment: Codable {
-    let id: UUID
+    let id: String
     let content: String
-    let userId: UUID
+    let userId: String
     let userName: String
     
     func toDictionary() -> [String: Any] {

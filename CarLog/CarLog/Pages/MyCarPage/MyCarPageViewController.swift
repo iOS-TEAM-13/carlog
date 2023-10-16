@@ -17,7 +17,7 @@ class MyCarPageViewController: UIViewController {
         registerTableview()
         setupUI()
         
-        FirestoreService().getPostData { result in
+        FirestoreService.getComments() { result in
             print("##########\(result)")
         }
         
