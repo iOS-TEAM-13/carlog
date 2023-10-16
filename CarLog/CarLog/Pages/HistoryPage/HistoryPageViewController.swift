@@ -7,6 +7,11 @@ class HistoryPageViewController: UIViewController {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        segmentedControl.selectedSegmentTintColor = .primaryColor
+        
+        let font = UIFont(name: "Jua", size: 18)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font ?? UIFont(), NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font ?? UIFont(), NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
     
@@ -57,11 +62,11 @@ class HistoryPageViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.height.equalTo(40)
+            make.height.equalTo(50)
         }
         
         drivingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -75,10 +80,10 @@ class HistoryPageViewController: UIViewController {
         }
         
         floatingButtonStackView.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
-
+        
     }
     
     

@@ -61,7 +61,7 @@ extension DrivingView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as! DrivingCollectionViewCell
         
         cell.layer.borderWidth = 1
-        cell.layer.cornerRadius = 5
+        cell.layer.cornerRadius = Constants.cornerRadius
         
         cell.writeDateLabel.text = dummy[indexPath.row].timeStamp
         cell.driveDistenceLabel.text = String("\(dummy[indexPath.row].driveDistance)km")
@@ -71,11 +71,11 @@ extension DrivingView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - Constants.horizontalMargin * 4), height: 100) //
+        return CGSize(width: (collectionView.bounds.width - Constants.horizontalMargin * 4), height: 90)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16
+        return 20
     }
     
 }
