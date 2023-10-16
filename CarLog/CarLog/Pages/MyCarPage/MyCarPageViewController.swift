@@ -5,7 +5,11 @@ import SwiftUI
 class MyCarPageViewController: UIViewController {
     
     //MARK: Properties
-    private let myCarTableView = UITableView()
+    private let myCarTableView: UITableView = {
+        let view = UITableView()
+        view.showsVerticalScrollIndicator = false
+        return view
+    }()
     
     private let dummy = CarInfo(engineOil: "엔진 오일", missionOil: "미션 오일", brakeOil: "브레이크 오일", brakePad: "브레이크 패드", tire: "타이어", tireRotation: "로테이션", fuelFilter: "연료 필터", wiper: "와이퍼", airconFilter: "에어컨 필터", insurance: "보험")
     private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tire"), UIImage(named: "tireRotation"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
@@ -51,6 +55,7 @@ extension MyCarPageViewController: UITableViewDelegate, UITableViewDataSource {
         cell.layer.cornerRadius = 20
 //        cell.backgroundColor = .thirdColor
         cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
         return cell
     }
     
