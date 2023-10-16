@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CarouselViewCell: UICollectionViewCell {
+class CarouselView: UIView {
     private let CheckScrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
@@ -72,37 +72,43 @@ class CarouselViewCell: UICollectionViewCell {
     }()
     
     static let identifier = "CarouselViewCell"
-   
-       private lazy var customView: UIView = {
-           let view = UIView()
-           view.backgroundColor = .systemBackground
-           view.layer.cornerRadius = 20
-           view.clipsToBounds = true
-           return view
-       }()
-   
-       override init(frame: CGRect) {
-           super.init(frame: frame)
-           setupUI()
-       }
+    
+    private lazy var customView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    init(view: CheckingView) {
+        super.init(frame: .zero)
+        self.checkTitle.text = view.title
+        self.firstAnswerButton.setTitle(view.firstButton, for: .normal)
+        self.secondAnswerButton.setTitle(view.secondButton, for: .normal)
+        self.thirdAnswerButton.setTitle(view.thirdbutton, for: .normal)
+        self.fourthAnswerButton.setTitle(view.fourthButton, for: .normal)
+        self.fifthAnswerButton.setTitle(view.fifthButton, for: .normal)
+        setupUI()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     private func setupUI() {
-//        contentView.backgroundColor = .thirdColor
-//        contentView.layer.cornerRadius = 20
-        contentView.addSubview(customView)
-
+        //        contentView.backgroundColor = .thirdColor
+        //        contentView.layer.cornerRadius = 20
+        self.addSubview(customView)
+        
         customView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
-//            $0.center.equalToSuperview()
-//            $0.width.equalTo(300)
-//            $0.height.equalTo(600)
+            //            $0.center.equalToSuperview()
+            //            $0.width.equalTo(300)
+            //            $0.height.equalTo(600)
         }
         
-       
+        
         
         customView.addSubview(checkTitle)
         customView.addSubview(CheckScrollView)
@@ -130,34 +136,34 @@ class CarouselViewCell: UICollectionViewCell {
             }
         }
     }
-   
+    
     func bind(checkingView: CheckingView) {
-//           addSubview(customView)
-//           customView = view
-//           view.snp.makeConstraints {
-//               $0.width.equalTo(300)
-//               $0.height.equalTo(600)
-//           }
-           
+        //           addSubview(customView)
+        //           customView = view
+        //           view.snp.makeConstraints {
+        //               $0.width.equalTo(300)
+        //               $0.height.equalTo(600)
+        //           }
+        
         checkTitle.text = checkingView.title
         firstAnswerButton.setTitle(checkingView.firstButton, for: .normal)
         secondAnswerButton.setTitle(checkingView.secondButton, for: .normal)
         thirdAnswerButton.setTitle(checkingView.thirdbutton, for: .normal)
         fourthAnswerButton.setTitle(checkingView.fourthButton, for: .normal)
         fifthAnswerButton.setTitle(checkingView.fifthButton, for: .normal)
-       }
+    }
     
-//    private func setupTitle(title: String) {
-//        checkTitle.text = title
-//    }
-//
-//    private func setupButton(firstButton: String, secondButton: String, thirdButton: String, fourthButton: String, fifthbutton: String) {
-//        firstAnswerButton.setTitle(firstButton, for: .normal)
-//        secondAnswerButton.setTitle(secondButton, for: .normal)
-//        thirdAnswerButton.setTitle(thirdButton, for: .normal)
-//        fourthAnswerButton.setTitle(fourthButton, for: .normal)
-//        fifthAnswerButton.setTitle(fifthbutton, for: .normal)
-//    }
+    //    private func setupTitle(title: String) {
+    //        checkTitle.text = title
+    //    }
+    //
+    //    private func setupButton(firstButton: String, secondButton: String, thirdButton: String, fourthButton: String, fifthbutton: String) {
+    //        firstAnswerButton.setTitle(firstButton, for: .normal)
+    //        secondAnswerButton.setTitle(secondButton, for: .normal)
+    //        thirdAnswerButton.setTitle(thirdButton, for: .normal)
+    //        fourthAnswerButton.setTitle(fourthButton, for: .normal)
+    //        fifthAnswerButton.setTitle(fifthbutton, for: .normal)
+    //    }
     
     @objc func checkButtonTapped(sender: UIButton) {
         let temp = [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton]

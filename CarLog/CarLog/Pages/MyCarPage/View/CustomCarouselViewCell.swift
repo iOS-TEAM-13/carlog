@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CustomCarouselViewCell: UICollectionViewCell {
+class CustomCarouselView: UIView {
     private lazy var customView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
