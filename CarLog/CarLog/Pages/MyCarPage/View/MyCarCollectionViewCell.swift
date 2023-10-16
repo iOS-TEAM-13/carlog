@@ -8,16 +8,16 @@
 import UIKit
 import SnapKit
 
-class MyCarTableViewCell: UITableViewCell {
+class MyCarCollectionViewCell: UICollectionViewCell {
     static var identifier = "MyCarTableViewCell"
     
-    private var tableViewImage: UIImageView = {
+    private var collectionViewImage: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "photo")
         return view
     }()
     
-    private var tableViewTitle: UILabel = {
+    private var collectionViewTitle: UILabel = {
         var label = UILabel()
         label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
         return label
@@ -33,67 +33,67 @@ class MyCarTableViewCell: UITableViewCell {
         return view
     }()
     
-    private var tableViewPeriod: UILabel = {
+    private var collectionViewPeriod: UILabel = {
         var label = UILabel()
         label.customLabel(text: "기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
         return label
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
-    }
+ 
+ required init?(coder: NSCoder) {
+     fatalError("init(coder:) has not been implemented")
+ }
     
     private func setupUI() {
-        contentView.addSubview(tableViewImage)
-        contentView.addSubview(tableViewTitle)
+        contentView.addSubview(collectionViewImage)
+        contentView.addSubview(collectionViewTitle)
         contentView.addSubview(progressView)
-        contentView.addSubview(tableViewPeriod)
+        contentView.addSubview(collectionViewPeriod)
         
         contentView.layer.cornerRadius = 20
         contentView.backgroundColor = .thirdColor
         
-        tableViewImage.snp.makeConstraints {
+        contentView.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)
+            $0.height.equalTo(100)
+        }
+        
+        collectionViewImage.snp.makeConstraints {
             $0.leading.equalTo(contentView).inset(Constants.horizontalMargin)
             $0.width.height.equalTo(60)
             $0.centerY.equalTo(contentView)
         }
         
-        tableViewTitle.snp.makeConstraints {
+        collectionViewTitle.snp.makeConstraints {
             $0.top.trailing.equalTo(contentView).inset(Constants.verticalMargin)
-            $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
 //            $0.height.equalTo(20)
         }
         
         progressView.snp.makeConstraints {
-            $0.top.equalTo(tableViewTitle.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.top.equalTo(collectionViewTitle.snp.bottom).inset(-Constants.verticalMargin)
+            $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
 //            $0.height.equalTo(10)
             $0.centerY.equalTo(contentView)
         }
         
-        tableViewPeriod.snp.makeConstraints {
+        collectionViewPeriod.snp.makeConstraints {
             $0.top.equalTo(progressView.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.equalTo(tableViewImage.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.bottom.trailing.equalTo(contentView).inset(Constants.verticalMargin)
 //            $0.height.equalTo(20)
         }
     }
     
     func bind(text: String, period: String, icon: UIImage) {
-        tableViewTitle.text = text
-        tableViewPeriod.text = period
-        tableViewImage.image = icon
+        collectionViewTitle.text = text
+        collectionViewPeriod.text = period
+        collectionViewImage.image = icon
     }
 
 }

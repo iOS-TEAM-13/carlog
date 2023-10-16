@@ -21,7 +21,6 @@ class MyCarCheckViewController: UIViewController {
         CheckingView(title: "에어컨 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"),
         CheckingView(title: "보험 가입 시기는 언제쯤인가요?", firstButton: "", secondButton: "", thirdbutton: "", fourthButton: "", fifthButton: ""),
     ]
-//    private let checkEngineOilView = CheckingView(title: "엔진 오일은 언제 교체하셨나요?", firstButton: "6개월 전", secondButton: "3개월 전", thirdbutton: "1개월 전", fourthButton: "최근", fifthButton: "모르겠어요")
     
     private let carouselView = CarouselView()
     
@@ -68,7 +67,6 @@ extension MyCarCheckViewController: UICollectionViewDelegate, UICollectionViewDa
             cell.bind(title: data)
             return cell
         }
-//        let cell = CarouselViewCell()
         let data = checkingList[indexPath.row]
         cell.bind(checkingView: data)
         return cell
