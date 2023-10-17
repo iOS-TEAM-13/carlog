@@ -60,8 +60,14 @@ extension DrivingView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as! DrivingCollectionViewCell
         
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 2
         cell.layer.cornerRadius = Constants.cornerRadius
+        
+        cell.layer.borderColor = UIColor.systemGray5.cgColor
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.layer.shadowRadius = 3
+        cell.layer.shadowOpacity = 0.3
         
         cell.writeDateLabel.text = dummy[indexPath.row].timeStamp
         cell.driveDistenceLabel.text = String("\(dummy[indexPath.row].driveDistance)km")

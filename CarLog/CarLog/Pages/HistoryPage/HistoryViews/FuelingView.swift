@@ -29,7 +29,7 @@ class FuelingView: UIView {
         let fuelingCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         fuelingCollectionView.dataSource = self
         fuelingCollectionView.delegate = self
-        fuelingCollectionView.register(FuelingCollectionViewCell.self, forCellWithReuseIdentifier: FuelingCollectionViewCell.identifier)
+        fuelingCollectionView.register(FuelingCollectionViewCell.self, forCellWithReuseIdentifier: FuelingCollectionViewCell.identifier)        
         return fuelingCollectionView
     }()
     
@@ -60,8 +60,14 @@ extension FuelingView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FuelingCollectionViewCell.identifier, for: indexPath) as! FuelingCollectionViewCell
         
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 2
         cell.layer.cornerRadius = Constants.cornerRadius
+        
+        cell.layer.borderColor = UIColor.systemGray5.cgColor
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.layer.shadowRadius = 3
+        cell.layer.shadowOpacity = 0.3
         
         cell.writeDateLabel.text = dummy[indexPath.row].timeStamp
         cell.priceLabel.text = String("\(dummy[indexPath.row].price)원")
