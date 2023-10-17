@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class MyCarCollectionViewCell: UICollectionViewCell {
-    static var identifier = "MyCarTableViewCell"
     
     private var collectionViewImage: UIImageView = {
         let view = UIImageView()
@@ -25,7 +24,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
 
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
-        view.trackTintColor = .firstColor
+        view.trackTintColor = .white
         view.progressTintColor = .primaryColor
         view.progress = 0.1
         return view

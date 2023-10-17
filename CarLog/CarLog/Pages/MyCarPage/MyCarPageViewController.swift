@@ -60,7 +60,7 @@ class MyCarPageViewController: UIViewController {
         
         myCarCollectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
@@ -104,6 +104,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: collectionView.bounds.width, height: 100)
+        .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 100)
     }
 }

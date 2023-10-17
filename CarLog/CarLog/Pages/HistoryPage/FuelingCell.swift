@@ -10,8 +10,6 @@ import UIKit
 
 class FuelingCell: UITableViewCell {
     
-    static let identifier = "FuelingCell"
-    
     lazy var cellLabelStackView: UIStackView = {
         let cellLabelStackView = UIStackView(arrangedSubviews: [cellTopLabelStackView, cellBottomLabelStackView])
         cellLabelStackView.axis = .vertical
