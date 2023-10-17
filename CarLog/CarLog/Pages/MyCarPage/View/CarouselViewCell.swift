@@ -128,7 +128,7 @@ class CarouselView: UIView {
         }
         
         CheckScrollView.snp.makeConstraints {
-            $0.top.equalTo(checkTitle.snp.bottom).inset(Constants.verticalMargin)
+            $0.top.equalTo(checkTitle.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
         }
         
