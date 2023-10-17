@@ -8,9 +8,10 @@
 import Foundation
 
 struct Driving {
+    let timeStamp: String
     let departDistance: Double
     let arriveDistance: Double
-    let drivenDistance: Double
-    let drivingTime: Date
-    let drivingTag: [String]
+    let driveDistance: Double
+//    let drivingTime: Date
+//    let drivingTag: [String]
 }

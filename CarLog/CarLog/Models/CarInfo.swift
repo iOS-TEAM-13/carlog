@@ -17,4 +17,5 @@ struct CarInfo {
     let fuelFilter: String
     let wiper: String
     let airconFilter: String
+    let insurance: String
 }

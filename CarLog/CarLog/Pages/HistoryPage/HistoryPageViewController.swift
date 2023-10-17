@@ -10,9 +10,9 @@ class HistoryPageViewController: UIViewController {
         return segmentedControl
     }()
     
-    lazy var drivingTableView: DrivingView = {
-        let drivingTableView = DrivingView()
-        return drivingTableView
+    lazy var drivingCollectionView: DrivingView = {
+        let drivingCollectionView = DrivingView()
+        return drivingCollectionView
     }()
     
     lazy var fuelingTableView: FuelingView = {
@@ -23,8 +23,8 @@ class HistoryPageViewController: UIViewController {
     var shouldHideFirstView: Bool? {
         didSet {
             guard let shouldHideFirstView = self.shouldHideFirstView else { return }
-            self.drivingTableView.isHidden = shouldHideFirstView
-            self.fuelingTableView.isHidden = !self.drivingTableView.isHidden
+            self.drivingCollectionView.isHidden = shouldHideFirstView
+            self.fuelingTableView.isHidden = !self.drivingCollectionView.isHidden
         }
     }
     
@@ -49,34 +49,34 @@ class HistoryPageViewController: UIViewController {
     
     func setupUI() {
         view.addSubview(segmentedControl)
-        view.addSubview(drivingTableView)
+        view.addSubview(drivingCollectionView)
         view.addSubview(fuelingTableView)
         view.addSubview(floatingButtonStackView)
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.height.equalTo(40)
         }
         
-        drivingTableView.snp.makeConstraints { make in
+        drivingCollectionView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(segmentedControl.snp.leading)
-            make.trailing.equalTo(segmentedControl.snp.trailing)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         fuelingTableView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(segmentedControl.snp.leading)
-            make.trailing.equalTo(segmentedControl.snp.trailing)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         floatingButtonStackView.snp.makeConstraints { make in
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
 
     }

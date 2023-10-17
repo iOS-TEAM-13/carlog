@@ -8,7 +8,8 @@ class LoginPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.primaryColor
+        view.backgroundColor = .white
+
         setupUI()
     }
 
@@ -19,10 +20,35 @@ class LoginPageViewController: UIViewController {
         }
 
         // MARK: - addTarget
-
+        loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginView.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
         loginView.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func textFieldDidChange(){
+        let userEmail = "1@test.com"
+        let userPassword = "1234"
+
+        if loginView.emailTextField.text == userEmail && loginView.passwordTextField.text == userPassword {
+            loginView.loginButton.isEnabled = true
+        } else {
+            loginView.loginButton.isEnabled = false
+        }
+
+        
+        UIView.animate(withDuration: 0.3) {
+            if self.loginView.loginButton.isEnabled {
+                self.view.layoutIfNeeded()
+                self.loginView.loginButton.setTitleColor(.white, for: .normal)
+                self.loginView.loginButton.backgroundColor = .primaryColor
+            } else {
+                self.view.layoutIfNeeded()
+                self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
+                self.loginView.loginButton.backgroundColor = .thirdColor
+            }
+        }
     }
 
     @objc func loginButtonTapped() {
@@ -42,15 +68,15 @@ class LoginPageViewController: UIViewController {
             navigationController.tabBarItem = tabBarItem
             return navigationController
         }, animated: false)
-        
+
         tabBarController.modalPresentationStyle = .fullScreen
-        self.present(tabBarController, animated: true, completion: nil)
+        present(tabBarController, animated: true, completion: nil)
     }
 
     @objc func signupButtonTapped() {
         let joinPageViewController = JoinupPageViewController()
         joinPageViewController.modalPresentationStyle = .fullScreen
-        self.present(joinPageViewController, animated: true, completion: nil)
+        present(joinPageViewController, animated: true, completion: nil)
     }
 
     @objc func checkboxTapped() {
