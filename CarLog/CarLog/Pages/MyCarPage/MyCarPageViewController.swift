@@ -8,17 +8,13 @@ class MyCarPageViewController: UIViewController {
     private let flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        //      layout.minimumLineSpacing = 8.0 // <- 셀 간격 설정
-//        layout.minimumInteritemSpacing = 0
         return layout
     }()
     
     private lazy var myCarCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
-//        view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = true
-//        view.contentInset = .zero
         view.backgroundColor = .systemBackground
         view.clipsToBounds = true
         view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
@@ -64,7 +60,7 @@ class MyCarPageViewController: UIViewController {
         
         myCarCollectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
@@ -108,6 +104,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: collectionView.bounds.width, height: 100)
+        .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 100)
     }
 }

@@ -44,8 +44,7 @@ class PageViewController: UIViewController {
         view.addSubview(customCarouselView!)
         
         customCarouselView!.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.centerY.equalToSuperview()
+            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     

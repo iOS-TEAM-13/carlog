@@ -51,11 +51,13 @@ class CustomCarouselView: UIView {
         
         checkTitle.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(customView).inset(Constants.horizontalMargin)
+            $0.height.equalTo(100)
         }
         
         calendarView.snp.makeConstraints {
-            $0.top.equalTo(checkTitle.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
+            $0.height.equalTo(300)
+            $0.width.equalTo(300)
+            $0.center.equalToSuperview()
         }
     }
     

@@ -10,8 +10,6 @@ import UIKit
 
 class DrivingCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "DrivingCollectionViewCell"
-    
     lazy var cellLabelStackView: UIStackView = {
         let cellLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, cellBottomLabelStackView])
         cellLabelStackView.axis = .vertical

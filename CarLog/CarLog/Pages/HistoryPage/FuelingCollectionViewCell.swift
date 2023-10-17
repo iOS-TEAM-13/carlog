@@ -9,9 +9,6 @@ import SnapKit
 import UIKit
 
 class FuelingCollectionViewCell: UICollectionViewCell {
-    
-    static let identifier = "FuelingCollectionViewCell"
-    
     lazy var cellLabelStackView: UIStackView = {
         let cellLabelStackView = UIStackView(arrangedSubviews: [cellTopLabelStackView, cellBottomLabelStackView])
         cellLabelStackView.axis = .vertical
