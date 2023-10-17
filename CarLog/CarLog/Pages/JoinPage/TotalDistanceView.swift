@@ -5,19 +5,8 @@ import SnapKit
 class TotalDistanceView: UIView {
     let duplicateComponents = DuplicateComponents()
     
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "최종 주행거리는\n얼마인가요?", textColor: .black, font: Constants.fontJua36 ?? UIFont(), alignment: .left)
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    lazy var totalDistanceTextField: UITextField = {
-        let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "최종 주행거리 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
-        return textField
-    }()
-    
+    lazy var label = duplicateComponents.joinupLabel(text: "최종 주행거리는\n얼마인가요?")
+    lazy var totalDistanceTextField = duplicateComponents.joinupTextField(placeholder: "최종 주행거리 입력")
     lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "완 료")
     lazy var spaceView = UIView()

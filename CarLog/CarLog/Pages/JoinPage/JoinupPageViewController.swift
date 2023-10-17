@@ -17,12 +17,6 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        oilModelView.oilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
-        oilModelView.oilCollectionView.dataSource = self
-        oilModelView.oilCollectionView.delegate = self
-        oilModelView.oilCollectionView.reloadData()
-
         setupUI()
     }
 
@@ -49,26 +43,6 @@ class JoinupPageViewController: UIViewController {
         nickNameView.nextButton.addTarget(self, action: #selector(nickNameViewNextButtonTapped), for: .touchUpInside)
         totalDistanceView.popButton.addTarget(self, action: #selector(totalDistanceViewPopButtonTapped), for: .touchUpInside)
         totalDistanceView.nextButton.addTarget(self, action: #selector(totalDistanceViewNextButtonTapped), for: .touchUpInside)
-    }
-}
-
-extension JoinupPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyData.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = oilModelView.oilCollectionView.dequeueReusableCell(withReuseIdentifier: "oilModelCollectionViewCell", for: indexPath) as! OilModelCollectionViewCell
-        cell.label.text = dummyData[indexPath.item]
-        return cell
-    }
-}
-
-extension JoinupPageViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionViewWidth = collectionView.bounds.width
-        let collectionViewHeight = collectionView.bounds.height
-        return CGSize(width: collectionViewWidth, height: collectionViewHeight)
     }
 }
 
