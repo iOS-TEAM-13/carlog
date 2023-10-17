@@ -211,6 +211,18 @@ class AddDrivingView: UIView {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
+        totalDistanceLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
+        arriveDistanceLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
+        driveDistenceLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
         kmLabel.snp.makeConstraints { make in
             make.trailing.equalTo(totalDistanceStackView).offset(-Constants.horizontalMargin)
             make.centerY.equalTo(totalDistanceStackView)

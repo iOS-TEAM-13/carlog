@@ -259,6 +259,22 @@ class AddFuelingView: UIView {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
+        totalDistanceLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
+        priceLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
+        countLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
+        totalPriceLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+        }
+        
         kmLabel.snp.makeConstraints { make in
             make.trailing.equalTo(totalDistanceStackView).offset(-Constants.horizontalMargin)
             make.centerY.equalTo(totalDistanceStackView)
