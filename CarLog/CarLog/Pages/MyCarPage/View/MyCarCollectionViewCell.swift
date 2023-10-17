@@ -25,7 +25,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
 
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
-        view.trackTintColor = .thirdColor
+        view.trackTintColor = .firstColor
         view.progressTintColor = .primaryColor
         view.progress = 0.1
         return view
