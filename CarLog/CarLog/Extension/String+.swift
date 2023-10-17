@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 extension String {
     // 대소문자, 특수문자, 숫자 8자 이상일 때 -> true
@@ -16,4 +16,9 @@ extension String {
             
             return emailTest.evaluate(with: self)
         }
+    
+    func width(of font: UIFont) -> CGFloat {
+        return (self as NSString).size(withAttributes: [.font: font]).width
+    }
+    
 }
