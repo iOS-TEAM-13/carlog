@@ -69,7 +69,6 @@ class MyCarPageViewController: UIViewController {
         guard let userDefault = userDefaults.string(forKey: "isFirst") else { userDefaults.set("false", forKey: "isFirst")
             let vc = MyCarCheckViewController()
             navigationController?.pushViewController(vc, animated: true)
-            print("@@@@@@@@@@@@@@ \(userDefaults.string(forKey: "isFirst")!)")
             return
         }
     }
