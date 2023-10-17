@@ -1,7 +1,7 @@
 import UIKit
 
 import FirebaseAuth
-import FirebaseDatabase
+import FirebaseFirestore
 import SnapKit
 
 class JoinupPageViewController: UIViewController {
@@ -50,17 +50,40 @@ extension JoinupPageViewController {
     @objc func textFieldDidChange() {}
 
     @objc func checkEmailButtonTapped() {
-        guard let email = joinupView.emailTextField.text else { return }
-        checkEmailDuplication(email: email) { [weak self] success, _ in
-            DispatchQueue.main.async {
-                if success {
-                    self?.joinupView.checkEmailButton.setTitle("사용가능", for: .normal)
-                } else {
-                    self?.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
-                    self?.showEmailAlreadyInUseAlert()
-                }
-            }
-        }
+        guard let emailToCheck = joinupView.emailTextField.text else {
+               return
+           }
+
+           let db = Firestore.firestore()
+           let usersRef = db.collection("users")
+
+           // Firestore에서 모든 사용자 이메일 가져오기
+           usersRef.getDocuments { (querySnapshot, error) in
+               if let error = error {
+                   print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                   return
+               }
+               
+               var isEmailAvailable = true
+               
+               for document in querySnapshot?.documents ?? [] {
+                   if let email = document.data()["email"] as? String {
+                       if email == emailToCheck {
+                           isEmailAvailable = false
+                           break
+                       }
+                   }
+               }
+
+               if isEmailAvailable {
+                   self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
+                   self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
+               } else {
+                   self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
+                   self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
+                   self.showAlert(message: "이미 사용중인 아이디입니다")
+               }
+           }
     }
 
     func showEmailAlreadyInUseAlert() {
@@ -89,24 +112,6 @@ extension JoinupPageViewController {
             }, completion: { _ in
                 toastLabel.removeFromSuperview()
             })
-        }
-    }
-
-    func checkEmailDuplication(email: String, completion: @escaping (Bool, Error?) -> Void) {
-        Auth.auth().fetchSignInMethods(forEmail: email) { methods, error in
-            if let error = error {
-                print("Error checking email duplication: \(error.localizedDescription)")
-                completion(false, error)
-                return
-            }
-
-            if let signInMethods = methods, signInMethods.isEmpty {
-                // 이메일이 이미 사용 중이지 않음
-                completion(true, nil)
-            } else {
-                // 이메일이 이미 사용 중
-                completion(false, nil)
-            }
         }
     }
 
@@ -217,11 +222,32 @@ extension JoinupPageViewController {
     }
 
     @objc func totalDistanceViewNextButtonTapped() {
-        Auth.auth().createUser(withEmail: joinupView.emailTextField.text!, password: joinupView.passwordTextField.text!) { _, _ in
-            let uid = Auth.auth().currentUser?.uid
+        signUpUser()
+    }
 
-            Database.database().reference().child("users").child(uid!).setValue(["name": self.nickNameView.carNickNameTextField.text])
-            self.dismiss(animated: true)
-        }
+    func signUpUser() {
+        guard let email = joinupView.emailTextField.text,
+                  let password = joinupView.passwordTextField.text else {
+                return
+            }
+            
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let error = error {
+                    print("회원가입 실패: \(error.localizedDescription)")
+                    return
+                }
+                if let email = authResult?.user.email {
+                    let db = Firestore.firestore()
+                    db.collection("users").addDocument(data: [
+                        "email": email
+                    ]) { error in
+                        if let error = error {
+                            print("사용자 데이터 Firestore에 저장 실패: \(error.localizedDescription)")
+                        } else {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                }
+            }
     }
 }
