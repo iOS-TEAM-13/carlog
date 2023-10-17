@@ -47,17 +47,29 @@ class AddDrivingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toDriveDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toArriveDistanceTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextPriceTextField))
-        nextTextField.setItems([flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeTotalDistanceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         totalDistanceTextField.inputAccessoryView = nextTextField
         
         return totalDistanceTextField
     }()
     
-    @objc func nextPriceTextField() {
+    @objc func toDriveDistanceTextField() {
+        self.driveDistenceTextField.becomeFirstResponder()
+    }
+    
+    @objc func toArriveDistanceTextField() {
         self.arriveDistanceTextField.becomeFirstResponder()
+    }
+    
+    @objc func closeTotalDistanceTextField() {
+        self.totalDistanceTextField.resignFirstResponder()
     }
     
     lazy var arriveDistanceStackView: UIStackView = {
@@ -85,22 +97,29 @@ class AddDrivingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalDistanceTextField))
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toTotalDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.tpDriveDistanceTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextdriveDistenceTextField))
-        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeArriveDistanceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         arriveDistanceTextField.inputAccessoryView = nextTextField
         
         return arriveDistanceTextField
     }()
     
-    @objc func beforeTotalDistanceTextField() {
+    @objc func toTotalDistanceTextField() {
         self.totalDistanceTextField.becomeFirstResponder()
     }
     
-    @objc func nextdriveDistenceTextField() {
+    @objc func tpDriveDistanceTextField() {
         self.driveDistenceTextField.becomeFirstResponder()
+    }
+    
+    @objc func closeArriveDistanceTextField() {
+        self.arriveDistanceTextField.resignFirstResponder()
     }
     
     lazy var driveDistenceStackView: UIStackView = {
@@ -127,16 +146,21 @@ class AddDrivingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeArriveDistanceTextField))
-        nextTextField.setItems([beforeButton], animated: false)
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toArriveDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toTotalDistanceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeDriveDistenceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         driveDistenceTextField.inputAccessoryView = nextTextField
         
         return driveDistenceTextField
     }()
     
-    @objc func beforeArriveDistanceTextField() {
-        self.arriveDistanceTextField.becomeFirstResponder()
+    @objc func closeDriveDistenceTextField() {
+        self.driveDistenceTextField.resignFirstResponder()
     }
     
     //MARK: - 단위 Label
