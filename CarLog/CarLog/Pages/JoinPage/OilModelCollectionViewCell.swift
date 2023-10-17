@@ -1,8 +1,3 @@
-
-
-
-
-
 import UIKit
 
 class OilModelCollectionViewCell: UICollectionViewCell {

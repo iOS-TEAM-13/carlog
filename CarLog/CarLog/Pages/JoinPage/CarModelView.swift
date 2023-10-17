@@ -32,7 +32,7 @@ class CarModelView: UIView {
         }
 
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(carModelTextField.snp.bottom).offset(50)
+            make.top.equalTo(carModelTextField.snp.bottom).offset(75)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
