@@ -54,7 +54,6 @@
 		FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051872AD6672F00F39E7F /* DateFormatter.swift */; };
 		FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051892AD6678E00F39E7F /* UITextField+.swift */; };
 		FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */; };
-		FF0287E72AD7C91D006657C1 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E62AD7C91D006657C1 /* CarouselView.swift */; };
 		FF0287E92AD7C9A4006657C1 /* CarouselViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E82AD7C9A4006657C1 /* CarouselViewCell.swift */; };
 		FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */; };
 		FF126E1F2AD8DCC700B2A109 /* CustomCarouselViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1E2AD8DCC700B2A109 /* CustomCarouselViewCell.swift */; };
@@ -65,8 +64,9 @@
 		FF5071722AD6BC6000713A81 /* Driving.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071712AD6BC6000713A81 /* Driving.swift */; };
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
-		FF5071782AD6E0DF00713A81 /* MyCarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyCarTableViewCell.swift */; };
+		FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */; };
 		FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */; };
+		FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AF59B2ADDA55D0067960E /* PageViewController.swift */; };
 		FFF64C3C2AD690AA00B9043A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3B2AD690AA00B9043A /* FirebaseAuth */; };
 		FFF64C3E2AD690AA00B9043A /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3D2AD690AA00B9043A /* FirebaseDatabase */; };
 		FFF64C402AD690AA00B9043A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3F2AD690AA00B9043A /* FirebaseFirestore */; };
@@ -121,7 +121,6 @@
 		FBE051872AD6672F00F39E7F /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		FBE051892AD6678E00F39E7F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCheckViewController.swift; sourceTree = "<group>"; };
-		FF0287E62AD7C91D006657C1 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		FF0287E82AD7C9A4006657C1 /* CarouselViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewCell.swift; sourceTree = "<group>"; };
 		FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingView.swift; sourceTree = "<group>"; };
 		FF126E1E2AD8DCC700B2A109 /* CustomCarouselViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCarouselViewCell.swift; sourceTree = "<group>"; };
@@ -132,8 +131,9 @@
 		FF5071712AD6BC6000713A81 /* Driving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driving.swift; sourceTree = "<group>"; };
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
-		FF5071772AD6E0DF00713A81 /* MyCarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarTableViewCell.swift; sourceTree = "<group>"; };
+		FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCollectionViewCell.swift; sourceTree = "<group>"; };
 		FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,11 +346,11 @@
 		FF0287E32AD789E4006657C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FF5071772AD6E0DF00713A81 /* MyCarTableViewCell.swift */,
-				FF0287E62AD7C91D006657C1 /* CarouselView.swift */,
+				FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */,
 				FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */,
 				FF0287E82AD7C9A4006657C1 /* CarouselViewCell.swift */,
 				FF126E1E2AD8DCC700B2A109 /* CustomCarouselViewCell.swift */,
+				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -465,6 +465,7 @@
 				B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
+				FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
 				B85A0F2B2AD78E7B009E0A00 /* FuelingCell.swift in Sources */,
@@ -476,7 +477,6 @@
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
-				FF0287E72AD7C91D006657C1 /* CarouselView.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
 				FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */,
@@ -487,7 +487,7 @@
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
-				FF5071782AD6E0DF00713A81 /* MyCarTableViewCell.swift in Sources */,
+				FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
