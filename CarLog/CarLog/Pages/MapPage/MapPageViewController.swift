@@ -51,7 +51,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     private lazy var mapDetailView: GasStationDetailView = {
         let view = GasStationDetailView()
-        view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 300)
+        view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 250)
         view.clipsToBounds = true
         return view
     }()
@@ -197,7 +197,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         if let _ = view.annotation as? MKPointAnnotation {
             // 어노테이션을 클릭했을 때 detailView를 나타냅니다.
             UIView.animate(withDuration: 0.1) {
-                self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 300 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 300) // 높이와 y 위치를 200으로 변경
+                self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 250 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 250) // 높이와 y 위치를 200으로 변경
                 mapView.deselectAnnotation(view.annotation, animated: false)
             }
             self.applyTopCornersRadius(to: self.mapDetailView, radius: 15)
