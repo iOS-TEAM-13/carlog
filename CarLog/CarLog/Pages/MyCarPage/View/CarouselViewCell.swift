@@ -36,6 +36,10 @@ class CarouselView: UIView {
         btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 1
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.4
+        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
+        btn.layer.shadowRadius = 4
         return btn
     }()
     
@@ -44,6 +48,10 @@ class CarouselView: UIView {
         btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 2
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.4
+        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
+        btn.layer.shadowRadius = 4
         return btn
     }()
     
@@ -52,6 +60,10 @@ class CarouselView: UIView {
         btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 3
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.4
+        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
+        btn.layer.shadowRadius = 4
         return btn
     }()
     
@@ -60,6 +72,10 @@ class CarouselView: UIView {
         btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 4
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.4
+        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
+        btn.layer.shadowRadius = 4
         return btn
     }()
     
@@ -68,6 +84,10 @@ class CarouselView: UIView {
         btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 5
         btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.4
+        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
+        btn.layer.shadowRadius = 4
         return btn
     }()
     
