@@ -1,7 +1,7 @@
 import UIKit
 
 import FirebaseAuth
-import FirebaseDatabase
+import FirebaseFirestore
 import SnapKit
 
 class JoinupPageViewController: UIViewController {
@@ -17,12 +17,6 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        oilModelView.oilCollectionView.register(OilModelCollectionViewCell.self, forCellWithReuseIdentifier: "oilModelCollectionViewCell")
-        oilModelView.oilCollectionView.dataSource = self
-        oilModelView.oilCollectionView.delegate = self
-        oilModelView.oilCollectionView.reloadData()
-
         setupUI()
     }
 
@@ -34,6 +28,7 @@ class JoinupPageViewController: UIViewController {
         }
 
         joinupView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        joinupView.checkEmailButton.addTarget(self, action: #selector(checkEmailButtonTapped), for: .touchUpInside)
         joinupView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         joinupView.confirmPasswordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         joinupView.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
@@ -51,72 +46,116 @@ class JoinupPageViewController: UIViewController {
     }
 }
 
-extension JoinupPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyData.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = oilModelView.oilCollectionView.dequeueReusableCell(withReuseIdentifier: "oilModelCollectionViewCell", for: indexPath) as! OilModelCollectionViewCell
-        cell.label.text = dummyData[indexPath.item]
-        return cell
-    }
-}
-
-extension JoinupPageViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionViewWidth = collectionView.bounds.width
-        let collectionViewHeight = collectionView.bounds.height
-        return CGSize(width: collectionViewWidth, height: collectionViewHeight)
-    }
-}
-
 extension JoinupPageViewController {
-    @objc func textFieldDidChange() {
-        
+    @objc func textFieldDidChange() {}
+
+    @objc func checkEmailButtonTapped() {
+        guard let emailToCheck = joinupView.emailTextField.text else {
+               return
+           }
+
+           let db = Firestore.firestore()
+           let usersRef = db.collection("users")
+
+           // Firestore에서 모든 사용자 이메일 가져오기
+           usersRef.getDocuments { (querySnapshot, error) in
+               if let error = error {
+                   print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                   return
+               }
+               
+               var isEmailAvailable = true
+               
+               for document in querySnapshot?.documents ?? [] {
+                   if let email = document.data()["email"] as? String {
+                       if email == emailToCheck {
+                           isEmailAvailable = false
+                           break
+                       }
+                   }
+               }
+
+               if isEmailAvailable {
+                   self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
+                   self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
+               } else {
+                   self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
+                   self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
+                   self.showAlert(message: "이미 사용중인 아이디입니다")
+               }
+           }
+    }
+
+    func showEmailAlreadyInUseAlert() {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.red.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.text = "이메일이 이미 사용 중입니다."
+        toastLabel.font = UIFont.systemFont(ofSize: 16)
+        toastLabel.numberOfLines = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+
+        let toastHeight: CGFloat = 40
+        let xOffset: CGFloat = 20
+        let yOffset: CGFloat = 20
+
+        if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
+            // Safe area inset을 사용하여 위치 계산
+            let safeArea = window.safeAreaInsets
+            toastLabel.frame = CGRect(x: xOffset, y: window.frame.height - safeArea.top - yOffset - toastHeight, width: window.frame.width - 2 * xOffset, height: toastHeight)
+            window.addSubview(toastLabel)
+
+            UIView.animate(withDuration: 3.0, delay: 0.6, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }, completion: { _ in
+                toastLabel.removeFromSuperview()
+            })
+        }
     }
 
     @objc func joinInButtonTapped() {
         // 유효성 검사를 위한 입력 값 가져오기
-           guard let email = joinupView.emailTextField.text,
-                 let password = joinupView.passwordTextField.text,
-                 let confirmPassword = joinupView.confirmPasswordTextField.text
-           else {
-               return
-           }
+        guard let email = joinupView.emailTextField.text,
+              let password = joinupView.passwordTextField.text,
+              let confirmPassword = joinupView.confirmPasswordTextField.text
+        else {
+            return
+        }
 
-           let isEmailValid = email.isValidEmail()
-           let isPasswordValid = password.isValidPassword()
-           let isConfirmPasswordValid = confirmPassword == password
+        let isEmailValid = email.isValidEmail()
+        let isPasswordValid = password.isValidPassword()
+        let isConfirmPasswordValid = confirmPassword == password
 
-           if isEmailValid && isPasswordValid && isConfirmPasswordValid {
-               // 모든 조건을 만족하면 다음 단계로 이동
-               view.addSubview(carNumberView)
-               joinupView.isHidden = true
-               carNumberView.isHidden = false
-               carNumberView.snp.makeConstraints { make in
-                   make.edges.equalToSuperview()
-               }
-           } else {
-               // 조건을 만족하지 않을 때 경고 표시
-               var alertMessage = ""
-               if !isEmailValid {
-                   alertMessage = "올바른 이메일 형식으로 써주세요"
-               } else if !isPasswordValid {
-                   alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
-               } else if !isConfirmPasswordValid {
-                   alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
-               }
-               showAlert(message: alertMessage)
-           }
+        if isEmailValid, isPasswordValid, isConfirmPasswordValid {
+            // 모든 조건을 만족하면 다음 단계로 이동
+            view.addSubview(carNumberView)
+            joinupView.isHidden = true
+            carNumberView.isHidden = false
+            carNumberView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        } else {
+            // 조건을 만족하지 않을 때 경고 표시
+            var alertMessage = ""
+            if !isEmailValid {
+                alertMessage = "올바른 이메일 형식으로 써주세요"
+            } else if !isPasswordValid {
+                alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
+            } else if !isConfirmPasswordValid {
+                alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
+            }
+            showAlert(message: alertMessage)
+        }
     }
 
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "경고", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
+
     @objc func joininPopButtonTapped() {
         dismiss(animated: true)
     }
@@ -183,11 +222,32 @@ extension JoinupPageViewController {
     }
 
     @objc func totalDistanceViewNextButtonTapped() {
-        Auth.auth().createUser(withEmail: joinupView.emailTextField.text!, password: joinupView.passwordTextField.text!) { _, _ in
-            let uid = Auth.auth().currentUser?.uid
+        signUpUser()
+    }
 
-            Database.database().reference().child("users").child(uid!).setValue(["name": self.nickNameView.carNickNameTextField.text])
-            self.dismiss(animated: true)
-        }
+    func signUpUser() {
+        guard let email = joinupView.emailTextField.text,
+                  let password = joinupView.passwordTextField.text else {
+                return
+            }
+            
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let error = error {
+                    print("회원가입 실패: \(error.localizedDescription)")
+                    return
+                }
+                if let email = authResult?.user.email {
+                    let db = Firestore.firestore()
+                    db.collection("users").addDocument(data: [
+                        "email": email
+                    ]) { error in
+                        if let error = error {
+                            print("사용자 데이터 Firestore에 저장 실패: \(error.localizedDescription)")
+                        } else {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                }
+            }
     }
 }

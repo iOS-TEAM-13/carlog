@@ -20,7 +20,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var writeDateLabel: UILabel = {
         let writeDateLabel = UILabel()
         writeDateLabel.textColor = .darkGray
-        writeDateLabel.font = Constants.fontJua14 ?? UIFont()
+        writeDateLabel.font = Constants.fontJua16 ?? UIFont()
         return writeDateLabel
     }()
     
@@ -28,14 +28,14 @@ class DrivingCollectionViewCell: UICollectionViewCell {
         let cellBottomLabelStackView = UIStackView(arrangedSubviews: [driveDistenceLabel, departDistenceLabel])
         cellBottomLabelStackView.axis = .horizontal
         cellBottomLabelStackView.distribution = .equalSpacing
-        cellBottomLabelStackView.alignment = .center
+        cellBottomLabelStackView.alignment = .bottom
         return cellBottomLabelStackView
     }()
     
     lazy var driveDistenceLabel: UILabel = {
         let driveDistenceLabel = UILabel()
         driveDistenceLabel.textColor = .black
-        driveDistenceLabel.font = Constants.fontJua28 ?? UIFont()
+        driveDistenceLabel.font = Constants.fontJua32 ?? UIFont()
         return driveDistenceLabel
     }()
     

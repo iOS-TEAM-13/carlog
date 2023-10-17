@@ -18,18 +18,16 @@ class AddDrivingView: UIView {
     
     lazy var addPhotoButton: UIButton = {
         let addPhotoButton = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 50, weight: .regular))
-        addPhotoButton.configuration = config
-        addPhotoButton.backgroundColor = .primaryColor
-        addPhotoButton.layer.cornerRadius = 10
+        addPhotoButton.setImage(UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)), for: .normal)
+        addPhotoButton.backgroundColor = .thirdColor
+        addPhotoButton.layer.cornerRadius = Constants.cornerRadius
         return addPhotoButton
     }()
     
-    lazy var inputFuelingStackView: UIStackView = {
-        let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, arriveDistanceStackView, driveDistenceStackView])
-        inputFuelingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
-        return inputFuelingStackView
+    lazy var inputDrivingStackView: UIStackView = {
+        let inputDrivingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, arriveDistanceStackView, driveDistenceStackView])
+        inputDrivingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
+        return inputDrivingStackView
     }()
     
     lazy var totalDistanceStackView: UIStackView = {
@@ -49,10 +47,10 @@ class AddDrivingView: UIView {
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
         totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
-        totalDistanceTextField.layer.borderWidth = 1
-        totalDistanceTextField.layer.cornerRadius = 4
+        totalDistanceTextField.layer.borderWidth = 1.5
+        totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -62,15 +60,13 @@ class AddDrivingView: UIView {
         nextTextField.setItems([flexibleSpace, nextButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         totalDistanceTextField.inputAccessoryView = nextTextField
-        //
+        
         return totalDistanceTextField
     }()
     
-    //
     @objc func nextPriceTextField() {
         self.arriveDistanceTextField.becomeFirstResponder()
     }
-    //
     
     lazy var arriveDistanceStackView: UIStackView = {
         let arriveDistanceStackView = UIStackView(arrangedSubviews: [arriveDistanceLabel, arriveDistanceTextField])
@@ -89,10 +85,10 @@ class AddDrivingView: UIView {
     lazy var arriveDistanceTextField: UITextField = {
         let arriveDistanceTextField = UITextField()
         arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 17665", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: arriveDistanceTextField.frame.size.height)))
-        arriveDistanceTextField.layer.borderWidth = 1
-        arriveDistanceTextField.layer.cornerRadius = 4
+        arriveDistanceTextField.layer.borderWidth = 1.5
+        arriveDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         arriveDistanceTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -103,11 +99,10 @@ class AddDrivingView: UIView {
         nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         arriveDistanceTextField.inputAccessoryView = nextTextField
-        //
+        
         return arriveDistanceTextField
     }()
     
-    //
     @objc func beforeTotalDistanceTextField() {
         self.totalDistanceTextField.becomeFirstResponder()
     }
@@ -115,7 +110,6 @@ class AddDrivingView: UIView {
     @objc func nextdriveDistenceTextField() {
         self.driveDistenceTextField.becomeFirstResponder()
     }
-    //
     
     lazy var driveDistenceStackView: UIStackView = {
         let driveDistenceStackView = UIStackView(arrangedSubviews: [driveDistenceLabel, driveDistenceTextField])
@@ -133,10 +127,10 @@ class AddDrivingView: UIView {
     lazy var driveDistenceTextField: UITextField = {
         let driveDistenceTextField = UITextField()
         driveDistenceTextField.historyCustomTextField(placeholder: "ex) 10", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: driveDistenceTextField.frame.size.height)))
-        driveDistenceTextField.layer.borderWidth = 1
-        driveDistenceTextField.layer.cornerRadius = 4
+        driveDistenceTextField.layer.borderWidth = 1.5
+        driveDistenceTextField.layer.cornerRadius = Constants.cornerRadius
         driveDistenceTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -145,15 +139,13 @@ class AddDrivingView: UIView {
         nextTextField.setItems([beforeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         driveDistenceTextField.inputAccessoryView = nextTextField
-        //
+        
         return driveDistenceTextField
     }()
     
-    //
     @objc func beforeArriveDistanceTextField() {
         self.arriveDistanceTextField.becomeFirstResponder()
     }
-    //
     
     //MARK: - 단위 Label
     lazy var kmLabel: UILabel = {
@@ -177,22 +169,22 @@ class AddDrivingView: UIView {
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
-        buttonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .fill)
+        buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
         buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
-        saveButton.layer.cornerRadius = 10
+        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
-        cancelButton.layer.cornerRadius = 10
+        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()
     
@@ -209,7 +201,7 @@ class AddDrivingView: UIView {
     private func setupUI() {
         addSubview(addDrivingPageLabel)
         addSubview(addPhotoButton)
-        addSubview(inputFuelingStackView)
+        addSubview(inputDrivingStackView)
         addSubview(buttonStackView)
         
         totalDistanceStackView.addSubview(kmLabel)
@@ -223,8 +215,9 @@ class AddDrivingView: UIView {
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(20)
+            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(40)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.width.height.equalTo(100)
         }
         
         totalDistanceLabel.snp.makeConstraints { make in
@@ -239,8 +232,8 @@ class AddDrivingView: UIView {
             make.trailing.equalTo(addPhotoButton.snp.trailing)
         }
         
-        inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
+        inputDrivingStackView.snp.makeConstraints { make in
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(25)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
@@ -261,9 +254,9 @@ class AddDrivingView: UIView {
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(inputFuelingStackView.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-40)
             make.height.equalTo(50)
         }
     }

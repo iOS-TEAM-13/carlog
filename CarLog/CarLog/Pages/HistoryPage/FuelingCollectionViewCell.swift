@@ -1,15 +1,14 @@
 //
-//  FuelingCell.swift
+//  FuelingCollectionViewCell.swift
 //  CarLog
 //
-//  Created by 김지훈 on 2023/10/12.
+//  Created by 김지훈 on 2023/10/17.
 //
 
 import SnapKit
 import UIKit
 
-class FuelingCell: UITableViewCell {
-    
+class FuelingCollectionViewCell: UICollectionViewCell {
     lazy var cellLabelStackView: UIStackView = {
         let cellLabelStackView = UIStackView(arrangedSubviews: [cellTopLabelStackView, cellBottomLabelStackView])
         cellLabelStackView.axis = .vertical
@@ -21,14 +20,14 @@ class FuelingCell: UITableViewCell {
         let cellTopLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, priceLabel])
         cellTopLabelStackView.axis = .horizontal
         cellTopLabelStackView.distribution = .equalSpacing
-        cellTopLabelStackView.alignment = .center
+        cellTopLabelStackView.alignment = .top
         return cellTopLabelStackView
     }()
     
     lazy var writeDateLabel: UILabel = {
         let writeDateLabel = UILabel()
         writeDateLabel.textColor = .darkGray
-        writeDateLabel.font = Constants.fontJua14 ?? UIFont()
+        writeDateLabel.font = Constants.fontJua16 ?? UIFont()
         return writeDateLabel
     }()
     
@@ -43,14 +42,14 @@ class FuelingCell: UITableViewCell {
         let cellBottomLabelStackView = UIStackView(arrangedSubviews: [totalPriceLabel, countLabel])
         cellBottomLabelStackView.axis = .horizontal
         cellBottomLabelStackView.distribution = .equalSpacing
-        cellBottomLabelStackView.alignment = .center
+        cellBottomLabelStackView.alignment = .bottom
         return cellBottomLabelStackView
     }()
     
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
         totalPriceLabel.textColor = .black
-        totalPriceLabel.font = Constants.fontJua28 ?? UIFont()
+        totalPriceLabel.font = Constants.fontJua32 ?? UIFont()
         return totalPriceLabel
     }()
     
@@ -60,25 +59,14 @@ class FuelingCell: UITableViewCell {
         countLabel.font = Constants.fontJua20 ?? UIFont()
         return countLabel
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("Not implemented required init?(coder: NSCoder)")
     }
     
     func setupUI() {
@@ -91,5 +79,5 @@ class FuelingCell: UITableViewCell {
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
     }
-
+    
 }
