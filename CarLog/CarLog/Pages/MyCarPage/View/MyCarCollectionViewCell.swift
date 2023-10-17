@@ -39,7 +39,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private let clickedIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(systemName: "arrowtriangle.right.fill")
+        view.image = UIImage(systemName: "chevron.forward")
         view.tintColor = .primaryColor
         return view
     }()
