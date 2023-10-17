@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Comment {
-    let id: UUID
+struct Comment: Codable {
+    let id: String
     let content: String
-    let userId: UUID
+    let userId: String
     let userName: String
 }
