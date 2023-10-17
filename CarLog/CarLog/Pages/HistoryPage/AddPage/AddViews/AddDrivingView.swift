@@ -9,19 +9,11 @@ import SnapKit
 import UIKit
 
 class AddDrivingView: UIView {
-
+    
     lazy var addDrivingPageLabel: UILabel = {
         let addDrivingPageLabel = UILabel()
         addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
         return addDrivingPageLabel
-    }()
-    
-    lazy var addPhotoButton: UIButton = {
-        let addPhotoButton = UIButton()
-        addPhotoButton.setImage(UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)), for: .normal)
-        addPhotoButton.backgroundColor = .thirdColor
-        addPhotoButton.layer.cornerRadius = Constants.cornerRadius
-        return addPhotoButton
     }()
     
     lazy var inputDrivingStackView: UIStackView = {
@@ -200,7 +192,6 @@ class AddDrivingView: UIView {
     
     private func setupUI() {
         addSubview(addDrivingPageLabel)
-        addSubview(addPhotoButton)
         addSubview(inputDrivingStackView)
         addSubview(buttonStackView)
         
@@ -214,26 +205,8 @@ class AddDrivingView: UIView {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
-        addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(40)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.width.height.equalTo(100)
-        }
-        
-        totalDistanceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        arriveDistanceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        driveDistenceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
         inputDrivingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(25)
+            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
@@ -260,5 +233,5 @@ class AddDrivingView: UIView {
             make.height.equalTo(50)
         }
     }
-
+    
 }

@@ -16,14 +16,6 @@ class AddFuelingView: UIView {
         return addFuelingPageLabel
     }()
     
-    lazy var addPhotoButton: UIButton = {
-        let addPhotoButton = UIButton()
-        addPhotoButton.setImage(UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)), for: .normal)
-        addPhotoButton.backgroundColor = .thirdColor
-        addPhotoButton.layer.cornerRadius = Constants.cornerRadius
-        return addPhotoButton
-    }()
-    
     lazy var inputFuelingStackView: UIStackView = {
         let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, priceStackView, countStackView, totalPriceStackView])
         inputFuelingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
@@ -247,7 +239,6 @@ class AddFuelingView: UIView {
     
     private func setupUI() {
         addSubview(addFuelingPageLabel)
-        addSubview(addPhotoButton)
         addSubview(inputFuelingStackView)
         addSubview(buttonStackView)
         
@@ -262,31 +253,8 @@ class AddFuelingView: UIView {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
-        addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(40)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.height.equalTo(totalDistanceLabel.snp.width)
-            make.width.height.equalTo(100)
-        }
-        
-        totalDistanceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        priceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        countLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        totalPriceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
         inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(25)
+            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
