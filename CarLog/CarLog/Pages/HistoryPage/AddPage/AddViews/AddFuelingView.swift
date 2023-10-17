@@ -12,17 +12,15 @@ class AddFuelingView: UIView {
     
     lazy var addFuelingPageLabel: UILabel = {
         let addFuelingPageLabel = UILabel()
-        addFuelingPageLabel.customLabel(text: "휘발유 or 경유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
+        addFuelingPageLabel.customLabel(text: "휘발유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
         return addFuelingPageLabel
     }()
     
     lazy var addPhotoButton: UIButton = {
         let addPhotoButton = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 50, weight: .regular))
-        addPhotoButton.configuration = config
-        addPhotoButton.backgroundColor = .primaryColor
-        addPhotoButton.layer.cornerRadius = 10
+        addPhotoButton.setImage(UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)), for: .normal)
+        addPhotoButton.backgroundColor = .thirdColor
+        addPhotoButton.layer.cornerRadius = Constants.cornerRadius
         return addPhotoButton
     }()
     
@@ -49,10 +47,10 @@ class AddFuelingView: UIView {
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
         totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
-        totalDistanceTextField.layer.borderWidth = 1
-        totalDistanceTextField.layer.cornerRadius = 4
+        totalDistanceTextField.layer.borderWidth = 1.5
+        totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -62,15 +60,13 @@ class AddFuelingView: UIView {
         nextTextField.setItems([flexibleSpace, nextButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         totalDistanceTextField.inputAccessoryView = nextTextField
-        //
+        
         return totalDistanceTextField
     }()
     
-    //
     @objc func nextPriceTextField() {
         self.priceTextField.becomeFirstResponder()
     }
-    //
     
     lazy var priceStackView: UIStackView = {
         let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField])
@@ -88,10 +84,10 @@ class AddFuelingView: UIView {
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
         priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: priceTextField.frame.size.height)))
-        priceTextField.layer.borderWidth = 1
-        priceTextField.layer.cornerRadius = 4
+        priceTextField.layer.borderWidth = 1.5
+        priceTextField.layer.cornerRadius = Constants.cornerRadius
         priceTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -102,11 +98,10 @@ class AddFuelingView: UIView {
         nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         priceTextField.inputAccessoryView = nextTextField
-        //
+        
         return priceTextField
     }()
     
-    //
     @objc func beforeTotalDistanceTextField() {
         self.totalDistanceTextField.becomeFirstResponder()
     }
@@ -114,7 +109,6 @@ class AddFuelingView: UIView {
     @objc func nextCountTextField() {
         self.countTextField.becomeFirstResponder()
     }
-    //
     
     lazy var countStackView: UIStackView = {
         let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField])
@@ -132,10 +126,10 @@ class AddFuelingView: UIView {
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
         countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
-        countTextField.layer.borderWidth = 1
-        countTextField.layer.cornerRadius = 4
+        countTextField.layer.borderWidth = 1.5
+        countTextField.layer.cornerRadius = Constants.cornerRadius
         countTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -146,11 +140,10 @@ class AddFuelingView: UIView {
         nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         countTextField.inputAccessoryView = nextTextField
-        //
+        
         return countTextField
     }()
     
-    //
     @objc func beforeTotalPriceTextField() {
         self.priceTextField.becomeFirstResponder()
     }
@@ -158,7 +151,6 @@ class AddFuelingView: UIView {
     @objc func nextTotalPriceTextField() {
         self.totalPriceTextField.becomeFirstResponder()
     }
-    //
     
     lazy var totalPriceStackView: UIStackView = {
         let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField])
@@ -176,10 +168,10 @@ class AddFuelingView: UIView {
     lazy var totalPriceTextField: UITextField = {
         let totalPriceTextField = UITextField()
         totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
-        totalPriceTextField.layer.borderWidth = 1
-        totalPriceTextField.layer.cornerRadius = 4
+        totalPriceTextField.layer.borderWidth = 1.5
+        totalPriceTextField.layer.cornerRadius = Constants.cornerRadius
         totalPriceTextField.keyboardType = .decimalPad
-        //
+        
         let nextTextField = UIToolbar()
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
@@ -188,15 +180,13 @@ class AddFuelingView: UIView {
         nextTextField.setItems([beforeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         totalPriceTextField.inputAccessoryView = nextTextField
-        //
+        
         return totalPriceTextField
     }()
     
-    //
     @objc func beforeCountTextField() {
         self.countTextField.becomeFirstResponder()
     }
-    //
     
     //MARK: - 단위 Label
     lazy var kmLabel: UILabel = {
@@ -226,22 +216,22 @@ class AddFuelingView: UIView {
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
-        buttonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .fill)
+        buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
         buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
-        saveButton.layer.cornerRadius = 10
+        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .primaryColor)
-        cancelButton.layer.cornerRadius = 10
+        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()
 
@@ -273,8 +263,10 @@ class AddFuelingView: UIView {
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(20)
+            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(40)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.height.equalTo(totalDistanceLabel.snp.width)
+            make.width.height.equalTo(100)
         }
         
         totalDistanceLabel.snp.makeConstraints { make in
@@ -294,7 +286,7 @@ class AddFuelingView: UIView {
         }
         
         inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(25)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
@@ -320,9 +312,9 @@ class AddFuelingView: UIView {
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(inputFuelingStackView.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-40)
             make.height.equalTo(50)
         }
     }
