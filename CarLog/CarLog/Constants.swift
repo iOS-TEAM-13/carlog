@@ -16,15 +16,19 @@ struct Constants {
     static let fontJua40 = UIFont(name: "Jua", size: 40)
     
     enum CheckView {
-        case engineView
-        case missionOilView
-        case brakeOilView
-        case brakePadView
-        case tireRotationView
-        case tireView
-        case filterView
-        case wiperView
-        case airconFilterView
+        case normalView
         case insuranceView
     }
 }
+
+//extension UITableViewCell {
+//    static var identifier: String {
+//        return String(describing: self)
+//    }
+//}
+//
+//extension UICollectionViewCell {
+//    static var identifier: String {
+//        return String(describing: self)
+//    }
+//}
