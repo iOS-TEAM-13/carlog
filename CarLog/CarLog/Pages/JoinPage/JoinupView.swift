@@ -12,7 +12,24 @@ class JoinupView: UIView {
         return label
     }()
 
-    lazy var emailTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "아이디")
+    lazy var emailTextField: UITextField = {
+        let textField = UITextField()
+        textField.loginCustomTextField(placeholder: "아이디", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.rightView = checkEmailButton
+        textField.rightViewMode = .always
+        return textField
+    }()
+    
+    lazy var checkEmailButton: UIButton = {
+        var configuration = UIButton.Configuration.tinted()
+        configuration.baseBackgroundColor = .white
+        configuration.imagePadding = 10
+        
+        let button = UIButton(configuration: configuration)
+        button.customButton(text: "ID중복", font: Constants.fontJua14 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
+        button.frame = CGRect(x: 0, y: 0, width: 20, height: 30)
+        return button
+    }()
     
     lazy var emailAlertLabel: UILabel = {
         let label = UILabel()
@@ -87,13 +104,14 @@ class JoinupView: UIView {
         button.customButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
         return button
     }()
+
     lazy var popButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
         return button
     }()
     
-    //showPasswordButton, showConfirmPasswordButton 공통부분
+    // showPasswordButton, showConfirmPasswordButton 공통부분
     private func makeToggleButton() -> UIButton {
         var configuration = UIButton.Configuration.tinted()
         configuration.image = UIImage(named: "invisible")
@@ -160,7 +178,7 @@ class JoinupView: UIView {
         toggleVisibility(button: showConfirmPasswordButton, textField: confirmPasswordTextField)
     }
     
-    private func toggleVisibility(button: UIButton, textField: UITextField){
+    private func toggleVisibility(button: UIButton, textField: UITextField) {
         let imageName = isSecure ? "eye" : "invisible"
         button.setImage(UIImage(named: imageName), for: .normal)
         isSecure.toggle()

@@ -34,6 +34,7 @@ class JoinupPageViewController: UIViewController {
         }
 
         joinupView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        joinupView.checkEmailButton.addTarget(self, action: #selector(checkEmailButtonTapped), for: .touchUpInside)
         joinupView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         joinupView.confirmPasswordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         joinupView.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
@@ -72,51 +73,111 @@ extension JoinupPageViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension JoinupPageViewController {
-    @objc func textFieldDidChange() {
-        
+    @objc func textFieldDidChange() {}
+
+    @objc func checkEmailButtonTapped() {
+        checkEmailDuplication(email: joinupView.emailTextField.text ?? "?") { isDuplicate, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else {
+                if isDuplicate {
+                    self.joinupView.checkEmailButton.setTitle("완료", for: .normal)
+                } else {
+                    print("이메일이 이미 사용 중입니다.")
+                    self.showEmailAlreadyInUseAlert()
+                }
+            }
+        }
+    }
+
+    func showEmailAlreadyInUseAlert() {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.red.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.text = "이메일이 이미 사용 중입니다."
+        toastLabel.font = UIFont.systemFont(ofSize: 16)
+        toastLabel.numberOfLines = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+
+        let toastHeight: CGFloat = 40
+        let xOffset: CGFloat = 20
+        let yOffset: CGFloat = 20
+
+        if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
+            // Safe area inset을 사용하여 위치 계산
+            let safeArea = window.safeAreaInsets
+            toastLabel.frame = CGRect(x: xOffset, y: window.frame.height - safeArea.top - yOffset - toastHeight, width: window.frame.width - 2 * xOffset, height: toastHeight)
+            window.addSubview(toastLabel)
+
+            UIView.animate(withDuration: 3.0, delay: 0.6, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }, completion: { _ in
+                toastLabel.removeFromSuperview()
+            })
+        }
+    }
+
+    func checkEmailDuplication(email: String, completion: @escaping (Bool, Error?) -> Void) {
+        Auth.auth().fetchSignInMethods(forEmail: email) { methods, error in
+            if let error = error {
+                print("Error checking email duplication: \(error.localizedDescription)")
+                completion(false, error)
+                return
+            }
+
+            if let signInMethods = methods, signInMethods.isEmpty {
+                // 이메일이 이미 사용 중이지 않음
+                completion(true, nil)
+            } else {
+                // 이메일이 이미 사용 중
+                completion(false, nil)
+            }
+        }
     }
 
     @objc func joinInButtonTapped() {
         // 유효성 검사를 위한 입력 값 가져오기
-           guard let email = joinupView.emailTextField.text,
-                 let password = joinupView.passwordTextField.text,
-                 let confirmPassword = joinupView.confirmPasswordTextField.text
-           else {
-               return
-           }
+        guard let email = joinupView.emailTextField.text,
+              let password = joinupView.passwordTextField.text,
+              let confirmPassword = joinupView.confirmPasswordTextField.text
+        else {
+            return
+        }
 
-           let isEmailValid = email.isValidEmail()
-           let isPasswordValid = password.isValidPassword()
-           let isConfirmPasswordValid = confirmPassword == password
+        let isEmailValid = email.isValidEmail()
+        let isPasswordValid = password.isValidPassword()
+        let isConfirmPasswordValid = confirmPassword == password
 
-           if isEmailValid && isPasswordValid && isConfirmPasswordValid {
-               // 모든 조건을 만족하면 다음 단계로 이동
-               view.addSubview(carNumberView)
-               joinupView.isHidden = true
-               carNumberView.isHidden = false
-               carNumberView.snp.makeConstraints { make in
-                   make.edges.equalToSuperview()
-               }
-           } else {
-               // 조건을 만족하지 않을 때 경고 표시
-               var alertMessage = ""
-               if !isEmailValid {
-                   alertMessage = "올바른 이메일 형식으로 써주세요"
-               } else if !isPasswordValid {
-                   alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
-               } else if !isConfirmPasswordValid {
-                   alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
-               }
-               showAlert(message: alertMessage)
-           }
+        if isEmailValid, isPasswordValid, isConfirmPasswordValid {
+            // 모든 조건을 만족하면 다음 단계로 이동
+            view.addSubview(carNumberView)
+            joinupView.isHidden = true
+            carNumberView.isHidden = false
+            carNumberView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        } else {
+            // 조건을 만족하지 않을 때 경고 표시
+            var alertMessage = ""
+            if !isEmailValid {
+                alertMessage = "올바른 이메일 형식으로 써주세요"
+            } else if !isPasswordValid {
+                alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
+            } else if !isConfirmPasswordValid {
+                alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
+            }
+            showAlert(message: alertMessage)
+        }
     }
 
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "경고", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
+
     @objc func joininPopButtonTapped() {
         dismiss(animated: true)
     }
