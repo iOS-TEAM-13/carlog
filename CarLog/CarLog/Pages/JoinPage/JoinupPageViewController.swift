@@ -76,15 +76,14 @@ extension JoinupPageViewController {
     @objc func textFieldDidChange() {}
 
     @objc func checkEmailButtonTapped() {
-        checkEmailDuplication(email: joinupView.emailTextField.text ?? "?") { isDuplicate, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-            } else {
-                if isDuplicate {
-                    self.joinupView.checkEmailButton.setTitle("완료", for: .normal)
+        guard let email = joinupView.emailTextField.text else { return }
+        checkEmailDuplication(email: email) { [weak self] success, _ in
+            DispatchQueue.main.async {
+                if success {
+                    self?.joinupView.checkEmailButton.setTitle("사용가능", for: .normal)
                 } else {
-                    print("이메일이 이미 사용 중입니다.")
-                    self.showEmailAlreadyInUseAlert()
+                    self?.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
+                    self?.showEmailAlreadyInUseAlert()
                 }
             }
         }

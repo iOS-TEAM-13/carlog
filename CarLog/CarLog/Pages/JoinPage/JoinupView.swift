@@ -26,7 +26,7 @@ class JoinupView: UIView {
         configuration.imagePadding = 10
         
         let button = UIButton(configuration: configuration)
-        button.customButton(text: "ID중복", font: Constants.fontJua14 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
+        button.customButton(text: "중복확인", font: Constants.fontJua14 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 30)
         return button
     }()
