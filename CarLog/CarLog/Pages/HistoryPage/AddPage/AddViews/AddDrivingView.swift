@@ -169,7 +169,7 @@ class AddDrivingView: UIView {
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
-        buttonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .fill)
+        buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
         buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
