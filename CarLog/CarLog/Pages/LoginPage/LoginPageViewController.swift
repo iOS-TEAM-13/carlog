@@ -12,6 +12,7 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
+        setDetailKeyboardNotification()
         keepLogin()
     }
 
@@ -20,16 +21,52 @@ class LoginPageViewController: UIViewController {
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview() // LoginPageProperties 뷰를 슈퍼뷰에 맞게 설정
         }
-        loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        loginView.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-        loginView.appleLoginButton.addTarget(self, action: #selector(appleLogInTapped), for: .touchUpInside)
+        addTargets()
+    }
+    
+    func addTargets() {
+        loginView.emailTextField.addAction(UIAction(handler: { _ in self.textFieldDidChange()}), for: .editingChanged)
+        loginView.passwordTextField.addAction(UIAction(handler: { _ in self.textFieldDidChange()}), for: .editingChanged)
+        loginView.loginButton.addAction(UIAction(handler: { _ in
+            guard let email = self.loginView.emailTextField.text, let password = self.loginView.passwordTextField.text else { return }
+
+            LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
+                if isSuccess {
+                } else {
+                    if error != nil {
+                        // 로그인 실패 시 에러 메시지 표시
+                        let alert = UIAlertController(title: "로그인 실패", message: "로그인과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        // 에러가 Firebase에서 반환되지 않은 경우 에러 메시지 표시
+                        let alert = UIAlertController(title: "로그인 실패", message: "서버가 연결되지 않았습니다.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }), for: .touchUpInside)
+        loginView.joinupButton.addAction(UIAction(handler: { _ in
+            let joinPageViewController = JoinupPageViewController()
+            joinPageViewController.modalPresentationStyle = .fullScreen
+            self.present(joinPageViewController, animated: true, completion: nil)
+        }), for: .touchUpInside)
+        loginView.appleLoginButton.addAction(UIAction(handler: { _ in
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.presentationContextProvider = self
+            authorizationController.performRequests()
+        }), for: .touchUpInside)
     }
 
-    @objc func textFieldDidChange() {
-        let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
-        let isPasswordValid = loginView.passwordTextField.text?.isValidPassword() ?? false
+    func textFieldDidChange() {
+        let isEmailValid = self.loginView.emailTextField.text?.isValidEmail() ?? false
+        let isPasswordValid = self.loginView.passwordTextField.text?.isValidPassword() ?? false
 
         UIView.animate(withDuration: 0.3) {
             if isEmailValid && isPasswordValid {
@@ -42,44 +79,6 @@ class LoginPageViewController: UIViewController {
                 self.loginView.loginButton.backgroundColor = .thirdColor
             }
         }
-    }
-
-    @objc func loginButtonTapped() {
-        guard let email = loginView.emailTextField.text, let password = loginView.passwordTextField.text else { return }
-
-        LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
-            if isSuccess {
-            } else {
-                if error != nil {
-                    // 로그인 실패 시 에러 메시지 표시
-                    let alert = UIAlertController(title: "로그인 실패", message: "로그인과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default))
-                    self.present(alert, animated: true, completion: nil)
-                } else {
-                    // 에러가 Firebase에서 반환되지 않은 경우 에러 메시지 표시
-                    let alert = UIAlertController(title: "로그인 실패", message: "서버가 연결되지 않았습니다.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
-    @objc func appleLogInTapped() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-
-    @objc func signupButtonTapped() {
-        let joinPageViewController = JoinupPageViewController()
-        joinPageViewController.modalPresentationStyle = .fullScreen
-        present(joinPageViewController, animated: true, completion: nil)
     }
 
     func mainTabBarController() -> UITabBarController {
