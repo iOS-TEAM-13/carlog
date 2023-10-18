@@ -51,67 +51,24 @@ extension JoinupPageViewController {
 
     @objc func checkEmailButtonTapped() {
         guard let emailToCheck = joinupView.emailTextField.text else {
-               return
-           }
+            return
+        }
 
-           let db = Firestore.firestore()
-           let usersRef = db.collection("users")
+        FirestoreService.firestoreService.checkingEmail(email: emailToCheck) { isEmailAvailable, error in
+            if let error = error {
+                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                return
+            }
 
-           // Firestore에서 모든 사용자 이메일 가져오기
-           usersRef.getDocuments { (querySnapshot, error) in
-               if let error = error {
-                   print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
-                   return
-               }
-               
-               var isEmailAvailable = true
-               
-               for document in querySnapshot?.documents ?? [] {
-                   if let email = document.data()["email"] as? String {
-                       if email == emailToCheck {
-                           isEmailAvailable = false
-                           break
-                       }
-                   }
-               }
-
-               if isEmailAvailable {
-                   self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
-                   self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
-               } else {
-                   self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
-                   self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
-                   self.showAlert(message: "이미 사용중인 아이디입니다")
-               }
-           }
-    }
-
-    func showEmailAlreadyInUseAlert() {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = UIColor.red.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center
-        toastLabel.text = "이메일이 이미 사용 중입니다."
-        toastLabel.font = UIFont.systemFont(ofSize: 16)
-        toastLabel.numberOfLines = 0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-
-        let toastHeight: CGFloat = 40
-        let xOffset: CGFloat = 20
-        let yOffset: CGFloat = 20
-
-        if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
-            // Safe area inset을 사용하여 위치 계산
-            let safeArea = window.safeAreaInsets
-            toastLabel.frame = CGRect(x: xOffset, y: window.frame.height - safeArea.top - yOffset - toastHeight, width: window.frame.width - 2 * xOffset, height: toastHeight)
-            window.addSubview(toastLabel)
-
-            UIView.animate(withDuration: 3.0, delay: 0.6, options: .curveEaseOut, animations: {
-                toastLabel.alpha = 0.0
-            }, completion: { _ in
-                toastLabel.removeFromSuperview()
-            })
+            if isEmailAvailable {
+                self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
+                self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
+            } else {
+                self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
+                self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
+                self.showAlert(message: "이미 사용중인 아이디입니다")
+                self.joinupView.emailTextField.text = ""
+            }
         }
     }
 
@@ -222,32 +179,12 @@ extension JoinupPageViewController {
     }
 
     @objc func totalDistanceViewNextButtonTapped() {
-        signUpUser()
-    }
-
-    func signUpUser() {
         guard let email = joinupView.emailTextField.text,
-                  let password = joinupView.passwordTextField.text else {
-                return
-            }
-            
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if let error = error {
-                    print("회원가입 실패: \(error.localizedDescription)")
-                    return
-                }
-                if let email = authResult?.user.email {
-                    let db = Firestore.firestore()
-                    db.collection("users").addDocument(data: [
-                        "email": email
-                    ]) { error in
-                        if let error = error {
-                            print("사용자 데이터 Firestore에 저장 실패: \(error.localizedDescription)")
-                        } else {
-                            self.dismiss(animated: true)
-                        }
-                    }
-                }
-            }
+              let password = joinupView.passwordTextField.text
+        else {
+            return
+        }
+        LoginService.loginService.signUpUser(email: email, password: password)
+        dismiss(animated: true)
     }
 }
