@@ -23,7 +23,6 @@ class LoginPageViewController: UIViewController {
         loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        loginView.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
         loginView.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
         loginView.appleLoginButton.addTarget(self, action: #selector(appleLogInTapped), for: .touchUpInside)
     }
@@ -81,17 +80,6 @@ class LoginPageViewController: UIViewController {
         let joinPageViewController = JoinupPageViewController()
         joinPageViewController.modalPresentationStyle = .fullScreen
         present(joinPageViewController, animated: true, completion: nil)
-    }
-
-    @objc func checkboxTapped() {
-        isChecked = !isChecked
-        if isChecked {
-            let checkedImage = UIImage(named: "check")
-            loginView.checkboxButton.setImage(checkedImage, for: .normal)
-        } else {
-            let uncheckedImage = UIImage(named: "checkbox")
-            loginView.checkboxButton.setImage(uncheckedImage, for: .normal)
-        }
     }
 
     func mainTabBarController() -> UITabBarController {
@@ -154,6 +142,6 @@ extension LoginPageViewController: ASAuthorizationControllerPresentationContextP
         
     // Apple ID 연동 실패 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // Handle error.
+    
     }
 }
