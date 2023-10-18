@@ -20,7 +20,6 @@ final class LoginView: UIView {
     lazy var rightDivider = divider()
     lazy var socialLoginDesignStackView = loginStackView(list: [leftDivider, socialLoginDesignLabel, rightDivider], spacing: 2, alignment: .center)
     lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
-//    = loginButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
