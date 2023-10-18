@@ -37,11 +37,11 @@ class OilModelView: UIView {
             make.centerY.equalTo(safeArea.snp.centerY).offset(-40)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(100)
+            make.height.equalTo(150)
         }
 
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(oilPickerView.snp.bottom).offset(50)
+            make.top.equalTo(oilPickerView.snp.bottom).offset(25)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)

@@ -20,7 +20,7 @@ class CarNumberView: UIView {
         addSubview(buttonStackView)
         
         label.snp.makeConstraints { make in
-            make.top.equalTo(carNumberTextField.snp.top).offset(-100)
+            make.top.equalTo(carNumberTextField.snp.top).offset(-150)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
         }
 
