@@ -102,12 +102,14 @@ final class JoinupView: UIView {
     lazy var joinInButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
 
     lazy var popButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
     

@@ -100,7 +100,7 @@ final class LoginView: UIView {
     private func loginButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor) -> UIButton {
         let button = UIButton()
         button.customButton(text: text, font: font, titleColor: titleColor, backgroundColor: backgroundColor)
-        //button.layer.cornerRadius = Constants.cornerRadius
+        button.layer.cornerRadius = Constants.cornerRadius
         return button
     }
     private func divider() -> UIView {
