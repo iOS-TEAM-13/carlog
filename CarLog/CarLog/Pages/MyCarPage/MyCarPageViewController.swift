@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import SwiftUI
+import UIKit
 
 class MyCarPageViewController: UIViewController {
     
@@ -30,7 +30,7 @@ class MyCarPageViewController: UIViewController {
         
         registerTableview()
         setupUI()
-        
+        checkFirst()
         
 //        FirestoreService.firestoreService.saveComment(comment: Comment(id: "id5", content: "content5", userId: "userId5", userName: "userName")) { error in
 //            print("###### comments: \(error)")
@@ -61,6 +61,15 @@ class MyCarPageViewController: UIViewController {
         myCarCollectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func checkFirst() {
+        let userDefaults = UserDefaults.standard
+        guard let userDefault = userDefaults.string(forKey: "isFirst") else { userDefaults.set("false", forKey: "isFirst")
+            let vc = MyCarCheckViewController()
+            navigationController?.pushViewController(vc, animated: true)
+            return
         }
     }
 }
@@ -99,8 +108,7 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = MyCarCheckViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
