@@ -26,3 +26,9 @@ extension UICollectionViewCell {
         return String(describing: self)
     }
 }
+
+struct Menu {
+    let title: String
+    let interval: String
+    let icon: UIImage
+}

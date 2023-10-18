@@ -31,7 +31,7 @@ class MyCarDetailPageViewController: UIViewController {
         return view
     }()
     
-    private var selectedPeriodLabel: UILabel = {
+    private var selectedIntervalLabel: UILabel = {
         var label = UILabel()
         label.customLabel(text: "기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
         return label
@@ -79,7 +79,10 @@ class MyCarDetailPageViewController: UIViewController {
         return view
     }()
     
-    private let dummy = [Detail(date: "2023 / 10 / 18", type: "수정"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체")]
+    // MARK: Dummy
+    private let dummyList = [Detail(date: "2023 / 10 / 18", type: "수정"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체")]
+    
+    var dummyMenu = Menu(title: "", interval: "", icon: UIImage(systemName: "photo")!)
     
     struct Detail {
         let date: String
@@ -92,6 +95,7 @@ class MyCarDetailPageViewController: UIViewController {
         
         setupUI()
         setCollectionView()
+        configure()
     }
     
     private func setupUI() {
@@ -101,7 +105,7 @@ class MyCarDetailPageViewController: UIViewController {
         
         backgroundView.addSubview(selectedTitleLabel)
         backgroundView.addSubview(selectedprogressView)
-        backgroundView.addSubview(selectedPeriodLabel)
+        backgroundView.addSubview(selectedIntervalLabel)
         backgroundView.addSubview(selectedIcon)
         
         backgroundView.snp.makeConstraints {
@@ -125,7 +129,7 @@ class MyCarDetailPageViewController: UIViewController {
             $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
         }
         
-        selectedPeriodLabel.snp.makeConstraints {
+        selectedIntervalLabel.snp.makeConstraints {
             $0.top.equalTo(selectedprogressView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(selectedIcon.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
@@ -151,6 +155,12 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
+    private func configure() {
+        selectedTitleLabel.text = dummyMenu.title
+        selectedIntervalLabel.text = dummyMenu.interval
+        selectedIcon.image = dummyMenu.icon
+    }
+    
     private func setCollectionView() {
         detailCollectionView.delegate = self
         detailCollectionView.dataSource = self
@@ -159,12 +169,12 @@ class MyCarDetailPageViewController: UIViewController {
 
 extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummy.count
+        return dummyList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        cell.bind(date: dummy[indexPath.row].date, type: dummy[indexPath.row].type)
+        cell.bind(date: dummyList[indexPath.row].date, type: dummyList[indexPath.row].type)
         return cell
     }
     
