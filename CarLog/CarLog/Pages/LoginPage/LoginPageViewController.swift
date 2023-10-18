@@ -1,5 +1,6 @@
 import UIKit
 
+import FirebaseAuth
 import SnapKit
 
 class LoginPageViewController: UIViewController {
@@ -20,31 +21,25 @@ class LoginPageViewController: UIViewController {
         }
 
         // MARK: - addTarget
+
         loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginView.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
         loginView.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
     }
-    
-    @objc func textFieldDidChange(){
-        let userEmail = "1@test.com"
-        let userPassword = "1234"
 
-        if loginView.emailTextField.text == userEmail && loginView.passwordTextField.text == userPassword {
-            loginView.loginButton.isEnabled = true
-        } else {
-            loginView.loginButton.isEnabled = false
-        }
+    @objc func textFieldDidChange() {
+        let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
+        let isPasswordValid = loginView.passwordTextField.text?.isValidPassword() ?? false
 
-        
         UIView.animate(withDuration: 0.3) {
-            if self.loginView.loginButton.isEnabled {
-                self.view.layoutIfNeeded()
+            if isEmailValid && isPasswordValid {
+                self.loginView.loginButton.isEnabled = true
                 self.loginView.loginButton.setTitleColor(.white, for: .normal)
                 self.loginView.loginButton.backgroundColor = .primaryColor
             } else {
-                self.view.layoutIfNeeded()
+                self.loginView.loginButton.isEnabled = false
                 self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
                 self.loginView.loginButton.backgroundColor = .thirdColor
             }
@@ -52,25 +47,38 @@ class LoginPageViewController: UIViewController {
     }
 
     @objc func loginButtonTapped() {
-        let tabBarController = TabBarController()
+        guard let email = loginView.emailTextField.text, let password = loginView.passwordTextField.text else {
+            // 이메일 또는 비밀번호가 비어있을 경우 에러 처리를 수행할 수 있습니다.
+            return
+        }
 
-        let tabs: [(root: UIViewController, icon: String)] = [
-            (MyCarPageViewController(), "car"),
-            (HistoryPageViewController(), "book"),
-            (MapPageViewController(), "map"),
-            (CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person"),
-        ]
+        LoginService.loginService.loginUser(email: email, password: password) { isSuccess,_  in
+            if isSuccess {
+                let tabBarController = TabBarController()
 
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
-            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
+                let tabs: [(root: UIViewController, icon: String)] = [
+                    (MyCarPageViewController(), "car"),
+                    (HistoryPageViewController(), "book"),
+                    (MapPageViewController(), "map"),
+                    (CommunityPageViewController(), "play"),
+                    (MyPageViewController(), "person"),
+                ]
 
-        tabBarController.modalPresentationStyle = .fullScreen
-        present(tabBarController, animated: true, completion: nil)
+                tabBarController.setViewControllers(tabs.map { root, icon in
+                    let navigationController = UINavigationController(rootViewController: root)
+                    let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
+                    navigationController.tabBarItem = tabBarItem
+                    return navigationController
+                }, animated: false)
+
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "로그인 실패", message: "로그인과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 
     @objc func signupButtonTapped() {
