@@ -1,5 +1,6 @@
 import UIKit
 
+import AuthenticationServices
 import FirebaseAuth
 import SnapKit
 
@@ -24,6 +25,7 @@ class LoginPageViewController: UIViewController {
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginView.checkboxButton.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
         loginView.joinupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
+        loginView.appleLoginButton.addTarget(self, action: #selector(appleLogInTapped), for: .touchUpInside)
     }
 
     @objc func textFieldDidChange() {
@@ -62,6 +64,17 @@ class LoginPageViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @objc func appleLogInTapped() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
 
     @objc func signupButtonTapped() {
@@ -111,5 +124,36 @@ class LoginPageViewController: UIViewController {
                 self.present(tabBarController, animated: true, completion: nil)
             }
         }
+    }
+}
+
+extension LoginPageViewController: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+    
+    // Apple ID 연동 성공 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        // Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                
+            // 계정 정보 가져오기
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+                
+            print("User ID : \(userIdentifier)")
+            print("User Email : \(email ?? "")")
+            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+
+        default:
+            break
+        }
+    }
+        
+    // Apple ID 연동 실패 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
     }
 }
