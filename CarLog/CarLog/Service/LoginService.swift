@@ -1,6 +1,8 @@
+import Foundation
+
+import AuthenticationServices
 import FirebaseAuth
 import FirebaseFirestore
-import Foundation
 
 final class LoginService {
     static let loginService = LoginService()
@@ -51,5 +53,10 @@ final class LoginService {
         } catch {
             print("로그아웃 실패: \(error.localizedDescription)")
         }
+    }
+    
+    //회원탈퇴
+    func quitUser(){
+        
     }
 }
