@@ -299,7 +299,6 @@
 				FFD5F74E2ADFBEBE00A06771 /* DetailPage */,
 				FF0287E32AD789E4006657C1 /* View */,
 				FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */,
-				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
 			);
 			path = MyCarPage;
 			sourceTree = "<group>";
@@ -387,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */,
+				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
 				FF0287E82AD7C9A4006657C1 /* CarouselView.swift */,
 				FF126E1E2AD8DCC700B2A109 /* CustomCarouselView.swift */,
 			);

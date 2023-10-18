@@ -44,7 +44,6 @@ class MyCarDetialViewCell: UICollectionViewCell {
         
         replacedTypeLabel.snp.makeConstraints {
             $0.top.trailing.bottom.equalTo(contentView).inset(Constants.verticalMargin)
-//            $0.leading.equalTo(replacedDateLabel.snp.trailing)
         }
     }
     

@@ -31,11 +31,10 @@ class CarouselView: UIView {
         return view
     }()
     
-    lazy private var firstAnswerButton: UIButton = {
+    let firstAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 1
-        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
         btn.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -43,11 +42,10 @@ class CarouselView: UIView {
         return btn
     }()
     
-    private let secondAnswerButton: UIButton = {
+     let secondAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 2
-        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
         btn.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -55,23 +53,21 @@ class CarouselView: UIView {
         return btn
     }()
     
-    private let thirdAnswerButton: UIButton = {
+     let thirdAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 3
-        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
         btn.layer.shadowOffset = CGSize(width: 0, height: 4)
         btn.layer.shadowRadius = 4
         return btn
     }()
-    
-    private let fourthAnswerButton: UIButton = {
+    // uiaction으로 변경
+     let fourthAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 4
-        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
         btn.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -79,11 +75,10 @@ class CarouselView: UIView {
         return btn
     }()
     
-    private let fifthAnswerButton: UIButton = {
+     let fifthAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
         btn.tag = 5
-        btn.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
         btn.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -187,53 +182,5 @@ class CarouselView: UIView {
         thirdAnswerButton.setTitle(checkingView.thirdbutton, for: .normal)
         fourthAnswerButton.setTitle(checkingView.fourthButton, for: .normal)
         fifthAnswerButton.setTitle(checkingView.fifthButton, for: .normal)
-    }
-    
-    @objc func checkButtonTapped(sender: UIButton) {
-        let temp = [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton]
-        temp.forEach { item in
-            item.backgroundColor = .thirdColor
-            item.setTitleColor(.black, for: .normal)
-        }
-        
-        switch sender.tag {
-        case 1:
-            firstAnswerButton.backgroundColor = .primaryColor
-            firstAnswerButton.setTitleColor(.white, for: .normal)
-            Constants.checkingData = String(describing: firstAnswerButton.titleLabel?.text)
-            let vc = MyCarCheckViewController()
-            vc.test1(text: (firstAnswerButton.titleLabel?.text)!)
-        case 2:
-            secondAnswerButton.backgroundColor = .primaryColor
-            secondAnswerButton.setTitleColor(.white, for: .normal)
-            Constants.checkingData = String(describing: secondAnswerButton.titleLabel?.text)
-        case 3:
-            thirdAnswerButton.backgroundColor = .primaryColor
-            thirdAnswerButton.setTitleColor(.white, for: .normal)
-            Constants.checkingData = String(describing: thirdAnswerButton.titleLabel?.text)
-        case 4:
-            fourthAnswerButton.backgroundColor = .primaryColor
-            fourthAnswerButton.setTitleColor(.white, for: .normal)
-        case 5:
-            fifthAnswerButton.backgroundColor = .primaryColor
-            fifthAnswerButton.setTitleColor(.white, for: .normal)
-        default:
-            break
-        }
-        
-//        switch sender.titleLabel?.text?.first {
-//        case "0":
-//            let vc = PageViewController()
-//            vc.chekingListdata.engineOil
-//        case "1":
-//        case "2":
-//        case "3":
-//        case "4":
-//        case "5":
-//        case "6":
-//        case "7":
-//        case "8":
-//        case "9":
-//        }
     }
 }
