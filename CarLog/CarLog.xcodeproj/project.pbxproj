@@ -19,6 +19,8 @@
 		B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */; };
 		B85A0F452ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */; };
 		B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F462ADDAF22009E0A00 /* FuelingCollectionViewCell.swift */; };
+		B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4B2ADEFB57009E0A00 /* DriveDetailViewController.swift */; };
+		B85A0F4F2ADEFB8F009E0A00 /* DriveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4E2ADEFB8F009E0A00 /* DriveDetailView.swift */; };
 		FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */; };
 		FB6311C62ADCEBB80038929A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C52ADCEBB80038929A /* String+.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
@@ -67,16 +69,12 @@
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
 		FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */; };
 		FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */; };
+		FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AF59B2ADDA55D0067960E /* PageViewController.swift */; };
 		FFA5DF8C2ADD145900B25A07 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF8B2ADD145900B25A07 /* FirebaseAuth */; };
 		FFA5DF8E2ADD145900B25A07 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF8D2ADD145900B25A07 /* FirebaseDatabase */; };
 		FFA5DF902ADD145900B25A07 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF8F2ADD145900B25A07 /* FirebaseFirestore */; };
 		FFA5DF922ADD145900B25A07 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF912ADD145900B25A07 /* FirebaseFirestoreSwift */; };
 		FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF932ADD145900B25A07 /* FirebaseStorage */; };
-		FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AF59B2ADDA55D0067960E /* PageViewController.swift */; };
-		FFF64C3C2AD690AA00B9043A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3B2AD690AA00B9043A /* FirebaseAuth */; };
-		FFF64C3E2AD690AA00B9043A /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3D2AD690AA00B9043A /* FirebaseDatabase */; };
-		FFF64C402AD690AA00B9043A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C3F2AD690AA00B9043A /* FirebaseFirestore */; };
-		FFF64C422AD690AA00B9043A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFF64C412AD690AA00B9043A /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +90,8 @@
 		B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelingView.swift; sourceTree = "<group>"; };
 		B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingCollectionViewCell.swift; sourceTree = "<group>"; };
 		B85A0F462ADDAF22009E0A00 /* FuelingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingCollectionViewCell.swift; sourceTree = "<group>"; };
+		B85A0F4B2ADEFB57009E0A00 /* DriveDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveDetailViewController.swift; sourceTree = "<group>"; };
+		B85A0F4E2ADEFB8F009E0A00 /* DriveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveDetailView.swift; sourceTree = "<group>"; };
 		FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateComponents.swift; sourceTree = "<group>"; };
 		FB6311C52ADCEBB80038929A /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +167,9 @@
 				B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */,
 				B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */,
 				B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */,
+				B85A0F492ADEF75A009E0A00 /* Cell */,
+				B85A0F272AD77E70009E0A00 /* AddPage */,
+				B85A0F4A2ADEFAA7009E0A00 /* DetailPage */,
 			);
 			path = HistoryViews;
 			sourceTree = "<group>";
@@ -188,6 +191,32 @@
 				B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */,
 			);
 			path = AddViews;
+			sourceTree = "<group>";
+		};
+		B85A0F492ADEF75A009E0A00 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */,
+				B85A0F462ADDAF22009E0A00 /* FuelingCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B85A0F4A2ADEFAA7009E0A00 /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				B85A0F4B2ADEFB57009E0A00 /* DriveDetailViewController.swift */,
+				B85A0F4D2ADEFB65009E0A00 /* DetailViews */,
+			);
+			path = DetailPage;
+			sourceTree = "<group>";
+		};
+		B85A0F4D2ADEFB65009E0A00 /* DetailViews */ = {
+			isa = PBXGroup;
+			children = (
+				B85A0F4E2ADEFB8F009E0A00 /* DriveDetailView.swift */,
+			);
+			path = DetailViews;
 			sourceTree = "<group>";
 		};
 		FB748B132AD53B5E00CC6A1F = {
@@ -304,9 +333,6 @@
 			children = (
 				FB748B392AD571D900CC6A1F /* HistoryPageViewController.swift */,
 				B85A0F262AD77E65009E0A00 /* HistoryViews */,
-				B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */,
-				B85A0F462ADDAF22009E0A00 /* FuelingCollectionViewCell.swift */,
-				B85A0F272AD77E70009E0A00 /* AddPage */,
 			);
 			path = HistoryPage;
 			sourceTree = "<group>";
@@ -470,12 +496,14 @@
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
+				B85A0F4F2ADEFB8F009E0A00 /* DriveDetailView.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
 				B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */,
 				B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */,
+				B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
