@@ -10,7 +10,6 @@ class LoginPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
         setupUI()
     }
 
@@ -21,7 +20,6 @@ class LoginPageViewController: UIViewController {
         }
 
         // MARK: - addTarget
-
         loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
@@ -47,29 +45,11 @@ class LoginPageViewController: UIViewController {
     }
 
     @objc func loginButtonTapped() {
-        guard let email = loginView.emailTextField.text, let password = loginView.passwordTextField.text else {
-            return
-        }
-
+        guard let email = loginView.emailTextField.text, let password = loginView.passwordTextField.text else { return }
+        
         LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
             if isSuccess {
-                let tabBarController = TabBarController()
-
-                let tabs: [(root: UIViewController, icon: String)] = [
-                    (MyCarPageViewController(), "car"),
-                    (HistoryPageViewController(), "book"),
-                    (MapPageViewController(), "map"),
-                    (CommunityPageViewController(), "play"),
-                    (MyPageViewController(), "person"),
-                ]
-
-                tabBarController.setViewControllers(tabs.map { root, icon in
-                    let navigationController = UINavigationController(rootViewController: root)
-                    let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-                    navigationController.tabBarItem = tabBarItem
-                    return navigationController
-                }, animated: false)
-
+                let tabBarController = self.mainTabBarController()
                 tabBarController.modalPresentationStyle = .fullScreen
                 self.present(tabBarController, animated: true, completion: nil)
             } else {
@@ -103,5 +83,26 @@ class LoginPageViewController: UIViewController {
             let uncheckedImage = UIImage(named: "checkbox")
             loginView.checkboxButton.setImage(uncheckedImage, for: .normal)
         }
+    }
+    
+    func mainTabBarController() -> UITabBarController {
+        let tabBarController = TabBarController()
+
+        let tabs: [(root: UIViewController, icon: String)] = [
+            (MyCarPageViewController(), "car"),
+            (HistoryPageViewController(), "book"),
+            (MapPageViewController(), "map"),
+            (CommunityPageViewController(), "play"),
+            (MyPageViewController(), "person"),
+        ]
+
+        tabBarController.setViewControllers(tabs.map { root, icon in
+            let navigationController = UINavigationController(rootViewController: root)
+            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
+            navigationController.tabBarItem = tabBarItem
+            return navigationController
+        }, animated: false)
+        
+        return tabBarController
     }
 }
