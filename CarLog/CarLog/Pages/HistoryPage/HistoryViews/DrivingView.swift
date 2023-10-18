@@ -16,7 +16,6 @@ class DrivingView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let drivingCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        drivingCollectionView.register(DrivingCollectionViewCell.self, forCellWithReuseIdentifier: DrivingCollectionViewCell.identifier)
         return drivingCollectionView
     }()
     

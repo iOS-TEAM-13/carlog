@@ -3,7 +3,7 @@ import UIKit
 
 class HistoryPageViewController: UIViewController {
     
-    var dummy = [
+    var drivingDummy = [
         Driving(timeStamp: "2023.10.15", departDistance: 222222, arriveDistance: 222223, driveDistance: 1),
         Driving(timeStamp: "2023.10.15", departDistance: 17778, arriveDistance: 17788, driveDistance: 10),
         Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
@@ -14,6 +14,19 @@ class HistoryPageViewController: UIViewController {
         Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
         Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
         Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
+    ]
+    
+    var fuelingDummy = [
+        Fueling(timeStamp: "2023.10.15", totalDistance: 17777, price: 1777, count: 55, totalPrice: 89999),
+        Fueling(timeStamp: "2020.10.12", totalDistance: 17787, price: 1776, count: 56, totalPrice: 100000),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
     ]
     
     lazy var segmentedControl: UISegmentedControl = {
@@ -31,11 +44,15 @@ class HistoryPageViewController: UIViewController {
         let drivingCollectionView = DrivingView()
         drivingCollectionView.drivingCollectionView.dataSource = self
         drivingCollectionView.drivingCollectionView.delegate = self
+        drivingCollectionView.drivingCollectionView.register(DrivingCollectionViewCell.self, forCellWithReuseIdentifier: DrivingCollectionViewCell.identifier)
         return drivingCollectionView
     }()
     
     lazy var fuelingCollectionView: FuelingView = {
         let fuelingCollectionView = FuelingView()
+        fuelingCollectionView.fuelingCollectionView.dataSource = self
+        fuelingCollectionView.fuelingCollectionView.delegate = self
+        fuelingCollectionView.fuelingCollectionView.register(FuelingCollectionViewCell.self, forCellWithReuseIdentifier: FuelingCollectionViewCell.identifier)
         return fuelingCollectionView
     }()
     
@@ -62,6 +79,7 @@ class HistoryPageViewController: UIViewController {
         self.didChangeValue(segment: self.segmentedControl)
         
         buttonActions()
+        
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
@@ -186,26 +204,56 @@ class HistoryPageViewController: UIViewController {
 
 extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummy.count
+        
+        if collectionView == drivingCollectionView.drivingCollectionView {
+            return drivingDummy.count
+        } else {
+            return fuelingDummy.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as! DrivingCollectionViewCell
         
-        cell.layer.borderWidth = 2
-        cell.layer.cornerRadius = Constants.cornerRadius
+        if collectionView == drivingCollectionView.drivingCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.layer.borderWidth = 2
+            cell.layer.cornerRadius = Constants.cornerRadius
+            
+            cell.layer.borderColor = UIColor.systemGray5.cgColor
+            cell.layer.shadowColor = UIColor.gray.cgColor
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+            cell.layer.shadowRadius = 3
+            cell.layer.shadowOpacity = 0.3
+            
+            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp
+            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance)km")
+            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance)km")
+            
+            return cell
+            
+        } else if collectionView == fuelingCollectionView.fuelingCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FuelingCollectionViewCell.identifier, for: indexPath) as? FuelingCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.layer.borderWidth = 2
+            cell.layer.cornerRadius = Constants.cornerRadius
+            
+            cell.layer.borderColor = UIColor.systemGray5.cgColor
+            cell.layer.shadowColor = UIColor.gray.cgColor
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+            cell.layer.shadowRadius = 3
+            cell.layer.shadowOpacity = 0.3
+            
+            cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp
+            cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price)원")
+            cell.totalPriceLabel.text = String("\(fuelingDummy[indexPath.row].totalPrice)원")
+            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count)L")
+            
+            return cell
+        }
         
-        cell.layer.borderColor = UIColor.systemGray5.cgColor
-        cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cell.layer.shadowRadius = 3
-        cell.layer.shadowOpacity = 0.3
+        return UICollectionViewCell()
         
-        cell.writeDateLabel.text = dummy[indexPath.row].timeStamp
-        cell.driveDistenceLabel.text = String("\(dummy[indexPath.row].driveDistance)km")
-        cell.departDistenceLabel.text = String("\(dummy[indexPath.row].departDistance)km")
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -217,9 +265,13 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let driveDetailViewController = DriveDetailViewController()
-        navigationController?.pushViewController(driveDetailViewController, animated: true)
+        if collectionView == drivingCollectionView.drivingCollectionView {
+            let driveDetailViewController = DriveDetailViewController()
+            self.navigationController?.pushViewController(driveDetailViewController, animated: true)
+        } else if collectionView == fuelingCollectionView.fuelingCollectionView {
+            let fuelingDetailViewController = AddFuelingViewController()
+            self.navigationController?.pushViewController(fuelingDetailViewController, animated: true)
+        }
     }
-    
     
 }
