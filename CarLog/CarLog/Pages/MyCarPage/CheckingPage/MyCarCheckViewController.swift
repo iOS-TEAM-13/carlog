@@ -29,6 +29,8 @@ class MyCarCheckViewController: UIViewController {
            return vc
        }()
     
+    var temp = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -58,6 +60,11 @@ class MyCarCheckViewController: UIViewController {
             pageViewController.dataSource = self
             pageViewController.delegate = self
         }
+    
+    func test1(text: String) {
+        temp = text
+        print("@@@@@ \(temp)")
+    }
 }
 
 extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -78,5 +85,34 @@ extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewCo
             return nil
         }
         return dataViewControllers[nextIndex]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if let currentViewController = pageViewController.viewControllers?.first {
+                if let pageTitle = (currentViewController  as! PageViewController).carouselView?.checkTitleLabel.text {
+                    switch pageTitle {
+                    case "엔진 오일은 언제 교체하셨나요?":
+                        print("@@@ 엔진 오일: \(Constants.checkingData)")
+                    case "미션 오일은 언제 교체하셨나요?":
+                        print("@@@ 미션 오일: \(Constants.checkingData)")
+                    case "브레이크 오일은 언제 교체하셨나요?":
+                        print("@@@ 브레이크 오일: \(Constants.checkingData)")
+                    case "브레이크 패드는 언제 교체하셨나요?":
+                        print("@@@ 브레이크 패드: \(Constants.checkingData)")
+//                    case "마지막 타이어 로테이션은 언제였나요?":
+//                    case "타이어는 언제 교체하셨나요?":
+//                    case "연료 필터는 언제 교체하셨나요?":
+//                    case "와이퍼 블레이드는 언제 교체하셨나요?":
+//                    case "에어컨 필터는 언제 교체하셨나요?":
+                    default:
+                        break
+                    }
+                }
+                if let pageTitle = (currentViewController  as! PageViewController).customCarouselView?.checkTitleLabel.text {
+                    print("@@@Current page title: \(pageTitle)")
+                }
+            }
+        }
     }
 }

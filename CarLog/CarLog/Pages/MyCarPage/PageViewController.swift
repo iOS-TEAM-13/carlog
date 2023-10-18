@@ -10,8 +10,8 @@ import UIKit
 
 class PageViewController: UIViewController {
     
-    private var carouselView: CarouselView?
-    private var customCarouselView: CustomCarouselView?
+    var carouselView: CarouselView?
+    var customCarouselView: CustomCarouselView?
     
     override func viewDidLoad() {
         super.viewDidLoad()

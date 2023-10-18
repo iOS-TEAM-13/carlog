@@ -15,7 +15,7 @@ class CarouselView: UIView {
         return view
     }()
     
-    private let checkTitle: UILabel = {
+    let checkTitleLabel: UILabel = {
         let label = UILabel()
         label.customLabel(text: "타이틀", textColor: .primaryColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
         label.numberOfLines = 0
@@ -91,8 +91,6 @@ class CarouselView: UIView {
         return btn
     }()
     
-    static let identifier = "CarouselViewCell"
-    
     private lazy var customView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -100,6 +98,20 @@ class CarouselView: UIView {
         view.clipsToBounds = true
         return view
     }()
+    
+//    private lazy var leftButton: UIImageView = {
+//        let view = UIImageView()
+//        view.image = UIImage(systemName: "arrowshape.turn.up.backward.circle")
+//        view.tintColor = .primaryColor
+//        return view
+//    }()
+//
+//    private lazy var rightButton: UIImageView = {
+//        let view = UIImageView()
+//        view.image = UIImage(systemName: "arrowshape.turn.up.right.circle")
+//        view.tintColor = .primaryColor
+//        return view
+//    }()
     
     init(view: CheckingView) {
         super.init(frame: .zero)
@@ -118,17 +130,19 @@ class CarouselView: UIView {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
 
-        customView.addSubview(checkTitle)
+        customView.addSubview(checkTitleLabel)
         customView.addSubview(CheckScrollView)
+//        self.addSubview(leftButton)
+//        self.addSubview(rightButton)
         CheckScrollView.addSubview(answerStackView)
         
-        checkTitle.snp.makeConstraints {
+        checkTitleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview().inset(Constants.verticalMargin)
             $0.height.equalTo(100)
         }
         
         CheckScrollView.snp.makeConstraints {
-            $0.top.equalTo(checkTitle.snp.bottom).inset(-Constants.verticalMargin)
+            $0.top.equalTo(checkTitleLabel.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
         }
         
@@ -138,6 +152,18 @@ class CarouselView: UIView {
             $0.width.equalTo(200)
         }
         
+//        leftButton.snp.makeConstraints {
+//            $0.top.equalTo(customView.snp.bottom).inset(Constants.verticalMargin)
+//            $0.leading.bottom.equalToSuperview().inset(Constants.horizontalMargin)
+//            $0.width.height.equalTo(30)
+//        }
+//
+//        rightButton.snp.makeConstraints {
+//            $0.top.equalTo(customView.snp.bottom).inset(Constants.verticalMargin)
+//            $0.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
+//            $0.width.height.equalTo(30)
+//        }
+        
         [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton].forEach{ item in
             item.snp.makeConstraints {
                 $0.height.equalTo(80)
@@ -146,7 +172,7 @@ class CarouselView: UIView {
     }
     
     private func configureUI(view: CheckingView) {
-        self.checkTitle.text = view.title
+        self.checkTitleLabel.text = view.title
         self.firstAnswerButton.setTitle(view.firstButton, for: .normal)
         self.secondAnswerButton.setTitle(view.secondButton, for: .normal)
         self.thirdAnswerButton.setTitle(view.thirdbutton, for: .normal)
@@ -155,8 +181,7 @@ class CarouselView: UIView {
     }
     
     func bind(checkingView: CheckingView) {
-        
-        checkTitle.text = checkingView.title
+        checkTitleLabel.text = checkingView.title
         firstAnswerButton.setTitle(checkingView.firstButton, for: .normal)
         secondAnswerButton.setTitle(checkingView.secondButton, for: .normal)
         thirdAnswerButton.setTitle(checkingView.thirdbutton, for: .normal)
@@ -175,12 +200,17 @@ class CarouselView: UIView {
         case 1:
             firstAnswerButton.backgroundColor = .primaryColor
             firstAnswerButton.setTitleColor(.white, for: .normal)
+            Constants.checkingData = String(describing: firstAnswerButton.titleLabel?.text)
+            let vc = MyCarCheckViewController()
+            vc.test1(text: (firstAnswerButton.titleLabel?.text)!)
         case 2:
             secondAnswerButton.backgroundColor = .primaryColor
             secondAnswerButton.setTitleColor(.white, for: .normal)
+            Constants.checkingData = String(describing: secondAnswerButton.titleLabel?.text)
         case 3:
             thirdAnswerButton.backgroundColor = .primaryColor
             thirdAnswerButton.setTitleColor(.white, for: .normal)
+            Constants.checkingData = String(describing: thirdAnswerButton.titleLabel?.text)
         case 4:
             fourthAnswerButton.backgroundColor = .primaryColor
             fourthAnswerButton.setTitleColor(.white, for: .normal)
@@ -190,5 +220,20 @@ class CarouselView: UIView {
         default:
             break
         }
+        
+//        switch sender.titleLabel?.text?.first {
+//        case "0":
+//            let vc = PageViewController()
+//            vc.chekingListdata.engineOil
+//        case "1":
+//        case "2":
+//        case "3":
+//        case "4":
+//        case "5":
+//        case "6":
+//        case "7":
+//        case "8":
+//        case "9":
+//        }
     }
 }
