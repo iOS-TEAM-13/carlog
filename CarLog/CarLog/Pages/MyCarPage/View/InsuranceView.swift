@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CustomCarouselView: UIView {
+class InsuranceView: UIView {
     private lazy var customView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground

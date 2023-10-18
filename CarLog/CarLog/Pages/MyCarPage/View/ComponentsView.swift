@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CarouselView: UIView {
+class ComponentsView: UIView {
     private let CheckScrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false

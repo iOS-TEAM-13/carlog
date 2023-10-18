@@ -17,6 +17,8 @@ class MyCarPageViewController: UIViewController {
         view.showsVerticalScrollIndicator = true
         view.backgroundColor = .systemBackground
         view.clipsToBounds = true
+        view.dataSource = self
+        view.delegate = self
         view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
         return view
     }()
@@ -28,7 +30,6 @@ class MyCarPageViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.systemBackground
         
-        registerTableview()
         setupUI()
         checkFirst()
         
@@ -50,11 +51,6 @@ class MyCarPageViewController: UIViewController {
     }
     
     //MARK: Method
-    private func registerTableview() {
-        myCarCollectionView.delegate = self
-        myCarCollectionView.dataSource = self
-    }
-    
     private func setupUI() {
         view.addSubview(myCarCollectionView)
         

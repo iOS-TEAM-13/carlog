@@ -10,8 +10,8 @@ import UIKit
 
 class PageViewController: UIViewController {
     
-    var carouselView: CarouselView?
-    var customCarouselView: CustomCarouselView?
+    var componetsView: ComponentsView?
+    var insuranceView: InsuranceView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +22,10 @@ class PageViewController: UIViewController {
     init(view: CheckingView, checkingView: Constants.CheckView) {
         super.init(nibName: nil, bundle: nil)
         if checkingView == .normalView {
-            carouselView = CarouselView(view: view)
+            componetsView = ComponentsView(view: view)
             setupCarouselView()
         } else {
-            customCarouselView = CustomCarouselView(view: view)
+            insuranceView = InsuranceView(view: view)
             setupCustomCarouselView()
         }
     }
@@ -35,23 +35,23 @@ class PageViewController: UIViewController {
     }
     
     private func setupCarouselView() {
-        view.addSubview(carouselView!)
+        view.addSubview(componetsView!)
         
-        carouselView!.snp.makeConstraints {
+        componetsView!.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     private func setupCustomCarouselView() {
-        view.addSubview(customCarouselView!)
+        view.addSubview(insuranceView!)
         
-        customCarouselView!.snp.makeConstraints {
+        insuranceView!.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     private func buttonActions() {
-        if let view = carouselView {
+        if let view = componetsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
                 self.checkButtonTapped(sender: view.firstAnswerButton)
             }), for: .touchUpInside)
@@ -71,7 +71,7 @@ class PageViewController: UIViewController {
     }
     
     func checkButtonTapped(sender: UIButton) {
-        if let view = carouselView {
+        if let view = componetsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
                 item.backgroundColor = .thirdColor
