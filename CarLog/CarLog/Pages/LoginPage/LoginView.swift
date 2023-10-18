@@ -1,5 +1,7 @@
 import UIKit
 
+import AuthenticationServices
+
 final class LoginView: UIView {
     lazy var logo: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
@@ -29,8 +31,10 @@ final class LoginView: UIView {
     lazy var socialLoginDesignLabel = basicLabel(text: "SNS 계정으로 로그인")
     lazy var rightDivider = divider()
     lazy var socialLoginDesignStackView = loginStackView(list: [leftDivider, socialLoginDesignLabel, rightDivider], spacing: 2, alignment: .center)
-    lazy var appleLoginButton: UIButton = loginButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
+    lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     
+//    = loginButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
+
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
