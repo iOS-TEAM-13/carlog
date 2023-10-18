@@ -33,8 +33,8 @@ final class LoginService {
                 isSuccess = false
             } else {
                 print("로그인 성공: \(user?.user.email ?? "사용자 정보 없음")")
-                completion(isSuccess, nil)
             }
+            completion(isSuccess, error)
         }
     }
 

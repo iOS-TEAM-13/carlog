@@ -48,11 +48,10 @@ class LoginPageViewController: UIViewController {
 
     @objc func loginButtonTapped() {
         guard let email = loginView.emailTextField.text, let password = loginView.passwordTextField.text else {
-            // 이메일 또는 비밀번호가 비어있을 경우 에러 처리를 수행할 수 있습니다.
             return
         }
 
-        LoginService.loginService.loginUser(email: email, password: password) { isSuccess,_  in
+        LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
             if isSuccess {
                 let tabBarController = TabBarController()
 
@@ -74,9 +73,17 @@ class LoginPageViewController: UIViewController {
                 tabBarController.modalPresentationStyle = .fullScreen
                 self.present(tabBarController, animated: true, completion: nil)
             } else {
-                let alert = UIAlertController(title: "로그인 실패", message: "로그인과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default))
-                self.present(alert, animated: true, completion: nil)
+                if error != nil {
+                    // 로그인 실패 시 에러 메시지 표시
+                    let alert = UIAlertController(title: "로그인 실패", message: "로그인과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    // 에러가 Firebase에서 반환되지 않은 경우 에러 메시지 표시
+                    let alert = UIAlertController(title: "로그인 실패", message: "서버가 연결되지 않았습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
