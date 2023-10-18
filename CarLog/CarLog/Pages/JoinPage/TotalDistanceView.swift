@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class TotalDistanceView: UIView {
+final class TotalDistanceView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label = duplicateComponents.joinupLabel(text: "최종 주행거리는\n얼마인가요?")

@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class OilModelView: UIView {
+final class OilModelView: UIView {
     let duplicateComponents = DuplicateComponents()
     let oilOptions: [String] = ["휘발유", "경유", "LPG", "전기"]
     private var selectedOil: String?

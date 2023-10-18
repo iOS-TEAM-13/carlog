@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class CarNumberView: UIView {
+final class CarNumberView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량번호를\n입력해주세요")
