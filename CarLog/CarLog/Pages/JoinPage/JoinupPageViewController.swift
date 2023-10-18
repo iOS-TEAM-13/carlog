@@ -18,7 +18,16 @@ class JoinupPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        setDetailKeyboardNotification()
+        registerForKeyboardNotifications()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        joinupView.endEditing(true)
+        carNumberView.endEditing(true)
+        carModelView.endEditing(true)
+        oilModelView.endEditing(true)
+        nickNameView.endEditing(true)
+        totalDistanceView.endEditing(true)
     }
 
     func setupUI() {
@@ -152,10 +161,44 @@ class JoinupPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
 
-
     func showAlert(message: String) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension JoinupPageViewController {
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
+        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+        
+        if let userInfo = notification.userInfo,
+           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        {
+            let keyboardHeight = keyboardFrame.height
+            for buttonList in buttonLists {
+                let textFieldFrameInWindow = buttonList.convert(buttonList.bounds, to: nil)
+                let maxY = textFieldFrameInWindow.maxY
+                for list in lists {
+                    if maxY > (list.frame.size.height - keyboardHeight) {
+                        let scrollOffset = maxY - (list.frame.size.height - keyboardHeight)
+                        list.frame.origin.y = scrollOffset - 100
+                    }
+                }
+            }
+        }
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
+        for list in lists {
+            list.frame.origin.y = 0
+        }
     }
 }
