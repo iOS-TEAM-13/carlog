@@ -29,7 +29,6 @@ class HistoryPageViewController: UIViewController {
     
     lazy var drivingCollectionView: DrivingView = {
         let drivingCollectionView = DrivingView()
-//        drivingCollectionView.delegate = self
         drivingCollectionView.drivingCollectionView.dataSource = self
         drivingCollectionView.drivingCollectionView.delegate = self
         return drivingCollectionView
@@ -61,6 +60,8 @@ class HistoryPageViewController: UIViewController {
         setupUI()
         
         self.didChangeValue(segment: self.segmentedControl)
+        
+        buttonActions()
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
@@ -102,9 +103,83 @@ class HistoryPageViewController: UIViewController {
     }
     
     func didSelectItem(at indexPath: IndexPath) {
-            let driveDetailViewController = DriveDetailViewController()
-            self.navigationController?.pushViewController(driveDetailViewController, animated: true)
+        let driveDetailViewController = DriveDetailViewController()
+        self.navigationController?.pushViewController(driveDetailViewController, animated: true)
+    }
+    
+    func buttonActions() {
+        
+        floatingButtonStackView.floatingButton.addAction(UIAction(handler: {_ in
+            self.isActive.toggle()
+        }), for: .touchUpInside)
+        
+        floatingButtonStackView.fuelingButton.addAction(UIAction(handler: {_ in
+            self.navigationController?.present(AddFuelingViewController(), animated: true)
+            self.navigationController?.modalPresentationStyle = .fullScreen
+        }), for: .touchUpInside)
+        
+        floatingButtonStackView.drivingButton.addAction(UIAction(handler: {_ in
+            self.navigationController?.present(AddDrivingViewController(), animated: true)
+            self.navigationController?.modalPresentationStyle = .fullScreen
+        }), for: .touchUpInside)
+        
+    }
+    
+    private var animation: UIViewPropertyAnimator?
+    
+    private var isActive: Bool = false {
+        didSet {
+            showActionButtons()
         }
+    }
+    
+    private func showActionButtons() {
+        popButtons()
+        rotateFloatingButton()
+    }
+    
+    private func popButtons() {
+        if isActive {
+            floatingButtonStackView.fuelingButton.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
+            UIView.animate(withDuration: 0.3, delay: 0.2, usingSpringWithDamping: 0.55, initialSpringVelocity: 0.3, options: [.curveEaseInOut], animations: { [weak self] in
+                guard let self = self else { return }
+                floatingButtonStackView.fuelingButton.layer.transform = CATransform3DIdentity
+                floatingButtonStackView.fuelingButton.alpha = 1.0
+            })
+            
+            floatingButtonStackView.drivingButton.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
+            UIView.animate(withDuration: 0.3, delay: 0.2, usingSpringWithDamping: 0.55, initialSpringVelocity: 0.3, options: [.curveEaseInOut], animations: { [weak self] in
+                guard let self = self else { return }
+                floatingButtonStackView.drivingButton.layer.transform = CATransform3DIdentity
+                floatingButtonStackView.drivingButton.alpha = 1.0
+            })
+        } else {
+            UIView.animate(withDuration: 0.15, delay: 0.2, options: []) { [weak self] in
+                guard let self = self else { return }
+                floatingButtonStackView.fuelingButton.layer.transform = CATransform3DMakeScale(0.4, 0.4, 0.1)
+                floatingButtonStackView.fuelingButton.alpha = 0.0
+            }
+            
+            UIView.animate(withDuration: 0.15, delay: 0.2, options: []) { [weak self] in
+                guard let self = self else { return }
+                floatingButtonStackView.drivingButton.layer.transform = CATransform3DMakeScale(0.4, 0.4, 0.1)
+                floatingButtonStackView.drivingButton.alpha = 0.0
+            }
+        }
+    }
+    
+    private func rotateFloatingButton() {
+        let animation = CABasicAnimation(keyPath: "transform.rotation.z")
+        let fromValue = isActive ? 0 : CGFloat.pi / 4
+        let toValue = isActive ? CGFloat.pi / 4 : 0
+        animation.fromValue = fromValue
+        animation.toValue = toValue
+        animation.duration = 0.3
+        animation.fillMode = .forwards
+        animation.isRemovedOnCompletion = false
+        floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
+    }
+    
     
     
 }
@@ -143,13 +218,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let driveDetailViewController = DriveDetailViewController()
-        
-        
-//        driveDetailViewController.selectedDriving = selectedDriving
-        
-        
         navigationController?.pushViewController(driveDetailViewController, animated: true)
     }
-
+    
     
 }

@@ -28,22 +28,20 @@ class AddDrivingViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
-        addDrivingView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
-        addDrivingView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
+        buttonActions()
         
     }
     
-    @objc func didSaveButton() {
-        print("---> addDrivingView 저장 버튼 눌렀어요")
-        dismiss(animated: true)
+    func buttonActions() {
+        addDrivingView.saveButton.addAction(UIAction(handler: { _ in
+            print("---> addDrivingView 저장 버튼 클릭 했어요")
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
+        
+        addDrivingView.cancelButton.addAction(UIAction(handler: { _ in
+            print("---> addDrivingView 취소 버튼 클릭 했어요")
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
     }
-    
-    @objc func didCancelButton() {
-        print("---> addDrivingView 취소 버튼 눌렀어요")
-        dismiss(animated: true)
-    }
-    
-    
-    
     
 }

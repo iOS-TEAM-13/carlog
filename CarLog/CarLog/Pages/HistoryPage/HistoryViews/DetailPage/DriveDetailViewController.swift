@@ -3,7 +3,7 @@
 //  CarLog
 //
 //  Created by 김지훈 on 2023/10/18.
-//
+// 취소 수정버튼 히든처리 , 네비게이션바 아이템 수정 버튼 추가
 
 import UIKit
 
@@ -33,13 +33,15 @@ class DriveDetailViewController: UIViewController {
     }
     
     @objc func didSaveButton() {
-        print("---> addDrivingView 저장 버튼 눌렀어요")
-        dismiss(animated: true)
+        print("---> driveDetailView 수정 버튼 눌렀어요")
+//        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
+        
+        
     }
     
     @objc func didCancelButton() {
-        print("---> addDrivingView 취소 버튼 눌렀어요")
-        dismiss(animated: true)
+        print("---> driveDetailView 취소 버튼 눌렀어요")
+//        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
     }
     
 }

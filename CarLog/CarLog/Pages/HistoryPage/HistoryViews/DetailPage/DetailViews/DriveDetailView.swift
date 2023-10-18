@@ -191,7 +191,7 @@ class DriveDetailView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        saveButton.customButton(text: "수정", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
