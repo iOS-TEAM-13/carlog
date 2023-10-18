@@ -5,9 +5,9 @@
 //  Created by t2023-m0056 on 2023/10/15.
 //
 
-import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Foundation
 
 final class FirestoreService {
     static let firestoreService = FirestoreService()
@@ -25,7 +25,7 @@ final class FirestoreService {
     }
 
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
-        db.collection("posts").getDocuments() { querySnapshot, error in
+        db.collection("posts").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
@@ -57,7 +57,7 @@ final class FirestoreService {
     }
 
     func loadComments(completion: @escaping ([Comment]?) -> Void) {
-        db.collection("comments").getDocuments() { querySnapshot, error in
+        db.collection("comments").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
@@ -103,4 +103,28 @@ final class FirestoreService {
 //            }
 //        }
 //    }
+    
+    func checkingEmail(email: String, completion: @escaping (Bool, Error?) -> Void) {
+        let usersRef = db.collection("users")
+        
+        // Firestore에서 모든 사용자 이메일 가져오기
+        usersRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                return
+            }
+            
+            var isEmailAvailable = true
+            
+            for document in querySnapshot?.documents ?? [] {
+                if let existingemail = document.data()["email"] as? String {
+                    if existingemail == email {
+                        isEmailAvailable = false
+                        break
+                    }
+                }
+            }
+            completion(isEmailAvailable, nil)
+        }
+    }
 }

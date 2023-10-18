@@ -1,5 +1,7 @@
 import UIKit
 
+import AuthenticationServices
+
 final class LoginView: UIView {
     lazy var logo: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
@@ -8,18 +10,6 @@ final class LoginView: UIView {
     }()
     lazy var emailTextField = loginTextField(placeholder: "user@example.com")
     lazy var passwordTextField = loginTextField(placeholder: "비밀번호")
-    lazy var checkboxButton: UIButton = {
-        let button = UIButton()
-        button.widthAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
-        button.heightAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1.0
-        button.backgroundColor = .white
-        return button
-    }()
-    lazy var loginStatusLabel = basicLabel(text: "로그인 상태 유지")
-    lazy var loginStatusStackView = loginStackView(list: [checkboxButton, loginStatusLabel], spacing: 5, alignment: .center)
     lazy var loginButton = loginButton(text: "로 그 인", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
     lazy var joinupButton = loginButton(text: "회원가입", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
     lazy var spaceView = UIView()
@@ -29,64 +19,58 @@ final class LoginView: UIView {
     lazy var socialLoginDesignLabel = basicLabel(text: "SNS 계정으로 로그인")
     lazy var rightDivider = divider()
     lazy var socialLoginDesignStackView = loginStackView(list: [leftDivider, socialLoginDesignLabel, rightDivider], spacing: 2, alignment: .center)
-    lazy var appleLoginButton: UIButton = loginButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
-    
+    lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+//    = loginButton(text: "  Apple Login", font: Constants.fontJua24 ?? UIFont(), titleColor: .white, backgroundColor: .black)
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
         addSubview(logo)
         addSubview(emailTextField)
         addSubview(passwordTextField)
-        addSubview(loginStatusStackView)
         addSubview(loginButton)
         addSubview(signupStackView)
         addSubview(socialLoginDesignStackView)
         addSubview(appleLoginButton)
 
         logo.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(10)
+            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(85)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(logo.snp.bottom).offset(10)
+            make.top.equalTo(logo.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         passwordTextField.snp.makeConstraints { make in
-            make.top.equalTo(emailTextField.snp.bottom).offset(10)
+            make.top.equalTo(emailTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
-
-        loginStatusStackView.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(15)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-        }
-
+        
         loginButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(60)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(40)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)
         }
         
         signupStackView.snp.makeConstraints { make in
-            make.top.equalTo(loginButton.snp.bottom).offset(10)
+            make.top.equalTo(loginButton.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         socialLoginDesignStackView.snp.makeConstraints { make in
-            make.top.equalTo(signupStackView.snp.bottom).offset(15)
+            make.top.equalTo(signupStackView.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
         appleLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(15)
+            make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(Constants.horizontalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)
@@ -116,6 +100,7 @@ final class LoginView: UIView {
     private func loginButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor) -> UIButton {
         let button = UIButton()
         button.customButton(text: text, font: font, titleColor: titleColor, backgroundColor: backgroundColor)
+        //button.layer.cornerRadius = Constants.cornerRadius
         return button
     }
     private func divider() -> UIView {

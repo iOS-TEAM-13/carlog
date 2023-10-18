@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class JoinupView: UIView {
+final class JoinupView: UIView {
     let duplicateComponents = DuplicateComponents()
     var isSecure = true
     
