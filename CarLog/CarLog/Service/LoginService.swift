@@ -38,4 +38,18 @@ final class LoginService {
         }
     }
 
+    func keepLogin(completion: @escaping (FirebaseAuth.User?) -> Void) {
+        Auth.auth().addStateDidChangeListener { auth, user in
+            completion(user)
+        }
+    }
+    
+    func logout(completion: () -> Void){
+        do {
+            try Auth.auth().signOut()
+            completion()
+        } catch {
+            print("로그아웃 실패: \(error.localizedDescription)")
+        }
+    }
 }

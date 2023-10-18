@@ -11,6 +11,7 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
+        keepLogin()
     }
 
     func setupUI() {
@@ -18,8 +19,6 @@ class LoginPageViewController: UIViewController {
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview() // LoginPageProperties 뷰를 슈퍼뷰에 맞게 설정
         }
-
-        // MARK: - addTarget
         loginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
@@ -46,12 +45,9 @@ class LoginPageViewController: UIViewController {
 
     @objc func loginButtonTapped() {
         guard let email = loginView.emailTextField.text, let password = loginView.passwordTextField.text else { return }
-        
+
         LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
             if isSuccess {
-                let tabBarController = self.mainTabBarController()
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true, completion: nil)
             } else {
                 if error != nil {
                     // 로그인 실패 시 에러 메시지 표시
@@ -84,7 +80,7 @@ class LoginPageViewController: UIViewController {
             loginView.checkboxButton.setImage(uncheckedImage, for: .normal)
         }
     }
-    
+
     func mainTabBarController() -> UITabBarController {
         let tabBarController = TabBarController()
 
@@ -102,7 +98,18 @@ class LoginPageViewController: UIViewController {
             navigationController.tabBarItem = tabBarItem
             return navigationController
         }, animated: false)
-        
+
         return tabBarController
+    }
+
+    func keepLogin() {
+        LoginService.loginService.keepLogin { user in
+            print("user:\(user?.email ?? "")")
+            if user != nil {
+                let tabBarController = self.mainTabBarController()
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true, completion: nil)
+            }
+        }
     }
 }
