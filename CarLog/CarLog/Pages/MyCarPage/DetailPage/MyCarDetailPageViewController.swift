@@ -9,7 +9,7 @@ import SnapKit
 import SwiftUI
 import UIKit
 
-class MyCarPageDetailViewController: UIViewController {
+class MyCarDetailPageViewController: UIViewController {
     private let backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .thirdColor
@@ -75,15 +75,23 @@ class MyCarPageDetailViewController: UIViewController {
         view.showsVerticalScrollIndicator = true
         view.backgroundColor = .systemBackground
         view.clipsToBounds = true
-        view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
+        view.register(MyCarDetialViewCell.self, forCellWithReuseIdentifier: MyCarDetialViewCell.identifier)
         return view
     }()
+    
+    private let dummy = [Detail(date: "2023 / 10 / 18", type: "수정"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체")]
+    
+    struct Detail {
+        let date: String
+        let type: String
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
         setupUI()
+        setCollectionView()
     }
     
     private func setupUI() {
@@ -142,6 +150,27 @@ class MyCarPageDetailViewController: UIViewController {
             $0.height.equalTo(60)
         }
     }
+    
+    private func setCollectionView() {
+        detailCollectionView.delegate = self
+        detailCollectionView.dataSource = self
+    }
+}
+
+extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dummy.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
+        cell.bind(date: dummy[indexPath.row].date, type: dummy[indexPath.row].type)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        .init(width: collectionView.bounds.width - Constants.horizontalMargin, height: 50)
+    }
 }
 
 // SwiftUI를 활용한 미리보기
@@ -153,7 +182,7 @@ struct MyCarDetailViewController_Previews: PreviewProvider {
 
 struct MyCarDetailVCReprsentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        let myCarDetailVC = MyCarPageDetailViewController()
+        let myCarDetailVC = MyCarDetailPageViewController()
         return UINavigationController(rootViewController: myCarDetailVC)
     }
     

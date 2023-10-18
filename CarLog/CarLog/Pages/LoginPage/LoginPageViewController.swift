@@ -58,7 +58,7 @@ class LoginPageViewController: UIViewController {
             (MyCarPageViewController(), "car"),
             (HistoryPageViewController(), "book"),
             (MapPageViewController(), "map"),
-            (MyCarPageDetailViewController(), "play"),
+            (MyCarDetailPageViewController(), "play"),
             (MyPageViewController(), "person"),
         ]
 

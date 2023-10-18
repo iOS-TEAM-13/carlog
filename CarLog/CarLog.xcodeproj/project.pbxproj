@@ -59,7 +59,7 @@
 		FF126E1F2AD8DCC700B2A109 /* CustomCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1E2AD8DCC700B2A109 /* CustomCarouselView.swift */; };
 		FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E212ADAE67E00B2A109 /* FirebaseService.swift */; };
 		FF271BA22ADEB41800209E61 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA12ADEB41800209E61 /* UIViewController+.swift */; };
-		FF271BA72ADFB1E600209E61 /* MyCarPageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA62ADFB1E600209E61 /* MyCarPageDetailViewController.swift */; };
+		FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */; };
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
 		FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716B2AD6BC4800713A81 /* Comment.swift */; };
 		FF50716E2AD6BC5100713A81 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716D2AD6BC5100713A81 /* Car.swift */; };
@@ -131,7 +131,7 @@
 		FF126E1E2AD8DCC700B2A109 /* CustomCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCarouselView.swift; sourceTree = "<group>"; };
 		FF126E212ADAE67E00B2A109 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		FF271BA12ADEB41800209E61 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
-		FF271BA62ADFB1E600209E61 /* MyCarPageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarPageDetailViewController.swift; sourceTree = "<group>"; };
+		FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailPageViewController.swift; sourceTree = "<group>"; };
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FF50716B2AD6BC4800713A81 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FF50716D2AD6BC5100713A81 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -378,7 +378,7 @@
 		FFD5F74E2ADFBEBE00A06771 /* DetailPage */ = {
 			isa = PBXGroup;
 			children = (
-				FF271BA62ADFB1E600209E61 /* MyCarPageDetailViewController.swift */,
+				FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";
@@ -533,7 +533,7 @@
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
-				FF271BA72ADFB1E600209E61 /* MyCarPageDetailViewController.swift in Sources */,
+				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
 				B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */,
 				B85A0F452ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift in Sources */,

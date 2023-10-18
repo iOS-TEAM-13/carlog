@@ -31,21 +31,25 @@ class MyCarDetialViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(replacedDateLabel)
         contentView.addSubview(replacedTypeLabel)
+        contentView.addSubview(replacedDateLabel)
+        
+        contentView.layer.cornerRadius = 20
+        contentView.backgroundColor = .thirdColor
         
         replacedDateLabel.snp.makeConstraints {
             $0.top.leading.bottom.equalTo(contentView).inset(Constants.verticalMargin)
+            $0.trailing.equalTo(replacedTypeLabel.snp.leading)
         }
         
         replacedTypeLabel.snp.makeConstraints {
             $0.top.trailing.bottom.equalTo(contentView).inset(Constants.verticalMargin)
-            $0.leading.equalTo(replacedDateLabel.snp.trailing)
+//            $0.leading.equalTo(replacedDateLabel.snp.trailing)
         }
     }
     
     func bind(date: String, type: String) {
-        replacedDateLabel.text = date
-        replacedTypeLabel.text = type
+        self.replacedDateLabel.text = date
+        self.replacedTypeLabel.text = type
     }
 }
