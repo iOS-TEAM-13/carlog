@@ -16,14 +16,6 @@ class AddFuelingView: UIView {
         return addFuelingPageLabel
     }()
     
-    lazy var addPhotoButton: UIButton = {
-        let addPhotoButton = UIButton()
-        addPhotoButton.setImage(UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)), for: .normal)
-        addPhotoButton.backgroundColor = .thirdColor
-        addPhotoButton.layer.cornerRadius = Constants.cornerRadius
-        return addPhotoButton
-    }()
-    
     lazy var inputFuelingStackView: UIStackView = {
         let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, priceStackView, countStackView, totalPriceStackView])
         inputFuelingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
@@ -55,17 +47,30 @@ class AddFuelingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toTotalPriceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toPriceTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextPriceTextField))
-        nextTextField.setItems([flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeTotalDistanceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
+        
         nextTextField.isUserInteractionEnabled = true
         totalDistanceTextField.inputAccessoryView = nextTextField
         
         return totalDistanceTextField
     }()
     
-    @objc func nextPriceTextField() {
+    @objc func toTotalPriceTextField() {
+        self.totalPriceTextField.becomeFirstResponder()
+    }
+    
+    @objc func toPriceTextField() {
         self.priceTextField.becomeFirstResponder()
+    }
+    
+    @objc func closeTotalDistanceTextField() {
+        self.totalDistanceTextField.resignFirstResponder()
     }
     
     lazy var priceStackView: UIStackView = {
@@ -92,22 +97,30 @@ class AddFuelingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalDistanceTextField))
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toTotalDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toCountTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextCountTextField))
-        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closePriceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
+        
         nextTextField.isUserInteractionEnabled = true
         priceTextField.inputAccessoryView = nextTextField
         
         return priceTextField
     }()
     
-    @objc func beforeTotalDistanceTextField() {
+    @objc func toTotalDistanceTextField() {
         self.totalDistanceTextField.becomeFirstResponder()
     }
     
-    @objc func nextCountTextField() {
+    @objc func toCountTextField() {
         self.countTextField.becomeFirstResponder()
+    }
+    
+    @objc func closePriceTextField() {
+        self.priceTextField.resignFirstResponder()
     }
     
     lazy var countStackView: UIStackView = {
@@ -134,22 +147,22 @@ class AddFuelingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalPriceTextField))
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toPriceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toTotalPriceTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextTotalPriceTextField))
-        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeCountTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
+        
         nextTextField.isUserInteractionEnabled = true
         countTextField.inputAccessoryView = nextTextField
         
         return countTextField
     }()
     
-    @objc func beforeTotalPriceTextField() {
-        self.priceTextField.becomeFirstResponder()
-    }
-    
-    @objc func nextTotalPriceTextField() {
-        self.totalPriceTextField.becomeFirstResponder()
+    @objc func closeCountTextField() {
+        self.countTextField.resignFirstResponder()
     }
     
     lazy var totalPriceStackView: UIStackView = {
@@ -176,16 +189,22 @@ class AddFuelingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeCountTextField))
-        nextTextField.setItems([beforeButton], animated: false)
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toCountTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toTotalDistanceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeTotalPriceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
+        
         nextTextField.isUserInteractionEnabled = true
         totalPriceTextField.inputAccessoryView = nextTextField
         
         return totalPriceTextField
     }()
     
-    @objc func beforeCountTextField() {
-        self.countTextField.becomeFirstResponder()
+    @objc func closeTotalPriceTextField() {
+        self.totalPriceTextField.resignFirstResponder()
     }
     
     //MARK: - 단위 Label
@@ -247,7 +266,6 @@ class AddFuelingView: UIView {
     
     private func setupUI() {
         addSubview(addFuelingPageLabel)
-        addSubview(addPhotoButton)
         addSubview(inputFuelingStackView)
         addSubview(buttonStackView)
         
@@ -262,33 +280,26 @@ class AddFuelingView: UIView {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
-        addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(40)
+        inputFuelingStackView.snp.makeConstraints { make in
+            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.height.equalTo(totalDistanceLabel.snp.width)
-            make.width.height.equalTo(100)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         totalDistanceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
+            make.width.equalTo(100)
         }
         
         priceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
+            make.width.equalTo(100)
         }
         
         countLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
+            make.width.equalTo(100)
         }
         
         totalPriceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(25)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.width.equalTo(100)
         }
         
         kmLabel.snp.makeConstraints { make in

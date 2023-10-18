@@ -9,19 +9,11 @@ import SnapKit
 import UIKit
 
 class AddDrivingView: UIView {
-
+    
     lazy var addDrivingPageLabel: UILabel = {
         let addDrivingPageLabel = UILabel()
         addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
         return addDrivingPageLabel
-    }()
-    
-    lazy var addPhotoButton: UIButton = {
-        let addPhotoButton = UIButton()
-        addPhotoButton.setImage(UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)), for: .normal)
-        addPhotoButton.backgroundColor = .thirdColor
-        addPhotoButton.layer.cornerRadius = Constants.cornerRadius
-        return addPhotoButton
     }()
     
     lazy var inputDrivingStackView: UIStackView = {
@@ -55,17 +47,29 @@ class AddDrivingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toDriveDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toArriveDistanceTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextPriceTextField))
-        nextTextField.setItems([flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeTotalDistanceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         totalDistanceTextField.inputAccessoryView = nextTextField
         
         return totalDistanceTextField
     }()
     
-    @objc func nextPriceTextField() {
+    @objc func toDriveDistanceTextField() {
+        self.driveDistenceTextField.becomeFirstResponder()
+    }
+    
+    @objc func toArriveDistanceTextField() {
         self.arriveDistanceTextField.becomeFirstResponder()
+    }
+    
+    @objc func closeTotalDistanceTextField() {
+        self.totalDistanceTextField.resignFirstResponder()
     }
     
     lazy var arriveDistanceStackView: UIStackView = {
@@ -93,22 +97,29 @@ class AddDrivingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeTotalDistanceTextField))
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toTotalDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.tpDriveDistanceTextField))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.nextdriveDistenceTextField))
-        nextTextField.setItems([beforeButton, flexibleSpace, nextButton], animated: false)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeArriveDistanceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         arriveDistanceTextField.inputAccessoryView = nextTextField
         
         return arriveDistanceTextField
     }()
     
-    @objc func beforeTotalDistanceTextField() {
+    @objc func toTotalDistanceTextField() {
         self.totalDistanceTextField.becomeFirstResponder()
     }
     
-    @objc func nextdriveDistenceTextField() {
+    @objc func tpDriveDistanceTextField() {
         self.driveDistenceTextField.becomeFirstResponder()
+    }
+    
+    @objc func closeArriveDistanceTextField() {
+        self.arriveDistanceTextField.resignFirstResponder()
     }
     
     lazy var driveDistenceStackView: UIStackView = {
@@ -135,16 +146,21 @@ class AddDrivingView: UIView {
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
-        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.beforeArriveDistanceTextField))
-        nextTextField.setItems([beforeButton], animated: false)
+        
+        let beforeButton = UIBarButtonItem(title: "이전", style: .plain, target: self, action: #selector(self.toArriveDistanceTextField))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(self.toTotalDistanceTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeDriveDistenceTextField))
+        
+        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
         nextTextField.isUserInteractionEnabled = true
         driveDistenceTextField.inputAccessoryView = nextTextField
         
         return driveDistenceTextField
     }()
     
-    @objc func beforeArriveDistanceTextField() {
-        self.arriveDistanceTextField.becomeFirstResponder()
+    @objc func closeDriveDistenceTextField() {
+        self.driveDistenceTextField.resignFirstResponder()
     }
     
     //MARK: - 단위 Label
@@ -200,7 +216,6 @@ class AddDrivingView: UIView {
     
     private func setupUI() {
         addSubview(addDrivingPageLabel)
-        addSubview(addPhotoButton)
         addSubview(inputDrivingStackView)
         addSubview(buttonStackView)
         
@@ -214,28 +229,22 @@ class AddDrivingView: UIView {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
-        addPhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(40)
+        inputDrivingStackView.snp.makeConstraints { make in
+            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.width.height.equalTo(100)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         totalDistanceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
+            make.width.equalTo(100)
         }
         
         arriveDistanceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
+            make.width.equalTo(100)
         }
         
         driveDistenceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(addPhotoButton.snp.trailing)
-        }
-        
-        inputDrivingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(25)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.width.equalTo(100)
         }
         
         kmLabel.snp.makeConstraints { make in
@@ -260,5 +269,5 @@ class AddDrivingView: UIView {
             make.height.equalTo(50)
         }
     }
-
+    
 }

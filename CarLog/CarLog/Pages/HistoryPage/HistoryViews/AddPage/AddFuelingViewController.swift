@@ -28,22 +28,20 @@ class AddFuelingViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
-        addFuelingView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
-        addFuelingView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
+        buttonActions()
         
     }
     
-    @objc func didSaveButton() {
-        print("---> addFuelingPage 저장 버튼 눌렀어요")
-        dismiss(animated: true)
+    func buttonActions() {
+        addFuelingView.saveButton.addAction(UIAction(handler: { _ in
+            print("---> addFuelingView 저장 버튼 클릭 했어요")
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
+        
+        addFuelingView.cancelButton.addAction(UIAction(handler: { _ in
+            print("---> addFuelingView 취소 버튼 클릭 했어요")
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
     }
-    
-    @objc func didCancelButton() {
-        print("---> addFuelingPage 취소 버튼 눌렀어요")
-        dismiss(animated: true)
-    }
-    
-    
-    
     
 }
