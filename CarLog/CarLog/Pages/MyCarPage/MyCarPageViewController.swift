@@ -17,6 +17,8 @@ class MyCarPageViewController: UIViewController {
         view.showsVerticalScrollIndicator = true
         view.backgroundColor = .systemBackground
         view.clipsToBounds = true
+        view.dataSource = self
+        view.delegate = self
         view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
         return view
     }()
@@ -28,7 +30,6 @@ class MyCarPageViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.systemBackground
         
-        registerTableview()
         setupUI()
         checkFirst()
         
@@ -50,11 +51,6 @@ class MyCarPageViewController: UIViewController {
     }
     
     //MARK: Method
-    private func registerTableview() {
-        myCarCollectionView.delegate = self
-        myCarCollectionView.dataSource = self
-    }
-    
     private func setupUI() {
         view.addSubview(myCarCollectionView)
         
@@ -66,7 +62,7 @@ class MyCarPageViewController: UIViewController {
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard
-        guard let userDefault = userDefaults.string(forKey: "isFirst") else { userDefaults.set("false", forKey: "isFirst")
+        guard userDefaults.string(forKey: "isFirst") != nil else { userDefaults.set("false", forKey: "isFirst")
             let vc = MyCarCheckViewController()
             navigationController?.pushViewController(vc, animated: true)
             return
@@ -108,7 +104,8 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let vc = MyCarCheckViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

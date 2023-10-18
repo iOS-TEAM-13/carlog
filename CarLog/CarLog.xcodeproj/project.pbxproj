@@ -54,11 +54,12 @@
 		FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051872AD6672F00F39E7F /* DateFormatter.swift */; };
 		FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE051892AD6678E00F39E7F /* UITextField+.swift */; };
 		FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */; };
-		FF0287E92AD7C9A4006657C1 /* CarouselViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E82AD7C9A4006657C1 /* CarouselViewCell.swift */; };
+		FF0287E92AD7C9A4006657C1 /* ComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0287E82AD7C9A4006657C1 /* ComponentsView.swift */; };
 		FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */; };
-		FF126E1F2AD8DCC700B2A109 /* CustomCarouselViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1E2AD8DCC700B2A109 /* CustomCarouselViewCell.swift */; };
+		FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */; };
 		FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E212ADAE67E00B2A109 /* FirebaseService.swift */; };
 		FF271BA22ADEB41800209E61 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA12ADEB41800209E61 /* UIViewController+.swift */; };
+		FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */; };
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
 		FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716B2AD6BC4800713A81 /* Comment.swift */; };
 		FF50716E2AD6BC5100713A81 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716D2AD6BC5100713A81 /* Car.swift */; };
@@ -74,6 +75,7 @@
 		FFA5DF902ADD145900B25A07 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF8F2ADD145900B25A07 /* FirebaseFirestore */; };
 		FFA5DF922ADD145900B25A07 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF912ADD145900B25A07 /* FirebaseFirestoreSwift */; };
 		FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF932ADD145900B25A07 /* FirebaseStorage */; };
+		FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,11 +127,12 @@
 		FBE051872AD6672F00F39E7F /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		FBE051892AD6678E00F39E7F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCheckViewController.swift; sourceTree = "<group>"; };
-		FF0287E82AD7C9A4006657C1 /* CarouselViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewCell.swift; sourceTree = "<group>"; };
+		FF0287E82AD7C9A4006657C1 /* ComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsView.swift; sourceTree = "<group>"; };
 		FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingView.swift; sourceTree = "<group>"; };
-		FF126E1E2AD8DCC700B2A109 /* CustomCarouselViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCarouselViewCell.swift; sourceTree = "<group>"; };
+		FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceView.swift; sourceTree = "<group>"; };
 		FF126E212ADAE67E00B2A109 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		FF271BA12ADEB41800209E61 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailPageViewController.swift; sourceTree = "<group>"; };
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FF50716B2AD6BC4800713A81 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FF50716D2AD6BC5100713A81 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCollectionViewCell.swift; sourceTree = "<group>"; };
 		FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,9 +295,10 @@
 		FBC7128C2AD6C87D006C2BB0 /* MyCarPage */ = {
 			isa = PBXGroup;
 			children = (
-				FF0287E32AD789E4006657C1 /* View */,
 				FB748B232AD53B5E00CC6A1F /* MyCarPageViewController.swift */,
-				FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */,
+				FFD5F74F2ADFBEEE00A06771 /* CheckingPage */,
+				FFD5F74E2ADFBEBE00A06771 /* DetailPage */,
+				FF0287E32AD789E4006657C1 /* View */,
 			);
 			path = MyCarPage;
 			sourceTree = "<group>";
@@ -355,11 +360,11 @@
 		FF0287E32AD789E4006657C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */,
 				FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */,
-				FF0287E82AD7C9A4006657C1 /* CarouselViewCell.swift */,
-				FF126E1E2AD8DCC700B2A109 /* CustomCarouselViewCell.swift */,
-				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
+				FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */,
+				FF0287E82AD7C9A4006657C1 /* ComponentsView.swift */,
+				FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */,
+				FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -371,6 +376,23 @@
 				FB1B96A22ADF5D39003827B1 /* LoginService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		FFD5F74E2ADFBEBE00A06771 /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */,
+			);
+			path = DetailPage;
+			sourceTree = "<group>";
+		};
+		FFD5F74F2ADFBEEE00A06771 /* CheckingPage */ = {
+			isa = PBXGroup;
+			children = (
+				FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */,
+				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
+			);
+			path = CheckingPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,7 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF0287E92AD7C9A4006657C1 /* CarouselViewCell.swift in Sources */,
+				FF0287E92AD7C9A4006657C1 /* ComponentsView.swift in Sources */,
 				B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */,
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
@@ -470,6 +492,7 @@
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
+				FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
@@ -490,7 +513,7 @@
 				FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
-				FF126E1F2AD8DCC700B2A109 /* CustomCarouselViewCell.swift in Sources */,
+				FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
@@ -512,6 +535,7 @@
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
+				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
 				B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */,
 				B85A0F452ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift in Sources */,

@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CustomCarouselView: UIView {
+class InsuranceView: UIView {
     private lazy var customView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -17,7 +17,7 @@ class CustomCarouselView: UIView {
         return view
     }()
     
-    private let checkTitle: UILabel = {
+    let checkTitleLabel: UILabel = {
         let label = UILabel()
         label.customLabel(text: "타이틀", textColor: .primaryColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
         label.numberOfLines = 0
@@ -42,14 +42,14 @@ class CustomCarouselView: UIView {
     
     private func setupUI() {
         self.addSubview(customView)
-        customView.addSubview(checkTitle)
+        customView.addSubview(checkTitleLabel)
         customView.addSubview(calendarView)
         
         customView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        checkTitle.snp.makeConstraints {
+        checkTitleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(customView).inset(Constants.horizontalMargin)
             $0.height.equalTo(100)
         }
@@ -62,10 +62,10 @@ class CustomCarouselView: UIView {
     }
     
     private func configureUI(view: CheckingView) {
-        self.checkTitle.text = view.title
+        self.checkTitleLabel.text = view.title
     }
     
     func bind(title: String) {
-        checkTitle.text = title
+        checkTitleLabel.text = title
     }
 }
