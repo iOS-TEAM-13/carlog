@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class CarNumberView: UIView {
+final class CarNumberView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량번호를\n입력해주세요")
@@ -20,7 +20,7 @@ class CarNumberView: UIView {
         addSubview(buttonStackView)
         
         label.snp.makeConstraints { make in
-            make.top.equalTo(carNumberTextField.snp.top).offset(-100)
+            make.top.equalTo(carNumberTextField.snp.top).offset(-150)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
         }
 

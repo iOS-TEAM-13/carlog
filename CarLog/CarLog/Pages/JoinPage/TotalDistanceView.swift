@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class TotalDistanceView: UIView {
+final class TotalDistanceView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label = duplicateComponents.joinupLabel(text: "최종 주행거리는\n얼마인가요?")
@@ -20,7 +20,7 @@ class TotalDistanceView: UIView {
         addSubview(buttonStackView)
         
         label.snp.makeConstraints { make in
-            make.top.equalTo(totalDistanceTextField.snp.top).offset(-100)
+            make.top.equalTo(totalDistanceTextField.snp.top).offset(-150)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
         }
 

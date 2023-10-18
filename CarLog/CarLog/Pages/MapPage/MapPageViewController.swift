@@ -44,8 +44,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     private func addDummyPin() {
         let pin = MKPointAnnotation()
         pin.coordinate = dummyData
-//        pin.title = "광교 SK 주유소"
-//        pin.subtitle = "휘발유: 1804원, 경유: 1455원"
         mapView.addAnnotation(pin)
     }
     
@@ -191,11 +189,11 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         
         view.layer.mask = mask
     }
-    // 어노테이션 클릭 시 관련 ㅋ
+    // 어노테이션 클릭 시 관련 코드
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("어노테이션이 클릭되었습니다.")
         if let _ = view.annotation as? MKPointAnnotation {
-            // 어노테이션을 클릭했을 때 detailView를 나타냅니다.
+            // 어노테이션을 클릭했을 때 detailView 나오게 함
             UIView.animate(withDuration: 0.1) {
                 self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 250 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 250) // 높이와 y 위치를 200으로 변경
                 mapView.deselectAnnotation(view.annotation, animated: false)
@@ -211,6 +209,11 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let view = UIView()
         view.backgroundColor = .white
         view.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        view.layer.cornerRadius = 8
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 3
+        view.layer.shadowOpacity = 0.3
         
         let label = UILabel(frame: view.bounds)
         label.text = "휘발유:2000원 \n경유: 1400원"

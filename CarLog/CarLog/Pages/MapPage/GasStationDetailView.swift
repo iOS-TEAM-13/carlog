@@ -7,9 +7,11 @@ class GasStationDetailView: UIView {
     
     private let nameLabel = {
         let label = UILabel()
-        label.text = "가나다라마바사아자차카타파하아야어여야"
+        label.text = "가나다라마바사아자차카타파하아야어여야랄랄라"
         label.textColor = .black
         label.font = Constants.fontJua24
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -95,24 +97,21 @@ class GasStationDetailView: UIView {
         
         self.backgroundColor = .white
         
-        if shouldAnimateLabel(label: nameLabel) {
-            animateLabel(label: nameLabel)
-        }
-        
         nameLabel.snp.makeConstraints { make in
             make.leftMargin.equalToSuperview().offset(20)
             make.bottomMargin.equalToSuperview().offset(-175)
+            make.width.equalTo(359)
         }
         
         storeImage.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(279)
+            make.right.equalToSuperview().offset(-75)
             make.bottomMargin.equalToSuperview().offset(-125)
             make.width.equalTo(39)
             make.height.equalTo(31)
         }
         
         carWashImage.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(334)
+            make.right.equalToSuperview().offset(-20)
             make.bottomMargin.equalToSuperview().offset(-125)
             make.width.equalTo(39)
             make.height.equalTo(40)
@@ -148,32 +147,6 @@ class GasStationDetailView: UIView {
         }
         
     }
-    
-    func shouldAnimateLabel(label: UILabel) -> Bool {
-        guard let labelText = label.text else {
-            return false
-        }
-        
-        let labelTextSize = (labelText as NSString).boundingRect(with: CGSize(width:  .greatestFiniteMagnitude, height: label.frame.height), options:  .usesLineFragmentOrigin, attributes:  [.font: label.font!], context: nil ).size
-        return labelTextSize.width > 359
-    }
-    
-    func animateLabel(label: UILabel) {
-            guard let labelText = label.text else {
-                return
-            }
-            
-            label.sizeToFit()
-            
-            let offScreenLeft = CGAffineTransform(translationX: -label.bounds.width, y: 0)
-            let offScreenRight = CGAffineTransform(translationX: self.bounds.width + labelText.width(of: label.font) - 50, y: 0)
-            
-            label.transform = offScreenRight
-            
-            UIView.animate(withDuration: 14.0, delay: 0, options: [.curveLinear, .repeat], animations: {
-                label.transform = offScreenLeft
-            }, completion: nil)
-        }
     
     
 }

@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import SwiftUI
+import UIKit
 
 class MyCarPageViewController: UIViewController {
     
@@ -17,6 +17,8 @@ class MyCarPageViewController: UIViewController {
         view.showsVerticalScrollIndicator = true
         view.backgroundColor = .systemBackground
         view.clipsToBounds = true
+        view.dataSource = self
+        view.delegate = self
         view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
         return view
     }()
@@ -28,9 +30,8 @@ class MyCarPageViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.systemBackground
         
-        registerTableview()
         setupUI()
-        
+        checkFirst()
         
 //        FirestoreService.firestoreService.saveComment(comment: Comment(id: "id5", content: "content5", userId: "userId5", userName: "userName")) { error in
 //            print("###### comments: \(error)")
@@ -50,17 +51,21 @@ class MyCarPageViewController: UIViewController {
     }
     
     //MARK: Method
-    private func registerTableview() {
-        myCarCollectionView.delegate = self
-        myCarCollectionView.dataSource = self
-    }
-    
     private func setupUI() {
         view.addSubview(myCarCollectionView)
         
         myCarCollectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func checkFirst() {
+        let userDefaults = UserDefaults.standard
+        guard userDefaults.string(forKey: "isFirst") != nil else { userDefaults.set("false", forKey: "isFirst")
+            let vc = MyCarCheckViewController()
+            navigationController?.pushViewController(vc, animated: true)
+            return
         }
     }
 }
