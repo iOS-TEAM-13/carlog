@@ -120,11 +120,6 @@ class HistoryPageViewController: UIViewController {
         
     }
     
-    func didSelectItem(at indexPath: IndexPath) {
-        let driveDetailViewController = DriveDetailViewController()
-        self.navigationController?.pushViewController(driveDetailViewController, animated: true)
-    }
-    
     func buttonActions() {
         
         floatingButtonStackView.floatingButton.addAction(UIAction(handler: {_ in
