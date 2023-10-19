@@ -19,9 +19,9 @@ class PageViewController: UIViewController {
         buttonActions()
     }
     
-    init(view: CheckingView, checkingView: Constants.CheckView) {
+    init(view: CheckingView, checkingView: componentsType) {
         super.init(nibName: nil, bundle: nil)
-        if checkingView == .normalView {
+        if checkingView == .engineOil || checkingView == .missionOil || checkingView == .brakeOil || checkingView == .brakePad || checkingView == .tire || checkingView == .tireRotation || checkingView == .fuelFilter || checkingView == .wiperBlade || checkingView == .airconFilter {
             componetsView = ComponentsView(view: view)
             setupCarouselView()
         } else {
