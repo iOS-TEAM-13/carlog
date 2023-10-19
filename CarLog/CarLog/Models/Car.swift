@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Car {
-    let number: String
-    let maker: String
-    let name: String
-    let oilType: String
-    let nickName: String
-    let totalDistance: Double
-    let carInfo: CarInfo
-    let driving: Driving
+struct Car: Codable {
+    let number: String?
+    let maker: String?
+    let name: String?
+    let oilType: String?
+    let nickName: String?
+    let totalDistance: Double?
+
+    let userEmail: String?
 }

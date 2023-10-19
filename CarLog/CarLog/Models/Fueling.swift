@@ -7,17 +7,13 @@
 
 import Foundation
 
-//struct Fueling {
-//    let price: Int
-//    let count: Double
-//    let totalPrice: Int
-//    let timeStamp: String
-//}
-
-struct Fueling {
-    let timeStamp: String
-    let totalDistance: Int
-    let price: Int
-    let count: Double
-    let totalPrice: Int
+struct Fueling: Codable {
+    let timeStamp: String?
+    let id: String?
+    let totalDistance: Int?
+    let price: Int?
+    let count: Double?
+    let totalPrice: Int?
+    
+    let userEmail: String?
 }
