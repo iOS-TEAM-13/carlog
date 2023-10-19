@@ -4,29 +4,11 @@ import UIKit
 class HistoryPageViewController: UIViewController {
     
     var drivingDummy = [
-        Driving(timeStamp: "2023.10.15", departDistance: 222222, arriveDistance: 222223, driveDistance: 1),
-        Driving(timeStamp: "2023.10.15", departDistance: 17778, arriveDistance: 17788, driveDistance: 10),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
-        Driving(timeStamp: "2023.10.16", departDistance: 17788, arriveDistance: 17900, driveDistance: 112),
+        Driving(timeStamp: "2023.10.15", id: "1", departDistance: 22, arriveDistance: 33, driveDistance: 11, userEmail: "hhn0212@naver.com")
     ]
     
     var fuelingDummy = [
-        Fueling(timeStamp: "2023.10.15", totalDistance: 17777, price: 1777, count: 55, totalPrice: 89999),
-        Fueling(timeStamp: "2020.10.12", totalDistance: 17787, price: 1776, count: 56, totalPrice: 100000),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
-        Fueling(timeStamp: "2020.10.13", totalDistance: 17797, price: 1800, count: 55.44, totalPrice: 123999),
+        Fueling(timeStamp: "2023.10.15", id: "1", totalDistance: 23, price: 1789, count: 10, totalPrice: 17890, userEmail: "hhn0212@naver.com")
     ]
     
     lazy var segmentedControl: UISegmentedControl = {
@@ -221,9 +203,9 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             cell.layer.shadowRadius = 3
             cell.layer.shadowOpacity = 0.3
             
-            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp
-            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance)km")
-            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance)km")
+            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp!
+            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance!)km")
+            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance!)km")
             
             return cell
             
@@ -239,10 +221,10 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             cell.layer.shadowRadius = 3
             cell.layer.shadowOpacity = 0.3
             
-            cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp
-            cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price)원")
-            cell.totalPriceLabel.text = String("\(fuelingDummy[indexPath.row].totalPrice)원")
-            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count)L")
+            cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp!
+            cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price!)원")
+            cell.totalPriceLabel.text = String("\(fuelingDummy[indexPath.row].totalPrice!)원")
+            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count!)L")
             
             return cell
         }
@@ -264,7 +246,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             let driveDetailViewController = DriveDetailViewController()
             self.navigationController?.pushViewController(driveDetailViewController, animated: true)
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
-            let fuelingDetailViewController = AddFuelingViewController()
+            let fuelingDetailViewController = FuelingDetailViewController()
             self.navigationController?.pushViewController(fuelingDetailViewController, animated: true)
         }
     }

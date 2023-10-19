@@ -23,7 +23,8 @@ class MyCarPageViewController: UIViewController {
         return view
     }()
     
-    private let dummy = CarInfo(engineOil: "엔진 오일", missionOil: "미션 오일", brakeOil: "브레이크 오일", brakePad: "브레이크 패드", tire: "타이어", tireRotation: "로테이션", fuelFilter: "연료 필터", wiper: "와이퍼", airconFilter: "에어컨 필터", insurance: "보험")
+//    private let dummy = CarParts CarInfo(engineOil: "엔진 오일", missionOil: "미션 오일", brakeOil: "브레이크 오일", brakePad: "브레이크 패드", tire: "타이어", tireRotation: "로테이션", fuelFilter: "연료 필터", wiper: "와이퍼", airconFilter: "에어컨 필터", insurance: "보험")
+    
     private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tire"), UIImage(named: "tireRotation"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
     //MARK: LifeCycle
     override func viewDidLoad() {
@@ -33,21 +34,28 @@ class MyCarPageViewController: UIViewController {
         setupUI()
         checkFirst()
         
-//        FirestoreService.firestoreService.saveComment(comment: Comment(id: "id5", content: "content5", userId: "userId5", userName: "userName")) { error in
-//            print("###### comments: \(error)")
-//        }
-//
-//        FirestoreService.firestoreService.loadComments() { result in
-//            print("################# comments: \(result)")
-//        }
-//
-//        FirestoreService.firestoreService.savePosts(post: Post(id: "id7", title: "title7", content: "content7", image: ["image1", "image2"], comment: [Comment(id: "id8", content: "content8", userId: "userId8", userName: "userName8"), Comment(id: "id9", content: "content9", userId: "userId9", userName: "userName9")])) { error in
-//            print("###### posts:  \(error)")
-//        }
-//
-//        FirestoreService.firestoreService.loadPosts() { result in
-//            print("########## posts: \(result)")
-//        }
+        //        FirestoreService.firestoreService.saveComment(comment: Comment(id: "id5", content: "content5", userId: "userId5", userName: "userName")) { error in
+        //            print("###### comments: \(error)")
+        //        }
+        //
+        //        FirestoreService.firestoreService.loadComments() { result in
+        //            print("################# comments: \(result)")
+        //        }
+        //
+        //        FirestoreService.firestoreService.savePosts(post: Post(id: "id7", title: "title7", content: "content7", image: ["image1", "image2"], comment: [Comment(id: "id8", content: "content8", userId: "userId8", userName: "userName8"), Comment(id: "id9", content: "content9", userId: "userId9", userName: "userName9")])) { error in
+        //            print("###### posts:  \(error)")
+        //        }
+        //
+        //        FirestoreService.firestoreService.loadPosts() { result in
+        //            print("########## posts: \(result)")
+        //        }
+        
+        //지훈
+//        FirestoreService.firestoreService.saveUsers(
+//            user: User(userId: "abc", email: "hhn0212@naver.com", password: "Rlawlgns1!",
+//            car: Car(number: "00서 0000", maker: "기아", name: "K5", oilType: "휘발유", nickName: "붕붕", totalDistance: 170,
+//            carInfo: CarInfo(engineOil: "3개월 전", missionOil: "3개월 전", brakeOil: "3개월 전", brakePad: "3개월 전", tire: "3개월 전",tireRotation: "3개월 전", fuelFilter: "3개월 전", wiper: "3개월 전", airconFilter: "3개월 전", insurance: "3개월 전"),
+//                     driving: [Driving(timeStamp: "2023.10.15", departDistance: 170, arriveDistance: 180, driveDistance: 10)], fueling: [nil]), post: nil)) { error in }
     }
     
     //MARK: Method
@@ -94,12 +102,12 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
-        let mirror = Mirror(reflecting: dummy)
-        let temp = mirror.children.compactMap{$0.value as? String}[indexPath.row]
-        if let icon = menuIcon[indexPath.row] {
-            cell.bind(text: temp, period: "기간1", icon: icon)
-        }
-        cell.layer.cornerRadius = 20
+//        let mirror = Mirror(reflecting: dummy)
+//        let temp = mirror.children.compactMap{$0.value as? String}[indexPath.row]
+//        if let icon = menuIcon[indexPath.row] {
+//            cell.bind(text: temp, period: "기간1", icon: icon)
+//        }
+//        cell.layer.cornerRadius = 20
         return cell
     }
     

@@ -8,8 +8,10 @@
 import Foundation
 
 struct Comment: Codable {
-    let id: String
-    let content: String
-    let userId: String
-    let userName: String
+    let id: String?
+    let content: String?
+    let userName: String?
+    
+    let userEmail: String?
+    let timeStamp: String?
 }

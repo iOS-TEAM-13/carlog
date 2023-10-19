@@ -104,6 +104,7 @@ final class FirestoreService {
 //        }
 //    }
     
+    //지훈
     func checkingEmail(email: String, completion: @escaping (Bool, Error?) -> Void) {
         let usersRef = db.collection("users")
         
@@ -125,6 +126,17 @@ final class FirestoreService {
                 }
             }
             completion(isEmailAvailable, nil)
+        }
+    }
+    
+    func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(user)
+            db.collection("users").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
         }
     }
 }

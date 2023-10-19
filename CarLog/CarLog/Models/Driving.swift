@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct Driving {
-    let timeStamp: String
-    let departDistance: Double
-    let arriveDistance: Double
-    let driveDistance: Double
-//    let drivingTime: Date
-//    let drivingTag: [String]
+struct Driving: Codable {
+    let timeStamp: String?
+    let id: String?
+    let departDistance: Double?
+    let arriveDistance: Double?
+    let driveDistance: Double?
+    
+    let userEmail: String?
 }
