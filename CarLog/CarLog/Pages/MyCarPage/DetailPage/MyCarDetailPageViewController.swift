@@ -151,7 +151,7 @@ class MyCarDetailPageViewController: UIViewController {
     
     private func configure() {
         selectedTitleLabel.text = dummyMenu?.0
-        selectedIntervalLabel.text = dummyMenu?.1.currentTime?.toString()
+        selectedIntervalLabel.text = dummyMenu?.1.currentTime
         selectedIcon.image = dummyIcon
     }
     

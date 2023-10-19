@@ -102,8 +102,8 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func bind(text: String, interval: String, icon: UIImage) {
-        collectionViewTitle.text = text
+    func bind(title: String, interval: String, icon: UIImage) {
+        collectionViewTitle.text = title
         collectionViewInterval.text = interval
         collectionViewImage.image = icon
     }

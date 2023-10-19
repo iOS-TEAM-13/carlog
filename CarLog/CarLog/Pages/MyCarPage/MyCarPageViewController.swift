@@ -23,7 +23,7 @@ class MyCarPageViewController: UIViewController {
         return view
     }()
     
-    private let dummy = CarParts(engineOil: PartsInfo(currentTime: Date(), fixHistory: [FixHistory(changedDate: Date(), changedType: .isFixedParts), FixHistory(changedDate: Date(), changedType: .isFixedParts)]), missionOil: PartsInfo(currentTime: Date(), fixHistory: []), brakeOil: PartsInfo(currentTime: Date(), fixHistory: []), brakePad: PartsInfo(currentTime: Date(), fixHistory: []), tire: PartsInfo(currentTime: Date(), fixHistory: []), tireRotation: PartsInfo(currentTime: Date(), fixHistory: []), fuelFilter: PartsInfo(currentTime: Date(), fixHistory: []), wiper: PartsInfo(currentTime: Date(), fixHistory: []), airconFilter: PartsInfo(currentTime: Date(), fixHistory: []), insurance: PartsInfo(currentTime: Date(), fixHistory: []), userEmail: "")
+    private let dummy = CarParts(engineOil: PartsInfo(currentTime: "6개월 전", fixHistory: [FixHistory(changedDate: Date(), changedType: .isFixedParts), FixHistory(changedDate: Date(), changedType: .isFixedParts)]), missionOil: PartsInfo(currentTime: "1개월 전", fixHistory: []), brakeOil: PartsInfo(currentTime: "6개월 전", fixHistory: []), brakePad: PartsInfo(currentTime: "1년 전", fixHistory: []), tire: PartsInfo(currentTime: "6개월 전", fixHistory: []), tireRotation: PartsInfo(currentTime: "2년 전", fixHistory: []), fuelFilter: PartsInfo(currentTime: "6개월 전", fixHistory: []), wiper: PartsInfo(currentTime: "3년 전", fixHistory: []), airconFilter: PartsInfo(currentTime: "6개월 전", fixHistory: []), insurance: PartsInfo(currentTime: "6개월 전", fixHistory: []), userEmail: "")
     
     private var totalParts: [(String, PartsInfo)] = []
     
@@ -88,7 +88,7 @@ class MyCarPageViewController: UIViewController {
         let mirror = Mirror(reflecting: dummy)
         mirror.children.forEach {
             if($0.label! != "userEmail") {
-                totalParts.append((engToKor[$0.label!]!, PartsInfo(currentTime: ($0.value as! PartsInfo).currentTime, fixHistory: [])))
+                totalParts.append((engToKor[$0.label!]!, PartsInfo(currentTime: ($0.value as! PartsInfo).currentTime, fixHistory: ($0.value as! PartsInfo).fixHistory)))
             }
         }
     }
@@ -119,7 +119,9 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
         if let icon = menuIcon[indexPath.row] {
-            cell.bind(text: totalParts[indexPath.row].0, interval: (totalParts[indexPath.row].1.currentTime?.toString())!, icon: icon)
+            let title = totalParts[indexPath.row].0
+            let interval = Util.util.toInterval(seletedDate: (totalParts[indexPath.row].1.currentTimeToMonth)!, type: title).toString()
+            cell.bind(title: title, interval: interval, icon: icon)
         }
         cell.layer.cornerRadius = 20
         return cell

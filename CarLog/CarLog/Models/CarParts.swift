@@ -22,7 +22,29 @@ struct CarParts: Codable {
 }
 
 struct PartsInfo: Codable {
-    let currentTime: Date?
+    let currentTime: String?
+    var currentTimeToMonth: Int? {
+        switch currentTime {
+        case "모르겠음":
+            return 0
+        case "최근":
+            return 0
+        case "1개월 전":
+            return 1
+        case "3개월 전":
+            return 3
+        case "6개월 전":
+            return 6
+        case "1년 전":
+            return 12
+        case "2년 전":
+            return 24
+        case "3년 전":
+            return 36
+        default:
+            return 0
+        }
+    }
     let fixHistory: [FixHistory?]
 }
 
