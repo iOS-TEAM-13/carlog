@@ -96,6 +96,7 @@ class MyCarDetailPageViewController: UIViewController {
         setupUI()
         setCollectionView()
         configure()
+        // 점검완료 교체완료 날짜변경
     }
     
     private func setupUI() {
@@ -143,7 +144,7 @@ class MyCarDetailPageViewController: UIViewController {
         
         detailCollectionView.snp.makeConstraints {
             $0.top.equalTo(buttonStackView.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         modifiedButton.snp.makeConstraints {
