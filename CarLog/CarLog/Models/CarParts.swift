@@ -31,7 +31,7 @@ struct FixHistory: Codable {
     let changedType: ChangedType?
 }
 
-enum ChangedType: Codable {
-    case isModifiedDate //수정
-    case isFixedParts //교체
+enum ChangedType: String, Codable {
+    case isModifiedDate = "날짜수정"
+    case isFixedParts = "교체완료"
 }

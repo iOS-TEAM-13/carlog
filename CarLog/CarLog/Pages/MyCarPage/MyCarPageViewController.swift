@@ -23,7 +23,7 @@ class MyCarPageViewController: UIViewController {
         return view
     }()
     
-    private let dummy = CarParts(engineOil: PartsInfo(currentTime: Date(), fixHistory: []), missionOil: PartsInfo(currentTime: Date(), fixHistory: []), brakeOil: PartsInfo(currentTime: Date(), fixHistory: []), brakePad: PartsInfo(currentTime: Date(), fixHistory: []), tire: PartsInfo(currentTime: Date(), fixHistory: []), tireRotation: PartsInfo(currentTime: Date(), fixHistory: []), fuelFilter: PartsInfo(currentTime: Date(), fixHistory: []), wiper: PartsInfo(currentTime: Date(), fixHistory: []), airconFilter: PartsInfo(currentTime: Date(), fixHistory: []), insurance: PartsInfo(currentTime: Date(), fixHistory: []), userEmail: "")
+    private let dummy = CarParts(engineOil: PartsInfo(currentTime: Date(), fixHistory: [FixHistory(changedDate: Date(), changedType: .isFixedParts), FixHistory(changedDate: Date(), changedType: .isFixedParts)]), missionOil: PartsInfo(currentTime: Date(), fixHistory: []), brakeOil: PartsInfo(currentTime: Date(), fixHistory: []), brakePad: PartsInfo(currentTime: Date(), fixHistory: []), tire: PartsInfo(currentTime: Date(), fixHistory: []), tireRotation: PartsInfo(currentTime: Date(), fixHistory: []), fuelFilter: PartsInfo(currentTime: Date(), fixHistory: []), wiper: PartsInfo(currentTime: Date(), fixHistory: []), airconFilter: PartsInfo(currentTime: Date(), fixHistory: []), insurance: PartsInfo(currentTime: Date(), fixHistory: []), userEmail: "")
     
     private var totalParts: [(String, PartsInfo)] = []
     

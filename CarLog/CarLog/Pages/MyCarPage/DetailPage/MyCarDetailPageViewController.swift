@@ -80,15 +80,8 @@ class MyCarDetailPageViewController: UIViewController {
     }()
     
     // MARK: Dummy
-    private let dummyList = [Detail(date: "2023 / 10 / 18", type: "수정"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체")]
-    
     var dummyMenu: (String, PartsInfo)?
     var dummyIcon: UIImage?
-    
-    struct Detail {
-        let date: String
-        let type: String
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,12 +163,12 @@ class MyCarDetailPageViewController: UIViewController {
 
 extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyList.count
+        return dummyMenu?.1.fixHistory.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        cell.bind(date: dummyList[indexPath.row].date, type: dummyList[indexPath.row].type)
+        cell.bind(date: dummyMenu?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: dummyMenu?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         return cell
     }
     
