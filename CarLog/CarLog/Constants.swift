@@ -15,14 +15,33 @@ struct Constants {
     static let fontJua36 = UIFont(name: "Jua", size: 36)
     static let fontJua40 = UIFont(name: "Jua", size: 40)
     
-    enum CheckView {
-        case normalView
-        case insuranceView
-    }
+//    enum CheckView {
+//        case normalView
+//        case insuranceView
+//    }
 }
 
 extension UICollectionViewCell {
     static var identifier: String {
         return String(describing: self)
     }
+}
+
+struct Menu {
+    let title: String
+    let interval: String
+    let icon: UIImage
+}
+
+enum componentsType: Codable {
+    case engineOil
+    case missionOil
+    case brakeOil
+    case brakePad
+    case tireRotation
+    case tire
+    case fuelFilter
+    case wiperBlade
+    case airconFilter
+    case insurance
 }

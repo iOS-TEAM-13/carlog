@@ -102,12 +102,14 @@ final class JoinupView: UIView {
     lazy var joinInButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
 
     lazy var popButton: UIButton = {
         let button = UIButton()
         button.customButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
     
@@ -138,7 +140,7 @@ final class JoinupView: UIView {
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
         emailStackView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(70)
+            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
@@ -156,7 +158,7 @@ final class JoinupView: UIView {
         }
 
         joinInButton.snp.makeConstraints { make in
-            make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(70)
+            make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)

@@ -18,6 +18,16 @@ class JoinupPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
+        registerForKeyboardNotifications()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        joinupView.endEditing(true)
+        carNumberView.endEditing(true)
+        carModelView.endEditing(true)
+        oilModelView.endEditing(true)
+        nickNameView.endEditing(true)
+        totalDistanceView.endEditing(true)
     }
 
     func setupUI() {
@@ -26,85 +36,129 @@ class JoinupPageViewController: UIViewController {
         joinupView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
-        joinupView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        joinupView.checkEmailButton.addTarget(self, action: #selector(checkEmailButtonTapped), for: .touchUpInside)
-        joinupView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        joinupView.confirmPasswordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        joinupView.joinInButton.addTarget(self, action: #selector(joinInButtonTapped), for: .touchUpInside)
-        joinupView.popButton.addTarget(self, action: #selector(joininPopButtonTapped), for: .touchUpInside)
-        carNumberView.popButton.addTarget(self, action: #selector(carNumberViewPopButtonTapped), for: .touchUpInside)
-        carNumberView.nextButton.addTarget(self, action: #selector(carNumberViewPopNextButtonTapped), for: .touchUpInside)
-        carModelView.popButton.addTarget(self, action: #selector(carModelViewPopButtonTapped), for: .touchUpInside)
-        carModelView.nextButton.addTarget(self, action: #selector(carModelViewNextButtonTapped), for: .touchUpInside)
-        oilModelView.popButton.addTarget(self, action: #selector(oilViewPopButtonTapped), for: .touchUpInside)
-        oilModelView.nextButton.addTarget(self, action: #selector(oilViewNextButtonTapped), for: .touchUpInside)
-        nickNameView.popButton.addTarget(self, action: #selector(nickNameViewPopButtonTapped), for: .touchUpInside)
-        nickNameView.nextButton.addTarget(self, action: #selector(nickNameViewNextButtonTapped), for: .touchUpInside)
-        totalDistanceView.popButton.addTarget(self, action: #selector(totalDistanceViewPopButtonTapped), for: .touchUpInside)
-        totalDistanceView.nextButton.addTarget(self, action: #selector(totalDistanceViewNextButtonTapped), for: .touchUpInside)
+        addTargets()
     }
-}
 
-extension JoinupPageViewController {
-    @objc func textFieldDidChange() {}
+    func addTargets() {
+        joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
+            guard let emailToCheck = self.joinupView.emailTextField.text else {
+                return
+            }
+            FirestoreService.firestoreService.checkingEmail(email: emailToCheck) { isEmailAvailable, error in
+                if let error = error {
+                    print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                    return
+                }
 
-    @objc func checkEmailButtonTapped() {
-        guard let emailToCheck = joinupView.emailTextField.text else {
-            return
-        }
-
-        FirestoreService.firestoreService.checkingEmail(email: emailToCheck) { isEmailAvailable, error in
-            if let error = error {
-                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                if isEmailAvailable {
+                    self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
+                    self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
+                } else {
+                    self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
+                    self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 사용중인 아이디입니다")
+                    self.joinupView.emailTextField.text = ""
+                }
+            }
+        }), for: .touchUpInside)
+        joinupView.joinInButton.addAction(UIAction(handler: { _ in
+            // 유효성 검사를 위한 입력 값 가져오기
+            guard let email = self.joinupView.emailTextField.text,
+                  let password = self.joinupView.passwordTextField.text,
+                  let confirmPassword = self.joinupView.confirmPasswordTextField.text
+            else {
                 return
             }
 
-            if isEmailAvailable {
-                self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
-                self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
+            let isEmailValid = email.isValidEmail()
+            let isPasswordValid = password.isValidPassword()
+            let isConfirmPasswordValid = confirmPassword == password
+
+            if isEmailValid, isPasswordValid, isConfirmPasswordValid {
+                // 모든 조건을 만족하면 다음 단계로 이동
+                self.view.addSubview(self.carNumberView)
+                self.joinupView.isHidden = true
+                self.carNumberView.isHidden = false
+                self.carNumberView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
             } else {
-                self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
-                self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
-                self.showAlert(message: "이미 사용중인 아이디입니다")
-                self.joinupView.emailTextField.text = ""
+                // 조건을 만족하지 않을 때 경고 표시
+                var alertMessage = ""
+                if !isEmailValid {
+                    alertMessage = "올바른 이메일 형식으로 써주세요"
+                } else if !isPasswordValid {
+                    alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
+                } else if !isConfirmPasswordValid {
+                    alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
+                }
+                self.showAlert(message: alertMessage)
             }
-        }
-    }
-
-    @objc func joinInButtonTapped() {
-        // 유효성 검사를 위한 입력 값 가져오기
-        guard let email = joinupView.emailTextField.text,
-              let password = joinupView.passwordTextField.text,
-              let confirmPassword = joinupView.confirmPasswordTextField.text
-        else {
-            return
-        }
-
-        let isEmailValid = email.isValidEmail()
-        let isPasswordValid = password.isValidPassword()
-        let isConfirmPasswordValid = confirmPassword == password
-
-        if isEmailValid, isPasswordValid, isConfirmPasswordValid {
-            // 모든 조건을 만족하면 다음 단계로 이동
-            view.addSubview(carNumberView)
-            joinupView.isHidden = true
-            carNumberView.isHidden = false
-            carNumberView.snp.makeConstraints { make in
+        }), for: .touchUpInside)
+        joinupView.popButton.addAction(UIAction(handler: { _ in
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
+        carNumberView.popButton.addAction(UIAction(handler: { _ in
+            self.joinupView.isHidden = false
+            self.carNumberView.isHidden = true
+        }), for: .touchUpInside)
+        carNumberView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.carModelView)
+            self.carNumberView.isHidden = true
+            self.carModelView.isHidden = false
+            self.carModelView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-        } else {
-            // 조건을 만족하지 않을 때 경고 표시
-            var alertMessage = ""
-            if !isEmailValid {
-                alertMessage = "올바른 이메일 형식으로 써주세요"
-            } else if !isPasswordValid {
-                alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
-            } else if !isConfirmPasswordValid {
-                alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
+        }), for: .touchUpInside)
+        carModelView.popButton.addAction(UIAction(handler: { _ in
+            self.carNumberView.isHidden = false
+            self.carModelView.isHidden = true
+        }), for: .touchUpInside)
+        carModelView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.oilModelView)
+            self.carModelView.isHidden = true
+            self.oilModelView.isHidden = false
+            self.oilModelView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
             }
-            showAlert(message: alertMessage)
-        }
+        }), for: .touchUpInside)
+        oilModelView.popButton.addAction(UIAction(handler: { _ in
+            self.carModelView.isHidden = false
+            self.oilModelView.isHidden = true
+        }), for: .touchUpInside)
+        oilModelView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.nickNameView)
+            self.oilModelView.isHidden = true
+            self.nickNameView.isHidden = false
+            self.nickNameView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+        nickNameView.popButton.addAction(UIAction(handler: { _ in
+            self.oilModelView.isHidden = false
+            self.nickNameView.isHidden = true
+        }), for: .touchUpInside)
+        nickNameView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.totalDistanceView)
+            self.nickNameView.isHidden = true
+            self.totalDistanceView.isHidden = false
+            self.totalDistanceView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+        totalDistanceView.popButton.addAction(UIAction(handler: { _ in
+            self.nickNameView.isHidden = false
+            self.totalDistanceView.isHidden = true
+        }), for: .touchUpInside)
+        totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
+            guard let email = self.joinupView.emailTextField.text,
+                  let password = self.joinupView.passwordTextField.text
+            else {
+                return
+            }
+            LoginService.loginService.signUpUser(email: email, password: password)
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
     }
 
     func showAlert(message: String) {
@@ -112,79 +166,39 @@ extension JoinupPageViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+}
 
-    @objc func joininPopButtonTapped() {
-        dismiss(animated: true)
+extension JoinupPageViewController {
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
-    @objc func carNumberViewPopButtonTapped() {
-        joinupView.isHidden = false
-        carNumberView.isHidden = true
-    }
-
-    @objc func carNumberViewPopNextButtonTapped() {
-        view.addSubview(carModelView)
-        carNumberView.isHidden = true
-        carModelView.isHidden = false
-        carModelView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
+        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+        
+        if let userInfo = notification.userInfo,
+           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        {
+            let keyboardHeight = keyboardFrame.height
+            for buttonList in buttonLists {
+                let textFieldFrameInWindow = buttonList.convert(buttonList.bounds, to: nil)
+                let maxY = textFieldFrameInWindow.maxY
+                for list in lists {
+                    if maxY > (list.frame.size.height - keyboardHeight) {
+                        let scrollOffset = maxY - (list.frame.size.height - keyboardHeight)
+                        list.frame.origin.y = scrollOffset - 100
+                    }
+                }
+            }
         }
     }
 
-    @objc func carModelViewPopButtonTapped() {
-        carNumberView.isHidden = false
-        carModelView.isHidden = true
-    }
-
-    @objc func carModelViewNextButtonTapped() {
-        view.addSubview(oilModelView)
-        carModelView.isHidden = true
-        oilModelView.isHidden = false
-        oilModelView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
+        for list in lists {
+            list.frame.origin.y = 0
         }
-    }
-
-    @objc func oilViewPopButtonTapped() {
-        carModelView.isHidden = false
-        oilModelView.isHidden = true
-    }
-
-    @objc func oilViewNextButtonTapped() {
-        view.addSubview(nickNameView)
-        oilModelView.isHidden = true
-        nickNameView.isHidden = false
-        nickNameView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-
-    @objc func nickNameViewPopButtonTapped() {
-        oilModelView.isHidden = false
-        nickNameView.isHidden = true
-    }
-
-    @objc func nickNameViewNextButtonTapped() {
-        view.addSubview(totalDistanceView)
-        nickNameView.isHidden = true
-        totalDistanceView.isHidden = false
-        totalDistanceView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-
-    @objc func totalDistanceViewPopButtonTapped() {
-        nickNameView.isHidden = false
-        totalDistanceView.isHidden = true
-    }
-
-    @objc func totalDistanceViewNextButtonTapped() {
-        guard let email = joinupView.emailTextField.text,
-              let password = joinupView.passwordTextField.text
-        else {
-            return
-        }
-        LoginService.loginService.signUpUser(email: email, password: password)
-        dismiss(animated: true)
     }
 }
