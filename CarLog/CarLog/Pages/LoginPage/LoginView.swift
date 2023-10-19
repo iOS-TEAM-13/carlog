@@ -16,10 +16,10 @@ final class LoginView: UIView {
     lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
     lazy var signupStackView = loginStackView(list: [joinupButton, spaceView, findIdPassword], spacing: 0, alignment: .fill)
     lazy var leftDivider = divider()
-    lazy var socialLoginDesignLabel = basicLabel(text: "SNS 계정으로 로그인")
-    lazy var rightDivider = divider()
-    lazy var socialLoginDesignStackView = loginStackView(list: [leftDivider, socialLoginDesignLabel, rightDivider], spacing: 2, alignment: .center)
-    lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+//    lazy var socialLoginDesignLabel = basicLabel(text: "SNS 계정으로 로그인")
+//    lazy var rightDivider = divider()
+//    lazy var socialLoginDesignStackView = loginStackView(list: [leftDivider, socialLoginDesignLabel, rightDivider], spacing: 2, alignment: .center)
+//    lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
@@ -28,8 +28,8 @@ final class LoginView: UIView {
         addSubview(passwordTextField)
         addSubview(loginButton)
         addSubview(signupStackView)
-        addSubview(socialLoginDesignStackView)
-        addSubview(appleLoginButton)
+//        addSubview(socialLoginDesignStackView)
+//        addSubview(appleLoginButton)
 
         logo.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
@@ -62,18 +62,18 @@ final class LoginView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
-        socialLoginDesignStackView.snp.makeConstraints { make in
-            make.top.equalTo(signupStackView.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-
-        appleLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
-        }
+//        socialLoginDesignStackView.snp.makeConstraints { make in
+//            make.top.equalTo(signupStackView.snp.bottom).offset(Constants.verticalMargin)
+//            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+//            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+//        }
+//
+//        appleLoginButton.snp.makeConstraints { make in
+//            make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(Constants.horizontalMargin)
+//            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+//            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+//            make.height.equalTo(50)
+//        }
     }
     
     override init(frame: CGRect) {
