@@ -57,16 +57,16 @@ class LoginPageViewController: UIViewController {
             joinPageViewController.modalPresentationStyle = .fullScreen
             self.present(joinPageViewController, animated: true, completion: nil)
         }), for: .touchUpInside)
-        loginView.appleLoginButton.addAction(UIAction(handler: { _ in
-            let appleIDProvider = ASAuthorizationAppleIDProvider()
-            let request = appleIDProvider.createRequest()
-            request.requestedScopes = [.fullName, .email]
-
-            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-            authorizationController.delegate = self
-            authorizationController.presentationContextProvider = self
-            authorizationController.performRequests()
-        }), for: .touchUpInside)
+//        loginView.appleLoginButton.addAction(UIAction(handler: { _ in
+//            let appleIDProvider = ASAuthorizationAppleIDProvider()
+//            let request = appleIDProvider.createRequest()
+//            request.requestedScopes = [.fullName, .email]
+//
+//            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+//            authorizationController.delegate = self
+//            authorizationController.presentationContextProvider = self
+//            authorizationController.performRequests()
+//        }), for: .touchUpInside)
     }
 
 //    func registerForKeyboardNotifications() {
@@ -142,31 +142,31 @@ class LoginPageViewController: UIViewController {
     }
 }
 
-extension LoginPageViewController: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        view.window!
-    }
-
-    // Apple ID 연동 성공 시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        // Apple ID
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-
-            // 계정 정보 가져오기
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-
-            print("User ID : \(userIdentifier)")
-            print("User Email : \(email ?? "")")
-            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
-
-        default:
-            break
-        }
-    }
-
-    // Apple ID 연동 실패 시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {}
-}
+//extension LoginPageViewController: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+//        view.window!
+//    }
+//
+//    // Apple ID 연동 성공 시
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+//        switch authorization.credential {
+//        // Apple ID
+//        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+//
+//            // 계정 정보 가져오기
+//            let userIdentifier = appleIDCredential.user
+//            let fullName = appleIDCredential.fullName
+//            let email = appleIDCredential.email
+//
+//            print("User ID : \(userIdentifier)")
+//            print("User Email : \(email ?? "")")
+//            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+//
+//        default:
+//            break
+//        }
+//    }
+//
+//    // Apple ID 연동 실패 시
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {}
+//}

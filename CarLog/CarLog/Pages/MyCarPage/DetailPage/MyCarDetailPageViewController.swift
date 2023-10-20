@@ -53,13 +53,13 @@ class MyCarDetailPageViewController: UIViewController {
     
     private let modifiedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "수정", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "날짜 변경", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
         return button
     }()
     
     private let completedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "완료", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "점검 완료", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
         return button
     }()
     
@@ -82,7 +82,8 @@ class MyCarDetailPageViewController: UIViewController {
     // MARK: Dummy
     private let dummyList = [Detail(date: "2023 / 10 / 18", type: "수정"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체")]
     
-    var dummyMenu = Menu(title: "", interval: "", icon: UIImage(systemName: "photo")!)
+    var dummyMenu: (String, PartsInfo)?
+    var dummyIcon: UIImage?
     
     struct Detail {
         let date: String
@@ -96,7 +97,6 @@ class MyCarDetailPageViewController: UIViewController {
         setupUI()
         setCollectionView()
         configure()
-        // 점검완료 교체완료 날짜변경
     }
     
     private func setupUI() {
@@ -157,9 +157,9 @@ class MyCarDetailPageViewController: UIViewController {
     }
     
     private func configure() {
-        selectedTitleLabel.text = dummyMenu.title
-        selectedIntervalLabel.text = dummyMenu.interval
-        selectedIcon.image = dummyMenu.icon
+        selectedTitleLabel.text = dummyMenu?.0
+        selectedIntervalLabel.text = dummyMenu?.1.currentTime?.toString()
+        selectedIcon.image = dummyIcon
     }
     
     private func setCollectionView() {
@@ -180,7 +180,7 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: collectionView.bounds.width - Constants.horizontalMargin, height: 50)
+        .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 50)
     }
 }
 

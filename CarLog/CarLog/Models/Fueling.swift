@@ -14,6 +14,5 @@ struct Fueling: Codable {
     let price: Int?
     let count: Double?
     let totalPrice: Int?
-    
     let userEmail: String?
 }

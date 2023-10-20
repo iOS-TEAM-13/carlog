@@ -12,8 +12,6 @@ struct Post: Codable {
     let title: String?
     let content: String?
     let image: [String?]
-    let comment: [Comment]
-    
     let userEmail: String?
     let timeStamp: String?
 }
