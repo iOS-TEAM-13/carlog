@@ -27,13 +27,14 @@ final class JoinupView: UIView {
         
         let button = UIButton(configuration: configuration)
         button.customButton(text: "중복확인", font: Constants.fontJua14 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 30)
+        button.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         return button
     }()
     
     lazy var emailAlertLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "영소문자와 숫자를 조합하여 6~12글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: "아이디는 필수 입력 정보입니다", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.isHidden = true
         return label
     }()
     
@@ -61,6 +62,7 @@ final class JoinupView: UIView {
     lazy var passwordAlertLabel: UILabel = {
         let label = UILabel()
         label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.isHidden = true
         return label
     }()
     
@@ -88,6 +90,7 @@ final class JoinupView: UIView {
     lazy var confirmPasswordAlertLabel: UILabel = {
         let label = UILabel()
         label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.isHidden = true
         return label
     }()
     
@@ -158,14 +161,14 @@ final class JoinupView: UIView {
         }
 
         joinInButton.snp.makeConstraints { make in
-            make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(30)
+            make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(Constants.verticalMargin * 5)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)
         }
         
         popButton.snp.makeConstraints { make in
-            make.top.equalTo(joinInButton.snp.bottom).offset(10)
+            make.top.equalTo(joinInButton.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(50)

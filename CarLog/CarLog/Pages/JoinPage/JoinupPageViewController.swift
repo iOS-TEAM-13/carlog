@@ -32,11 +32,12 @@ class JoinupPageViewController: UIViewController {
 
     func setupUI() {
         view.addSubview(joinupView) // 첫번째 화면 뷰
-
         joinupView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
         addTargets()
+        forHiddenViews()
     }
 
     func addTargets() {
@@ -44,7 +45,18 @@ class JoinupPageViewController: UIViewController {
             if self.joinupView.emailTextField.text?.isEmpty == true {
                 self.joinupView.emailAlertLabel.isHidden = false
             }
-        }), for: .editingChanged)
+        }), for: .editingDidBegin)
+        joinupView.passwordTextField.addAction(UIAction(handler: { _ in
+            if self.joinupView.passwordTextField.text?.isEmpty == true {
+                self.joinupView.passwordAlertLabel.isHidden = false
+            }
+        }), for: .editingDidBegin)
+        joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
+            if self.joinupView.confirmPasswordTextField.text?.isEmpty == true {
+                self.joinupView.confirmPasswordAlertLabel.isHidden = false
+            }
+        }), for: .editingDidBegin)
+        
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty else {
                 return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
@@ -105,6 +117,51 @@ class JoinupPageViewController: UIViewController {
                 self.showAlert(message: alertMessage)
             }
         }), for: .touchUpInside)
+        
+    }
+
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+extension JoinupPageViewController {
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
+        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+
+        if let userInfo = notification.userInfo,
+           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        {
+            let keyboardHeight = keyboardFrame.height
+            for buttonList in buttonLists {
+                let textFieldFrameInWindow = buttonList.convert(buttonList.bounds, to: nil)
+                let maxY = textFieldFrameInWindow.maxY
+                for list in lists {
+                    if maxY > (list.frame.size.height - keyboardHeight) {
+                        let scrollOffset = maxY - (list.frame.size.height - keyboardHeight)
+                        list.frame.origin.y = scrollOffset - 100
+                    }
+                }
+            }
+        }
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
+        for list in lists {
+            list.frame.origin.y = 0
+        }
+    }
+    
+    func forHiddenViews(){
         joinupView.popButton.addAction(UIAction(handler: { _ in
             self.dismiss(animated: true)
         }), for: .touchUpInside)
@@ -170,45 +227,5 @@ class JoinupPageViewController: UIViewController {
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }
-
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-}
-
-extension JoinupPageViewController {
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
-
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        {
-            let keyboardHeight = keyboardFrame.height
-            for buttonList in buttonLists {
-                let textFieldFrameInWindow = buttonList.convert(buttonList.bounds, to: nil)
-                let maxY = textFieldFrameInWindow.maxY
-                for list in lists {
-                    if maxY > (list.frame.size.height - keyboardHeight) {
-                        let scrollOffset = maxY - (list.frame.size.height - keyboardHeight)
-                        list.frame.origin.y = scrollOffset - 100
-                    }
-                }
-            }
-        }
-    }
-
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        for list in lists {
-            list.frame.origin.y = 0
-        }
-    }
+    
 }
