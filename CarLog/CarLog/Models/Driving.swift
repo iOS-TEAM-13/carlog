@@ -13,6 +13,5 @@ struct Driving: Codable {
     let departDistance: Double?
     let arriveDistance: Double?
     let driveDistance: Double?
-    
     let userEmail: String?
 }

@@ -14,6 +14,5 @@ struct Car: Codable {
     let oilType: String?
     let nickName: String?
     let totalDistance: Double?
-
     let userEmail: String?
 }

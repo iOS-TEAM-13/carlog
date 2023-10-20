@@ -40,6 +40,7 @@ final class LoginService {
         }
     }
 
+    //
     func keepLogin(completion: @escaping (FirebaseAuth.User?) -> Void) {
         Auth.auth().addStateDidChangeListener { _, user in
             completion(user)
