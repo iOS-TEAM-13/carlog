@@ -62,6 +62,10 @@ class JoinupPageViewController: UIViewController {
             }
         }), for: .touchUpInside)
         joinupView.joinInButton.addAction(UIAction(handler: { _ in
+            if self.joinupView.checkEmailButton.title(for: .normal) != "사용 가능" {
+                self.showAlert(message: "아이디 중복검사를 해주세요")
+                return
+            }
             // 유효성 검사를 위한 입력 값 가져오기
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
@@ -173,11 +177,11 @@ extension JoinupPageViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     @objc private func keyboardWillShow(_ notification: Notification) {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
         let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
-        
+
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
         {
