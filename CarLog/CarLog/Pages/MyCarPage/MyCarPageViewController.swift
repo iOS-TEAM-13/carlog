@@ -120,8 +120,9 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
         if let icon = menuIcon[indexPath.row] {
             let title = totalParts[indexPath.row].0
-            let interval = Util.util.toInterval(seletedDate: (totalParts[indexPath.row].1.currentTimeToMonth)!, type: title).toString()
-            cell.bind(title: title, interval: interval, icon: icon)
+            let firstInterval = Util.util.toInterval(seletedDate: (totalParts[indexPath.row].1.currentTimeToMonth!)).toString()
+            let secondInterval = Util.util.toInterval(seletedDate: (totalParts[indexPath.row].1.currentTimeToMonth)!, type: title).toString()
+            cell.bind(title: title, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon)
         }
         cell.layer.cornerRadius = 20
         return cell
