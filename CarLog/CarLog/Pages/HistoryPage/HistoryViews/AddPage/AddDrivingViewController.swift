@@ -52,6 +52,7 @@ class AddDrivingViewController: UIViewController {
             let driveDistance = Double(addDrivingView.driveDistenceTextField.text ?? "0") ?? 0.0
             // reloaddata잘해라
             let userEmail = Auth.auth().currentUser?.email
+            print(userEmail ?? "")
             
             let newDriving = Driving(timeStamp: timeStamp, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
             
