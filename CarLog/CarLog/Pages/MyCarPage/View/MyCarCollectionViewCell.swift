@@ -116,10 +116,12 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func bind(title: String, interval: String, icon: UIImage) {
+    func bind(title: String, interval: String, icon: UIImage, progress: Double) {
         collectionViewTitle.text = title
         self.interval.text = interval
-//        fixInterval.text = secondInterval
+        print("@@@@@ progress1 \(progress)")
+        print("@@@@@ progress2 \(Float(progress))")
+        self.progressView.progress = Float(progress)
         collectionViewImage.image = icon
     }
 
