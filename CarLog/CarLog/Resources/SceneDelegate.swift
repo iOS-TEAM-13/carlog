@@ -8,18 +8,27 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
-        
-        let rootViewController = LoginPageViewController()
-        //let rootNavigationController = UINavigationController(rootViewController: rootViewController)
-        
-        self.window?.rootViewController = rootViewController
-        self.window?.makeKeyAndVisible()
+
+        LoginService.loginService.keepLogin { user in
+            DispatchQueue.main.async {
+                if user != nil {
+                    
+                    let tabBarController = Constants.mainTabBarController()
+                    self.window?.rootViewController = tabBarController
+                } else {
+                    // 사용자가 로그인하지 않은 경우 LoginPageViewController를 루트 뷰 컨트롤러로 설정
+                    let loginPageViewController = LoginPageViewController()
+                    self.window?.rootViewController = loginPageViewController
+                }
+
+                self.window?.makeKeyAndVisible()
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -49,7 +58,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

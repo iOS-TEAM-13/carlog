@@ -12,7 +12,6 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        keepLogin()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -71,38 +70,6 @@ class LoginPageViewController: UIViewController {
                 self.loginView.loginButton.isEnabled = false
                 self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
                 self.loginView.loginButton.backgroundColor = .thirdColor
-            }
-        }
-    }
-
-    func mainTabBarController() -> UITabBarController {
-        let tabBarController = TabBarController()
-
-        let tabs: [(root: UIViewController, icon: String)] = [
-            (MyCarPageViewController(), "car"),
-            (HistoryPageViewController(), "book"),
-            (MapPageViewController(), "map"),
-            //(CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person"),
-        ]
-
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
-            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
-
-        return tabBarController
-    }
-
-    func keepLogin() {
-        LoginService.loginService.keepLogin { user in
-            print("user:\(user?.email ?? "")")
-            if user != nil {
-                let tabBarController = self.mainTabBarController()
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true, completion: nil)
             }
         }
     }
