@@ -62,6 +62,8 @@ class HistoryPageViewController: UIViewController {
         
         buttonActions()
         
+        //
+        loadDrivingData()
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
@@ -175,7 +177,18 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
     }
     
-    
+    //
+    func loadDrivingData() {
+        FirestoreService.firestoreService.loadDriving { result in
+            if let drivings = result {
+                // Firestore에서 가져온 데이터를 사용하여 컬렉션 뷰 업데이트
+                self.drivingDummy = drivings
+                self.drivingCollectionView.drivingCollectionView.reloadData()
+            } else {
+                print("데이터 로드 중 오류 발생")
+            }
+        }
+    }
     
 }
 
@@ -244,6 +257,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == drivingCollectionView.drivingCollectionView {
             let driveDetailViewController = DriveDetailViewController()
+            //
+            driveDetailViewController.drivingData = drivingDummy[indexPath.row]
             self.navigationController?.pushViewController(driveDetailViewController, animated: true)
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
             let fuelingDetailViewController = FuelingDetailViewController()

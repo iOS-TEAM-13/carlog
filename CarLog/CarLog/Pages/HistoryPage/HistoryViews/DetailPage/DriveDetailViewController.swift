@@ -9,6 +9,9 @@ import UIKit
 
 class DriveDetailViewController: UIViewController {
     
+    //
+    var drivingData: Driving?
+    
     lazy var driveDetailView: DriveDetailView = {
         let driveDetailView = DriveDetailView()
         return driveDetailView
@@ -27,6 +30,11 @@ class DriveDetailViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        //
+        driveDetailView.totalDistanceTextField.text = "\(drivingData?.departDistance ?? 0)"
+        driveDetailView.arriveDistanceTextField.text = "\(drivingData?.arriveDistance ?? 0)"
+        driveDetailView.driveDistenceTextField.text = "\(drivingData?.driveDistance ?? 0)"
+        
         driveDetailView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
         driveDetailView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
         
@@ -34,14 +42,15 @@ class DriveDetailViewController: UIViewController {
     
     @objc func didSaveButton() {
         print("---> driveDetailView 수정 버튼 눌렀어요")
-//        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
+        //        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
         
         
     }
     
     @objc func didCancelButton() {
         print("---> driveDetailView 취소 버튼 눌렀어요")
-//        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
+        //        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
     }
+    
     
 }

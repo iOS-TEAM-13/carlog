@@ -10,7 +10,9 @@ import FirebaseFirestoreSwift
 import Foundation
 
 final class FirestoreService {
+    
     static let firestoreService = FirestoreService()
+    
     let db = Firestore.firestore()
     
     func savePosts(post: Post, completion: @escaping (Error?) -> Void) {
@@ -137,6 +139,39 @@ final class FirestoreService {
             }
         } catch {
             completion(error)
+        }
+    }
+    
+    //
+    func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(driving)
+            db.collection("drivings").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+    
+    func loadDriving(completion: @escaping ([Driving]?) -> Void) {
+        db.collection("drivings").getDocuments { querySnapshot, error in
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var drivings: [Driving] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let driving = try Firestore.Decoder().decode(Driving.self, from: document.data())
+                        drivings.append(driving)
+                    } catch {
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(drivings)
+            }
         }
     }
 }
