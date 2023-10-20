@@ -82,6 +82,7 @@
 		FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF932ADD145900B25A07 /* FirebaseStorage */; };
 		FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */; };
 		FFFFAF842AE1644800A7677E /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFFAF832AE1644800A7677E /* Date+.swift */; };
+		FFFFAF862AE18A5500A7677E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFFAF852AE18A5500A7677E /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +156,7 @@
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailViewCell.swift; sourceTree = "<group>"; };
 		FFFFAF832AE1644800A7677E /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		FFFFAF852AE18A5500A7677E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 				FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */,
 				FF126E202ADAE66D00B2A109 /* Service */,
 				FBE051782AD652D800F39E7F /* Constants.swift */,
+				FFFFAF852AE18A5500A7677E /* Util.swift */,
 				FBE0517E2AD660BC00F39E7F /* Extension */,
 				FB748B362AD53BB500CC6A1F /* Models */,
 				FB748B352AD53BAD00CC6A1F /* Pages */,
@@ -531,6 +534,7 @@
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
+				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,

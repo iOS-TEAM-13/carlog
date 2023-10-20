@@ -21,13 +21,17 @@ class MyCarCheckViewController: UIViewController {
     private let insuranceView = PageViewController(view:  CheckingView(title: "보험 가입 시기는 언제쯤인가요?", firstButton: "", secondButton: "", thirdbutton: "", fourthButton: "", fifthButton: ""), checkingView: .insurance)
     
     lazy var dataViewControllers: [UIViewController] = {
-            return [engineOilView, missionOilView, brakeOilView, brakePadView, tireRotationView, tireView, fuelFilterView, wiperBladeView, airconFilterView, insuranceView]
-        }()
+        return [engineOilView, missionOilView, brakeOilView, brakePadView, tireRotationView, tireView, fuelFilterView, wiperBladeView, airconFilterView, insuranceView]
+    }()
     
     lazy var pageViewController: UIPageViewController = {
-           let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-           return vc
-       }()
+        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        return vc
+    }()
+    
+    private let addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
+        print("@@@@@@ btn clicked")
+    }))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,14 +54,14 @@ class MyCarCheckViewController: UIViewController {
     
     private func setPageViewController() {
         if let firstVC = dataViewControllers.first {
-                    pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
-                }
+            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+        }
     }
     
     private func setupDelegate() {
-            pageViewController.dataSource = self
-            pageViewController.delegate = self
-        }
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
+    }
 }
 
 extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -70,13 +74,18 @@ extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewCo
         }
         return dataViewControllers[previousIndex]
     }
-
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let nextIndex = index + 1
         if nextIndex == dataViewControllers.count {
             return nil
         }
+//        if nextIndex == 10 {
+//            navigationItem.rightBarButtonItem = addButton
+//        } else {
+//            navigationItem.rightBarButtonItem = nil
+//        }
         return dataViewControllers[nextIndex]
     }
 }
