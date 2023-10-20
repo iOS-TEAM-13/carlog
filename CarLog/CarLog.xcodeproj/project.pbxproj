@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */; };
@@ -67,7 +68,7 @@
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
 		FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716B2AD6BC4800713A81 /* Comment.swift */; };
 		FF50716E2AD6BC5100713A81 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716D2AD6BC5100713A81 /* Car.swift */; };
-		FF5071702AD6BC5800713A81 /* CarParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716F2AD6BC5800713A81 /* CarParts.swift */; };
+		FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716F2AD6BC5800713A81 /* CarPart.swift */; };
 		FF5071722AD6BC6000713A81 /* Driving.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071712AD6BC6000713A81 /* Driving.swift */; };
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
@@ -80,6 +81,8 @@
 		FFA5DF922ADD145900B25A07 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF912ADD145900B25A07 /* FirebaseFirestoreSwift */; };
 		FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF932ADD145900B25A07 /* FirebaseStorage */; };
 		FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */; };
+		FFFFAF842AE1644800A7677E /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFFAF832AE1644800A7677E /* Date+.swift */; };
+		FFFFAF862AE18A5500A7677E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFFAF852AE18A5500A7677E /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,7 +147,7 @@
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FF50716B2AD6BC4800713A81 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FF50716D2AD6BC5100713A81 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
-		FF50716F2AD6BC5800713A81 /* CarParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarParts.swift; sourceTree = "<group>"; };
+		FF50716F2AD6BC5800713A81 /* CarPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPart.swift; sourceTree = "<group>"; };
 		FF5071712AD6BC6000713A81 /* Driving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driving.swift; sourceTree = "<group>"; };
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 		FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailViewCell.swift; sourceTree = "<group>"; };
+		FFFFAF832AE1644800A7677E /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		FFFFAF852AE18A5500A7677E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +166,7 @@
 			files = (
 				FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */,
 				FFA5DF8C2ADD145900B25A07 /* FirebaseAuth in Frameworks */,
+				1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */,
 				FFA5DF8E2ADD145900B25A07 /* FirebaseDatabase in Frameworks */,
 				FFA5DF902ADD145900B25A07 /* FirebaseFirestore in Frameworks */,
 				FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */,
@@ -254,6 +260,7 @@
 				FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */,
 				FF126E202ADAE66D00B2A109 /* Service */,
 				FBE051782AD652D800F39E7F /* Constants.swift */,
+				FFFFAF852AE18A5500A7677E /* Util.swift */,
 				FBE0517E2AD660BC00F39E7F /* Extension */,
 				FB748B362AD53BB500CC6A1F /* Models */,
 				FB748B352AD53BAD00CC6A1F /* Pages */,
@@ -298,7 +305,7 @@
 				FF5071692AD6BC4100713A81 /* Post.swift */,
 				FF50716D2AD6BC5100713A81 /* Car.swift */,
 				FF50716B2AD6BC4800713A81 /* Comment.swift */,
-				FF50716F2AD6BC5800713A81 /* CarParts.swift */,
+				FF50716F2AD6BC5800713A81 /* CarPart.swift */,
 				FF5071712AD6BC6000713A81 /* Driving.swift */,
 				FF5071732AD6BC6900713A81 /* Fueling.swift */,
 				FF5071752AD6BC7000713A81 /* GasStation.swift */,
@@ -389,6 +396,7 @@
 				FBE051892AD6678E00F39E7F /* UITextField+.swift */,
 				FB6311C52ADCEBB80038929A /* String+.swift */,
 				FF271BA12ADEB41800209E61 /* UIViewController+.swift */,
+				FFFFAF832AE1644800A7677E /* Date+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -455,6 +463,7 @@
 				FFA5DF8F2ADD145900B25A07 /* FirebaseFirestore */,
 				FFA5DF912ADD145900B25A07 /* FirebaseFirestoreSwift */,
 				FFA5DF932ADD145900B25A07 /* FirebaseStorage */,
+				1301A9B42AE25EA8001962F4 /* SwiftSMTP */,
 			);
 			productName = CarLog;
 			productReference = FB748B1C2AD53B5E00CC6A1F /* CarLog.app */;
@@ -488,6 +497,7 @@
 				FB748B412AD586DB00CC6A1F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				FB748B442AD586EE00CC6A1F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				FFA5DF8A2ADD145900B25A07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1301A9B32AE25EA8001962F4 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
 			);
 			productRefGroup = FB748B1D2AD53B5E00CC6A1F /* Products */;
 			projectDirPath = "";
@@ -522,8 +532,9 @@
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
-				FF5071702AD6BC5800713A81 /* CarParts.swift in Sources */,
+				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
+				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
@@ -532,6 +543,7 @@
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				B85A0F4F2ADEFB8F009E0A00 /* DriveDetailView.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
+				FFFFAF842AE1644800A7677E /* Date+.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
 				B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
@@ -791,6 +803,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1301A9B32AE25EA8001962F4 /* XCRemoteSwiftPackageReference "Swift-SMTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-SMTP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		FB748B412AD586DB00CC6A1F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -818,6 +838,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1301A9B42AE25EA8001962F4 /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1301A9B32AE25EA8001962F4 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
+			productName = SwiftSMTP;
+		};
 		FB748B422AD586DB00CC6A1F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FB748B412AD586DB00CC6A1F /* XCRemoteSwiftPackageReference "SnapKit" */;
