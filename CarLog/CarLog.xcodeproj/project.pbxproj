@@ -10,7 +10,7 @@
 		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
-		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
+		7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
 		B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */; };
@@ -88,7 +88,7 @@
 /* Begin PBXFileReference section */
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
+		7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFloationButtonViewController.swift; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonStackView.swift; sourceTree = "<group>"; };
@@ -380,7 +380,7 @@
 			children = (
 				7E08D8852AD948B500998E27 /* MyPageView.swift */,
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
-				7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */,
+				7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -565,6 +565,7 @@
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
 				FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
+				7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
@@ -578,7 +579,6 @@
 				FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
-				7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,

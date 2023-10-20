@@ -2,18 +2,29 @@ import UIKit
 import SnapKit
 
 class MyPageViewController: UIViewController {
-    let mypageView = MyPageView()
+    let myPageView = MyPageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupUI()
-    }
-    
-    func setupUI() {
-        view.addSubview(mypageView)
-        mypageView.snp.makeConstraints { make in
+
+        view.addSubview(myPageView)
+        myPageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        addTargetButton()
     }
+    
+    
+    func addTargetButton() {
+         
+        myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func logoutButtonTapped() {
+    LoginService.loginService.logout {
+        self.dismiss(animated: true)
+    }
+ }
+    
 }
