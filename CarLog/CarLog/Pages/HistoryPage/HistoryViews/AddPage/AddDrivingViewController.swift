@@ -5,6 +5,7 @@
 //  Created by 김지훈 on 2023/10/13.
 //
 
+import FirebaseAuth
 import SnapKit
 import UIKit
 
@@ -44,13 +45,15 @@ class AddDrivingViewController: UIViewController {
             print("---> addDrivingView 저장 버튼 클릭 했어요")
             
             //
-            let timeStamp = "" // 여기에 적절한 타임스탬프 값을 설정
+            let timeStamp = "" // 현재시간
+            let id = UUID().uuidString
             let departDistance = Double(addDrivingView.totalDistanceTextField.text ?? "0") ?? 0.0
             let arriveDistance = Double(addDrivingView.arriveDistanceTextField.text ?? "0") ?? 0.0
             let driveDistance = Double(addDrivingView.driveDistenceTextField.text ?? "0") ?? 0.0
-            let userEmail = "" // 여기에 사용자 이메일 값을 설정
+            // reloaddata잘해라
+            let userEmail = Auth.auth().currentUser?.email
             
-            let newDriving = Driving(timeStamp: timeStamp, id: "", departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
+            let newDriving = Driving(timeStamp: timeStamp, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
             
             FirestoreService.firestoreService.saveDriving(driving: newDriving) { error in
                 if let error = error {
@@ -59,6 +62,12 @@ class AddDrivingViewController: UIViewController {
                     print("    ----> 주행기록 저장 성공!")
                 }
             }
+            
+            let v = HistoryPageViewController()
+            
+            v.drivingDummy.append(newDriving)
+            
+            v.drivingCollectionView.drivingCollectionView.reloadData()
             
             self.dismiss(animated: true)
         }), for: .touchUpInside)

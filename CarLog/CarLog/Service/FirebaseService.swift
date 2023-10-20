@@ -5,6 +5,7 @@
 //  Created by t2023-m0056 on 2023/10/15.
 //
 
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
@@ -155,7 +156,7 @@ final class FirestoreService {
     }
     
     func loadDriving(completion: @escaping ([Driving]?) -> Void) {
-        db.collection("drivings").getDocuments { querySnapshot, error in
+        db.collection("drivings").whereField("userEmail", in: [Auth.auth().currentUser?.email]).getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)

@@ -64,6 +64,13 @@ class HistoryPageViewController: UIViewController {
         
         //
         loadDrivingData()
+        drivingCollectionView.drivingCollectionView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidLoad()
+        loadDrivingData()
+        drivingCollectionView.drivingCollectionView.reloadData()
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
