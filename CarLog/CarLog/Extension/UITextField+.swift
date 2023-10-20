@@ -21,6 +21,8 @@ extension UITextField {
         self.backgroundColor = .white
         self.leftView = paddingView
         self.leftViewMode = .always
+        self.autocorrectionType = .no
+        self.autocapitalizationType = .none
     }
     
     func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment){
