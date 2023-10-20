@@ -24,7 +24,7 @@ class MyCarPageViewController: UIViewController {
     }()
     
     private let dummy = CarPart(engineOil: PartsInfo(currentTime: "3년 전", fixHistory: [FixHistory(changedDate: Date(), changedType: .isFixedParts), FixHistory(changedDate: Date(), changedType: .isFixedParts)]), missionOil: PartsInfo(currentTime: "3년 전", fixHistory: []), brakeOil: PartsInfo(currentTime: "3년 전", fixHistory: []), brakePad: PartsInfo(currentTime: "3년 전", fixHistory: []), tire: PartsInfo(currentTime: "3년 전", fixHistory: []), tireRotation: PartsInfo(currentTime: "3년 전", fixHistory: []), fuelFilter: PartsInfo(currentTime: "3년 전", fixHistory: []), wiper: PartsInfo(currentTime: "3년 전", fixHistory: []), airconFilter: PartsInfo(currentTime: "3년 전", fixHistory: []), insurance: PartsInfo(currentTime: "3년 전", fixHistory: []), userEmail: "")
-    
+
     private var totalParts: [(String, PartsInfo)] = []
     
     private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tire"), UIImage(named: "tireRotation"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]

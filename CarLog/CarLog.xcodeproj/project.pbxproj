@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
@@ -165,6 +166,7 @@
 			files = (
 				FB748B432AD586DB00CC6A1F /* SnapKit in Frameworks */,
 				FFA5DF8C2ADD145900B25A07 /* FirebaseAuth in Frameworks */,
+				1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */,
 				FFA5DF8E2ADD145900B25A07 /* FirebaseDatabase in Frameworks */,
 				FFA5DF902ADD145900B25A07 /* FirebaseFirestore in Frameworks */,
 				FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */,
@@ -461,6 +463,7 @@
 				FFA5DF8F2ADD145900B25A07 /* FirebaseFirestore */,
 				FFA5DF912ADD145900B25A07 /* FirebaseFirestoreSwift */,
 				FFA5DF932ADD145900B25A07 /* FirebaseStorage */,
+				1301A9B42AE25EA8001962F4 /* SwiftSMTP */,
 			);
 			productName = CarLog;
 			productReference = FB748B1C2AD53B5E00CC6A1F /* CarLog.app */;
@@ -494,6 +497,7 @@
 				FB748B412AD586DB00CC6A1F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				FB748B442AD586EE00CC6A1F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				FFA5DF8A2ADD145900B25A07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1301A9B32AE25EA8001962F4 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
 			);
 			productRefGroup = FB748B1D2AD53B5E00CC6A1F /* Products */;
 			projectDirPath = "";
@@ -799,6 +803,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1301A9B32AE25EA8001962F4 /* XCRemoteSwiftPackageReference "Swift-SMTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-SMTP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		FB748B412AD586DB00CC6A1F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -826,6 +838,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1301A9B42AE25EA8001962F4 /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1301A9B32AE25EA8001962F4 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
+			productName = SwiftSMTP;
+		};
 		FB748B422AD586DB00CC6A1F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FB748B412AD586DB00CC6A1F /* XCRemoteSwiftPackageReference "SnapKit" */;
