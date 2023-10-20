@@ -149,6 +149,7 @@ class JoinupPageViewController: UIViewController {
                 self.carNumberView.snp.makeConstraints { make in
                     make.edges.equalToSuperview()
                 }
+                LoginService.loginService.signUpUser(email: email, password: password)
             } else {
                 // 조건을 만족하지 않을 때 경고 표시
                 var alertMessage = ""
@@ -299,12 +300,6 @@ extension JoinupPageViewController {
             self.totalDistanceView.isHidden = true
         }), for: .touchUpInside)
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
-            guard let email = self.joinupView.emailTextField.text,
-                  let password = self.joinupView.passwordTextField.text
-            else {
-                return
-            }
-            LoginService.loginService.signUpUser(email: email, password: password)
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }

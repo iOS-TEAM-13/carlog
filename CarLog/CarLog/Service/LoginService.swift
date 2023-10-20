@@ -8,7 +8,7 @@ final class LoginService {
     static let loginService = LoginService()
     let db = Firestore.firestore()
 
-    func signUpUser(email: String, password: String) {
+    func signUpUser(email: String, password: String ) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("회원가입 실패: \(error.localizedDescription)")
