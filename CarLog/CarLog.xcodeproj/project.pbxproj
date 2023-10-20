@@ -67,7 +67,7 @@
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
 		FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716B2AD6BC4800713A81 /* Comment.swift */; };
 		FF50716E2AD6BC5100713A81 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716D2AD6BC5100713A81 /* Car.swift */; };
-		FF5071702AD6BC5800713A81 /* CarParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716F2AD6BC5800713A81 /* CarParts.swift */; };
+		FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716F2AD6BC5800713A81 /* CarPart.swift */; };
 		FF5071722AD6BC6000713A81 /* Driving.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071712AD6BC6000713A81 /* Driving.swift */; };
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
@@ -145,7 +145,7 @@
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FF50716B2AD6BC4800713A81 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FF50716D2AD6BC5100713A81 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
-		FF50716F2AD6BC5800713A81 /* CarParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarParts.swift; sourceTree = "<group>"; };
+		FF50716F2AD6BC5800713A81 /* CarPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPart.swift; sourceTree = "<group>"; };
 		FF5071712AD6BC6000713A81 /* Driving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driving.swift; sourceTree = "<group>"; };
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 				FF5071692AD6BC4100713A81 /* Post.swift */,
 				FF50716D2AD6BC5100713A81 /* Car.swift */,
 				FF50716B2AD6BC4800713A81 /* Comment.swift */,
-				FF50716F2AD6BC5800713A81 /* CarParts.swift */,
+				FF50716F2AD6BC5800713A81 /* CarPart.swift */,
 				FF5071712AD6BC6000713A81 /* Driving.swift */,
 				FF5071732AD6BC6900713A81 /* Fueling.swift */,
 				FF5071752AD6BC7000713A81 /* GasStation.swift */,
@@ -525,7 +525,7 @@
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
-				FF5071702AD6BC5800713A81 /* CarParts.swift in Sources */,
+				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CarParts: Codable {
+struct CarPart: Codable {
     let engineOil: PartsInfo
     let missionOil: PartsInfo
     let brakeOil: PartsInfo

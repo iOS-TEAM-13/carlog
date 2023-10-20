@@ -5,14 +5,75 @@
 //  Created by t2023-m0056 on 2023/10/15.
 //
 
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
 final class FirestoreService {
+    
     static let firestoreService = FirestoreService()
+    
     let db = Firestore.firestore()
     
+    //MARK: - User
+    func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(user)
+            db.collection("users").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+    
+    func loadUsers(completion: @escaping ([User]?) -> Void) {
+        db.collection("users").getDocuments { querySnapshot, error in
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var users: [User] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let user = try Firestore.Decoder().decode(User.self, from: document.data())
+                        users.append(user)
+                    } catch {
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(users)
+            }
+        }
+    }
+    
+    func checkingEmail(email: String, completion: @escaping (Bool, Error?) -> Void) {
+        let usersRef = db.collection("users")
+        
+        // Firestore에서 모든 사용자 이메일 가져오기
+        usersRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                return
+            }
+            
+            var isEmailAvailable = true
+            
+            for document in querySnapshot?.documents ?? [] {
+                if let existingemail = document.data()["email"] as? String {
+                    if existingemail == email {
+                        isEmailAvailable = false
+                        break
+                    }
+                }
+            }
+            completion(isEmailAvailable, nil)
+        }
+    }
+    
+    //MARK: - Post
     func savePosts(post: Post, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(post)
@@ -45,6 +106,7 @@ final class FirestoreService {
         }
     }
     
+    //MARK: - Comment
     func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(comment)
@@ -77,6 +139,7 @@ final class FirestoreService {
         }
     }
     
+    
 //    func editUserData(post: Post, completion: @escaping (Post?) -> Void) {
 //            var result: UserModel?
 //
@@ -103,40 +166,138 @@ final class FirestoreService {
 //            }
 //        }
 //    }
-    
-    //지훈
-    func checkingEmail(email: String, completion: @escaping (Bool, Error?) -> Void) {
-        let usersRef = db.collection("users")
-        
-        // Firestore에서 모든 사용자 이메일 가져오기
-        usersRef.getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
-                return
-            }
-            
-            var isEmailAvailable = true
-            
-            for document in querySnapshot?.documents ?? [] {
-                if let existingemail = document.data()["email"] as? String {
-                    if existingemail == email {
-                        isEmailAvailable = false
-                        break
-                    }
-                }
-            }
-            completion(isEmailAvailable, nil)
-        }
-    }
-    
-    func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
+
+    //MARK: - Car
+    func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
-            let data = try Firestore.Encoder().encode(user)
-            db.collection("users").addDocument(data: data) { error in
+            let data = try Firestore.Encoder().encode(car)
+            db.collection("cars").addDocument(data: data) { error in
                 completion(error)
             }
         } catch {
             completion(error)
         }
     }
+    
+    func loadCar(completion: @escaping ([Car]?) -> Void) {
+        db.collection("cars").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var cars: [Car] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let car = try Firestore.Decoder().decode(Car.self, from: document.data())
+                        cars.append(car)
+                    } catch {
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(cars)
+            }
+        }
+    }
+    
+    //MARK: - CarParts
+    func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(carPart)
+            db.collection("carParts").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+    
+    func loadCarPart(completion: @escaping ([CarPart]?) -> Void ) {
+        db.collection("cars").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var carParts: [CarPart] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: document.data())
+                        carParts.append(carPart)
+                    } catch {
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(carParts)
+            }
+        }
+    }
+    
+    //MARK: - Driving
+    func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(driving)
+            db.collection("drivings").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+    
+    func loadDriving(completion: @escaping ([Driving]?) -> Void) {
+        db.collection("drivings").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var drivings: [Driving] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let driving = try Firestore.Decoder().decode(Driving.self, from: document.data())
+                        drivings.append(driving)
+                    } catch {
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(drivings)
+            }
+        }
+    }
+    
+    //MARK: - Fueling
+    func saveFueling(fueling: Fueling, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(fueling)
+            db.collection("fuelings").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+    
+    func loadFueling(completion: @escaping ([Fueling]?) -> Void) {
+        db.collection("fuelings").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var fuelings: [Fueling] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let fueling = try Firestore.Decoder().decode(Fueling.self, from: document.data())
+                        fuelings.append(fueling)
+                    } catch {
+                        completion(nil)
+                        return
+                    }
+                }
+                completion(fuelings)
+            }
+        }
+    }
+    
 }
+
