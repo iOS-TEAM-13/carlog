@@ -36,12 +36,6 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-//    private var fixInterval: UILabel = {
-//        var label = UILabel()
-//        label.customLabel(text: "교체 시기", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
-//        return label
-//    }()
-    
     private let clickedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
@@ -64,7 +58,6 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(collectionViewTitle)
         contentView.addSubview(progressView)
         contentView.addSubview(interval)
-//        contentView.addSubview(fixInterval)
         
         contentView.layer.cornerRadius = 20
         contentView.backgroundColor = .thirdColor
@@ -101,13 +94,6 @@ class MyCarCollectionViewCell: UICollectionViewCell {
             $0.bottom.equalTo(contentView).inset(Constants.verticalMargin)
         }
         
-//        fixInterval.snp.makeConstraints {
-//            $0.top.equalTo(progressView.snp.bottom).inset(-Constants.verticalMargin)
-//            $0.leading.equalTo(selectedInterval.snp.trailing).inset(-Constants.horizontalMargin)
-//            $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
-//            $0.bottom.equalTo(contentView).inset(Constants.verticalMargin)
-//        }
-        
         clickedIcon.snp.makeConstraints {
             $0.trailing.equalTo(contentView).inset(Constants.horizontalMargin)
             $0.centerY.equalTo(contentView)
@@ -119,8 +105,6 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     func bind(title: String, interval: String, icon: UIImage, progress: Double) {
         collectionViewTitle.text = title
         self.interval.text = interval
-        print("@@@@@ progress1 \(progress)")
-        print("@@@@@ progress2 \(Float(progress))")
         self.progressView.progress = Float(progress)
         collectionViewImage.image = icon
     }

@@ -14,7 +14,6 @@ class Util {
         let currentDate = Date()
         let calendar = Calendar.current
         var value = 0
-        print("@@@ \(type)")
         switch type {
         case "엔진 오일":
             value = 6 - seletedDate
