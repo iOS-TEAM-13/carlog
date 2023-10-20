@@ -57,7 +57,7 @@ final class JoinupView: UIView {
     
     lazy var smtpEmailLabel = makeLabel(text: "이메일 인증", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
     
-    lazy var smtpEmialTextField: UITextField = {
+    lazy var smtpEmailTextField: UITextField = {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "유효한 이메일을 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
@@ -65,9 +65,9 @@ final class JoinupView: UIView {
     
     lazy var smtpButton = makeButton(text: "인증", font: Constants.fontJua16 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
     lazy var stmpStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [smtpEmialTextField, smtpButton])
+        let stackView = UIStackView(arrangedSubviews: [smtpEmailTextField, smtpButton])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        smtpEmialTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.75).isActive = true
+        smtpEmailTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.75).isActive = true
         smtpButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.2).isActive = true
         return stackView
     }()
@@ -80,16 +80,24 @@ final class JoinupView: UIView {
     
     lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: Constants.fontJua16 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
     
+    lazy var smtpTimerLabel: UILabel = makeLabel(text: "3:00", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .center)
+    
     lazy var smtpNumberStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, UIView()])
+        let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
         smtpNumberTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.5).isActive = true
         smtpNumberButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.2).isActive = true
         return stackView
     }()
     
-    lazy var allStackView: UIStackView = {
+    lazy var allTextFieldStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, stmpStackView, smtpNumberStackView])
+        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
+        return stackView
+    }()
+    
+    lazy var buttonStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [joinInButton, popButton])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
@@ -101,31 +109,23 @@ final class JoinupView: UIView {
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
-        addSubview(allStackView)
-        addSubview(joinInButton)
-        addSubview(popButton)
+        addSubview(allTextFieldStackView)
+        addSubview(buttonStackView)
         
+        smtpTimerLabel.isHidden = true
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
-        allStackView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
+        allTextFieldStackView.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin * 5)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
-        joinInButton.snp.makeConstraints { make in
-            make.top.equalTo(smtpNumberStackView.snp.bottom).offset(Constants.verticalMargin * 5)
+        buttonStackView.snp.makeConstraints { make in
+            make.bottom.equalTo(safeArea.snp.bottom).offset(-Constants.verticalMargin * 2)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
-        }
-        
-        popButton.snp.makeConstraints { make in
-            make.top.equalTo(joinInButton.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
         }
     }
     
@@ -158,6 +158,7 @@ extension JoinupView {
         let button = UIButton()
         button.customButton(text: text, font: font, titleColor: titleColor, backgroundColor: backgroundColor)
         button.layer.cornerRadius = Constants.cornerRadius
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }
 

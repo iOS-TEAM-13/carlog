@@ -3,6 +3,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 import SnapKit
+import SwiftSMTP
 
 class JoinupPageViewController: UIViewController {
     let joinupView = JoinupView()
@@ -12,6 +13,8 @@ class JoinupPageViewController: UIViewController {
     let nickNameView = NickNameView()
     let totalDistanceView = TotalDistanceView()
 
+    var timer: Timer?
+    var seconds: Int = 180
     let dummyData = ["휘발유", "경유", "LPG"]
 
     override func viewDidLoad() {
@@ -35,7 +38,7 @@ class JoinupPageViewController: UIViewController {
         joinupView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+
         addTargets()
         forHiddenViews()
     }
@@ -56,7 +59,7 @@ class JoinupPageViewController: UIViewController {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
             }
         }), for: .editingDidBegin)
-        
+
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty else {
                 return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
@@ -79,6 +82,43 @@ class JoinupPageViewController: UIViewController {
                 }
             }
         }), for: .touchUpInside)
+
+        joinupView.smtpButton.addAction(UIAction(handler: { _ in
+            guard let email = self.joinupView.emailTextField.text else {
+                let alert = UIAlertController(title: "오류", message: "유효하지 않은 이메일 형식입니다.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                print("유효하지 않은 이메일 형식입니다.")
+                return
+            }
+
+            // smtp 로직
+            let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
+
+            let from = Mail.User(name: "BilBoard", email: "user3rum@gmail.com")
+            let to = Mail.User(name: "User", email: self.joinupView.emailTextField.text!)
+
+            let code = "\(Int.random(in: 100000 ... 999999))"
+
+            let mail = Mail(from: from, to: [to], subject: "[BILBOARD] E-MAIL VERIFICATION", text: "인증번호 \(code) \n" + "APP으로 돌아가 인증번호를 입력해주세요.")
+
+            smtp.send(mail) { error in
+                if let error = error {
+                    print("전송에 실패하였습니다.: \(error)")
+                } else {
+                    print("전송에 성공하였습니다!")
+                    UserDefaults.standard.set(code, forKey: "emailVerificationCode")
+                }
+            }
+            self.joinupView.smtpTimerLabel.isHidden = false
+
+            // 타이머
+            if self.timer == nil {
+                // 타이머 시작
+                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
+            }
+        }), for: .touchUpInside)
+
         joinupView.joinInButton.addAction(UIAction(handler: { _ in
             if self.joinupView.checkEmailButton.title(for: .normal) != "가능" {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
@@ -117,7 +157,6 @@ class JoinupPageViewController: UIViewController {
                 self.showAlert(message: alertMessage)
             }
         }), for: .touchUpInside)
-        
     }
 
     func showAlert(message: String) {
@@ -128,6 +167,17 @@ class JoinupPageViewController: UIViewController {
 }
 
 extension JoinupPageViewController {
+    @objc func updateTimerLabel() {
+        if seconds > 0 {
+            seconds -= 1
+            joinupView.smtpTimerLabel.text = timeString(time: TimeInterval(seconds))
+        } else {
+            timer?.invalidate()
+            timer = nil
+            joinupView.smtpNumberButton.isEnabled = false
+        }
+    }
+
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -154,14 +204,40 @@ extension JoinupPageViewController {
         }
     }
 
+    func timeString(time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02i:%02i", minutes, seconds)
+    }
+
+    @IBAction func verifyButtonPressed(_ sender: UIButton) {
+        checkVerificationCode()
+    }
+
+    func checkVerificationCode() {
+        guard let userInputCode = joinupView.smtpNumberTextField.text else {
+            return
+        }
+
+        if let savedCode = UserDefaults.standard.string(forKey: "emailVerificationCode"), savedCode == userInputCode {
+            showAlert(message: "인증에 성공하였습니다!")
+
+            joinupView.smtpTimerLabel.isHidden = true
+            joinupView.smtpNumberTextField.isHidden = true
+            joinupView.smtpNumberButton.isHidden = true
+        } else {
+            showAlert(message: "인증번호가 일치하지 않습니다.")
+        }
+    }
+
     @objc private func keyboardWillHide(_ notification: Notification) {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
         for list in lists {
             list.frame.origin.y = 0
         }
     }
-    
-    func forHiddenViews(){
+
+    func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
             self.dismiss(animated: true)
         }), for: .touchUpInside)
@@ -227,5 +303,4 @@ extension JoinupPageViewController {
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }
-    
 }
