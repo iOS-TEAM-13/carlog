@@ -40,10 +40,16 @@ class JoinupPageViewController: UIViewController {
     }
 
     func addTargets() {
-        joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
-            guard let emailToCheck = self.joinupView.emailTextField.text else {
-                return
+        joinupView.emailTextField.addAction(UIAction(handler: { _ in
+            if self.joinupView.emailTextField.text?.isEmpty == true {
+                self.joinupView.emailAlertLabel.isHidden = false
             }
+        }), for: .editingChanged)
+        joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
+            guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty else {
+                return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
+            }
+
             FirestoreService.firestoreService.checkingEmail(email: emailToCheck) { isEmailAvailable, error in
                 if let error = error {
                     print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
@@ -52,7 +58,7 @@ class JoinupPageViewController: UIViewController {
 
                 if isEmailAvailable {
                     self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
-                    self.joinupView.checkEmailButton.setTitle("사용 가능", for: .normal)
+                    self.joinupView.checkEmailButton.setTitle("가능", for: .normal)
                 } else {
                     self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
                     self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
@@ -62,7 +68,7 @@ class JoinupPageViewController: UIViewController {
             }
         }), for: .touchUpInside)
         joinupView.joinInButton.addAction(UIAction(handler: { _ in
-            if self.joinupView.checkEmailButton.title(for: .normal) != "사용 가능" {
+            if self.joinupView.checkEmailButton.title(for: .normal) != "가능" {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
