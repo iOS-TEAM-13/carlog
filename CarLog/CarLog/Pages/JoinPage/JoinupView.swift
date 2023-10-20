@@ -6,11 +6,7 @@ final class JoinupView: UIView {
     let duplicateComponents = DuplicateComponents()
     var isSecure = true
     
-    lazy var emailLabel: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "아이디", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
-        return label
-    }()
+    lazy var emailLabel = makeLabel(text: "아이디", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
 
     lazy var emailTextField: UITextField = {
         let textField = UITextField()
@@ -31,24 +27,9 @@ final class JoinupView: UIView {
         return button
     }()
     
-    lazy var emailAlertLabel: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "아이디는 필수 입력 정보입니다", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
-        label.isHidden = true
-        return label
-    }()
+    lazy var emailAlertLabel = makeAlertLabel(text: "아이디는 필수 입력 정보입니다", textColor: .red)
     
-    lazy var emailStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel])
-        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
-        return stackView
-    }()
-    
-    lazy var passwordLabel: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
-        return label
-    }()
+    lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
     
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
@@ -59,24 +40,9 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var passwordAlertLabel: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
-        label.isHidden = true
-        return label
-    }()
-    
-    lazy var passwordStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordAlertLabel])
-        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
-        return stackView
-    }()
+    lazy var passwordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red)
 
-    lazy var confirmPasswordLabel: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
-        return label
-    }()
+    lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
     
     lazy var confirmPasswordTextField: UITextField = {
         let textField = UITextField()
@@ -87,36 +53,114 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var confirmPasswordAlertLabel: UILabel = {
-        let label = UILabel()
-        label.customLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
-        label.isHidden = true
-        return label
+    lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red)
+    
+    lazy var smtpEmailLabel = makeLabel(text: "이메일 인증", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+    
+    lazy var smtpEmialTextField: UITextField = {
+        let textField = UITextField()
+        textField.loginCustomTextField(placeholder: "유효한 이메일을 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        return textField
     }()
     
-    lazy var confirmPasswordStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel])
+    lazy var smtpButton = makeButton(text: "인증", font: Constants.fontJua16 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var stmpStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [smtpEmialTextField, smtpButton])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        smtpEmialTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.75).isActive = true
+        smtpButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.2).isActive = true
+        return stackView
+    }()
+    
+    lazy var smtpNumberTextField: UITextField = {
+        let textField = UITextField()
+        textField.loginCustomTextField(placeholder: "인증번호를 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        return textField
+    }()
+    
+    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: Constants.fontJua16 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    
+    lazy var smtpNumberStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, UIView()])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        smtpNumberTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.5).isActive = true
+        smtpNumberButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.2).isActive = true
+        return stackView
+    }()
+    
+    lazy var allStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, stmpStackView, smtpNumberStackView])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-    lazy var joinInButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
-        button.layer.cornerRadius = Constants.cornerRadius
-        return button
-    }()
+    lazy var joinInButton = makeButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var popButton = makeButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+   
+    private func setupUI() {
+        let safeArea = safeAreaLayoutGuide
+        addSubview(allStackView)
+        addSubview(joinInButton)
+        addSubview(popButton)
+        
+        showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
+        showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
+        
+        allStackView.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+        }
 
-    lazy var popButton: UIButton = {
+        joinInButton.snp.makeConstraints { make in
+            make.top.equalTo(smtpNumberStackView.snp.bottom).offset(Constants.verticalMargin * 5)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.height.equalTo(50)
+        }
+        
+        popButton.snp.makeConstraints { make in
+            make.top.equalTo(joinInButton.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.height.equalTo(50)
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension JoinupView {
+    private func makeLabel(text: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) -> UILabel {
+        let label = UILabel()
+        label.customLabel(text: text, textColor: textColor, font: font, alignment: alignment)
+        return label
+    }
+
+    private func makeAlertLabel(text: String, textColor: UIColor) -> UILabel {
+        let label = UILabel()
+        label.customLabel(text: text, textColor: textColor, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.isHidden = true
+        return label
+    }
+    
+    private func makeButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor) -> UIButton {
         let button = UIButton()
-        button.customButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.customButton(text: text, font: font, titleColor: titleColor, backgroundColor: backgroundColor)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
-    }()
-    
-    // showPasswordButton, showConfirmPasswordButton 공통부분
+    }
+
     private func makeToggleButton() -> UIButton {
         var configuration = UIButton.Configuration.tinted()
         configuration.image = UIImage(named: "invisible")
@@ -131,48 +175,11 @@ final class JoinupView: UIView {
         return button
     }
     
-    private func setupUI() {
-        let safeArea = safeAreaLayoutGuide
-        addSubview(emailStackView)
-        addSubview(passwordStackView)
-        addSubview(confirmPasswordStackView)
-        addSubview(joinInButton)
-        addSubview(popButton)
-        
-        showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
-        showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
-        
-        emailStackView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-
-        passwordStackView.snp.makeConstraints { make in
-            make.top.equalTo(emailAlertLabel.snp.bottom).offset(15)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-
-        confirmPasswordStackView.snp.makeConstraints { make in
-            make.top.equalTo(passwordAlertLabel.snp.bottom).offset(15)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-
-        joinInButton.snp.makeConstraints { make in
-            make.top.equalTo(confirmPasswordAlertLabel.snp.bottom).offset(Constants.verticalMargin * 5)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
-        }
-        
-        popButton.snp.makeConstraints { make in
-            make.top.equalTo(joinInButton.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
-        }
+    private func toggleVisibility(button: UIButton, textField: UITextField) {
+        let imageName = isSecure ? "eye" : "invisible"
+        button.setImage(UIImage(named: imageName), for: .normal)
+        isSecure.toggle()
+        textField.isSecureTextEntry = isSecure
     }
     
     @objc func togglePasswordVisibilityTapped() {
@@ -181,22 +188,5 @@ final class JoinupView: UIView {
 
     @objc func toggleConfirmVisibilityTapped() {
         toggleVisibility(button: showConfirmPasswordButton, textField: confirmPasswordTextField)
-    }
-    
-    private func toggleVisibility(button: UIButton, textField: UITextField) {
-        let imageName = isSecure ? "eye" : "invisible"
-        button.setImage(UIImage(named: imageName), for: .normal)
-        isSecure.toggle()
-        textField.isSecureTextEntry = isSecure
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
