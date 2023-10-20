@@ -30,6 +30,7 @@ class PageViewController: UIViewController {
         } else {
             insuranceView = InsuranceView(view: view)
             setupCustomCarouselView()
+            insuranceButtonActions()
         }
     }
     
@@ -98,7 +99,80 @@ class PageViewController: UIViewController {
         }
     }
     
-    func checkButtonTapped(sender: UIButton) {
+    private func insuranceButtonActions() {
+        if let view = insuranceView {
+            [view.calendarView.january, view.calendarView.february, view.calendarView.march, view.calendarView.april, view.calendarView.may, view.calendarView.june, view.calendarView.july, view.calendarView.august, view.calendarView.september, view.calendarView.october, view.calendarView.november, view.calendarView.december].forEach { item in
+                item.addAction(UIAction(handler: { _ in
+                    self.calendarButtonTapped(sender: item)
+                }), for: .touchUpInside)
+            }
+        }
+    }
+    
+    private func calendarButtonTapped(sender: UIButton) {
+        if let view = insuranceView {
+            [view.calendarView.january, view.calendarView.february, view.calendarView.march, view.calendarView.april, view.calendarView.may, view.calendarView.june, view.calendarView.july, view.calendarView.august, view.calendarView.september, view.calendarView.october, view.calendarView.november, view.calendarView.december].forEach { item in
+                item.backgroundColor = .thirdColor
+                item.setTitleColor(.black, for: .normal)
+            }
+            if let text = sender.titleLabel?.text {
+                switch text {
+                case "Jan":
+                    view.calendarView.january.backgroundColor = .primaryColor
+                    view.calendarView.january.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "1"
+                case "Feb":
+                    view.calendarView.february.backgroundColor = .primaryColor
+                    view.calendarView.february.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "2"
+                case "Mar":
+                    view.calendarView.march.backgroundColor = .primaryColor
+                    view.calendarView.march.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "3"
+                case "Apr":
+                    view.calendarView.april.backgroundColor = .primaryColor
+                    view.calendarView.april.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "4"
+                case "May":
+                    view.calendarView.may.backgroundColor = .primaryColor
+                    view.calendarView.may.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "5"
+                case "Jun":
+                    view.calendarView.june.backgroundColor = .primaryColor
+                    view.calendarView.june.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "6"
+                case "Jul":
+                    view.calendarView.july.backgroundColor = .primaryColor
+                    view.calendarView.july.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "7"
+                case "Aug":
+                    view.calendarView.august.backgroundColor = .primaryColor
+                    view.calendarView.august.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "8"
+                case "Sep":
+                    view.calendarView.september.backgroundColor = .primaryColor
+                    view.calendarView.september.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "9"
+                case "Oct":
+                    view.calendarView.october.backgroundColor = .primaryColor
+                    view.calendarView.october.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "10"
+                case "Nov":
+                    view.calendarView.november.backgroundColor = .primaryColor
+                    view.calendarView.november.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "11"
+                case "Dec":
+                    view.calendarView.december.backgroundColor = .primaryColor
+                    view.calendarView.december.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "12"
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func checkButtonTapped(sender: UIButton) {
         if let view = componetsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in

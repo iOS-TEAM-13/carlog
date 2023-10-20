@@ -37,7 +37,7 @@ class MyCarDetailPageViewController: UIViewController {
         return label
     }()
     
-    private let selectedIcon: UIImageView = {
+    private let selectedImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
         view.tintColor = .primaryColor
@@ -80,16 +80,23 @@ class MyCarDetailPageViewController: UIViewController {
     }()
     
     // MARK: Dummy
-    var dummyMenu: (String, PartsInfo)?
-    var dummyIcon: UIImage?
+    var selectedParts: (String, PartsInfo)?
+    var selectedInsurance: (String, InsuranceInfo)?
+    var selectedProgress: Double?
+    var selectedInterval: String?
+    var selectedIcon: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        if selectedInsurance?.0 == nil {
+            configureParts()
+        } else {
+            configureInsurance()
+        }
         setupUI()
         setCollectionView()
-        configure()
     }
     
     private func setupUI() {
@@ -100,13 +107,13 @@ class MyCarDetailPageViewController: UIViewController {
         backgroundView.addSubview(selectedTitleLabel)
         backgroundView.addSubview(selectedprogressView)
         backgroundView.addSubview(selectedIntervalLabel)
-        backgroundView.addSubview(selectedIcon)
+        backgroundView.addSubview(selectedImageView)
         
         backgroundView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
         }
         
-        selectedIcon.snp.makeConstraints {
+        selectedImageView.snp.makeConstraints {
             $0.top.leading.bottom.equalTo(backgroundView).inset(Constants.horizontalMargin)
             $0.width.height.equalTo(60)
             $0.centerY.equalTo(backgroundView)
@@ -114,18 +121,18 @@ class MyCarDetailPageViewController: UIViewController {
         
         selectedTitleLabel.snp.makeConstraints {
             $0.top.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
-            $0.leading.equalTo(selectedIcon.snp.trailing).inset(-Constants.verticalMargin)
+            $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.verticalMargin)
         }
         
         selectedprogressView.snp.makeConstraints {
             $0.top.equalTo(selectedTitleLabel.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.equalTo(selectedIcon.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
         }
         
         selectedIntervalLabel.snp.makeConstraints {
             $0.top.equalTo(selectedprogressView.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.equalTo(selectedIcon.snp.trailing).inset(-Constants.horizontalMargin)
+            $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
             $0.bottom.equalTo(backgroundView).inset(Constants.verticalMargin)
         }
@@ -149,10 +156,18 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
-    private func configure() {
-        selectedTitleLabel.text = dummyMenu?.0
-        selectedIntervalLabel.text = dummyMenu?.1.currentTime
-        selectedIcon.image = dummyIcon
+    private func configureParts() {
+        selectedTitleLabel.text = selectedParts?.0
+        selectedIntervalLabel.text = selectedParts?.1.currentTime
+        selectedImageView.image = selectedIcon
+        selectedIntervalLabel.text = selectedInterval
+        selectedprogressView.progress = Float(selectedProgress ?? 0.0)
+    }
+    
+    private func configureInsurance() {
+        selectedTitleLabel.text = selectedInsurance?.0
+        selectedIntervalLabel.text = selectedInsurance?.1.currentTime
+        selectedImageView.image = selectedIcon
     }
     
     private func setCollectionView() {
@@ -163,12 +178,21 @@ class MyCarDetailPageViewController: UIViewController {
 
 extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyMenu?.1.fixHistory.count ?? 0
+        if selectedInsurance?.0 == nil {
+            return selectedParts?.1.fixHistory.count ?? 0
+        } else {
+            return selectedInsurance?.1.fixHistory.count ?? 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        cell.bind(date: dummyMenu?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: dummyMenu?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+  
+        if selectedInsurance?.0 == nil {
+            cell.bind(date: selectedParts?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+        } else {
+            cell.bind(date: selectedInsurance?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedInsurance?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+        }
         return cell
     }
     

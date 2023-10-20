@@ -46,18 +46,18 @@ class CalendarView: UIView {
         return view
     }()
     
-    lazy private var january = self.customButton(text: "Jan")
-    lazy private var february = self.customButton(text: "Feb")
-    lazy private var march = self.customButton(text: "Mar")
-    lazy private var april = self.customButton(text: "Apr")
-    lazy private var may = self.customButton(text: "May")
-    lazy private var june = self.customButton(text: "Jun")
-    lazy private var july = self.customButton(text: "Jul")
-    lazy private var august = self.customButton(text: "Aug")
-    lazy private var september = self.customButton(text: "Sep")
-    lazy private var october = self.customButton(text: "Oct")
-    lazy private var november = self.customButton(text: "Nov")
-    lazy private var december = self.customButton(text: "Dec")
+    lazy var january = self.customButton(text: "Jan")
+    lazy var february = self.customButton(text: "Feb")
+    lazy var march = self.customButton(text: "Mar")
+    lazy var april = self.customButton(text: "Apr")
+    lazy var may = self.customButton(text: "May")
+    lazy var june = self.customButton(text: "Jun")
+    lazy var july = self.customButton(text: "Jul")
+    lazy var august = self.customButton(text: "Aug")
+    lazy var september = self.customButton(text: "Sep")
+    lazy var october = self.customButton(text: "Oct")
+    lazy var november = self.customButton(text: "Nov")
+    lazy var december = self.customButton(text: "Dec")
     
     init() {
         super.init(frame: .zero)
@@ -78,7 +78,7 @@ class CalendarView: UIView {
     
     private func customButton(text: String) -> UIButton {
         let button = UIButton()
-        button.customButton(text: text, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.customButton(text: text, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .black, backgroundColor: .thirdColor)
         button.backgroundColor = .thirdColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
