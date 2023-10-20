@@ -8,21 +8,21 @@
 import Foundation
 
 struct CarParts: Codable {
-    let engineOil: PartsInfo
-    let missionOil: PartsInfo
-    let brakeOil: PartsInfo
-    let brakePad: PartsInfo
-    let tire: PartsInfo
-    let tireRotation: PartsInfo
-    let fuelFilter: PartsInfo
-    let wiper: PartsInfo
-    let airconFilter: PartsInfo
-    let insurance: PartsInfo
-    let userEmail: String?
+    var engineOil: PartsInfo
+    var missionOil: PartsInfo
+    var brakeOil: PartsInfo
+    var brakePad: PartsInfo
+    var tire: PartsInfo
+    var tireRotation: PartsInfo
+    var fuelFilter: PartsInfo
+    var wiper: PartsInfo
+    var airconFilter: PartsInfo
+    var insurance: PartsInfo
+    var userEmail: String?
 }
 
 struct PartsInfo: Codable {
-    let currentTime: String?
+    var currentTime: String?
     var currentTimeToMonth: Int? {
         switch currentTime {
         case "모르겠음":
