@@ -83,8 +83,9 @@ class JoinupPageViewController: UIViewController {
             }
         }), for: .touchUpInside)
 
+        //SMTP 인증 보내기
         joinupView.smtpButton.addAction(UIAction(handler: { _ in
-            guard let email = self.joinupView.emailTextField.text else {
+            guard let email = self.joinupView.smtpEmailTextField.text else {
                 let alert = UIAlertController(title: "오류", message: "유효하지 않은 이메일 형식입니다.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
                 self.present(alert, animated: true)
@@ -96,7 +97,7 @@ class JoinupPageViewController: UIViewController {
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
 
             let from = Mail.User(name: "BilBoard", email: "user3rum@gmail.com")
-            let to = Mail.User(name: "User", email: self.joinupView.emailTextField.text!)
+            let to = Mail.User(name: "User", email: self.joinupView.smtpEmailTextField.text!)
 
             let code = "\(Int.random(in: 100000 ... 999999))"
 
