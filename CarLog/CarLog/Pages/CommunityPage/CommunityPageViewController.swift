@@ -23,8 +23,16 @@ class CommunityPageViewController: UIViewController {
     }
 
     @objc func logoutButtonTapped() {
-        LoginService.loginService.logout {
-            self.dismiss(animated: true)
-        }
+//        LoginService.loginService.logout {
+//            self.dismiss(animated: true)
+//        }
+//        LoginService.loginService.quitUser { user in
+//            if user != nil {
+//                self.dismiss(animated: true)
+//            }
+//    }
+        
+        LoginService.loginService.quitUser()
+        self.dismiss(animated: true)
     }
 }

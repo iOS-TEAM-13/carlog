@@ -41,12 +41,12 @@ final class LoginService {
     }
 
     func keepLogin(completion: @escaping (FirebaseAuth.User?) -> Void) {
-        Auth.auth().addStateDidChangeListener { auth, user in
+        Auth.auth().addStateDidChangeListener { _, user in
             completion(user)
         }
     }
-    
-    func logout(completion: () -> Void){
+
+    func logout(completion: () -> Void) {
         do {
             try Auth.auth().signOut()
             completion()
@@ -54,9 +54,12 @@ final class LoginService {
             print("로그아웃 실패: \(error.localizedDescription)")
         }
     }
-    
-    //회원탈퇴
-    func quitUser(){
-        
+
+    func quitUser() {
+        guard let user = Auth.auth().currentUser else {
+            print("로그인 정보 존재 안함")
+            return
+        }
+        user.delete()
     }
 }
