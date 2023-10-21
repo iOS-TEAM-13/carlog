@@ -14,7 +14,7 @@ final class LoginView: UIView {
     lazy var joinupButton = loginButton(text: "회원가입", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
     lazy var spaceView = UIView()
     lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
-    lazy var signupStackView = loginStackView(list: [joinupButton, spaceView, findIdPassword], spacing: 0, alignment: .fill)
+    lazy var signupStackView = loginStackView(list: [joinupButton, spaceView, spaceView], spacing: 0, alignment: .fill)
     lazy var leftDivider = divider()
 
     private func setupUI() {
