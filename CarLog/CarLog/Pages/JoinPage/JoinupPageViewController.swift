@@ -49,16 +49,25 @@ class JoinupPageViewController: UIViewController {
                 self.joinupView.emailAlertLabel.isHidden = false
             }
         }), for: .editingDidBegin)
+        joinupView.emailTextField.addAction(UIAction(handler: { _ in
+            self.textFieldDidChange()
+        }), for: .editingChanged)
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
             if self.joinupView.passwordTextField.text?.isEmpty == true {
                 self.joinupView.passwordAlertLabel.isHidden = false
             }
         }), for: .editingDidBegin)
+        joinupView.passwordTextField.addAction(UIAction(handler: { _ in
+            self.textFieldDidChange()
+        }), for: .editingChanged)
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
             if self.joinupView.confirmPasswordTextField.text?.isEmpty == true {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
             }
         }), for: .editingDidBegin)
+        joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
+            self.textFieldDidChange()
+        }), for: .editingChanged)
 
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty, emailToCheck.isValidEmail() else {
@@ -218,6 +227,20 @@ extension JoinupPageViewController {
 
     @IBAction func verifyButtonPressed(_ sender: UIButton) {
         checkVerificationCode()
+    }
+    
+    func textFieldDidChange() {
+        let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
+        let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
+        let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false
+
+        UIView.animate(withDuration: 0.3) {
+            if isEmailValid && isPasswordValid && isConfirmPassword {
+                self.joinupView.joinInButton.isEnabled = true
+                self.joinupView.joinInButton.setTitleColor(.primaryColor, for: .normal)
+                self.joinupView.joinInButton.backgroundColor = .thirdColor
+            }
+        }
     }
 
     func checkVerificationCode() {

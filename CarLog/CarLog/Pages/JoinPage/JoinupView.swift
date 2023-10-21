@@ -110,7 +110,7 @@ final class JoinupView: UIView {
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-    lazy var joinInButton = makeButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var joinInButton = makeButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .gray, backgroundColor: .lightGray)
     lazy var popButton = makeButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
    
     private func setupUI() {

@@ -64,15 +64,9 @@ class LoginPageViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             if isEmailValid && isPasswordValid {
                 self.loginView.loginButton.isEnabled = true
-                self.loginView.loginButton.setTitleColor(.white, for: .normal)
-                self.loginView.loginButton.backgroundColor = .primaryColor
-            } else {
-                self.loginView.loginButton.isEnabled = false
                 self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
                 self.loginView.loginButton.backgroundColor = .thirdColor
             }
         }
     }
 }
-
-
