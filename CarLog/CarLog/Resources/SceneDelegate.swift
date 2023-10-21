@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         LoginService.loginService.keepLogin { user in
             DispatchQueue.main.async {
                 if user != nil {
-                    
                     let tabBarController = Constants.mainTabBarController()
                     self.window?.rootViewController = tabBarController
                 } else {

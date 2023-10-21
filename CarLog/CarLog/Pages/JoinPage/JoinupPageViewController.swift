@@ -158,7 +158,7 @@ class JoinupPageViewController: UIViewController {
                 self.carNumberView.snp.makeConstraints { make in
                     make.edges.equalToSuperview()
                 }
-                LoginService.loginService.signUpUser(email: email, password: password)
+                
             } else {
                 // 조건을 만족하지 않을 때 경고 표시
                 var alertMessage = ""
@@ -182,6 +182,7 @@ class JoinupPageViewController: UIViewController {
 }
 
 extension JoinupPageViewController {
+    
     @objc func updateTimerLabel() {
         if seconds > 0 {
             seconds -= 1
@@ -270,10 +271,12 @@ extension JoinupPageViewController {
         joinupView.popButton.addAction(UIAction(handler: { _ in
             self.dismiss(animated: true)
         }), for: .touchUpInside)
+        
         carNumberView.popButton.addAction(UIAction(handler: { _ in
             self.joinupView.isHidden = false
             self.carNumberView.isHidden = true
         }), for: .touchUpInside)
+        
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carNumberView.isHidden = true
@@ -282,10 +285,12 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
         carModelView.popButton.addAction(UIAction(handler: { _ in
             self.carNumberView.isHidden = false
             self.carModelView.isHidden = true
         }), for: .touchUpInside)
+        
         carModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
@@ -294,6 +299,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
         oilModelView.popButton.addAction(UIAction(handler: { _ in
             self.carModelView.isHidden = false
             self.oilModelView.isHidden = true
@@ -323,6 +329,21 @@ extension JoinupPageViewController {
             self.totalDistanceView.isHidden = true
         }), for: .touchUpInside)
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
+            LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
+            
+            let selectedOilType = self.oilModelView.selectedOil
+            
+            FirestoreService.firestoreService.saveCar(
+                car: Car(
+                    number: self.carNumberView.carNumberTextField.text,
+                    maker: self.carModelView.carModelTextField.text,
+                    name: self.carModelView.carModelTextField.text,
+                    oilType: selectedOilType ?? "",
+                    nickName: self.nickNameView.carNickNameTextField.text,
+                    totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
+                    userEmail: self.joinupView.emailTextField.text),
+                completion: { err in })
+            print("userEmail: \(Auth.auth().currentUser?.email) ??????")
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }

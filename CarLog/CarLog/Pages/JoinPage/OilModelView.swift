@@ -4,8 +4,8 @@ import SnapKit
 
 final class OilModelView: UIView {
     let duplicateComponents = DuplicateComponents()
-    let oilOptions: [String] = ["휘발유", "경유", "LPG", "전기"]
-    private var selectedOil: String?
+    let oilOptions: [String] = ["선택", "휘발유", "경유"]
+    var selectedOil: String?
 
     lazy var label = duplicateComponents.joinupLabel(text: "주종을\n선택해주세요")
     lazy var oilPickerView: UIPickerView = {
