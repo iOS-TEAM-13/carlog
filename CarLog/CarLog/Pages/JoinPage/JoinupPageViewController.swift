@@ -8,6 +8,7 @@ import SwiftSMTP
 class JoinupPageViewController: UIViewController {
     let joinupView = JoinupView()
     let carNumberView = CarNumberView()
+    let carMakerView = CarMakerView()
     let carModelView = CarModelView()
     let oilModelView = OilModelView()
     let nickNameView = NickNameView()
@@ -278,8 +279,22 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
         
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
-            self.view.addSubview(self.carModelView)
+            self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
+            self.carMakerView.isHidden = false
+            self.carMakerView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+        
+        carMakerView.popButton.addAction(UIAction(handler: { _ in
+            self.carNumberView.isHidden = false
+            self.carMakerView.isHidden = true
+        }), for: .touchUpInside)
+        
+        carMakerView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.carModelView)
+            self.carMakerView.isHidden = true
             self.carModelView.isHidden = false
             self.carModelView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
@@ -287,7 +302,7 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
         
         carModelView.popButton.addAction(UIAction(handler: { _ in
-            self.carNumberView.isHidden = false
+            self.carMakerView.isHidden = false
             self.carModelView.isHidden = true
         }), for: .touchUpInside)
         
@@ -336,14 +351,13 @@ extension JoinupPageViewController {
             FirestoreService.firestoreService.saveCar(
                 car: Car(
                     number: self.carNumberView.carNumberTextField.text,
-                    maker: self.carModelView.carModelTextField.text,
+                    maker: self.carMakerView.carMakerTextField.text,
                     name: self.carModelView.carModelTextField.text,
                     oilType: selectedOilType ?? "",
                     nickName: self.nickNameView.carNickNameTextField.text,
                     totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
                     userEmail: self.joinupView.emailTextField.text),
                 completion: { err in })
-            print("userEmail: \(Auth.auth().currentUser?.email) ??????")
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }

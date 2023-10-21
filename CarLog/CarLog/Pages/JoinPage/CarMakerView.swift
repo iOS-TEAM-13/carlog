@@ -2,11 +2,11 @@ import UIKit
 
 import SnapKit
 
-final class CarModelView: UIView {
+class CarMakerView: UIView {
     let duplicateComponents = DuplicateComponents()
     
-    lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량명을\n입력해주세요")
-    lazy var carModelTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차종 입력")
+    lazy var label: UILabel = duplicateComponents.joinupLabel(text: "제조사를\n입력해주세요")
+    lazy var carMakerTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "제조사 입력")
     lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
     lazy var spaceView = UIView()
@@ -16,15 +16,15 @@ final class CarModelView: UIView {
         let safeArea = safeAreaLayoutGuide
         
         addSubview(label)
-        addSubview(carModelTextField)
+        addSubview(carMakerTextField)
         addSubview(buttonStackView)
         
         label.snp.makeConstraints { make in
-            make.top.equalTo(carModelTextField.snp.top).offset(-150)
+            make.top.equalTo(carMakerTextField.snp.top).offset(-150)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
         }
 
-        carModelTextField.snp.makeConstraints { make in
+        carMakerTextField.snp.makeConstraints { make in
             make.centerX.equalTo(safeArea.snp.centerX)
             make.centerY.equalTo(safeArea.snp.centerY).offset(-40)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
@@ -32,7 +32,7 @@ final class CarModelView: UIView {
         }
 
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(carModelTextField.snp.bottom).offset(75)
+            make.top.equalTo(carMakerTextField.snp.bottom).offset(75)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
