@@ -61,7 +61,7 @@ class JoinupPageViewController: UIViewController {
         }), for: .editingDidBegin)
 
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
-            guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty else {
+            guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty, emailToCheck.isValidEmail() else {
                 return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
             }
 
