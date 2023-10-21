@@ -3,9 +3,10 @@ import UIKit
 
 class HistoryPageViewController: UIViewController {
     
-    var drivingDummy = [
-        Driving(timeStamp: nil, id: nil, departDistance: nil, arriveDistance: nil, driveDistance: nil, userEmail: nil)
-    ]
+//    var drivingDummy = [
+//        Driving(timeStamp: nil, id: nil, departDistance: nil, arriveDistance: nil, driveDistance: nil, userEmail: nil)
+//    ]
+    var drivingDummy: [Driving] = []
     
     var fuelingDummy = [
         Fueling(timeStamp: "2023.10.15", id: "1", totalDistance: 23, price: 1789, count: 10, totalPrice: 17890, userEmail: "hhn0212@naver.com")
@@ -212,7 +213,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
             cell.layer.borderWidth = 2
-            cell.layer.cornerRadius = Constants.cornerRadius
+            cell.layer.cornerRadius = Constants.cornerRadius * 4
             
             cell.layer.borderColor = UIColor.systemGray5.cgColor
             cell.layer.shadowColor = UIColor.gray.cgColor
