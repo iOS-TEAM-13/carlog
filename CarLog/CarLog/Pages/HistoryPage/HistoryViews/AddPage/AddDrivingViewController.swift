@@ -30,21 +30,20 @@ class AddDrivingViewController: UIViewController {
         }
         
         buttonActions()
-        
     }
     
     func buttonActions() {
         addDrivingView.saveButton.addAction(UIAction(handler: { [self] _ in
             print("---> addDrivingView 저장 버튼 클릭 했어요")
             
-            let timeStamp = Date.toString(Date.now)
+            let timeStamp = Date().toString()
             let id = UUID().uuidString
             let departDistance = Double(addDrivingView.totalDistanceTextField.text ?? "0") ?? 0.0
             let arriveDistance = Double(addDrivingView.arriveDistanceTextField.text ?? "0") ?? 0.0
             let driveDistance = Double(addDrivingView.driveDistenceTextField.text ?? "0") ?? 0.0
             let userEmail = Auth.auth().currentUser?.email
             
-            let newDriving = Driving(timeStamp: timeStamp(), id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
+            let newDriving = Driving(timeStamp: timeStamp, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
             
             FirestoreService.firestoreService.saveDriving(driving: newDriving) { error in
                 if let error = error {
