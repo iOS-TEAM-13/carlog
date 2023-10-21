@@ -4,7 +4,7 @@ import UIKit
 class HistoryPageViewController: UIViewController {
     
     var drivingDummy = [
-        Driving(timeStamp: "2023.10.15", id: "1", departDistance: 22, arriveDistance: 33, driveDistance: 11, userEmail: "hhn0212@naver.com")
+        Driving(timeStamp: nil, id: nil, departDistance: nil, arriveDistance: nil, driveDistance: nil, userEmail: nil)
     ]
     
     var fuelingDummy = [
@@ -57,20 +57,15 @@ class HistoryPageViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         setupUI()
-        
         self.didChangeValue(segment: self.segmentedControl)
-        
         buttonActions()
         
-        //
         loadDrivingData()
-        drivingCollectionView.drivingCollectionView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidLoad()
         loadDrivingData()
-        drivingCollectionView.drivingCollectionView.reloadData()
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
@@ -190,7 +185,9 @@ class HistoryPageViewController: UIViewController {
             if let drivings = result {
                 // Firestore에서 가져온 데이터를 사용하여 컬렉션 뷰 업데이트
                 self.drivingDummy = drivings
-                self.drivingCollectionView.drivingCollectionView.reloadData()
+                DispatchQueue.main.async {
+                    self.drivingCollectionView.drivingCollectionView.reloadData()
+                }
             } else {
                 print("데이터 로드 중 오류 발생")
             }
@@ -223,9 +220,9 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             cell.layer.shadowRadius = 3
             cell.layer.shadowOpacity = 0.3
             
-            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp!
-            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance!)km")
-            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance!)km")
+            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
+            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0.0)km")
+            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance ?? 0.0)km")
             
             return cell
             
