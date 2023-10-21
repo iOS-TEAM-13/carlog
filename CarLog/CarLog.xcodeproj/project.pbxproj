@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
 		136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128F92AE42E1F00B99ACF /* CarMakerView.swift */; };
+		136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		136128F92AE42E1F00B99ACF /* CarMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMakerView.swift; sourceTree = "<group>"; };
+		136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinupPageViewController+.swift"; sourceTree = "<group>"; };
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFloationButtonViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */,
+				136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */,
 				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
 				FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */,
 				FBBDA7192AD7E55A0031C17B /* CarModelView.swift */,
@@ -557,6 +560,7 @@
 				B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
 				FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */,
+				136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
