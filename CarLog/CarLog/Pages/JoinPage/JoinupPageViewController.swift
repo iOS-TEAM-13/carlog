@@ -54,9 +54,11 @@ class JoinupPageViewController: UIViewController {
         let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
         let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
         let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false
+        let isSMTPEmailVaild = joinupView.smtpEmailTextField.text?.isValidEmail() ?? false
+        let isSMTPNumber = joinupView.smtpNumberTextField.text?.count == 6
 
         UIView.animate(withDuration: 0.3) {
-            if isEmailValid, isPasswordValid, isConfirmPassword {
+            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailVaild, isSMTPNumber {
                 self.joinupView.joinInButton.isEnabled = true
                 self.joinupView.joinInButton.setTitleColor(.primaryColor, for: .normal)
                 self.joinupView.joinInButton.backgroundColor = .thirdColor

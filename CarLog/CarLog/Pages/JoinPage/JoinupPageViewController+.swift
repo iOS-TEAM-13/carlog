@@ -34,6 +34,14 @@ extension JoinupPageViewController {
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
+
+        joinupView.smtpEmailTextField.addAction(UIAction(handler: { _ in
+            self.textFieldDidChange()
+        }), for: .editingChanged)
+        
+        joinupView.smtpNumberTextField.addAction(UIAction(handler: { _ in
+            self.textFieldDidChange()
+        }), for: .editingChanged)
     }
 
     func addCheckEmailButtonAction() {
