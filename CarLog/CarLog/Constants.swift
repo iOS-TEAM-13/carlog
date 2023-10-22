@@ -5,7 +5,7 @@ struct Constants {
     static let horizontalMargin: CGFloat = 16.0
     static let verticalMargin: CGFloat = 12.0
     static let cornerRadius: CGFloat = 5.0
-
+    
     static let fontJua10 = UIFont(name: "Jua", size: 10)
     static let fontJua14 = UIFont(name: "Jua", size: 14)
     static let fontJua16 = UIFont(name: "Jua", size: 16)
@@ -15,7 +15,31 @@ struct Constants {
     static let fontJua32 = UIFont(name: "Jua", size: 32)
     static let fontJua36 = UIFont(name: "Jua", size: 36)
     static let fontJua40 = UIFont(name: "Jua", size: 40)
-    
+//}
+//   
+//extension UIFont {
+//        static func SpoqaHanSansNeo(size fontSize: CGFloat, weight: UIFont.Weight) -> UIFont {
+//            let fontName = "SpoqaHanSansNeo"
+//
+//            var weightString: String
+//            switch weight {
+//            case .bold:
+//                weightString = "Blod"
+//            case .light:
+//                weightString = "Light"
+//            case .medium:
+//                weightString = "Medium"
+//            case .regular:
+//                weightString = "Regular"
+//            case .thin:
+//                weightString = "Thin"
+//            default:
+//                weightString = "Medium"
+//            }
+//
+//            return UIFont(name: "\(fontName)-\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
+//        }
+
     static var carParts = CarPart(engineOil: PartsInfo(currentTime: "", fixHistory: []), missionOil: PartsInfo(currentTime: "", fixHistory: []), brakeOil: PartsInfo(currentTime: "", fixHistory: []), brakePad: PartsInfo(currentTime: "", fixHistory: []), tire: PartsInfo(currentTime: "", fixHistory: []), tireRotation: PartsInfo(currentTime: "", fixHistory: []), fuelFilter: PartsInfo(currentTime: "", fixHistory: []), wiper: PartsInfo(currentTime: "", fixHistory: []), airconFilter: PartsInfo(currentTime: "", fixHistory: []), insurance: PartsInfo(currentTime: "", fixHistory: []), userEmail: Auth.auth().currentUser?.email)
 }
 

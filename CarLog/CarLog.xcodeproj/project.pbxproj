@@ -10,7 +10,6 @@
 		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
-		7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
 		B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */; };
@@ -88,7 +87,11 @@
 /* Begin PBXFileReference section */
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFloationButtonViewController.swift; sourceTree = "<group>"; };
+		7E62C9B92AE4F38600391BB1 /* SpoqaHanSansNeo-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Medium.otf"; sourceTree = "<group>"; };
+		7E62C9BA2AE4F38600391BB1 /* SpoqaHanSansNeo-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Bold.otf"; sourceTree = "<group>"; };
+		7E62C9BB2AE4F38600391BB1 /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
+		7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
+		7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonStackView.swift; sourceTree = "<group>"; };
@@ -178,6 +181,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E62C9B82AE4F36F00391BB1 /* SpoqaHanSansNeo_OTF_original */ = {
+			isa = PBXGroup;
+			children = (
+				7E62C9BA2AE4F38600391BB1 /* SpoqaHanSansNeo-Bold.otf */,
+				7E62C9BB2AE4F38600391BB1 /* SpoqaHanSansNeo-Light.otf */,
+				7E62C9B92AE4F38600391BB1 /* SpoqaHanSansNeo-Medium.otf */,
+				7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */,
+				7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */,
+			);
+			path = SpoqaHanSansNeo_OTF_original;
+			sourceTree = "<group>";
+		};
 		B85A0F262AD77E65009E0A00 /* HistoryViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +293,7 @@
 				FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */,
 				FB748B2A2AD53B5F00CC6A1F /* LaunchScreen.storyboard */,
 				FB748B282AD53B5F00CC6A1F /* Assets.xcassets */,
+				7E62C9B82AE4F36F00391BB1 /* SpoqaHanSansNeo_OTF_original */,
 				FBE051762AD62C9600F39E7F /* Jua.ttf */,
 			);
 			path = Resources;
@@ -380,7 +396,6 @@
 			children = (
 				7E08D8852AD948B500998E27 /* MyPageView.swift */,
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
-				7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -565,7 +580,6 @@
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
 				FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
-				7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
