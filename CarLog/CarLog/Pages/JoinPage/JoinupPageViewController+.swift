@@ -206,7 +206,12 @@ extension JoinupPageViewController {
 
     func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
-            self.dismiss(animated: true)
+            let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default){ _ in
+                self.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+            self.present(alert, animated: true, completion: nil)
         }), for: .touchUpInside)
 
         carNumberView.popButton.addAction(UIAction(handler: { _ in
