@@ -114,7 +114,9 @@ extension JoinupPageViewController {
 
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
-                  let confirmPassword = self.joinupView.confirmPasswordTextField.text
+                  let confirmPassword = self.joinupView.confirmPasswordTextField.text,
+                  let smtpEmail = self.joinupView.smtpEmailTextField.text,
+                  let smtpNumber = self.joinupView.smtpNumberTextField.text
             else {
                 return
             }
@@ -122,10 +124,10 @@ extension JoinupPageViewController {
             let isEmailValid = email.isValidEmail()
             let isPasswordValid = password.isValidPassword()
             let isConfirmPasswordValid = confirmPassword == password
+            let isSMTPEmailValid = smtpEmail.isValidEmail()
+            let isSMTPNumber = smtpNumber.count == 6
 
-            if !self.joinupView.smtpNumberButton.isEnabled {
-                self.showAlert(message: "이메일 인증을 진행해주세요")
-            } else if isEmailValid, isPasswordValid, isConfirmPasswordValid {
+            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber {
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.view.addSubview(self.carNumberView)
                 self.joinupView.isHidden = true
@@ -142,6 +144,10 @@ extension JoinupPageViewController {
                     alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
                 } else if !isConfirmPasswordValid {
                     alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
+                } else if !isSMTPEmailValid {
+                    alertMessage = "이메일 인증을 해주세요"
+                } else if smtpNumber.isEmpty {
+                    alertMessage = "인증번호를 확인해주세요"
                 }
                 self.showAlert(message: alertMessage)
             }
