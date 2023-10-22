@@ -3,6 +3,7 @@ import UIKit
 
 extension JoinupPageViewController {
     // MARK: - 회원가입의 주요 기능 구현 코드
+
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             if self.joinupView.emailTextField.text?.isEmpty == true {
@@ -62,11 +63,11 @@ extension JoinupPageViewController {
 
     func addSMTPButtonAction() {
         joinupView.smtpButton.addAction(UIAction(handler: { _ in
-            guard self.joinupView.smtpEmailTextField.text != nil else {
-                let alert = UIAlertController(title: "오류", message: "유효하지 않은 이메일 형식입니다.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                self.present(alert, animated: true)
-                print("유효하지 않은 이메일 형식입니다.")
+            guard let emailText = self.joinupView.smtpEmailTextField.text,
+                  !emailText.isEmpty,
+                  emailText.isValidEmail()
+            else {
+                self.showAlert(message: "유효하지 않는 이메일 형식이거나 이메일이 비어 있습니다")
                 return
             }
 
@@ -110,6 +111,7 @@ extension JoinupPageViewController {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
+
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text
@@ -121,7 +123,9 @@ extension JoinupPageViewController {
             let isPasswordValid = password.isValidPassword()
             let isConfirmPasswordValid = confirmPassword == password
 
-            if isEmailValid, isPasswordValid, isConfirmPasswordValid {
+            if !self.joinupView.smtpNumberButton.isEnabled {
+                self.showAlert(message: "이메일 인증을 진행해주세요")
+            } else if isEmailValid, isPasswordValid, isConfirmPasswordValid {
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.view.addSubview(self.carNumberView)
                 self.joinupView.isHidden = true
@@ -145,6 +149,7 @@ extension JoinupPageViewController {
     }
 
     // MARK: - SMTP 인증관련 코드
+
     func checkVerificationCode() {
         guard let userInputCode = joinupView.smtpNumberTextField.text else {
             return
@@ -157,6 +162,7 @@ extension JoinupPageViewController {
             joinupView.smtpNumberTextField.isHidden = true
             joinupView.smtpNumberButton.isHidden = true
         } else {
+            joinupView.smtpNumberButton.isEnabled = false
             showAlert(message: "인증번호가 일치하지 않습니다.")
         }
     }
@@ -183,6 +189,7 @@ extension JoinupPageViewController {
     }
 
     // MARK: - View 관련 로직 + 회원가입할 때 기능 구현
+
     func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
             self.dismiss(animated: true)
