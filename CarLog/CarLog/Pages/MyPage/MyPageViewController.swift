@@ -88,7 +88,6 @@ class MyPageViewController: UIViewController {
             dismiss(animated: true)
         }
     }
- }
     
     @objc private func dialPhoneNumber() {
         if let phoneCallURL = URL(string: "tel://000-000-0000") {
@@ -102,4 +101,7 @@ class MyPageViewController: UIViewController {
             }
         }
     }
+ }
+    
+    
 
