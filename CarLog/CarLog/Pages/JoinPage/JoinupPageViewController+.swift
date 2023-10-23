@@ -29,7 +29,7 @@ extension JoinupPageViewController {
                 self.joinupView.passwordAlertLabel.isHidden = false
                 return
             }
-            
+
             if password.isEmpty || !password.isValidPassword() {
                 self.joinupView.passwordAlertLabel.isHidden = false
             } else {
@@ -46,7 +46,7 @@ extension JoinupPageViewController {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
                 return
             }
-            
+
             if password.isEmpty || !password.isValidPassword() {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
             } else {
@@ -154,8 +154,9 @@ extension JoinupPageViewController {
                 if success {
                     self.showAlert(message: "인증이 성공적으로 처리되었습니다")
                     self.joinupView.smtpTimerLabel.isHidden = true
-                    self.joinupView.smtpNumberTextField.isHidden = true
-                    self.joinupView.smtpNumberButton.isHidden = true
+//                    self.joinupView.smtpNumberTextField.isHidden = true
+//                    self.joinupView.smtpNumberButton.isHidden = true
+                    self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
                 }
             }
         }), for: .touchUpInside)
@@ -168,11 +169,13 @@ extension JoinupPageViewController {
                 return
             }
             
-            if self.joinupView.smtpButton.isEnabled == false && self.joinupView.smtpNumberButton.isEnabled == false{
-                print("")
-            } else {
-                
+            if self.joinupView.smtpNumberButton.title(for: .normal) != "완료" {
+                self.showAlert(message: "인증번호를 확인해주세요")
             }
+
+            if self.joinupView.smtpButton.isEnabled == false, self.joinupView.smtpNumberButton.isEnabled == false {
+                print("")
+            } else {}
 
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
@@ -193,9 +196,8 @@ extension JoinupPageViewController {
                 LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
-                    self.smtpNumberButtonPressed = success
                     if success {
-                        let alert = UIAlertController(title: "인증을 성공했습니다", message: nil, preferredStyle: .alert)
+                        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                             self.view.addSubview(self.carNumberView)
                             self.joinupView.isHidden = true
@@ -243,7 +245,7 @@ extension JoinupPageViewController {
             completion(true)
         } else {
             joinupView.smtpNumberButton.isEnabled = true
-            self.joinupView.smtpNumberTextField.text = ""
+            joinupView.smtpNumberTextField.text = ""
             showAlert(message: "인증번호가 일치하지 않습니다.")
 
             // 인증에 실패한 경우 false를 반환

@@ -13,7 +13,6 @@ class JoinupPageViewController: UIViewController {
     let nickNameView = NickNameView()
     let totalDistanceView = TotalDistanceView()
 
-    var smtpNumberButtonPressed = false
     var timer: Timer?
     var seconds: Int = 180
     let dummyData = ["휘발유", "경유", "LPG"]
@@ -21,6 +20,8 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        joinupView.joinInButton.isEnabled = false
         setupUI()
     }
 
