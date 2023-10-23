@@ -60,10 +60,28 @@ extension JoinupPageViewController {
 
         joinupView.smtpEmailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
+            if let smtpEmailText = self.joinupView.smtpEmailTextField.text, !smtpEmailText.isEmpty, smtpEmailText.isValidEmail() {
+                self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.smtpButton.backgroundColor = .mainNavyColor
+                self.joinupView.smtpButton.isEnabled = true
+            } else {
+                self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
+                self.joinupView.smtpButton.backgroundColor = .lightGray
+                self.joinupView.smtpButton.isEnabled = false
+            }
         }), for: .editingChanged)
 
         joinupView.smtpNumberTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
+            if let smtpNumberText = self.joinupView.smtpNumberTextField.text, !smtpNumberText.isEmpty, smtpNumberText.count == 6 {
+                self.joinupView.smtpNumberButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.smtpNumberButton.backgroundColor = .mainNavyColor
+                self.joinupView.smtpNumberButton.isEnabled = true
+            } else {
+                self.joinupView.smtpNumberButton.setTitleColor(.gray, for: .normal)
+                self.joinupView.smtpNumberButton.backgroundColor = .lightGray
+                self.joinupView.smtpNumberButton.isEnabled = false
+            }
         }), for: .editingChanged)
     }
 

@@ -67,8 +67,8 @@ class JoinupPageViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailValid, isSMTPNumber {
                 self.joinupView.joinInButton.isEnabled = true
-                self.joinupView.joinInButton.setTitleColor(.mainNavyColor, for: .normal)
-                self.joinupView.joinInButton.backgroundColor = .buttonSkyBlueColor
+                self.joinupView.joinInButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.joinInButton.backgroundColor = .mainNavyColor
             } else {
                 self.joinupView.joinInButton.isEnabled = false
                 self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
