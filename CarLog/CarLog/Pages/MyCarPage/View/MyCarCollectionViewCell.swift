@@ -18,28 +18,28 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private var collectionViewTitle: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
 
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
-        view.progressTintColor = .primaryColor
+        view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
     }()
     
     private var interval: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "설정 기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
+        label.customLabel(text: "설정 기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
         return label
     }()
     
     private let clickedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .primaryColor
+        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -60,7 +60,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(interval)
         
         contentView.layer.cornerRadius = 20
-        contentView.backgroundColor = .thirdColor
+        contentView.backgroundColor = .buttonSkyBlueColor
         
         contentView.snp.makeConstraints {
             $0.top.trailing.equalToSuperview()

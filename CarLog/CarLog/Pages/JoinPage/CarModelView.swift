@@ -5,7 +5,7 @@ import SnapKit
 final class CarModelView: UIView {
     let duplicateComponents = DuplicateComponents()
     
-    lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량종류를\n입력해주세요")
+    lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량명을\n입력해주세요")
     lazy var carModelTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차종 입력")
     lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")

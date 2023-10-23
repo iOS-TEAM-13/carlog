@@ -12,35 +12,35 @@ import UIKit
 class MyCarDetailPageViewController: UIViewController {
     private let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .thirdColor
+        view.backgroundColor = .buttonSkyBlueColor
         view.layer.cornerRadius = Constants.cornerRadius
         return view
     }()
     
     private var selectedTitleLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
     
     lazy private var selectedprogressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
-        view.progressTintColor = .primaryColor
+        view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
     }()
     
     private var selectedIntervalLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
+        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
     
     private let selectedImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .primaryColor
+        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -53,13 +53,13 @@ class MyCarDetailPageViewController: UIViewController {
     
     private let modifiedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "날짜 변경", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
     private let completedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "점검 완료", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     

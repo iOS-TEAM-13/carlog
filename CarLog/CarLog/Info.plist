@@ -9,6 +9,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Jua.ttf</string>
+		<string>SpoqaHanSansNeo-Bold.otf</string>
+		<string>SpoqaHanSansNeo-Light.otf</string>
+		<string>SpoqaHanSansNeo-Medium.otf</string>
+		<string>SpoqaHanSansNeo-Regular.otf</string>
+		<string>SpoqaHanSansNeo-Thin.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

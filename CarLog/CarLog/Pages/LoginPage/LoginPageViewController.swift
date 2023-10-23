@@ -58,6 +58,17 @@ class LoginPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
 
+    func keepLogin() {
+        LoginService.loginService.keepLogin { user in
+            print("user:\(user?.email ?? "")")
+            if user != nil {
+                let tabBarController = Constants.mainTabBarController()
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true, completion: nil)
+            }
+        }
+    }
+
     func textFieldDidChange() {
         let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
         let isPasswordValid = loginView.passwordTextField.text?.isValidPassword() ?? false
@@ -65,47 +76,9 @@ class LoginPageViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             if isEmailValid && isPasswordValid {
                 self.loginView.loginButton.isEnabled = true
-                self.loginView.loginButton.setTitleColor(.white, for: .normal)
-                self.loginView.loginButton.backgroundColor = .primaryColor
-            } else {
-                self.loginView.loginButton.isEnabled = false
-                self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
-                self.loginView.loginButton.backgroundColor = .thirdColor
-            }
-        }
-    }
-
-    func mainTabBarController() -> UITabBarController {
-        let tabBarController = TabBarController()
-
-        let tabs: [(root: UIViewController, icon: String)] = [
-            (MyCarPageViewController(), "car"),
-            (HistoryPageViewController(), "book"),
-            (MapPageViewController(), "map"),
-            (CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person"),
-        ]
-
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
-            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
-
-        return tabBarController
-    }
-
-    func keepLogin() {
-        LoginService.loginService.keepLogin { user in
-            print("user:\(user?.email ?? "")")
-            if user != nil {
-                let tabBarController = self.mainTabBarController()
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true, completion: nil)
+                self.loginView.loginButton.setTitleColor(.mainNavyColor, for: .normal)
+                self.loginView.loginButton.backgroundColor = .buttonSkyBlueColor
             }
         }
     }
 }
-
-

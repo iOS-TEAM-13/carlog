@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B369CE12AE4F87C0084BF35 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369CE02AE4F87C0084BF35 /* NetworkManager.swift */; };
+		3B369CE32AE4FD3C0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369CE22AE4FD3C0084BF35 /* GasStationList.swift */; };
 		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
+		136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128F92AE42E1F00B99ACF /* CarMakerView.swift */; };
+		136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
-		7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */; };
+		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
 		B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */; };
@@ -86,9 +90,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B369CE02AE4F87C0084BF35 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		3B369CE22AE4FD3C0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
+		136128F92AE42E1F00B99ACF /* CarMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMakerView.swift; sourceTree = "<group>"; };
+		136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinupPageViewController+.swift"; sourceTree = "<group>"; };
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFloationButtonViewController.swift; sourceTree = "<group>"; };
+		7E62C9B92AE4F38600391BB1 /* SpoqaHanSansNeo-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Medium.otf"; sourceTree = "<group>"; };
+		7E62C9BA2AE4F38600391BB1 /* SpoqaHanSansNeo-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Bold.otf"; sourceTree = "<group>"; };
+		7E62C9BB2AE4F38600391BB1 /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
+		7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
+		7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
+		7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonStackView.swift; sourceTree = "<group>"; };
@@ -178,6 +191,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B369CDF2AE4F8590084BF35 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				3B369CE02AE4F87C0084BF35 /* NetworkManager.swift */,
+			);
+			path = NetworkManager;
+		7E62C9B82AE4F36F00391BB1 /* SpoqaHanSansNeo_OTF_original */ = {
+			isa = PBXGroup;
+			children = (
+				7E62C9BA2AE4F38600391BB1 /* SpoqaHanSansNeo-Bold.otf */,
+				7E62C9BB2AE4F38600391BB1 /* SpoqaHanSansNeo-Light.otf */,
+				7E62C9B92AE4F38600391BB1 /* SpoqaHanSansNeo-Medium.otf */,
+				7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */,
+				7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */,
+			);
+			path = SpoqaHanSansNeo_OTF_original;
+			sourceTree = "<group>";
+		};
 		B85A0F262AD77E65009E0A00 /* HistoryViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +288,7 @@
 		FB748B1E2AD53B5E00CC6A1F /* CarLog */ = {
 			isa = PBXGroup;
 			children = (
+				3B369CDF2AE4F8590084BF35 /* NetworkManager */,
 				FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */,
 				FF126E202ADAE66D00B2A109 /* Service */,
 				FBE051782AD652D800F39E7F /* Constants.swift */,
@@ -278,6 +310,7 @@
 				FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */,
 				FB748B2A2AD53B5F00CC6A1F /* LaunchScreen.storyboard */,
 				FB748B282AD53B5F00CC6A1F /* Assets.xcassets */,
+				7E62C9B82AE4F36F00391BB1 /* SpoqaHanSansNeo_OTF_original */,
 				FBE051762AD62C9600F39E7F /* Jua.ttf */,
 			);
 			path = Resources;
@@ -310,6 +343,7 @@
 				FF5071732AD6BC6900713A81 /* Fueling.swift */,
 				FF5071752AD6BC7000713A81 /* GasStation.swift */,
 				FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */,
+				3B369CE22AE4FD3C0084BF35 /* GasStationList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				FBBDA7122AD79D440031C17B /* JoinupPageViewController.swift */,
+				136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */,
 				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
 				FBBDA7162AD7D18B0031C17B /* CarNumberView.swift */,
 				FBBDA7192AD7E55A0031C17B /* CarModelView.swift */,
@@ -325,6 +360,7 @@
 				FBBDA71E2AD7E7AB0031C17B /* TotalDistanceView.swift */,
 				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
 				FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */,
+				136128F92AE42E1F00B99ACF /* CarMakerView.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -380,7 +416,6 @@
 			children = (
 				7E08D8852AD948B500998E27 /* MyPageView.swift */,
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
-				7EE52D6D2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -397,6 +432,7 @@
 				FB6311C52ADCEBB80038929A /* String+.swift */,
 				FF271BA12ADEB41800209E61 /* UIViewController+.swift */,
 				FFFFAF832AE1644800A7677E /* Date+.swift */,
+				7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -537,6 +573,7 @@
 				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
+				136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */,
@@ -552,7 +589,9 @@
 				B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */,
 				B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
+				3B369CE32AE4FD3C0084BF35 /* GasStationList.swift in Sources */,
 				FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */,
+				136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
@@ -565,12 +604,12 @@
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
 				FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
-				7EE52D6E2AE26CD8003DE458 /* MyPageFloationButtonViewController.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
+				3B369CE12AE4F87C0084BF35 /* NetworkManager.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
@@ -580,6 +619,7 @@
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
+				7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */,
 				3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
 				FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */,

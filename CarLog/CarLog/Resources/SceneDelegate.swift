@@ -1,24 +1,23 @@
-//
-//  SceneDelegate.swift
-//  CarLog
-//
-//  Created by t2023-m0050 on 2023/10/10.
-//
-
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+import FirebaseAuth
 
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
-        
-        let rootViewController = LoginPageViewController()
-        //let rootNavigationController = UINavigationController(rootViewController: rootViewController)
-        
-        self.window?.rootViewController = rootViewController
+
+        if Auth.auth().currentUser != nil {
+            // 사용자가 로그인되어 있음
+            let tabBarController = Constants.mainTabBarController()
+            self.window?.rootViewController = tabBarController
+        } else {
+            // 사용자가 로그인되어 있지 않음
+            let loginPageViewController = LoginPageViewController()
+            self.window?.rootViewController = loginPageViewController
+        }
         self.window?.makeKeyAndVisible()
     }
 
@@ -49,7 +48,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-
