@@ -15,8 +15,8 @@ class HistoryPageViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentTintColor = .mainNavyColor
         
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), .foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
     
@@ -202,7 +202,7 @@ class HistoryPageViewController: UIViewController {
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { result in
             if let drivings = result {
-//                self.drivingDummy = drivings.reversed()
+                //                self.drivingDummy = drivings.reversed()
                 self.drivingDummy = drivings
                 DispatchQueue.main.async {
                     self.drivingCollectionView.drivingCollectionView.reloadData()
@@ -244,7 +244,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
             cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0.0)km")
-            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance ?? 0.0)km")
+            cell.arriveTotalDistenceLabel.text = String("\(drivingDummy[indexPath.row].arriveDistance ?? 0.0)km")
             
             return cell
             
@@ -291,5 +291,6 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             self.navigationController?.pushViewController(fuelingDetailViewController, animated: true)
         }
     }
-    
+
 }
+
