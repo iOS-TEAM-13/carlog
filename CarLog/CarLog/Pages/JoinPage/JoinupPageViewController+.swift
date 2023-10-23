@@ -1,5 +1,7 @@
-import SwiftSMTP
 import UIKit
+
+import FirebaseAuth
+import SwiftSMTP
 
 extension JoinupPageViewController {
     // MARK: - 회원가입의 주요 기능 구현 코드
@@ -38,7 +40,7 @@ extension JoinupPageViewController {
         joinupView.smtpEmailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
-        
+
         joinupView.smtpNumberTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
@@ -208,7 +210,7 @@ extension JoinupPageViewController {
     func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
             let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default){ _ in
+            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
                 self.dismiss(animated: true, completion: nil)
             })
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
@@ -286,8 +288,6 @@ extension JoinupPageViewController {
             self.totalDistanceView.isHidden = true
         }), for: .touchUpInside)
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
-//            LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
-
             let selectedOilType = self.oilModelView.selectedOil
 
             FirestoreService.firestoreService.saveCar(
@@ -300,7 +300,19 @@ extension JoinupPageViewController {
                     totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
                     userEmail: self.joinupView.emailTextField.text),
                 completion: { _ in })
-            self.dismiss(animated: true) // 모달이니까 당연히 Loginpage로 이동함, 자동로그인이 되지 않으니 users에 저장되는 것은 로그인 해야 생김
+            self.dismiss(animated: true)
+            self.keepLogin()
         }), for: .touchUpInside)
+    }
+
+    func keepLogin() {
+        LoginService.loginService.keepLogin { user in
+            print("user:\(user?.email ?? "")")
+            if user != nil {
+                let tabBarController = Constants.mainTabBarController()
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true, completion: nil)
+            }
+        }
     }
 }
