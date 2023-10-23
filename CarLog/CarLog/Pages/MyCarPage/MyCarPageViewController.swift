@@ -103,7 +103,8 @@ class MyCarPageViewController: UIViewController {
 
         guard let firstDays = totalProgress.day else { return 0.0 }
         guard let secoundDays = currentProgress.day else { return 0.0 }
-        return Double(firstDays) / Double(secoundDays)
+        print("@@@@@@@@ \(firstDays) + \(secoundDays)")
+        return Double(secoundDays) / Double(firstDays)
     }
     
     private func calculatorProgress(firstInsurance: String, secondInsurance: String) -> Double {

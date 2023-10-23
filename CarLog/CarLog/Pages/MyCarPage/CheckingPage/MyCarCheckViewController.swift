@@ -33,7 +33,7 @@ class MyCarCheckViewController: UIViewController {
     lazy private var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
         FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { error in
             print("데이터 저장 성공")
-            self.dismiss(animated: true, completion: nil)
+//            self.dismiss(animated: true, completion: nil)
         }
     }))
     
