@@ -26,7 +26,7 @@ class InsuranceView: UIView {
         return label
     }()
     
-    private let calendarView = CalendarView()
+    let calendarView = CalendarView()
     
     static let identifier = "CustomCarouselViewCell"
     

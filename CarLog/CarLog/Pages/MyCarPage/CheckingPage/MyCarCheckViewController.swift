@@ -9,6 +9,7 @@ import SnapKit
 import UIKit
 
 class MyCarCheckViewController: UIViewController {
+    // MARK: Properties
     private let engineOilView = PageViewController(view: CheckingView(title: "엔진 오일은 언제 교체하셨나요?", firstButton: "6개월 전", secondButton: "3개월 전", thirdbutton: "1개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .engineOil)
     private let missionOilView = PageViewController(view: CheckingView(title: "미션 오일은 언제 교체하셨나요?", firstButton: "2년 전", secondButton: "1년 전", thirdbutton: "6개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .missionOil)
     private let brakeOilView = PageViewController(view: CheckingView(title: "브레이크 오일은 언제 교체하셨나요?", firstButton: "2년 전", secondButton: "1년 전", thirdbutton: "6개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .brakeOil)
@@ -29,19 +30,28 @@ class MyCarCheckViewController: UIViewController {
         return vc
     }()
     
-    private let addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
-        print("@@@@@@ btn clicked")
+    lazy private var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
+        FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { error in
+            print("데이터 저장 성공")
+//            self.dismiss(animated: true, completion: nil)
+        }
     }))
     
+    // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
         setupUI()
         setupDelegate()
         setPageViewController()
+        NotificationCenter.default.addObserver(self, selector: #selector(completedCheckingView), name: Notification.Name("completedCheckingView"), object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("completedCheckingView"), object: nil)
+    }
+    
+    // MARK: Method
     private func setupUI() {
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -62,6 +72,13 @@ class MyCarCheckViewController: UIViewController {
         pageViewController.dataSource = self
         pageViewController.delegate = self
     }
+    
+    // MARK: objc
+    @objc private func completedCheckingView() {
+        if Constants.carParts.engineOil.currentTime != "" && Constants.carParts.missionOil.currentTime != "" && Constants.carParts.brakeOil.currentTime != "" && Constants.carParts.brakePad.currentTime != "" && Constants.carParts.tireRotation.currentTime != "" && Constants.carParts.tire.currentTime != "" && Constants.carParts.fuelFilter.currentTime != "" && Constants.carParts.wiper.currentTime != "" && Constants.carParts.airconFilter.currentTime != "" && Constants.carParts.insurance.currentTime != "" {
+            navigationItem.rightBarButtonItem = addButton
+        }
+    }
 }
 
 extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -81,11 +98,10 @@ extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewCo
         if nextIndex == dataViewControllers.count {
             return nil
         }
-//        if nextIndex == 10 {
-//            navigationItem.rightBarButtonItem = addButton
-//        } else {
-//            navigationItem.rightBarButtonItem = nil
-//        }
         return dataViewControllers[nextIndex]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        completedCheckingView()
     }
 }

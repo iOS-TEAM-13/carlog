@@ -17,7 +17,7 @@ struct CarPart: Codable {
     var fuelFilter: PartsInfo
     var wiper: PartsInfo
     var airconFilter: PartsInfo
-    var insurance: PartsInfo
+    var insurance: InsuranceInfo
     var userEmail: String?
 }
 
@@ -45,6 +45,11 @@ struct PartsInfo: Codable {
             return 0
         }
     }
+    let fixHistory: [FixHistory?]
+}
+
+struct InsuranceInfo: Codable {
+    var currentTime: String?
     let fixHistory: [FixHistory?]
 }
 

@@ -93,18 +93,7 @@ class ComponentsView: UIView {
         view.clipsToBounds = true
         return view
     }()
-    
-//    private lazy var completeButton: UIButton = {
-//        let btn = UIButton()
-//        btn.customButton(text: "완료", font: Constants.fontJua24 ?? UIFont(), titleColor: .black, backgroundColor: .thirdColor)
-//        btn.layer.cornerRadius = Constants.cornerRadius
-//        btn.layer.shadowColor = UIColor.black.cgColor
-//        btn.layer.shadowOpacity = 0.4
-//        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
-//        btn.layer.shadowRadius = 4
-//        return btn
-//    }()
-    
+
     init(view: CheckingView) {
         super.init(frame: .zero)
         setupUI()
@@ -142,13 +131,6 @@ class ComponentsView: UIView {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(200)
         }
-        
-//        completeButton.snp.makeConstraints {
-//            $0.top.equalTo(answerStackView.snp.bottom).inset(Constants.verticalMargin)
-//            $0.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
-//            $0.width.equalTo(60)
-//            $0.height.equalTo(40)
-//        }
         
         [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton].forEach{ item in
             item.snp.makeConstraints {

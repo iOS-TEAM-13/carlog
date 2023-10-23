@@ -212,23 +212,23 @@ final class FirestoreService {
         }
     }
     
-    func loadCarPart(completion: @escaping ([CarPart]?) -> Void ) {
-        db.collection("cars").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+    func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
+        db.collection("carParts").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
             } else {
-                var carParts: [CarPart] = []
+                var carParts: CarPart?
                 for document in querySnapshot?.documents ?? [] {
                     do {
                         let carPart = try Firestore.Decoder().decode(CarPart.self, from: document.data())
-                        carParts.append(carPart)
+                        carParts = carPart
                     } catch {
                         completion(nil)
                         return
                     }
+                    completion(carParts)
                 }
-                completion(carParts)
             }
         }
     }

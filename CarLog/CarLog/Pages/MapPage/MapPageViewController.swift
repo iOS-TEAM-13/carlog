@@ -6,6 +6,7 @@ import UIKit
 class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     let mapView = MKMapView()
+    var stationList : [GasStationSummary] = []
     
     var locationManager = CLLocationManager()
     //dummyData
@@ -70,6 +71,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         setupMapView()
         getLocationUsagePermission()
         addDummyPin()
+        fetchList()
     }
     
     func setupMapView() {
@@ -294,6 +296,23 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     func hideDetailView() {
         UIView.animate(withDuration: 0.3) {
             self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
+        }
+    }
+    //MARK : FETCH DATA
+    
+    func fetchList() {
+        let networkManager = NetworkManager()
+        
+        networkManager.fetchGasStationList(x: "314681.8", y: "544837", sort: "1", prodcd: "B027") { listResponse in
+            if let listResponse = listResponse {
+                for item in listResponse.result.oil {
+                    self.stationList.append(item)
+                }
+// 땡겨와서 쪼갠뒤 저장했다. 
+                
+            } else {
+                print("실패")
+            }
         }
     }
     
