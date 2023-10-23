@@ -27,7 +27,7 @@ class JoinupPageViewController: UIViewController {
     deinit {
         registerForKeyboardNotifications()
     }
-    
+
     func setupUI() {
         view.addSubview(joinupView) // 첫 view
         forHiddenViews() // 다음 버튼들의 숨겨진 views
@@ -48,6 +48,7 @@ class JoinupPageViewController: UIViewController {
     }
 
     // MARK: - Alert 창 구현
+
     func showAlert(message: String) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -55,23 +56,29 @@ class JoinupPageViewController: UIViewController {
     }
 
     // MARK: 텍스트 필드 변경 관련
+
     func textFieldDidChange() {
         let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
         let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
         let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false
-        let isSMTPEmailVaild = joinupView.smtpEmailTextField.text?.isValidEmail() ?? false
+        let isSMTPEmailValid = joinupView.smtpEmailTextField.text?.isValidEmail() ?? false
         let isSMTPNumber = joinupView.smtpNumberTextField.text?.count == 6
 
         UIView.animate(withDuration: 0.3) {
-            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailVaild, isSMTPNumber {
+            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailValid, isSMTPNumber {
                 self.joinupView.joinInButton.isEnabled = true
                 self.joinupView.joinInButton.setTitleColor(.mainNavyColor, for: .normal)
                 self.joinupView.joinInButton.backgroundColor = .buttonSkyBlueColor
+            } else {
+                self.joinupView.joinInButton.isEnabled = false
+                self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
+                self.joinupView.joinInButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
             }
         }
     }
 
     // MARK: - Keyboard 관련
+
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
