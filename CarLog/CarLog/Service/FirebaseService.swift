@@ -233,11 +233,20 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - Driving
+    //MARK: - Driving / timeStamp를 Date로 변환하고, 그걸 다시 String으로 변환하는데 없으면 거기다가 현재 시간을 넣어라 / currentTime값이 nil인 경우를 위해 if let 사용
     func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(driving)
-            db.collection("drivings").addDocument(data: data) { error in
+            
+            var documentID = ""
+            
+            if let currentTime = driving.timeStamp?.toDateDetail()?.toStringDetail() {
+                documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
+            } else {
+                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")123124123"
+            }
+
+            db.collection("drivings").document(documentID).setData(data) { error in
                 completion(error)
             }
         } catch {

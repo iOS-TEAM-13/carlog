@@ -62,22 +62,20 @@ class HistoryPageViewController: UIViewController {
         
         loadDrivingData()
         
-        //indicator
+        //indicator 추가
         ac = UIActivityIndicatorView(style: .medium)
         ac.center = view.center
         view.addSubview(ac)
         ac.startAnimating()
         
-        //노티피케이션으로 addDriving 연결? / 옵저버 끊어주기
+        //NotificationCenter addDriving 연결하기
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewDrivingRecordAdded(_:)), name: .newDrivingRecordAdded, object: nil)
-        
     }
     
-    //
+    //NotificationCenter newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
-            //노티피케이션에서 받은 새 주행 기록을 처리하고 화면 업데이트
-            drivingDummy.append(newDriving)
+            drivingDummy.insert(newDriving, at: 0)
             drivingCollectionView.drivingCollectionView.reloadData()
         }
     }
@@ -198,15 +196,12 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
     }
     
-    //firestoreService.loadDriving
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { result in
             if let drivings = result {
-                //                self.drivingDummy = drivings.reversed()
-                self.drivingDummy = drivings
+                self.drivingDummy = drivings.sorted(by: { $0.timeStamp?.toDateDetail() ?? Date() < $1.timeStamp?.toDateDetail() ?? Date() })
                 DispatchQueue.main.async {
                     self.drivingCollectionView.drivingCollectionView.reloadData()
-                    //
                     self.ac.stopAnimating()
                     self.ac.isHidden = true
                 }
@@ -215,7 +210,6 @@ class HistoryPageViewController: UIViewController {
             }
         }
     }
-    
 }
 
 extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
