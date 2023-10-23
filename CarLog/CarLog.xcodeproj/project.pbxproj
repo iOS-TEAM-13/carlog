@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B369CE12AE4F87C0084BF35 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369CE02AE4F87C0084BF35 /* NetworkManager.swift */; };
+		3B369CE32AE4FD3C0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369CE22AE4FD3C0084BF35 /* GasStationList.swift */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E2EE3242AD81F5C002A5600 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */; };
@@ -84,6 +86,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B369CE02AE4F87C0084BF35 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		3B369CE22AE4FD3C0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		7E2EE3232AD81F5C002A5600 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +178,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B369CDF2AE4F8590084BF35 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				3B369CE02AE4F87C0084BF35 /* NetworkManager.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
 		B85A0F262AD77E65009E0A00 /* HistoryViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +265,7 @@
 		FB748B1E2AD53B5E00CC6A1F /* CarLog */ = {
 			isa = PBXGroup;
 			children = (
+				3B369CDF2AE4F8590084BF35 /* NetworkManager */,
 				FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */,
 				FF126E202ADAE66D00B2A109 /* Service */,
 				FBE051782AD652D800F39E7F /* Constants.swift */,
@@ -305,6 +318,7 @@
 				FF5071732AD6BC6900713A81 /* Fueling.swift */,
 				FF5071752AD6BC7000713A81 /* GasStation.swift */,
 				FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */,
+				3B369CE22AE4FD3C0084BF35 /* GasStationList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -544,6 +558,7 @@
 				B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */,
 				B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
+				3B369CE32AE4FD3C0084BF35 /* GasStationList.swift in Sources */,
 				FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
@@ -562,6 +577,7 @@
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
+				3B369CE12AE4F87C0084BF35 /* NetworkManager.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
