@@ -99,11 +99,9 @@ class MyCarPageViewController: UIViewController {
         guard let second = secondInterval.intervalToDate() else { return 0.0 }
 
         let totalProgress = calendar.dateComponents([.day], from: first, to: second)
-        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
-
+        let currentProgress = calendar.dateComponents([.day], from: currentDate, to: second)
         guard let firstDays = totalProgress.day else { return 0.0 }
         guard let secoundDays = currentProgress.day else { return 0.0 }
-        print("@@@@@@@@ \(firstDays) + \(secoundDays)")
         return Double(secoundDays) / Double(firstDays)
     }
     
