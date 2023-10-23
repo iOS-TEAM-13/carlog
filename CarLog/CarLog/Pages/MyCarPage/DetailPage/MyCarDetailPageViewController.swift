@@ -22,7 +22,7 @@ class MyCarDetailPageViewController: UIViewController {
         label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
         return label
     }()
-
+    
     lazy private var selectedprogressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
@@ -79,13 +79,26 @@ class MyCarDetailPageViewController: UIViewController {
         return view
     }()
     
+    let datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .date
+        return picker
+    }()
+    
+    let textField: UITextField = {
+        let field = UITextField()
+        field.backgroundColor = .thirdColor
+        field.layer.cornerRadius = 10
+        return field
+    }()
+    
     // MARK: Dummy
     var selectedParts: (String, PartsInfo)?
     var selectedInsurance: (String, InsuranceInfo)?
     var selectedProgress: Double?
     var selectedInterval: String?
     var selectedIcon: UIImage?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -97,6 +110,7 @@ class MyCarDetailPageViewController: UIViewController {
         }
         setupUI()
         setCollectionView()
+        addButtonActions()
     }
     
     private func setupUI() {
@@ -174,6 +188,78 @@ class MyCarDetailPageViewController: UIViewController {
         detailCollectionView.delegate = self
         detailCollectionView.dataSource = self
     }
+    
+    private func addButtonActions() {
+        modifiedButton.addAction(UIAction(handler: { _ in
+            self.modifiedButtonTapped()
+        }), for: .touchUpInside)
+        completedButton.addAction(UIAction(handler: { _ in
+            self.completedButtonTapped()
+        }), for: .touchUpInside)
+    }
+    
+    private func modifiedButtonTapped() {
+        setupDatePicker()
+        setupTextField()
+        setupToolBar()
+    }
+    
+    private func completedButtonTapped() {
+        setupDatePicker()
+        setupTextField()
+        setupToolBar()
+    }
+    
+    private func setupTextField() {
+        view.addSubview(textField)
+        textField.frame = CGRect(x: 50, y: view.frame.size.height - 250, width: view.frame.size.width - 100, height: 50)
+    }
+    
+    private func setupDatePicker() {
+        // UIDatePicker 객체 생성을 해줍니다.
+        let datePicker = UIDatePicker()
+        // datePickerModed에는 time, date, dateAndTime, countDownTimer가 존재합니다.
+        datePicker.datePickerMode = .date
+        // datePicker 스타일을 설정합니다. wheels, inline, compact, automatic이 존재합니다.
+        datePicker.preferredDatePickerStyle = .wheels
+        // 원하는 언어로 지역 설정도 가능합니다.
+        datePicker.locale = Locale(identifier: "ko-KR")
+        // 값이 변할 때마다 동작을 설정해 줌
+        datePicker.addAction(UIAction(handler: { _ in
+            self.dateChange(datePicker)
+        }), for: .valueChanged)
+        // textField의 inputView가 nil이라면 기본 할당은 키보드입니다.
+        textField.inputView = datePicker
+        // textField에 오늘 날짜로 표시되게 설정
+        textField.text = dateFormat(date: Date())
+    }
+
+   
+
+    private func dateFormat(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy / MM / dd"
+        return formatter.string(from: date)
+    }
+    
+    private func setupToolBar() {
+        let toolBar = UIToolbar()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonHandeler))
+        toolBar.items = [flexibleSpace, doneButton]
+        toolBar.sizeToFit()
+        textField.inputAccessoryView = toolBar
+    }
+    
+    // 값이 변할 때 마다 동작
+    @objc func dateChange(_ sender: UIDatePicker) {
+        textField.text = dateFormat(date: sender.date)
+    }
+
+    @objc func doneButtonHandeler(_ sender: UIBarButtonItem) {
+//        textField.text = dateFormat(date: datePicker.date)
+        textField.resignFirstResponder()
+    }
 }
 
 extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
@@ -187,7 +273,7 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-  
+        
         if selectedInsurance?.0 == nil {
             cell.bind(date: selectedParts?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         } else {
@@ -199,21 +285,4 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 50)
     }
-}
-
-// SwiftUI를 활용한 미리보기
-struct MyCarDetailViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        MyCarDetailVCReprsentable().edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct MyCarDetailVCReprsentable: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UIViewController {
-        let myCarDetailVC = MyCarDetailPageViewController()
-        return UINavigationController(rootViewController: myCarDetailVC)
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-    typealias UIViewControllerType = UIViewController
 }

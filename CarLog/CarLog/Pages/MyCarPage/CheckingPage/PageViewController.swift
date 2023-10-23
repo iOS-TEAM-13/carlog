@@ -18,18 +18,22 @@ class PageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonActions()
+        addButtonActions()
     }
+    
+    private let addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
+        print("@@@@@@ btn clicked")
+    }))
     
     init(view: CheckingView, checkingView: componentsType) {
         super.init(nibName: nil, bundle: nil)
         if checkingView == .engineOil || checkingView == .missionOil || checkingView == .brakeOil || checkingView == .brakePad || checkingView == .tire || checkingView == .tireRotation || checkingView == .fuelFilter || checkingView == .wiperBlade || checkingView == .airconFilter {
             componetsView = ComponentsView(view: view)
             type = componetsView?.checkTitleLabel.text ?? ""
-            setupCarouselView()
+            setupComponetsView()
         } else {
             insuranceView = InsuranceView(view: view)
-            setupCustomCarouselView()
+            setupInsuranceView()
             insuranceButtonActions()
         }
     }
@@ -38,7 +42,7 @@ class PageViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    private func setupCarouselView() {
+    private func setupComponetsView() {
         view.addSubview(componetsView!)
         
         componetsView!.snp.makeConstraints {
@@ -46,7 +50,7 @@ class PageViewController: UIViewController {
         }
     }
     
-    private func setupCustomCarouselView() {
+    private func setupInsuranceView() {
         view.addSubview(insuranceView!)
         
         insuranceView!.snp.makeConstraints {
@@ -79,7 +83,7 @@ class PageViewController: UIViewController {
         }
     }
     
-    private func buttonActions() {
+    private func addButtonActions() {
         if let view = componetsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
                 self.checkButtonTapped(sender: view.firstAnswerButton)

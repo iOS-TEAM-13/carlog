@@ -36,12 +36,12 @@ class MyCarCheckViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
         setupUI()
         setupDelegate()
         setPageViewController()
     }
     
+
     private func setupUI() {
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -62,6 +62,11 @@ class MyCarCheckViewController: UIViewController {
         pageViewController.dataSource = self
         pageViewController.delegate = self
     }
+    
+    private func completedCheckingView() {
+        if Constants.carParts.engineOil.currentTime != "" && Constants.carParts.missionOil.currentTime != "" && Constants.carParts.brakeOil.currentTime != "" && Constants.carParts.brakePad.currentTime != "" && Constants.carParts.tireRotation.currentTime != "" && Constants.carParts.tire.currentTime != "" && Constants.carParts.fuelFilter.currentTime != "" && Constants.carParts.wiper.currentTime != "" && Constants.carParts.airconFilter.currentTime != "" && Constants.carParts.insurance.currentTime != "" {
+        }
+    }
 }
 
 extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -81,11 +86,10 @@ extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewCo
         if nextIndex == dataViewControllers.count {
             return nil
         }
-//        if nextIndex == 10 {
-//            navigationItem.rightBarButtonItem = addButton
-//        } else {
-//            navigationItem.rightBarButtonItem = nil
-//        }
         return dataViewControllers[nextIndex]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        completedCheckingView()
     }
 }

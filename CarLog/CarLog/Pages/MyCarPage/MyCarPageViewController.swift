@@ -1,3 +1,4 @@
+import FirebaseAuth
 import SnapKit
 import SwiftUI
 import UIKit
@@ -23,9 +24,9 @@ class MyCarPageViewController: UIViewController {
         return view
     }()
     
-    private let dummy = CarPart(engineOil: PartsInfo(currentTime: "3년 전", fixHistory: [FixHistory(changedDate: Date(), changedType: .isFixedParts), FixHistory(changedDate: Date(), changedType: .isFixedParts)]), missionOil: PartsInfo(currentTime: "3년 전", fixHistory: []), brakeOil: PartsInfo(currentTime: "3년 전", fixHistory: []), brakePad: PartsInfo(currentTime: "3년 전", fixHistory: []), tire: PartsInfo(currentTime: "3년 전", fixHistory: []), tireRotation: PartsInfo(currentTime: "3년 전", fixHistory: []), fuelFilter: PartsInfo(currentTime: "3년 전", fixHistory: []), wiper: PartsInfo(currentTime: "3년 전", fixHistory: []), airconFilter: PartsInfo(currentTime: "3년 전", fixHistory: []), insurance: InsuranceInfo(currentTime: "3", fixHistory: []), userEmail: "")
+    private var carParts = Constants.carParts
 
-    private var totalParts: [(String, Any)] = []
+    private var totalParts: [(String, Any)] = [("엔진 오일", PartsInfo(currentTime: "3년 전", fixHistory: [(FixHistory(changedDate: Date(), changedType: (ChangedType.isFixedParts))), (FixHistory(changedDate: Date(), changedType: ChangedType.isFixedParts))])), ("미션 오일", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("브레이크 오일", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("브레이크 패드", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("타이어 교체", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("타이어 로테이션", PartsInfo(currentTime: ("3년 전"), fixHistory: [])), ("연료 필터", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("와이퍼 블레이드", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("에어컨 필터", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("보험", InsuranceInfo(currentTime: "3", fixHistory: []))]
     
     private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tire"), UIImage(named: "tireRotation"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
     
@@ -41,9 +42,11 @@ class MyCarPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.systemBackground
-        createDummy()
+        
         setupUI()
         checkFirst()
+        
+        loadData()
     }
     
     //MARK: Method
@@ -66,13 +69,25 @@ class MyCarPageViewController: UIViewController {
     }
     
     private func createDummy() {
-        let mirror = Mirror(reflecting: dummy)
+        totalParts.removeAll()
+        let mirror = Mirror(reflecting: carParts)
         mirror.children.forEach {
             if($0.label! == "insurance") {
-                print($0.label!)
                 totalParts.append((engToKor[$0.label!]!, InsuranceInfo(currentTime: ($0.value as! InsuranceInfo).currentTime, fixHistory: ($0.value as! InsuranceInfo).fixHistory)))
             } else if($0.label! == "userEmail") { } else {
                 totalParts.append((engToKor[$0.label!]!, PartsInfo(currentTime: ($0.value as! PartsInfo).currentTime, fixHistory: ($0.value as! PartsInfo).fixHistory)))
+            }
+        }
+    }
+    
+    private func loadData() {
+        FirestoreService.firestoreService.loadCarPart() { data in
+            DispatchQueue.main.async {
+                if let data = data {
+                    self.carParts = data
+                    self.createDummy()
+                    self.myCarCollectionView.reloadData()
+                }
             }
         }
     }
