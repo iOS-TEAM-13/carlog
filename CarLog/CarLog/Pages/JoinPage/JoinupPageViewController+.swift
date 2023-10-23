@@ -8,30 +8,51 @@ extension JoinupPageViewController {
 
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
-            if self.joinupView.emailTextField.text?.isEmpty == true {
+            guard let email = self.joinupView.emailTextField.text else {
                 self.joinupView.emailAlertLabel.isHidden = false
+                return
             }
-        }), for: .editingDidBegin)
+
+            if email.isEmpty || !email.isValidEmail() {
+                self.joinupView.emailAlertLabel.isHidden = false
+            } else {
+                self.joinupView.emailAlertLabel.isHidden = true
+            }
+        }), for: .editingDidEnd)
 
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
 
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
-            if self.joinupView.passwordTextField.text?.isEmpty == true {
+            guard let password = self.joinupView.passwordTextField.text else {
                 self.joinupView.passwordAlertLabel.isHidden = false
+                return
             }
-        }), for: .editingDidBegin)
+            
+            if password.isEmpty || !password.isValidPassword() {
+                self.joinupView.passwordAlertLabel.isHidden = false
+            } else {
+                self.joinupView.passwordAlertLabel.isHidden = true
+            }
+        }), for: .editingDidEnd)
 
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
 
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
-            if self.joinupView.confirmPasswordTextField.text?.isEmpty == true {
+            guard let password = self.joinupView.confirmPasswordTextField.text else {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
+                return
             }
-        }), for: .editingDidBegin)
+            
+            if password.isEmpty || !password.isValidPassword() {
+                self.joinupView.confirmPasswordAlertLabel.isHidden = false
+            } else {
+                self.joinupView.confirmPasswordAlertLabel.isHidden = true
+            }
+        }), for: .editingDidEnd)
 
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
