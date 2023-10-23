@@ -67,7 +67,7 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var smtpButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var smtpButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
   
     lazy var stmpStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpEmailTextField, smtpButton])

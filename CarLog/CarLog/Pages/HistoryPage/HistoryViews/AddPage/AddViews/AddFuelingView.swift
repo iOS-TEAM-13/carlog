@@ -242,7 +242,7 @@ class AddFuelingView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
