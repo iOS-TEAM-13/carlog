@@ -57,13 +57,13 @@ final class MyPageView: UIView {
     // ⭐ 나중에 Community Page 연결 필요
     lazy var myWritingButton: UIButton = {
         let myWritingButton = UIButton()
-        myWritingButton.customButton(text: "내가 작성한 글", font: Constants.fontJua20 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        myWritingButton.customButton(text: "내가 작성한 글", font: Constants.fontJua20 ?? UIFont(), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         return myWritingButton
     }()
     
     lazy var logoutButton: UIButton = {
         let logoutbutton = UIButton()
-        logoutbutton.customButton(text: "로그아웃", font: Constants.fontJua20 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        logoutbutton.customButton(text: "로그아웃", font: Constants.fontJua20 ?? UIFont(), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         return logoutbutton
     }()
     
@@ -82,7 +82,7 @@ final class MyPageView: UIView {
     lazy var floatingButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .primaryColor
+        config.baseBackgroundColor = .mainNavyColor
         config.cornerStyle = .capsule
         config.image = UIImage(named: "Context Icon")
         button.configuration = config

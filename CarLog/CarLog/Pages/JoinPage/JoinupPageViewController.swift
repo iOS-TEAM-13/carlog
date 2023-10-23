@@ -23,6 +23,10 @@ class JoinupPageViewController: UIViewController {
         setupUI()
     }
 
+    deinit {
+        registerForKeyboardNotifications()
+    }
+    
     func setupUI() {
         view.addSubview(joinupView) // 첫 view
         forHiddenViews() // 다음 버튼들의 숨겨진 views
@@ -60,8 +64,8 @@ class JoinupPageViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailVaild, isSMTPNumber {
                 self.joinupView.joinInButton.isEnabled = true
-                self.joinupView.joinInButton.setTitleColor(.primaryColor, for: .normal)
-                self.joinupView.joinInButton.backgroundColor = .thirdColor
+                self.joinupView.joinInButton.setTitleColor(.mainNavyColor, for: .normal)
+                self.joinupView.joinInButton.backgroundColor = .buttonSkyBlueColor
             }
         }
     }

@@ -102,29 +102,29 @@ class PageViewController: UIViewController {
         if let view = componetsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
-                item.backgroundColor = .thirdColor
+                item.backgroundColor = .buttonSkyBlueColor
                 item.setTitleColor(.black, for: .normal)
             }
             
             switch sender.tag {
             case 1:
-                view.firstAnswerButton.backgroundColor = .primaryColor
+                view.firstAnswerButton.backgroundColor = .mainNavyColor
                 view.firstAnswerButton.setTitleColor(.white, for: .normal)
                 addCarParts(text: view.firstAnswerButton.titleLabel?.text ?? "")
             case 2:
-                view.secondAnswerButton.backgroundColor = .primaryColor
+                view.secondAnswerButton.backgroundColor = .mainNavyColor
                 view.secondAnswerButton.setTitleColor(.white, for: .normal)
                 addCarParts(text: view.secondAnswerButton.titleLabel?.text ?? "")
             case 3:
-                view.thirdAnswerButton.backgroundColor = .primaryColor
+                view.thirdAnswerButton.backgroundColor = .mainNavyColor
                 view.thirdAnswerButton.setTitleColor(.white, for: .normal)
                 addCarParts(text: view.thirdAnswerButton.titleLabel?.text ?? "")
             case 4:
-                view.fourthAnswerButton.backgroundColor = .primaryColor
+                view.fourthAnswerButton.backgroundColor = .mainNavyColor
                 view.fourthAnswerButton.setTitleColor(.white, for: .normal)
                 addCarParts(text: view.fourthAnswerButton.titleLabel?.text ?? "")
             case 5:
-                view.fifthAnswerButton.backgroundColor = .primaryColor
+                view.fifthAnswerButton.backgroundColor = .mainNavyColor
                 view.fifthAnswerButton.setTitleColor(.white, for: .normal)
                 addCarParts(text: view.fifthAnswerButton.titleLabel?.text ?? "")
             default:

@@ -12,7 +12,7 @@ import UIKit
 class MyCarDetailPageViewController: UIViewController {
     private let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .thirdColor
+        view.backgroundColor = .buttonSkyBlueColor
         view.layer.cornerRadius = Constants.cornerRadius
         return view
     }()
@@ -26,7 +26,7 @@ class MyCarDetailPageViewController: UIViewController {
     lazy private var selectedprogressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
-        view.progressTintColor = .primaryColor
+        view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
     }()
@@ -40,7 +40,7 @@ class MyCarDetailPageViewController: UIViewController {
     private let selectedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .primaryColor
+        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -53,13 +53,13 @@ class MyCarDetailPageViewController: UIViewController {
     
     private let modifiedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "날짜 변경", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "날짜 변경", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
     private let completedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "점검 완료", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "점검 완료", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     

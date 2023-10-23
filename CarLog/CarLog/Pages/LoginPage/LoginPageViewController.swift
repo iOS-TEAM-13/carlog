@@ -12,6 +12,7 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
+        keepLogin()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -57,6 +58,17 @@ class LoginPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
 
+    func keepLogin() {
+        LoginService.loginService.keepLogin { user in
+            print("user:\(user?.email ?? "")")
+            if user != nil {
+                let tabBarController = Constants.mainTabBarController()
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true, completion: nil)
+            }
+        }
+    }
+
     func textFieldDidChange() {
         let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
         let isPasswordValid = loginView.passwordTextField.text?.isValidPassword() ?? false
@@ -64,8 +76,8 @@ class LoginPageViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             if isEmailValid && isPasswordValid {
                 self.loginView.loginButton.isEnabled = true
-                self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
-                self.loginView.loginButton.backgroundColor = .thirdColor
+                self.loginView.loginButton.setTitleColor(.mainNavyColor, for: .normal)
+                self.loginView.loginButton.backgroundColor = .buttonSkyBlueColor
             }
         }
     }

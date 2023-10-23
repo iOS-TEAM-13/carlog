@@ -25,7 +25,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
-        view.progressTintColor = .primaryColor
+        view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
     }()
@@ -39,7 +39,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     private let clickedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .primaryColor
+        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -60,7 +60,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(interval)
         
         contentView.layer.cornerRadius = 20
-        contentView.backgroundColor = .thirdColor
+        contentView.backgroundColor = .buttonSkyBlueColor
         
         contentView.snp.makeConstraints {
             $0.top.trailing.equalToSuperview()

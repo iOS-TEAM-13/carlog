@@ -57,7 +57,7 @@ extension JoinupPageViewController {
                 }
 
                 if isEmailAvailable {
-                    self.joinupView.checkEmailButton.setTitleColor(.primaryColor, for: .normal)
+                    self.joinupView.checkEmailButton.setTitleColor(.mainNavyColor, for: .normal)
                     self.joinupView.checkEmailButton.setTitle("가능", for: .normal)
                 } else {
                     self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
@@ -136,6 +136,7 @@ extension JoinupPageViewController {
             let isSMTPNumber = smtpNumber.count == 6
 
             if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber {
+                LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.view.addSubview(self.carNumberView)
                 self.joinupView.isHidden = true
@@ -285,7 +286,7 @@ extension JoinupPageViewController {
             self.totalDistanceView.isHidden = true
         }), for: .touchUpInside)
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
-            LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
+//            LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
 
             let selectedOilType = self.oilModelView.selectedOil
 
@@ -299,7 +300,7 @@ extension JoinupPageViewController {
                     totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
                     userEmail: self.joinupView.emailTextField.text),
                 completion: { _ in })
-            self.dismiss(animated: true)
+            self.dismiss(animated: true) // 모달이니까 당연히 Loginpage로 이동함, 자동로그인이 되지 않으니 users에 저장되는 것은 로그인 해야 생김
         }), for: .touchUpInside)
     }
 }
