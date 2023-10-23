@@ -6,7 +6,7 @@ final class CarNumberView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량번호를\n입력해주세요")
-    lazy var carNumberTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차량번호 입력")
+    lazy var carNumberTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차량번호 ex)56머3344")
     lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
     lazy var spaceView = UIView()
