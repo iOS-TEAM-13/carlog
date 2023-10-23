@@ -91,36 +91,6 @@ class MyCarPageViewController: UIViewController {
             }
         }
     }
-    
-    private func calculatorProgress(firstInterval: String, secondInterval: String) -> Double {
-        let calendar = Calendar.current
-        let currentDate = Date()
-        
-        guard let first = firstInterval.intervalToDate() else { return 0.0 }
-        guard let second = secondInterval.intervalToDate() else { return 0.0 }
-
-        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
-        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
-        guard let firstDays = totalProgress.day else { return 0.0 }
-        guard let secoundDays = currentProgress.day else { return 0.0 }
-        
-        return Double(secoundDays) / Double(firstDays)
-    }
-    
-    private func calculatorProgress(firstInsurance: String, secondInsurance: String) -> Double {
-        let calendar = Calendar.current
-        let currentDate = Date()
-        
-        guard let first = firstInsurance.intervalToDate() else { return 0.0 }
-        guard let second = secondInsurance.intervalToDate() else { return 0.0 }
-
-        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
-        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
-
-        guard let firstDays = totalProgress.day else { return 0.0 }
-        guard let secoundDays = currentProgress.day else { return 0.0 }
-        return Double(secoundDays) / Double(firstDays)
-    }
 }
 
 extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -147,11 +117,11 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
             if carParts.parts[indexPath.row].name != .insurance {
                 firstInterval = Util.util.toInterval(seletedDate: carParts.parts[indexPath.row].currentTimeToMonth!).toString()
                 secondInterval = Util.util.toInterval(seletedDate: carParts.parts[indexPath.row].currentTimeToMonth ?? 0, type: carParts.parts[indexPath.row].name).toString()
-                progress = calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+                progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
             } else {
                 firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(carParts.parts[indexPath.row].currentTime!) ?? 0).0.toString()
                 secondInterval = Util.util.toInterval(seletedInsuranceDate: Int((carParts.parts[indexPath.row]).currentTime!) ?? 0).1.toString()
-                progress = calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
+                progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
             }
             cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
         }
@@ -181,11 +151,11 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         if carParts.parts[indexPath.row].name != .insurance {
             firstInterval = Util.util.toInterval(seletedDate: (carParts.parts[indexPath.row]).currentTimeToMonth!).toString()
             secondInterval = Util.util.toInterval(seletedDate: (carParts.parts[indexPath.row]).currentTimeToMonth ?? 0, type: carParts.parts[indexPath.row].name).toString()
-            progress = calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+            progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
         } else {
             firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(carParts.parts[indexPath.row].currentTime!) ?? 0).0.toString()
             secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(carParts.parts[indexPath.row].currentTime!) ?? 0).1.toString()
-            progress = calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
+            progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
         }
         vc.selectedParts = carParts.parts[indexPath.row]
         vc.selectedProgress = progress

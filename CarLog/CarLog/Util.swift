@@ -10,6 +10,7 @@ import Foundation
 class Util {
     static let util = Util()
     
+    // MARK: MyCarPage
     func toInterval(seletedDate: Int, type: componentsType) -> Date {
         let currentDate = Date()
         let calendar = Calendar.current
@@ -74,5 +75,35 @@ class Util {
         } else {
             return (thisYearDate, nextYearDate)
         }
+    }
+    
+    func calculatorProgress(firstInterval: String, secondInterval: String) -> Double {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        guard let first = firstInterval.intervalToDate() else { return 0.0 }
+        guard let second = secondInterval.intervalToDate() else { return 0.0 }
+
+        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
+        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
+        guard let firstDays = totalProgress.day else { return 0.0 }
+        guard let secoundDays = currentProgress.day else { return 0.0 }
+        
+        return Double(secoundDays) / Double(firstDays)
+    }
+    
+    func calculatorProgress(firstInsurance: String, secondInsurance: String) -> Double {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        guard let first = firstInsurance.intervalToDate() else { return 0.0 }
+        guard let second = secondInsurance.intervalToDate() else { return 0.0 }
+
+        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
+        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
+
+        guard let firstDays = totalProgress.day else { return 0.0 }
+        guard let secoundDays = currentProgress.day else { return 0.0 }
+        return Double(secoundDays) / Double(firstDays)
     }
 }

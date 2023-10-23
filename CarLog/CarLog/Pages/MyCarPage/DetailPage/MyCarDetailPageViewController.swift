@@ -99,6 +99,8 @@ class MyCarDetailPageViewController: UIViewController {
     var selectedInterval: String?
     var selectedIcon: UIImage?
     
+    var saveData: CarPart?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -112,6 +114,7 @@ class MyCarDetailPageViewController: UIViewController {
         setupUI()
         setCollectionView()
         addButtonActions()
+        loadCarParts()
     }
     
     private func setupUI() {
@@ -193,6 +196,17 @@ class MyCarDetailPageViewController: UIViewController {
         selectedprogressView.progress = Float(selectedProgress ?? 0.0)
     }
     
+    private func configureNewUI() {
+        if let newParts = saveData?.parts.first(where: { $0.name == selectedParts?.name }) {
+            var firstInterval = Util.util.toInterval(seletedDate: newParts.currentTimeToMonth!).toString()
+            var secondInterval = Util.util.toInterval(seletedDate: newParts.currentTimeToMonth ?? 0, type: newParts.name).toString()
+            var progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+            self.selectedTitleLabel.text = newParts.name.rawValue
+            self.selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
+            self.selectedprogressView.progress = Float(progress ?? 0.0)
+        }
+    }
+    
     private func setCollectionView() {
         detailCollectionView.delegate = self
         detailCollectionView.dataSource = self
@@ -215,6 +229,16 @@ class MyCarDetailPageViewController: UIViewController {
     
     private func completedButtonTapped() {
         showAlert()
+    }
+    
+    private func loadCarParts() {
+        FirestoreService.firestoreService.loadCarPart{ data in
+            DispatchQueue.main.async {
+                if let data = data {
+                    self.saveData = data
+                }
+            }
+        }
     }
     
     private func setupTextField() {
@@ -241,8 +265,6 @@ class MyCarDetailPageViewController: UIViewController {
         textField.text = dateFormat(date: Date())
     }
     
-    
-    
     private func dateFormat(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy / MM / dd"
@@ -258,59 +280,18 @@ class MyCarDetailPageViewController: UIViewController {
         textField.inputAccessoryView = toolBar
     }
     
-//    private func showAlert() {
-//        let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
-//        let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-//            print("확인 버튼이 눌렸습니다.")
-//            print("@@@@@@@ \(self.selectedParts)")
-//            print("@@@@@@@ \(self.selectedInsurance)")
-//            if var info = self.selectedParts {
-//                print("@@@@@@@@ \(self.selectedInsurance?.0)")
-//                if self.selectedInsurance?.0 == nil {
-//                    print("@@@@@@@@ 2")
-//                    info.1.currentTime = "최근"
-//                    switch info.0 {
-//                    case "엔진 오일":
-//                        print("@@@@@@@@ 3")
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .engineOil)
-//                    case "미션 오일":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .missionOil)
-//                    case "브레이크 오일":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakeOil)
-//                    case "브레이크 패드":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakePad)
-//                    case "타이어 로테이션":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tireRotation)
-//                    case "타이어 교체":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tire)
-//                    case "연료 필터":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .fuelFilter)
-//                    case "와이퍼 블레이드":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .wiperBlade)
-//                    case "에어컨 필터":
-//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .airconFilter)
-//                    default:
-//                        break
-//                    }
-//                } else {
-//                    self.selectedInsurance?.1.currentTime = Date().toString()
-//                    FirestoreService.firestoreService.updateInsurance(insuranceInfo: self.selectedInsurance!.1, type: .insurance)
-//                }
-//            }
-//
-//        }
-//        let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
-//            print("취소 버튼이 눌렸습니다.")
-//        }
-//        alert.addAction(sucess)
-//        alert.addAction(cancel)
-//        present(alert, animated: true)
-//    }
-    
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            
+            for i in 0...(self.saveData?.parts.count ?? 0) - 1 {
+                if self.saveData?.parts[i].name == self.selectedParts?.name {
+                    self.saveData?.parts[i].currentTime = "최근"
+                }
+            }
+            FirestoreService.firestoreService.saveCarPart(carPart: self.saveData ?? CarPart(parts: [])) { error in
+                print("carPart 저장 실패")
+            }
+            self.configureNewUI()
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
