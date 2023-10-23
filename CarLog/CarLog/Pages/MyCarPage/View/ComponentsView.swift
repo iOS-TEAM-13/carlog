@@ -106,7 +106,6 @@ class ComponentsView: UIView {
     
     private func setupUI() {
         self.addSubview(customView)
-//        self.addSubview(completeButton)
         
         customView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()

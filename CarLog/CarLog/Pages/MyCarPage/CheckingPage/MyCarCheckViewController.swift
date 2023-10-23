@@ -74,11 +74,6 @@ class MyCarCheckViewController: UIViewController {
     }
     
     // MARK: objc
-//    @objc private func completedCheckingView() {
-//        if Constants.carParts.engineOil.currentTime != "" && Constants.carParts.missionOil.currentTime != "" && Constants.carParts.brakeOil.currentTime != "" && Constants.carParts.brakePad.currentTime != "" && Constants.carParts.tireRotation.currentTime != "" && Constants.carParts.tire.currentTime != "" && Constants.carParts.fuelFilter.currentTime != "" && Constants.carParts.wiper.currentTime != "" && Constants.carParts.airconFilter.currentTime != "" && Constants.carParts.insurance.currentTime != "" {
-//            navigationItem.rightBarButtonItem = addButton
-//        }
-//    }
     @objc private func completedCheckingView() {
         if Constants.carParts.parts.filter({ $0.currentTime == nil }).count == 0 {
             navigationItem.rightBarButtonItem = addButton

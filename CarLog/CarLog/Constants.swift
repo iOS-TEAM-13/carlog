@@ -28,7 +28,7 @@ struct Constants {
             (HistoryPageViewController(), "book"),
             (MapPageViewController(), "map"),
             //(CommunityPageViewController(), "play"),
-            (MyCarCheckViewController(), "person"),
+            (MyPageViewController(), "person"),
         ]
 
         tabBarController.setViewControllers(tabs.map { root, icon in
