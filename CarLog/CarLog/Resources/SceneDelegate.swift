@@ -1,11 +1,6 @@
-//
-//  SceneDelegate.swift
-//  CarLog
-//
-//  Created by t2023-m0050 on 2023/10/10.
-//
-
 import UIKit
+
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -14,20 +9,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
 
-        LoginService.loginService.keepLogin { user in
-            DispatchQueue.main.async {
-                if user != nil {
-                    let tabBarController = Constants.mainTabBarController()
-                    self.window?.rootViewController = tabBarController
-                } else {
-                    // 사용자가 로그인하지 않은 경우 LoginPageViewController를 루트 뷰 컨트롤러로 설정
-                    let loginPageViewController = LoginPageViewController()
-                    self.window?.rootViewController = loginPageViewController
-                }
-
-                self.window?.makeKeyAndVisible()
-            }
+        if Auth.auth().currentUser != nil {
+            // 사용자가 로그인되어 있음
+            let tabBarController = Constants.mainTabBarController()
+            self.window?.rootViewController = tabBarController
+        } else {
+            // 사용자가 로그인되어 있지 않음
+            let loginPageViewController = LoginPageViewController()
+            self.window?.rootViewController = loginPageViewController
         }
+        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
