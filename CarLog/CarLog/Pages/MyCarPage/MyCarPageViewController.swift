@@ -45,7 +45,6 @@ class MyCarPageViewController: UIViewController {
         
         setupUI()
         checkFirst()
-        
         loadData()
     }
     
@@ -61,7 +60,7 @@ class MyCarPageViewController: UIViewController {
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard
-        guard userDefaults.string(forKey: "isFirst") != nil else { userDefaults.set("false", forKey: "isFirst")
+        guard userDefaults.string(forKey: Auth.auth().currentUser?.email ?? "") != nil else { userDefaults.set("false", forKey: Auth.auth().currentUser?.email ?? "")
             let vc = MyCarCheckViewController()
             navigationController?.pushViewController(vc, animated: true)
             return
@@ -133,7 +132,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         if let icon = menuIcon[indexPath.row] {
             let title = totalParts[indexPath.row].0
             if indexPath.row != 9 {
-                print(totalParts)
                 firstInterval = Util.util.toInterval(seletedDate: (totalParts[indexPath.row] as! (String, PartsInfo)).1.currentTimeToMonth!).toString()
                 secondInterval = Util.util.toInterval(seletedDate: (totalParts[indexPath.row] as! (String, PartsInfo)).1.currentTimeToMonth ?? 0, type: title).toString()
                 progress = calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)

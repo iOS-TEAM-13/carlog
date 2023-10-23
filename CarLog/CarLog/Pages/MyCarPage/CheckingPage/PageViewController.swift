@@ -17,13 +17,7 @@ class PageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        addButtonActions()
     }
-    
-    private let addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
-        print("@@@@@@ btn clicked")
-    }))
     
     init(view: CheckingView, checkingView: componentsType) {
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +25,7 @@ class PageViewController: UIViewController {
             componetsView = ComponentsView(view: view)
             type = componetsView?.checkTitleLabel.text ?? ""
             setupComponetsView()
+            componentsButtonActions()
         } else {
             insuranceView = InsuranceView(view: view)
             setupInsuranceView()
@@ -58,32 +53,7 @@ class PageViewController: UIViewController {
         }
     }
     
-    private func addCarParts(text :String) {
-        switch type {
-        case "엔진 오일은 언제 교체하셨나요?":
-            Constants.carParts.engineOil.currentTime = text
-        case "미션 오일은 언제 교체하셨나요?":
-            Constants.carParts.missionOil.currentTime = text
-        case "브레이크 오일은 언제 교체하셨나요?":
-            Constants.carParts.brakeOil.currentTime = text
-        case "브레이크 패드는 언제 교체하셨나요?":
-            Constants.carParts.brakePad.currentTime = text
-        case "마지막 타이어 로테이션은 언제였나요?":
-            Constants.carParts.tireRotation.currentTime = text
-        case "타이어는 언제 교체하셨나요?":
-            Constants.carParts.tire.currentTime = text
-        case "연료 필터는 언제 교체하셨나요?":
-            Constants.carParts.fuelFilter.currentTime = text
-        case "와이퍼 블레이드는 언제 교체하셨나요?":
-            Constants.carParts.wiper.currentTime = text
-        case "에어컨 필터는 언제 교체하셨나요?":
-            Constants.carParts.airconFilter.currentTime = text
-        default:
-            break
-        }
-    }
-    
-    private func addButtonActions() {
+    private func componentsButtonActions() {
         if let view = componetsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
                 self.checkButtonTapped(sender: view.firstAnswerButton)
@@ -174,6 +144,7 @@ class PageViewController: UIViewController {
                 }
             }
         }
+        NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
     }
     
     private func checkButtonTapped(sender: UIButton) {
@@ -209,5 +180,32 @@ class PageViewController: UIViewController {
                 break
             }
         }
+        NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
     }
+    
+    private func addCarParts(text :String) {
+        switch type {
+        case "엔진 오일은 언제 교체하셨나요?":
+            Constants.carParts.engineOil.currentTime = text
+        case "미션 오일은 언제 교체하셨나요?":
+            Constants.carParts.missionOil.currentTime = text
+        case "브레이크 오일은 언제 교체하셨나요?":
+            Constants.carParts.brakeOil.currentTime = text
+        case "브레이크 패드는 언제 교체하셨나요?":
+            Constants.carParts.brakePad.currentTime = text
+        case "마지막 타이어 로테이션은 언제였나요?":
+            Constants.carParts.tireRotation.currentTime = text
+        case "타이어는 언제 교체하셨나요?":
+            Constants.carParts.tire.currentTime = text
+        case "연료 필터는 언제 교체하셨나요?":
+            Constants.carParts.fuelFilter.currentTime = text
+        case "와이퍼 블레이드는 언제 교체하셨나요?":
+            Constants.carParts.wiper.currentTime = text
+        case "에어컨 필터는 언제 교체하셨나요?":
+            Constants.carParts.airconFilter.currentTime = text
+        default:
+            break
+        }
+    }
+    
 }
