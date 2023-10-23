@@ -34,7 +34,7 @@ final class MyPageView: UIView {
     //텍스트 폰트에 따른 언더라인 수정
     lazy var myWritingButton: UIButton = {
         let myWritingButton = UIButton()
-        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         return myWritingButton     // ⭐ 나중에 Community Page 연결 필요
     }()
     
@@ -104,7 +104,7 @@ final class MyPageView: UIView {
     lazy var phoneCallButton: UIButton = {
         let phoneCallbutton = UIButton()
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .primaryColor
+        config.baseBackgroundColor = .mainNavyColor
         config.cornerStyle = .capsule
         config.image = UIImage(named: "Context Icon")
         phoneCallbutton.configuration = config

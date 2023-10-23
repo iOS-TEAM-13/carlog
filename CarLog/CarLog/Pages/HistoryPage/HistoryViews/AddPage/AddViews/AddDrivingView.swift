@@ -192,14 +192,14 @@ class AddDrivingView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()

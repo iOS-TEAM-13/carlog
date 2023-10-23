@@ -6,6 +6,7 @@ class MyPageViewController: UIViewController {
    
 // MARK: - Properties
     let myPageView = MyPageView()
+
     var isEditMode = false
     
 // MARK: - Life Cycle
@@ -20,14 +21,14 @@ class MyPageViewController: UIViewController {
         }
         addTargetButton()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
+  
+  override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
 //        FirestoreService.firestoreService.loadCar(completion: <#T##([Car]?) -> Void#>)
 //        // ⭐ 내 차 정보 불러오기
     }
-    
+     
     func addTargetButton() {
         myPageView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
@@ -70,10 +71,22 @@ class MyPageViewController: UIViewController {
         }
         
     }
-    
+
     @objc func logoutButtonTapped() {
-    LoginService.loginService.logout {
-        self.dismiss(animated: true)
+        if Auth.auth().currentUser != nil {
+            LoginService.loginService.logout {
+                let loginViewController = LoginPageViewController()
+                self.dismiss(animated: true) {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate
+                    {
+                        sceneDelegate.window?.rootViewController = loginViewController
+                    }
+                }
+            }
+        } else {
+            dismiss(animated: true)
+        }
     }
  }
     
@@ -89,5 +102,4 @@ class MyPageViewController: UIViewController {
             }
         }
     }
-    
-}
+

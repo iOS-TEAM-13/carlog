@@ -13,7 +13,7 @@ class HistoryPageViewController: UIViewController {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
-        segmentedControl.selectedSegmentTintColor = .primaryColor
+        segmentedControl.selectedSegmentTintColor = .mainNavyColor
         
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), .foregroundColor: UIColor.darkGray], for: .normal)
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), .foregroundColor: UIColor.white], for: .selected)

@@ -4,14 +4,14 @@ import SnapKit
 
 final class JoinupView: UIView {
     let duplicateComponents = DuplicateComponents()
-    var isSecure = true
-    
+    var isSecure = true  
     lazy var emailLabel = makeLabel(text: "아이디", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "아이디", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         textField.rightView = checkEmailButton
+        textField.delegate = self
         textField.rightViewMode = .always
         return textField
     }()
@@ -37,6 +37,7 @@ final class JoinupView: UIView {
         textField.isSecureTextEntry = isSecure
         textField.rightView = showPasswordButton
         textField.rightViewMode = .always
+        textField.delegate = self
         return textField
     }()
     
@@ -50,6 +51,7 @@ final class JoinupView: UIView {
         textField.isSecureTextEntry = isSecure
         textField.rightView = showConfirmPasswordButton
         textField.rightViewMode = .always
+        textField.delegate = self
         return textField
     }()
     
@@ -60,10 +62,13 @@ final class JoinupView: UIView {
     lazy var smtpEmailTextField: UITextField = {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "유효한 이메일을 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.delegate = self
+        textField.keyboardType = .emailAddress      
         return textField
     }()
     
     lazy var smtpButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+  
     lazy var stmpStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpEmailTextField, smtpButton])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
@@ -77,8 +82,8 @@ final class JoinupView: UIView {
         textField.loginCustomTextField(placeholder: "인증번호를 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }()
-    
-    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+
+    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
     
     lazy var smtpTimerLabel: UILabel = makeLabel(text: "3:00", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
     
@@ -104,8 +109,9 @@ final class JoinupView: UIView {
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-    lazy var joinInButton = makeButton(text: "다 음", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
-    lazy var popButton = makeButton(text: "취 소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+
+    lazy var joinInButton = makeButton(text: "다 음", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .gray, backgroundColor: .lightGray)
+    lazy var popButton = makeButton(text: "취 소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
@@ -115,11 +121,11 @@ final class JoinupView: UIView {
         smtpTimerLabel.isHidden = true
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
-        
+   
         allTextFieldStackView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin * 5)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(safeArea).offset(Constants.verticalMargin)
+            make.leading.equalTo(safeArea).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea).offset(-Constants.horizontalMargin)
         }
 
         buttonStackView.snp.makeConstraints { make in
@@ -137,6 +143,21 @@ final class JoinupView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension JoinupView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.emailTextField {
+            self.passwordTextField.becomeFirstResponder()
+        } else if textField == self.passwordTextField {
+            self.confirmPasswordTextField.becomeFirstResponder()
+        } else if textField == self.confirmPasswordTextField {
+            self.smtpEmailTextField.becomeFirstResponder()
+        } else if textField == self.smtpEmailTextField {
+            self.smtpNumberTextField.becomeFirstResponder()
+        }
+        return true
     }
 }
 

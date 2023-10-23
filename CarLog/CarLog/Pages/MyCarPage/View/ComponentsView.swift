@@ -33,7 +33,7 @@ class ComponentsView: UIView {
     
     let firstAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "첫번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "첫번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 1
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -44,7 +44,7 @@ class ComponentsView: UIView {
     
      let secondAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "두번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "두번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 2
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -55,7 +55,7 @@ class ComponentsView: UIView {
     
      let thirdAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "세번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "세번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 3
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -66,7 +66,7 @@ class ComponentsView: UIView {
   
      let fourthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "네번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "네번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 4
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -77,7 +77,7 @@ class ComponentsView: UIView {
     
      let fifthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "다섯번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "다섯번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 5
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4

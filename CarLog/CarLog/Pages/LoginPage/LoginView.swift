@@ -8,13 +8,15 @@ final class LoginView: UIView {
         imageView.contentMode = .bottom
         return imageView
     }()
-    lazy var emailTextField = loginTextField(placeholder: "user@example.com")
+    lazy var emailTextField = loginTextField(placeholder: "이메일")
     lazy var passwordTextField = loginTextField(placeholder: "비밀번호")
-    lazy var loginButton = loginButton(text: "로 그 인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+
+    lazy var loginButton = loginButton(text: "로 그 인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .gray, backgroundColor: .lightGray)
     lazy var joinupButton = loginButton(text: "회원가입", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
     lazy var spaceView = UIView()
     lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
     lazy var signupStackView = loginStackView(list: [joinupButton, spaceView, findIdPassword], spacing: 0, alignment: .fill)
+
     lazy var leftDivider = divider()
 
     private func setupUI() {

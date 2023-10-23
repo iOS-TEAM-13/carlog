@@ -16,7 +16,7 @@ class DuplicateComponents {
 
     func joininButton(text: String) -> UIButton {
         let button = UIButton()
-        button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         button.layer.cornerRadius = Constants.cornerRadius
         button.widthAnchor.constraint(equalToConstant: 160).isActive = true
         return button
