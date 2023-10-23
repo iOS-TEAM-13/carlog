@@ -26,13 +26,11 @@ class MyCarPageViewController: UIViewController {
     
     private var carParts = Constants.carParts
 
-    private var totalParts: [(String, Any)] = [("엔진 오일", PartsInfo(currentTime: "3년 전", fixHistory: [(FixHistory(changedDate: Date(), changedType: (ChangedType.isFixedParts))), (FixHistory(changedDate: Date(), changedType: ChangedType.isFixedParts))])), ("미션 오일", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("브레이크 오일", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("브레이크 패드", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("타이어 교체", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("타이어 로테이션", PartsInfo(currentTime: ("3년 전"), fixHistory: [])), ("연료 필터", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("와이퍼 블레이드", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("에어컨 필터", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("보험", InsuranceInfo(currentTime: "3", fixHistory: []))]
+    private var totalParts: [(String, Any)] = [("엔진 오일", PartsInfo(currentTime: "3년 전", fixHistory: [(FixHistory(changedDate: Date(), changedType: (ChangedType.isFixedParts))), (FixHistory(changedDate: Date(), changedType: ChangedType.isFixedParts))])), ("미션 오일", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("브레이크 오일", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("브레이크 패드", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("타이어 로테이션", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("타이어 교체", PartsInfo(currentTime: ("3년 전"), fixHistory: [])), ("연료 필터", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("와이퍼 블레이드", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("에어컨 필터", PartsInfo(currentTime: "3년 전", fixHistory: [])), ("보험", InsuranceInfo(currentTime: "3", fixHistory: []))]
     
-    private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tire"), UIImage(named: "tireRotation"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
+    private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tireRotation"), UIImage(named: "tire"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
     
-    private let menuTitle = ["엔진 오일", "미션 오일", "브레이크 오일", "브레이크 패드", "타이어", "로테이션", "연료 필터", "와이퍼", "에어컨 필터", "보험"]
-    
-    private let engToKor: [String:String] = ["engineOil" : "엔진 오일", "missionOil" : "미션 오일", "brakeOil" : "브레이크 오일", "brakePad" : "브레이크 패드", "tire" : "타이어 교체", "tireRotation" : "타이어 로테이션", "fuelFilter" : "연료 필터", "wiper" : "와이퍼 블레이드", "airconFilter" : "에어컨 필터", "insurance" : "보험"]
+    private let engToKor: [String:String] = ["engineOil" : "엔진 오일", "missionOil" : "미션 오일", "brakeOil" : "브레이크 오일", "brakePad" : "브레이크 패드", "tireRotation" : "타이어 로테이션", "tire" : "타이어 교체", "fuelFilter" : "연료 필터", "wiper" : "와이퍼 블레이드", "airconFilter" : "에어컨 필터", "insurance" : "보험"]
     
     var firstInterval = ""
     var secondInterval = ""
