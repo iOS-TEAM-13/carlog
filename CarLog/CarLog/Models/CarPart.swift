@@ -12,8 +12,8 @@ struct CarPart: Codable {
     var missionOil: PartsInfo
     var brakeOil: PartsInfo
     var brakePad: PartsInfo
-    var tireRotation: PartsInfo
     var tire: PartsInfo
+    var tireRotation: PartsInfo
     var fuelFilter: PartsInfo
     var wiper: PartsInfo
     var airconFilter: PartsInfo

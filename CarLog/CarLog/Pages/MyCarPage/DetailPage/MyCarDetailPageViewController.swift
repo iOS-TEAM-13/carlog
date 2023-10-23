@@ -205,9 +205,7 @@ class MyCarDetailPageViewController: UIViewController {
     }
     
     private func completedButtonTapped() {
-        setupDatePicker()
-        setupTextField()
-        setupToolBar()
+        showAlert()
     }
     
     private func setupTextField() {
@@ -233,9 +231,9 @@ class MyCarDetailPageViewController: UIViewController {
         // textField에 오늘 날짜로 표시되게 설정
         textField.text = dateFormat(date: Date())
     }
-
-   
-
+    
+    
+    
     private func dateFormat(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy / MM / dd"
@@ -251,13 +249,62 @@ class MyCarDetailPageViewController: UIViewController {
         textField.inputAccessoryView = toolBar
     }
     
+    private func showAlert() {
+        let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
+        let sucess = UIAlertAction(title: "확인", style: .default) { _ in
+            print("확인 버튼이 눌렸습니다.")
+            print("@@@@@@@ \(self.selectedParts)")
+            print("@@@@@@@ \(self.selectedInsurance)")
+            if var info = self.selectedParts {
+                print("@@@@@@@@ \(self.selectedInsurance?.0)")
+                if self.selectedInsurance?.0 == nil {
+                    print("@@@@@@@@ 2")
+                    info.1.currentTime = "최근"
+                    switch info.0 {
+                    case "엔진 오일":
+                        print("@@@@@@@@ 3")
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .engineOil)
+                    case "미션 오일":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .missionOil)
+                    case "브레이크 오일":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakeOil)
+                    case "브레이크 패드":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakePad)
+                    case "타이어 로테이션":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tireRotation)
+                    case "타이어 교체":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tire)
+                    case "연료 필터":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .fuelFilter)
+                    case "와이퍼 블레이드":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .wiperBlade)
+                    case "에어컨 필터":
+                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .airconFilter)
+                    default:
+                        break
+                    }
+                } else {
+                    self.selectedInsurance?.1.currentTime = Date().toString()
+                    FirestoreService.firestoreService.updateInsurance(insuranceInfo: self.selectedInsurance!.1, type: .insurance)
+                }
+            }
+               
+        }
+        let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
+            print("취소 버튼이 눌렸습니다.")
+        }
+        alert.addAction(sucess)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
     // 값이 변할 때 마다 동작
     @objc func dateChange(_ sender: UIDatePicker) {
         textField.text = dateFormat(date: sender.date)
     }
-
+    
     @objc func doneButtonHandeler(_ sender: UIBarButtonItem) {
-//        textField.text = dateFormat(date: datePicker.date)
+        //        textField.text = dateFormat(date: datePicker.date)
         textField.resignFirstResponder()
     }
 }

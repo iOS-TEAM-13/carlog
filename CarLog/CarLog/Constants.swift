@@ -46,15 +46,15 @@ extension UICollectionViewCell {
     }
 }
 
-enum componentsType: Codable {
-    case engineOil
-    case missionOil
-    case brakeOil
-    case brakePad
-    case tireRotation
-    case tire
-    case fuelFilter
-    case wiperBlade
-    case airconFilter
-    case insurance
+enum componentsType: String, Codable {
+    case engineOil = "엔진 오일"
+    case missionOil = "미션 오일"
+    case brakeOil = "브레이크 오일"
+    case brakePad = "브레이크 패드"
+    case tireRotation = "타이어 로테이션"
+    case tire = "타이어 교체"
+    case fuelFilter = "연료 필터"
+    case wiperBlade = "와이퍼 블레이드"
+    case airconFilter = "에어컨 필터"
+    case insurance = "보험"
 }

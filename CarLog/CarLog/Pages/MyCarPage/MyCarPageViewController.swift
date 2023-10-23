@@ -43,6 +43,10 @@ class MyCarPageViewController: UIViewController {
         
         setupUI()
         checkFirst()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadData()
     }
     
