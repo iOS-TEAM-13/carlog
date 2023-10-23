@@ -6,6 +6,7 @@ import UIKit
 class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     let mapView = MKMapView()
+    var stationList : [GasStationSummary] = []
     
     var locationManager = CLLocationManager()
     //dummyData
@@ -70,6 +71,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         setupMapView()
         getLocationUsagePermission()
         addDummyPin()
+        fetchList()
     }
     
     func setupMapView() {
@@ -120,39 +122,39 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             return nil
         }
         // 클러스터 어노테이션 처리
-        if let cluster = annotation as? MKClusterAnnotation {
-            let identifier = "Cluster"
-            var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-            var label: UILabel?
-            
-            if clusterView == nil {
-                clusterView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                
-                // 원 형태의 뷰 생성
-                let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-                circleView.layer.cornerRadius = 15
-                circleView.backgroundColor = UIColor.mainNavyColor.withAlphaComponent(0.5)
-                
-                label = UILabel(frame: circleView.bounds)
-                label?.textColor = .black
-                label?.textAlignment = .center
-                label?.font = UIFont(name: "Jua", size: 20)
-                label?.text = "\(cluster.memberAnnotations.count)"
-                circleView.addSubview(label!)
-                
-                clusterView?.addSubview(circleView)
-            } else {
-                if let lbl = clusterView?.subviews.first?.subviews.first as? UILabel {
-                    lbl.text = "\(cluster.memberAnnotations.count)"
-                    label = lbl
-                }
-            }
-            
-            // 여기에서 원하는대로 label의 텍스트를 업데이트
-            label?.text = "\(cluster.memberAnnotations.count)"
-            
-            return clusterView
-        }
+//        if let cluster = annotation as? MKClusterAnnotation {
+//            let identifier = "Cluster"
+//            var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+//            var label: UILabel?
+//            
+//            if clusterView == nil {
+//                clusterView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//                
+//                // 원 형태의 뷰 생성
+//                let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+//                circleView.layer.cornerRadius = 15
+//                circleView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.5)
+//                
+//                label = UILabel(frame: circleView.bounds)
+//                label?.textColor = .black
+//                label?.textAlignment = .center
+//                label?.font = UIFont(name: "Jua", size: 20)
+//                label?.text = "\(cluster.memberAnnotations.count)"
+//                circleView.addSubview(label!)
+//                
+//                clusterView?.addSubview(circleView)
+//            } else {
+//                if let lbl = clusterView?.subviews.first?.subviews.first as? UILabel {
+//                    lbl.text = "\(cluster.memberAnnotations.count)"
+//                    label = lbl
+//                }
+//            }
+//            
+//            // 여기에서 원하는대로 label의 텍스트를 업데이트
+//            label?.text = "\(cluster.memberAnnotations.count)"
+//            
+//            return clusterView
+//        }
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Custom")
         if annotationView == nil {
@@ -294,6 +296,23 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     func hideDetailView() {
         UIView.animate(withDuration: 0.3) {
             self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
+        }
+    }
+    //MARK : FETCH DATA
+    
+    func fetchList() {
+        let networkManager = NetworkManager()
+        
+        networkManager.fetchGasStationList(x: "314681.8", y: "544837", sort: "1", prodcd: "B027") { listResponse in
+            if let listResponse = listResponse {
+                for item in listResponse.result.oil {
+                    self.stationList.append(item)
+                }
+// 땡겨와서 쪼갠뒤 저장했다.
+                
+            } else {
+                print("실패")
+            }
         }
     }
     
