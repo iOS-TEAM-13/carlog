@@ -18,28 +18,28 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private var collectionViewTitle: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
 
     lazy private var progressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
-        view.progressTintColor = .primaryColor
+        view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
     }()
     
-    private var collectionViewInterval: UILabel = {
+    private var interval: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
+        label.customLabel(text: "설정 기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
         return label
     }()
     
     private let clickedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .primaryColor
+        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -57,10 +57,10 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(clickedIcon)
         contentView.addSubview(collectionViewTitle)
         contentView.addSubview(progressView)
-        contentView.addSubview(collectionViewInterval)
+        contentView.addSubview(interval)
         
         contentView.layer.cornerRadius = 20
-        contentView.backgroundColor = .thirdColor
+        contentView.backgroundColor = .buttonSkyBlueColor
         
         contentView.snp.makeConstraints {
             $0.top.trailing.equalToSuperview()
@@ -87,7 +87,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
             $0.centerY.equalTo(contentView)
         }
         
-        collectionViewInterval.snp.makeConstraints {
+        interval.snp.makeConstraints {
             $0.top.equalTo(progressView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
@@ -102,9 +102,10 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func bind(text: String, interval: String, icon: UIImage) {
-        collectionViewTitle.text = text
-        collectionViewInterval.text = interval
+    func bind(title: String, interval: String, icon: UIImage, progress: Double) {
+        collectionViewTitle.text = title
+        self.interval.text = interval
+        self.progressView.progress = Float(progress)
         collectionViewImage.image = icon
     }
 

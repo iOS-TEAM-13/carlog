@@ -12,35 +12,35 @@ import UIKit
 class MyCarDetailPageViewController: UIViewController {
     private let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .thirdColor
+        view.backgroundColor = .buttonSkyBlueColor
         view.layer.cornerRadius = Constants.cornerRadius
         return view
     }()
     
     private var selectedTitleLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
 
     lazy private var selectedprogressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
-        view.progressTintColor = .primaryColor
+        view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
     }()
     
     private var selectedIntervalLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
+        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
     
     private let selectedIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .primaryColor
+        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -53,13 +53,13 @@ class MyCarDetailPageViewController: UIViewController {
     
     private let modifiedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "날짜 변경", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
     private let completedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "점검 완료", font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), titleColor: .white, backgroundColor: .primaryColor)
+        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
@@ -80,15 +80,8 @@ class MyCarDetailPageViewController: UIViewController {
     }()
     
     // MARK: Dummy
-    private let dummyList = [Detail(date: "2023 / 10 / 18", type: "수정"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체"), Detail(date: "2023 / 10 / 19", type: "교체")]
-    
     var dummyMenu: (String, PartsInfo)?
     var dummyIcon: UIImage?
-    
-    struct Detail {
-        let date: String
-        let type: String
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,7 +151,7 @@ class MyCarDetailPageViewController: UIViewController {
     
     private func configure() {
         selectedTitleLabel.text = dummyMenu?.0
-        selectedIntervalLabel.text = dummyMenu?.1.currentTime?.toString()
+        selectedIntervalLabel.text = dummyMenu?.1.currentTime
         selectedIcon.image = dummyIcon
     }
     
@@ -170,12 +163,12 @@ class MyCarDetailPageViewController: UIViewController {
 
 extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyList.count
+        return dummyMenu?.1.fixHistory.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        cell.bind(date: dummyList[indexPath.row].date, type: dummyList[indexPath.row].type)
+        cell.bind(date: dummyMenu?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: dummyMenu?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         return cell
     }
     

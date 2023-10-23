@@ -5,6 +5,7 @@
 //  Created by t2023-m0056 on 2023/10/17.
 //
 
+import FirebaseAuth
 import SnapKit
 import UIKit
 
@@ -12,6 +13,7 @@ class PageViewController: UIViewController {
     
     var componetsView: ComponentsView?
     var insuranceView: InsuranceView?
+    var type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,7 @@ class PageViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         if checkingView == .engineOil || checkingView == .missionOil || checkingView == .brakeOil || checkingView == .brakePad || checkingView == .tire || checkingView == .tireRotation || checkingView == .fuelFilter || checkingView == .wiperBlade || checkingView == .airconFilter {
             componetsView = ComponentsView(view: view)
+            type = componetsView?.checkTitleLabel.text ?? ""
             setupCarouselView()
         } else {
             insuranceView = InsuranceView(view: view)
@@ -50,6 +53,31 @@ class PageViewController: UIViewController {
         }
     }
     
+    private func addCarParts(text :String) {
+        switch type {
+        case "엔진 오일은 언제 교체하셨나요?":
+            Constants.carParts.engineOil.currentTime = text
+        case "미션 오일은 언제 교체하셨나요?":
+            Constants.carParts.missionOil.currentTime = text
+        case "브레이크 오일은 언제 교체하셨나요?":
+            Constants.carParts.brakeOil.currentTime = text
+        case "브레이크 패드는 언제 교체하셨나요?":
+            Constants.carParts.brakePad.currentTime = text
+        case "마지막 타이어 로테이션은 언제였나요?":
+            Constants.carParts.tireRotation.currentTime = text
+        case "타이어는 언제 교체하셨나요?":
+            Constants.carParts.tire.currentTime = text
+        case "연료 필터는 언제 교체하셨나요?":
+            Constants.carParts.fuelFilter.currentTime = text
+        case "와이퍼 블레이드는 언제 교체하셨나요?":
+            Constants.carParts.wiper.currentTime = text
+        case "에어컨 필터는 언제 교체하셨나요?":
+            Constants.carParts.airconFilter.currentTime = text
+        default:
+            break
+        }
+    }
+    
     private func buttonActions() {
         if let view = componetsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
@@ -74,26 +102,31 @@ class PageViewController: UIViewController {
         if let view = componetsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
-                item.backgroundColor = .thirdColor
+                item.backgroundColor = .buttonSkyBlueColor
                 item.setTitleColor(.black, for: .normal)
             }
             
             switch sender.tag {
             case 1:
-                view.firstAnswerButton.backgroundColor = .primaryColor
+                view.firstAnswerButton.backgroundColor = .mainNavyColor
                 view.firstAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.firstAnswerButton.titleLabel?.text ?? "")
             case 2:
-                view.secondAnswerButton.backgroundColor = .primaryColor
+                view.secondAnswerButton.backgroundColor = .mainNavyColor
                 view.secondAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.secondAnswerButton.titleLabel?.text ?? "")
             case 3:
-                view.thirdAnswerButton.backgroundColor = .primaryColor
+                view.thirdAnswerButton.backgroundColor = .mainNavyColor
                 view.thirdAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.thirdAnswerButton.titleLabel?.text ?? "")
             case 4:
-                view.fourthAnswerButton.backgroundColor = .primaryColor
+                view.fourthAnswerButton.backgroundColor = .mainNavyColor
                 view.fourthAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.fourthAnswerButton.titleLabel?.text ?? "")
             case 5:
-                view.fifthAnswerButton.backgroundColor = .primaryColor
+                view.fifthAnswerButton.backgroundColor = .mainNavyColor
                 view.fifthAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.fifthAnswerButton.titleLabel?.text ?? "")
             default:
                 break
             }

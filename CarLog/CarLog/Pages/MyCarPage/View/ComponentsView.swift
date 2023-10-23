@@ -17,7 +17,7 @@ class ComponentsView: UIView {
     
     let checkTitleLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "타이틀", textColor: .primaryColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
+        label.customLabel(text: "타이틀", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium), alignment: .center)
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
@@ -33,7 +33,7 @@ class ComponentsView: UIView {
     
     let firstAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "첫번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 1
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -44,7 +44,7 @@ class ComponentsView: UIView {
     
      let secondAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "두번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 2
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -55,7 +55,7 @@ class ComponentsView: UIView {
     
      let thirdAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "세번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 3
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -63,10 +63,10 @@ class ComponentsView: UIView {
         btn.layer.shadowRadius = 4
         return btn
     }()
-    // uiaction으로 변경
+  
      let fourthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "네번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 4
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -77,7 +77,7 @@ class ComponentsView: UIView {
     
      let fifthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .thirdColor)
+        btn.customButton(text: "다섯번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 5
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -94,18 +94,15 @@ class ComponentsView: UIView {
         return view
     }()
     
-//    private lazy var leftButton: UIImageView = {
-//        let view = UIImageView()
-//        view.image = UIImage(systemName: "arrowshape.turn.up.backward.circle")
-//        view.tintColor = .primaryColor
-//        return view
-//    }()
-//
-//    private lazy var rightButton: UIImageView = {
-//        let view = UIImageView()
-//        view.image = UIImage(systemName: "arrowshape.turn.up.right.circle")
-//        view.tintColor = .primaryColor
-//        return view
+//    private lazy var completeButton: UIButton = {
+//        let btn = UIButton()
+//        btn.customButton(text: "완료", font: Constants.fontJua24 ?? UIFont(), titleColor: .black, backgroundColor: .thirdColor)
+//        btn.layer.cornerRadius = Constants.cornerRadius
+//        btn.layer.shadowColor = UIColor.black.cgColor
+//        btn.layer.shadowOpacity = 0.4
+//        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
+//        btn.layer.shadowRadius = 4
+//        return btn
 //    }()
     
     init(view: CheckingView) {
@@ -120,6 +117,7 @@ class ComponentsView: UIView {
     
     private func setupUI() {
         self.addSubview(customView)
+//        self.addSubview(completeButton)
         
         customView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -127,8 +125,6 @@ class ComponentsView: UIView {
 
         customView.addSubview(checkTitleLabel)
         customView.addSubview(CheckScrollView)
-//        self.addSubview(leftButton)
-//        self.addSubview(rightButton)
         CheckScrollView.addSubview(answerStackView)
         
         checkTitleLabel.snp.makeConstraints {
@@ -147,16 +143,11 @@ class ComponentsView: UIView {
             $0.width.equalTo(200)
         }
         
-//        leftButton.snp.makeConstraints {
-//            $0.top.equalTo(customView.snp.bottom).inset(Constants.verticalMargin)
-//            $0.leading.bottom.equalToSuperview().inset(Constants.horizontalMargin)
-//            $0.width.height.equalTo(30)
-//        }
-//
-//        rightButton.snp.makeConstraints {
-//            $0.top.equalTo(customView.snp.bottom).inset(Constants.verticalMargin)
+//        completeButton.snp.makeConstraints {
+//            $0.top.equalTo(answerStackView.snp.bottom).inset(Constants.verticalMargin)
 //            $0.trailing.bottom.equalToSuperview().inset(Constants.horizontalMargin)
-//            $0.width.height.equalTo(30)
+//            $0.width.equalTo(60)
+//            $0.height.equalTo(40)
 //        }
         
         [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton].forEach{ item in

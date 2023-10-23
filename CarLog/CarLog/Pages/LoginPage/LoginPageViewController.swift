@@ -12,7 +12,6 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        //registerForKeyboardNotifications()
         keepLogin()
     }
 
@@ -57,40 +56,18 @@ class LoginPageViewController: UIViewController {
             joinPageViewController.modalPresentationStyle = .fullScreen
             self.present(joinPageViewController, animated: true, completion: nil)
         }), for: .touchUpInside)
-//        loginView.appleLoginButton.addAction(UIAction(handler: { _ in
-//            let appleIDProvider = ASAuthorizationAppleIDProvider()
-//            let request = appleIDProvider.createRequest()
-//            request.requestedScopes = [.fullName, .email]
-//
-//            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-//            authorizationController.delegate = self
-//            authorizationController.presentationContextProvider = self
-//            authorizationController.performRequests()
-//        }), for: .touchUpInside)
     }
 
-//    func registerForKeyboardNotifications() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//
-//    @objc private func keyboardWillShow(_ notification: Notification) {
-//        if let userInfo = notification.userInfo,
-//           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-//        {
-//            let keyboardHeight = keyboardFrame.height
-//            let textFieldFrameInWindow = loginView.loginButton.convert(loginView.loginButton.bounds, to: nil)
-//            let maxY = textFieldFrameInWindow.maxY
-//            if maxY > (loginView.frame.size.height - keyboardHeight) {
-//                let scrollOffset = maxY - (loginView.frame.size.height - keyboardHeight)
-//                loginView.frame.origin.y = -scrollOffset
-//            }
-//        }
-//    }
-//
-//    @objc private func keyboardWillHide(_ notification: Notification) {
-//        loginView.frame.origin.y = 0
-//    }
+    func keepLogin() {
+        LoginService.loginService.keepLogin { user in
+            print("user:\(user?.email ?? "")")
+            if user != nil {
+                let tabBarController = Constants.mainTabBarController()
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true, completion: nil)
+            }
+        }
+    }
 
     func textFieldDidChange() {
         let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
@@ -99,74 +76,9 @@ class LoginPageViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             if isEmailValid && isPasswordValid {
                 self.loginView.loginButton.isEnabled = true
-                self.loginView.loginButton.setTitleColor(.white, for: .normal)
-                self.loginView.loginButton.backgroundColor = .primaryColor
-            } else {
-                self.loginView.loginButton.isEnabled = false
-                self.loginView.loginButton.setTitleColor(.primaryColor, for: .normal)
-                self.loginView.loginButton.backgroundColor = .thirdColor
-            }
-        }
-    }
-
-    func mainTabBarController() -> UITabBarController {
-        let tabBarController = TabBarController()
-
-        let tabs: [(root: UIViewController, icon: String)] = [
-            (MyCarPageViewController(), "car"),
-            (HistoryPageViewController(), "book"),
-            (MapPageViewController(), "map"),
-            (CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person"),
-        ]
-
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
-            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
-
-        return tabBarController
-    }
-
-    func keepLogin() {
-        LoginService.loginService.keepLogin { user in
-            print("user:\(user?.email ?? "")")
-            if user != nil {
-                let tabBarController = self.mainTabBarController()
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true, completion: nil)
+                self.loginView.loginButton.setTitleColor(.mainNavyColor, for: .normal)
+                self.loginView.loginButton.backgroundColor = .buttonSkyBlueColor
             }
         }
     }
 }
-
-//extension LoginPageViewController: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
-//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-//        view.window!
-//    }
-//
-//    // Apple ID 연동 성공 시
-//    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-//        switch authorization.credential {
-//        // Apple ID
-//        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-//
-//            // 계정 정보 가져오기
-//            let userIdentifier = appleIDCredential.user
-//            let fullName = appleIDCredential.fullName
-//            let email = appleIDCredential.email
-//
-//            print("User ID : \(userIdentifier)")
-//            print("User Email : \(email ?? "")")
-//            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
-//
-//        default:
-//            break
-//        }
-//    }
-//
-//    // Apple ID 연동 실패 시
-//    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {}
-//}

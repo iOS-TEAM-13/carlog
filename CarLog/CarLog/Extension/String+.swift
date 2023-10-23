@@ -5,7 +5,6 @@ extension String {
     func isValidPassword() -> Bool {
         let regularExpression = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"
         let passwordValidation = NSPredicate(format: "SELF MATCHES %@", regularExpression)
-        
         return passwordValidation.evaluate(with: self)
     }
     
@@ -13,7 +12,6 @@ extension String {
     func isValidEmail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        
         return emailTest.evaluate(with: self)
     }
     
@@ -31,5 +29,14 @@ extension String {
             return nil
         }
     }
-    
+    func intervalToDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    } 
 }

@@ -133,7 +133,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 // 원 형태의 뷰 생성
                 let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
                 circleView.layer.cornerRadius = 15
-                circleView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.5)
+                circleView.backgroundColor = UIColor.mainNavyColor.withAlphaComponent(0.5)
                 
                 label = UILabel(frame: circleView.bounds)
                 label?.textColor = .black

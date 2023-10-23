@@ -20,7 +20,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var writeDateLabel: UILabel = {
         let writeDateLabel = UILabel()
         writeDateLabel.textColor = .darkGray
-        writeDateLabel.font = Constants.fontJua16 ?? UIFont()
+        writeDateLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         return writeDateLabel
     }()
     
@@ -35,14 +35,14 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var driveDistenceLabel: UILabel = {
         let driveDistenceLabel = UILabel()
         driveDistenceLabel.textColor = .black
-        driveDistenceLabel.font = Constants.fontJua32 ?? UIFont()
+        driveDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua32, weight: .medium)
         return driveDistenceLabel
     }()
     
     lazy var departDistenceLabel: UILabel = {
         let departDistenceLabel = UILabel()
         departDistenceLabel.textColor = .black
-        departDistenceLabel.font = Constants.fontJua20 ?? UIFont()
+        departDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
         return departDistenceLabel
     }()
     

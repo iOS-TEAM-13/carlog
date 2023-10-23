@@ -21,18 +21,23 @@ extension UITextField {
         self.backgroundColor = .white
         self.leftView = paddingView
         self.leftViewMode = .always
+        self.autocorrectionType = .no
+        self.autocapitalizationType = .none
     }
     
-    func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView){
+    func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment){
+        let border = CALayer()
+        let width = CGFloat(1)
+        border.borderColor = UIColor.systemGray.cgColor
+        border.frame = CGRect(x: 0, y: 45, width: UIScreen.main.bounds.width - 40, height: 1)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
         self.placeholder = placeholder
         self.font = font
         self.sizeToFit()
         self.textAlignment = alignment
         self.textColor = textColor
         self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.layer.cornerRadius = 15
-        self.backgroundColor = .thirdColor
-        self.leftView = paddingView
         self.leftViewMode = .always
     }
     
@@ -48,4 +53,6 @@ extension UITextField {
         self.rightView = paddingView
         self.rightViewMode = .always
     }
+     
+
 }

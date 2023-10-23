@@ -12,7 +12,7 @@ class AddFuelingView: UIView {
     
     lazy var addFuelingPageLabel: UILabel = {
         let addFuelingPageLabel = UILabel()
-        addFuelingPageLabel.customLabel(text: "휘발유", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
+        addFuelingPageLabel.customLabel(text: "휘발유", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
         return addFuelingPageLabel
     }()
     
@@ -31,14 +31,14 @@ class AddFuelingView: UIView {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         totalDistanceLabel.numberOfLines = 2
         return totalDistanceLabel
     }()
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
         totalDistanceTextField.layer.borderWidth = 1.5
         totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
@@ -82,13 +82,13 @@ class AddFuelingView: UIView {
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        priceLabel.customLabel(text: "단가", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return priceLabel
     }()
     
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
-        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: priceTextField.frame.size.height)))
+        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: priceTextField.frame.size.height)))
         priceTextField.layer.borderWidth = 1.5
         priceTextField.layer.cornerRadius = Constants.cornerRadius
         priceTextField.keyboardType = .decimalPad
@@ -132,13 +132,13 @@ class AddFuelingView: UIView {
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        countLabel.customLabel(text: "수량", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return countLabel
     }()
     
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
-        countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
+        countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 29, height: countTextField.frame.size.height)))
         countTextField.layer.borderWidth = 1.5
         countTextField.layer.cornerRadius = Constants.cornerRadius
         countTextField.keyboardType = .decimalPad
@@ -174,13 +174,13 @@ class AddFuelingView: UIView {
     
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return totalPriceLabel
     }()
     
     lazy var totalPriceTextField: UITextField = {
         let totalPriceTextField = UITextField()
-        totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
+        totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 34, height: totalPriceTextField.frame.size.height)))
         totalPriceTextField.layer.borderWidth = 1.5
         totalPriceTextField.layer.cornerRadius = Constants.cornerRadius
         totalPriceTextField.keyboardType = .decimalPad
@@ -210,25 +210,25 @@ class AddFuelingView: UIView {
     //MARK: - 단위 Label
     lazy var kmLabel: UILabel = {
         let kmLabel = UILabel()
-        kmLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return kmLabel
     }()
     
     lazy var wonLabel: UILabel = {
         let wonLabel = UILabel()
-        wonLabel.customLabel(text: "원", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        wonLabel.customLabel(text: "원", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return wonLabel
     }()
     
     lazy var lLabel: UILabel = {
         let lLabel = UILabel()
-        lLabel.customLabel(text: "L", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        lLabel.customLabel(text: "L", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return lLabel
     }()
     
     lazy var wonLabel2: UILabel = {
         let wonLabel2 = UILabel()
-        wonLabel2.customLabel(text: "원", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        wonLabel2.customLabel(text: "원", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return wonLabel2
     }()
     
@@ -242,14 +242,14 @@ class AddFuelingView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()

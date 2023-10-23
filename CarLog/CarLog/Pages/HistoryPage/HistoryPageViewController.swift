@@ -3,9 +3,7 @@ import UIKit
 
 class HistoryPageViewController: UIViewController {
     
-    var drivingDummy = [
-        Driving(timeStamp: "2023.10.15", id: "1", departDistance: 22, arriveDistance: 33, driveDistance: 11, userEmail: "hhn0212@naver.com")
-    ]
+    var drivingDummy: [Driving] = []
     
     var fuelingDummy = [
         Fueling(timeStamp: "2023.10.15", id: "1", totalDistance: 23, price: 1789, count: 10, totalPrice: 17890, userEmail: "hhn0212@naver.com")
@@ -15,10 +13,10 @@ class HistoryPageViewController: UIViewController {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
-        segmentedControl.selectedSegmentTintColor = .primaryColor
+        segmentedControl.selectedSegmentTintColor = .mainNavyColor
         
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: Constants.fontJua20 ?? UIFont(), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: Constants.fontJua20 ?? UIFont(), .foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), .foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
     
@@ -52,16 +50,41 @@ class HistoryPageViewController: UIViewController {
         return floatingButtonStackView
     }()
     
+    var ac: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         
         setupUI()
-        
         self.didChangeValue(segment: self.segmentedControl)
-        
         buttonActions()
         
+        loadDrivingData()
+        
+        //indicator
+        ac = UIActivityIndicatorView(style: .medium)
+        ac.center = view.center
+        view.addSubview(ac)
+        ac.startAnimating()
+        
+        //노티피케이션으로 addDriving 연결? / 옵저버 끊어주기
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewDrivingRecordAdded(_:)), name: .newDrivingRecordAdded, object: nil)
+        
+    }
+    
+    //
+    @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
+        if let newDriving = notification.object as? Driving {
+            //노티피케이션에서 받은 새 주행 기록을 처리하고 화면 업데이트
+            drivingDummy.append(newDriving)
+            drivingCollectionView.drivingCollectionView.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidLoad()
+        loadDrivingData()
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
@@ -175,7 +198,23 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
     }
     
-    
+    //firestoreService.loadDriving
+    func loadDrivingData() {
+        FirestoreService.firestoreService.loadDriving { result in
+            if let drivings = result {
+//                self.drivingDummy = drivings.reversed()
+                self.drivingDummy = drivings
+                DispatchQueue.main.async {
+                    self.drivingCollectionView.drivingCollectionView.reloadData()
+                    //
+                    self.ac.stopAnimating()
+                    self.ac.isHidden = true
+                }
+            } else {
+                print("데이터 로드 중 오류 발생")
+            }
+        }
+    }
     
 }
 
@@ -195,7 +234,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
             cell.layer.borderWidth = 2
-            cell.layer.cornerRadius = Constants.cornerRadius
+            cell.layer.cornerRadius = Constants.cornerRadius * 4
             
             cell.layer.borderColor = UIColor.systemGray5.cgColor
             cell.layer.shadowColor = UIColor.gray.cgColor
@@ -203,9 +242,9 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             cell.layer.shadowRadius = 3
             cell.layer.shadowOpacity = 0.3
             
-            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp!
-            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance!)km")
-            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance!)km")
+            cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
+            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0.0)km")
+            cell.departDistenceLabel.text = String("\(drivingDummy[indexPath.row].departDistance ?? 0.0)km")
             
             return cell
             
@@ -244,6 +283,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == drivingCollectionView.drivingCollectionView {
             let driveDetailViewController = DriveDetailViewController()
+            //
+            driveDetailViewController.drivingData = drivingDummy[indexPath.row]
             self.navigationController?.pushViewController(driveDetailViewController, animated: true)
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
             let fuelingDetailViewController = FuelingDetailViewController()

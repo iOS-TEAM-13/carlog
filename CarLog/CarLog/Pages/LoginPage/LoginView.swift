@@ -8,18 +8,17 @@ final class LoginView: UIView {
         imageView.contentMode = .bottom
         return imageView
     }()
-    lazy var emailTextField = loginTextField(placeholder: "user@example.com")
+    lazy var emailTextField = loginTextField(placeholder: "이메일")
     lazy var passwordTextField = loginTextField(placeholder: "비밀번호")
-    lazy var loginButton = loginButton(text: "로 그 인", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
-    lazy var joinupButton = loginButton(text: "회원가입", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
+
+    lazy var loginButton = loginButton(text: "로 그 인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .gray, backgroundColor: .lightGray)
+    lazy var joinupButton = loginButton(text: "회원가입", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
     lazy var spaceView = UIView()
-    lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: Constants.fontJua16 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
+    lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
     lazy var signupStackView = loginStackView(list: [joinupButton, spaceView, findIdPassword], spacing: 0, alignment: .fill)
+
     lazy var leftDivider = divider()
-//    lazy var socialLoginDesignLabel = basicLabel(text: "SNS 계정으로 로그인")
-//    lazy var rightDivider = divider()
-//    lazy var socialLoginDesignStackView = loginStackView(list: [leftDivider, socialLoginDesignLabel, rightDivider], spacing: 2, alignment: .center)
-//    lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
@@ -28,8 +27,7 @@ final class LoginView: UIView {
         addSubview(passwordTextField)
         addSubview(loginButton)
         addSubview(signupStackView)
-//        addSubview(socialLoginDesignStackView)
-//        addSubview(appleLoginButton)
+
 
         logo.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
@@ -61,19 +59,6 @@ final class LoginView: UIView {
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
-
-//        socialLoginDesignStackView.snp.makeConstraints { make in
-//            make.top.equalTo(signupStackView.snp.bottom).offset(Constants.verticalMargin)
-//            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-//            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-//        }
-//
-//        appleLoginButton.snp.makeConstraints { make in
-//            make.top.equalTo(socialLoginDesignStackView.snp.bottom).offset(Constants.horizontalMargin)
-//            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-//            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-//            make.height.equalTo(50)
-//        }
     }
     
     override init(frame: CGRect) {
@@ -88,12 +73,12 @@ final class LoginView: UIView {
     
     private func basicLabel(text: String) -> UILabel {
         let label = UILabel()
-        label.customLabel(text: text, textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .center)
+        label.customLabel(text: text, textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
         return label
     }
     private func loginTextField(placeholder: String) -> UITextField {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: placeholder, textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: placeholder, textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }
     private func loginButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor) -> UIButton {
