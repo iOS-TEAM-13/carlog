@@ -87,7 +87,7 @@ class MyCarDetailPageViewController: UIViewController {
     
     let textField: UITextField = {
         let field = UITextField()
-        field.backgroundColor = .thirdColor
+        field.backgroundColor = .buttonSkyBlueColor
         field.layer.cornerRadius = 10
         return field
     }()
