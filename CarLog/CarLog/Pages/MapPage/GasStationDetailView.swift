@@ -9,7 +9,7 @@ class GasStationDetailView: UIView {
         let label = UILabel()
         label.text = "가나다라마바사아자차카타파하아야어여야랄랄라"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
         return label
