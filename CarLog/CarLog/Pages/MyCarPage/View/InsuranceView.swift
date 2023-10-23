@@ -19,7 +19,7 @@ class InsuranceView: UIView {
     
     let checkTitleLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "타이틀", textColor: .mainNavyColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
+        label.customLabel(text: "타이틀", textColor: .primaryColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium), alignment: .center)
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5

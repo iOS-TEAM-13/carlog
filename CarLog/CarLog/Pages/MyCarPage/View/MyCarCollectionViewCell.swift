@@ -18,7 +18,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private var collectionViewTitle: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return label
     }()
 
@@ -32,7 +32,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private var interval: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "설정 기간", textColor: .systemGray, font: Constants.fontJua10 ?? UIFont.systemFont(ofSize: 10), alignment: .left)
+        label.customLabel(text: "설정 기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
         return label
     }()
     

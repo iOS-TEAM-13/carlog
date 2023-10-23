@@ -17,7 +17,7 @@ class ComponentsView: UIView {
     
     let checkTitleLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "타이틀", textColor: .mainNavyColor, font: Constants.fontJua36 ?? UIFont.systemFont(ofSize: 36), alignment: .center)
+        label.customLabel(text: "타이틀", textColor: .primaryColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium), alignment: .center)
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
@@ -33,7 +33,7 @@ class ComponentsView: UIView {
     
     let firstAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "첫번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
+        btn.customButton(text: "첫번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 1
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -44,7 +44,7 @@ class ComponentsView: UIView {
     
      let secondAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "두번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
+        btn.customButton(text: "두번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 2
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -55,7 +55,7 @@ class ComponentsView: UIView {
     
      let thirdAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "세번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
+        btn.customButton(text: "세번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 3
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -66,7 +66,7 @@ class ComponentsView: UIView {
   
      let fourthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "네번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
+        btn.customButton(text: "네번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 4
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4
@@ -77,7 +77,7 @@ class ComponentsView: UIView {
     
      let fifthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "다섯번째", font: Constants.fontJua24 ?? UIFont.systemFont(ofSize: 24), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
+        btn.customButton(text: "다섯번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 5
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOpacity = 0.4

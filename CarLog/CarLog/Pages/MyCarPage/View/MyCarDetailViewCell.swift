@@ -11,13 +11,13 @@ import UIKit
 class MyCarDetialViewCell: UICollectionViewCell {
     private let replacedDateLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "날짜", textColor: .black, font: Constants.fontJua20 ?? UIFont.systemFont(ofSize: 20), alignment: .left)
+        label.customLabel(text: "날짜", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .left)
         return label
     }()
     
     private let replacedTypeLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "구분", textColor: .systemGray, font: Constants.fontJua16 ?? UIFont.systemFont(ofSize: 16), alignment: .left)
+        label.customLabel(text: "구분", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .left)
         return label
     }()
     
