@@ -3,9 +3,6 @@ import UIKit
 
 class HistoryPageViewController: UIViewController {
     
-//    var drivingDummy = [
-//        Driving(timeStamp: nil, id: nil, departDistance: nil, arriveDistance: nil, driveDistance: nil, userEmail: nil)
-//    ]
     var drivingDummy: [Driving] = []
     
     var fuelingDummy = [
@@ -53,6 +50,8 @@ class HistoryPageViewController: UIViewController {
         return floatingButtonStackView
     }()
     
+    var ac: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -62,6 +61,25 @@ class HistoryPageViewController: UIViewController {
         buttonActions()
         
         loadDrivingData()
+        
+        //indicator
+        ac = UIActivityIndicatorView(style: .medium)
+        ac.center = view.center
+        view.addSubview(ac)
+        ac.startAnimating()
+        
+        //노티피케이션으로 addDriving 연결? / 옵저버 끊어주기
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewDrivingRecordAdded(_:)), name: .newDrivingRecordAdded, object: nil)
+        
+    }
+    
+    //
+    @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
+        if let newDriving = notification.object as? Driving {
+            //노티피케이션에서 받은 새 주행 기록을 처리하고 화면 업데이트
+            drivingDummy.append(newDriving)
+            drivingCollectionView.drivingCollectionView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -180,14 +198,17 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
     }
     
-    //
+    //firestoreService.loadDriving
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { result in
             if let drivings = result {
-                // Firestore에서 가져온 데이터를 사용하여 컬렉션 뷰 업데이트
+//                self.drivingDummy = drivings.reversed()
                 self.drivingDummy = drivings
                 DispatchQueue.main.async {
                     self.drivingCollectionView.drivingCollectionView.reloadData()
+                    //
+                    self.ac.stopAnimating()
+                    self.ac.isHidden = true
                 }
             } else {
                 print("데이터 로드 중 오류 발생")
