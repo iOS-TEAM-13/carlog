@@ -42,7 +42,7 @@ class MyPageViewController: UIViewController {
       }
       
       private func toggleTextFieldsEditing(enable: Bool) {
-          [myPageView.textField1, myPageView.textField2, myPageView.textField3, myPageView.textField4].forEach {
+          [myPageView.carNumberTextField, myPageView.carTypeTextField, myPageView.carMakerTextField, myPageView.carOilTypeTextField].forEach {
               $0.isUserInteractionEnabled = enable
               $0.borderStyle = enable ? .roundedRect : .none   // 라운더 없음으로 해도 글씨 창 라운더 생김 현상(커스텀 때문인지;;)
           }
@@ -65,7 +65,7 @@ class MyPageViewController: UIViewController {
             myPageView.myPageDesignStackView.isHidden = false
             myPageView.phoneCallButton.isHidden = false
             // ⭐ 택스트필드1~4 입력한 값들을 저장해서 파이어베이스에 넣어주기!
-            FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.textField1.text, maker: myPageView.textField2.text, name: myPageView.textField3.text, oilType: myPageView.textField4.text, nickName: "", totalDistance: 0.0, userEmail: Auth.auth().currentUser?.email)) { error in
+            FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carTypeTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: "", totalDistance: 0.0, userEmail: Auth.auth().currentUser?.email)) { error in
             }
         }
         

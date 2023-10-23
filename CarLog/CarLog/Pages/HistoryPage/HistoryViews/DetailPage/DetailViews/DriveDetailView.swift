@@ -11,7 +11,7 @@ class DriveDetailView: UIView {
 
     lazy var addDrivingPageLabel: UILabel = {
         let addDrivingPageLabel = UILabel()
-        addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: Constants.fontJua28 ?? UIFont(), alignment: .center)
+        addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
         return addDrivingPageLabel
     }()
     
@@ -30,14 +30,14 @@ class DriveDetailView: UIView {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적(출발)\n주행거리", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        totalDistanceLabel.customLabel(text: "누적(출발)\n주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         totalDistanceLabel.numberOfLines = 2
         return totalDistanceLabel
     }()
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
         totalDistanceTextField.layer.borderWidth = 1.5
         totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
@@ -80,14 +80,14 @@ class DriveDetailView: UIView {
     
     lazy var arriveDistanceLabel: UILabel = {
         let arriveDistanceLabel = UILabel()
-        arriveDistanceLabel.customLabel(text: "도착\n주행거리", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        arriveDistanceLabel.customLabel(text: "도착\n주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         arriveDistanceLabel.numberOfLines = 2
         return arriveDistanceLabel
     }()
     
     lazy var arriveDistanceTextField: UITextField = {
         let arriveDistanceTextField = UITextField()
-        arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 17665", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: arriveDistanceTextField.frame.size.height)))
+        arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 17665", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: arriveDistanceTextField.frame.size.height)))
         arriveDistanceTextField.layer.borderWidth = 1.5
         arriveDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         arriveDistanceTextField.keyboardType = .decimalPad
@@ -130,13 +130,13 @@ class DriveDetailView: UIView {
     
     lazy var driveDistenceLabel: UILabel = {
         let driveDistenceLabel = UILabel()
-        driveDistenceLabel.customLabel(text: "주행거리", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        driveDistenceLabel.customLabel(text: "주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return driveDistenceLabel
     }()
     
     lazy var driveDistenceTextField: UITextField = {
         let driveDistenceTextField = UITextField()
-        driveDistenceTextField.historyCustomTextField(placeholder: "ex) 10", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: driveDistenceTextField.frame.size.height)))
+        driveDistenceTextField.historyCustomTextField(placeholder: "ex) 10", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: driveDistenceTextField.frame.size.height)))
         driveDistenceTextField.layer.borderWidth = 1.5
         driveDistenceTextField.layer.cornerRadius = Constants.cornerRadius
         driveDistenceTextField.keyboardType = .decimalPad
@@ -165,19 +165,19 @@ class DriveDetailView: UIView {
     //MARK: - 단위 Label
     lazy var kmLabel: UILabel = {
         let kmLabel = UILabel()
-        kmLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return kmLabel
     }()
     
     lazy var kmLabel2: UILabel = {
         let kmLabel = UILabel()
-        kmLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return kmLabel
     }()
     
     lazy var kmLabel3: UILabel = {
         let kmLabel = UILabel()
-        kmLabel.customLabel(text: "km", textColor: .black, font: Constants.fontJua20 ?? UIFont(), alignment: .center)
+        kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return kmLabel
     }()
     
@@ -191,14 +191,14 @@ class DriveDetailView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "수정", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        saveButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
         cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()

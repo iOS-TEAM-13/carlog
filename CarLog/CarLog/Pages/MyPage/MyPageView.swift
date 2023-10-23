@@ -16,7 +16,7 @@ final class MyPageView: UIView {
         let label = UILabel()
         label.text = "내 차 정보"
         label.textColor = .black
-        label.font = Constants.fontJua28
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
         return label
     }()
     
@@ -34,38 +34,38 @@ final class MyPageView: UIView {
     //텍스트 폰트에 따른 언더라인 수정
     lazy var myWritingButton: UIButton = {
         let myWritingButton = UIButton()
-        myWritingButton.customButton(text: "내가 작성한 글", font: Constants.fontJua20 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
         return myWritingButton     // ⭐ 나중에 Community Page 연결 필요
     }()
     
-    lazy var textField1: UITextField = {
+    lazy var carNumberTextField: UITextField = {
         let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "차량 번호 ex)56머3344", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        textField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return textField
     }()
     
-    lazy var textField2: UITextField = {
+    lazy var carTypeTextField: UITextField = {
         let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        textField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return textField
     }()
     
-    lazy var textField3: UITextField = {
+    lazy var carMakerTextField: UITextField = {
         let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        textField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return textField
     }()
     
-    lazy var textField4: UITextField = {
+    lazy var carOilTypeTextField: UITextField = {
         let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+        textField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return textField
     }()
     
     lazy var logoutButton: UIButton = {
         let logoutbutton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: Constants.fontJua16 ?? UIFont(),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray]
 //            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
         let attributedTitle = NSAttributedString(string: "로그아웃", attributes: attributes)
@@ -77,7 +77,7 @@ final class MyPageView: UIView {
     lazy var horizontalDivider: UIView = {
         let horizontaldivider = UIView()
         horizontaldivider.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        horizontaldivider.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        horizontaldivider.heightAnchor.constraint(equalToConstant: 15).isActive = true
         horizontaldivider.backgroundColor = .lightGray
         return horizontaldivider
     }()
@@ -85,7 +85,7 @@ final class MyPageView: UIView {
     lazy var membershipWithdrawalButton: UIButton = {
         let membershipwithdrawalbutton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: Constants.fontJua16 ?? UIFont(),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray]
 //            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
         let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
@@ -110,7 +110,7 @@ final class MyPageView: UIView {
         phoneCallbutton.configuration = config
         phoneCallbutton.layer.shadowOffset = CGSize(width: 5, height: 5)
         phoneCallbutton.layer.shadowRadius = 10
-        phoneCallbutton.layer.shadowOpacity = 0.3
+        phoneCallbutton.layer.shadowOpacity = 0.1
         return phoneCallbutton
     }()
     
@@ -121,17 +121,17 @@ final class MyPageView: UIView {
         addSubview(titleLabel)
         addSubview(editButton)
         addSubview(myWritingButton)
-        addSubview(textField1)
-        addSubview(textField2)
-        addSubview(textField3)
-        addSubview(textField4)
+        addSubview(carNumberTextField)
+        addSubview(carTypeTextField)
+        addSubview(carMakerTextField)
+        addSubview(carMakerTextField)
         addSubview(myPageDesignStackView)
         addSubview(phoneCallButton)
         
-        textField1.isUserInteractionEnabled = false
-        textField2.isUserInteractionEnabled = false
-        textField3.isUserInteractionEnabled = false
-        textField4.isUserInteractionEnabled = false
+        carNumberTextField.isUserInteractionEnabled = false
+        carTypeTextField.isUserInteractionEnabled = false
+        carMakerTextField.isUserInteractionEnabled = false
+        carMakerTextField.isUserInteractionEnabled = false
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeArea).offset(Constants.verticalMargin)
@@ -141,8 +141,7 @@ final class MyPageView: UIView {
         
         editButton.snp.makeConstraints { make in
             make.top.equalTo(safeArea).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(Constants.horizontalMargin * 20)
-            make.leading.equalTo(safeArea.snp.leading).offset(-Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         myWritingButton.snp.makeConstraints { make in
@@ -153,26 +152,26 @@ final class MyPageView: UIView {
             make.height.equalTo(70)
         }
         
-        textField1.snp.makeConstraints { make in
+        carNumberTextField.snp.makeConstraints { make in
             make.top.equalTo(myWritingButton.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        textField2.snp.makeConstraints { make in
-            make.top.equalTo(textField1.snp.bottom).offset(Constants.verticalMargin)
+        carTypeTextField.snp.makeConstraints { make in
+            make.top.equalTo(carNumberTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        textField3.snp.makeConstraints { make in
-            make.top.equalTo(textField2.snp.bottom).offset(Constants.verticalMargin)
+        carMakerTextField.snp.makeConstraints { make in
+            make.top.equalTo(carTypeTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        textField4.snp.makeConstraints { make in
-            make.top.equalTo(textField3.snp.bottom).offset(Constants.verticalMargin)
+        carMakerTextField.snp.makeConstraints { make in
+            make.top.equalTo(carMakerTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }

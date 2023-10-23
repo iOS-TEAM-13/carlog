@@ -6,11 +6,11 @@ final class JoinupView: UIView {
     let duplicateComponents = DuplicateComponents()
     var isSecure = true
     
-    lazy var emailLabel = makeLabel(text: "아이디", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+    lazy var emailLabel = makeLabel(text: "아이디", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "아이디", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "아이디", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         textField.rightView = checkEmailButton
         textField.rightViewMode = .always
         return textField
@@ -22,18 +22,18 @@ final class JoinupView: UIView {
         configuration.imagePadding = 10
         
         let button = UIButton(configuration: configuration)
-        button.customButton(text: "중복확인", font: Constants.fontJua14 ?? UIFont(), titleColor: .black, backgroundColor: .clear)
+        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         return button
     }()
     
     lazy var emailAlertLabel = makeAlertLabel(text: "아이디는 필수 입력 정보입니다", textColor: .red)
     
-    lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+    lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "비밀번호", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "비밀번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         textField.isSecureTextEntry = isSecure
         textField.rightView = showPasswordButton
         textField.rightViewMode = .always
@@ -42,11 +42,11 @@ final class JoinupView: UIView {
     
     lazy var passwordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red)
 
-    lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+    lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
     lazy var confirmPasswordTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "비밀번호 재확인", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "비밀번호 재확인", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         textField.isSecureTextEntry = isSecure
         textField.rightView = showConfirmPasswordButton
         textField.rightViewMode = .always
@@ -55,15 +55,15 @@ final class JoinupView: UIView {
     
     lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 10~16글자 이내로 작성하세요", textColor: .red)
     
-    lazy var smtpEmailLabel = makeLabel(text: "이메일 인증", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left)
+    lazy var smtpEmailLabel = makeLabel(text: "이메일 인증", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
     lazy var smtpEmailTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "유효한 이메일을 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "유효한 이메일을 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }()
     
-    lazy var smtpButton = makeButton(text: "인증", font: Constants.fontJua16 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var smtpButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
     lazy var stmpStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpEmailTextField, smtpButton])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
@@ -74,13 +74,13 @@ final class JoinupView: UIView {
     
     lazy var smtpNumberTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "인증번호를 입력", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "인증번호를 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }()
     
-    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: Constants.fontJua16 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
     
-    lazy var smtpTimerLabel: UILabel = makeLabel(text: "3:00", textColor: .black, font: Constants.fontJua16 ?? UIFont(), alignment: .center)
+    lazy var smtpTimerLabel: UILabel = makeLabel(text: "3:00", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
     
     lazy var smtpNumberStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])
@@ -104,8 +104,8 @@ final class JoinupView: UIView {
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-    lazy var joinInButton = makeButton(text: "다 음", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
-    lazy var popButton = makeButton(text: "취 소", font: Constants.fontJua24 ?? UIFont(), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var joinInButton = makeButton(text: "다 음", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
+    lazy var popButton = makeButton(text: "취 소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .primaryColor, backgroundColor: .thirdColor)
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
