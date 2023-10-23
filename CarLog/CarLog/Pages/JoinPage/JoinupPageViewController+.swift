@@ -167,6 +167,12 @@ extension JoinupPageViewController {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
+            
+            if self.joinupView.smtpButton.isEnabled == false && self.joinupView.smtpNumberButton.isEnabled == false{
+                print("")
+            } else {
+                
+            }
 
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
@@ -189,12 +195,16 @@ extension JoinupPageViewController {
                 self.checkVerificationCode { success in
                     self.smtpNumberButtonPressed = success
                     if success {
-                        self.view.addSubview(self.carNumberView)
-                        self.joinupView.isHidden = true
-                        self.carNumberView.isHidden = false
-                        self.carNumberView.snp.makeConstraints { make in
-                            make.edges.equalToSuperview()
-                        }
+                        let alert = UIAlertController(title: "인증을 성공했습니다", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                            self.view.addSubview(self.carNumberView)
+                            self.joinupView.isHidden = true
+                            self.carNumberView.isHidden = false
+                            self.carNumberView.snp.makeConstraints { make in
+                                make.edges.equalToSuperview()
+                            }
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                     } else {
                         if self.joinupView.smtpNumberTextField.text?.count == 6 {
                             self.joinupView.smtpNumberTextField.text = "" // 6자리이고 일치하지 않으면 입력값 초기화
@@ -233,6 +243,7 @@ extension JoinupPageViewController {
             completion(true)
         } else {
             joinupView.smtpNumberButton.isEnabled = true
+            self.joinupView.smtpNumberTextField.text = ""
             showAlert(message: "인증번호가 일치하지 않습니다.")
 
             // 인증에 실패한 경우 false를 반환
