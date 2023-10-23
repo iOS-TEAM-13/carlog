@@ -17,8 +17,6 @@ class PageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        buttonActions()
     }
     
     init(view: CheckingView, checkingView: componentsType) {
@@ -26,10 +24,12 @@ class PageViewController: UIViewController {
         if checkingView == .engineOil || checkingView == .missionOil || checkingView == .brakeOil || checkingView == .brakePad || checkingView == .tire || checkingView == .tireRotation || checkingView == .fuelFilter || checkingView == .wiperBlade || checkingView == .airconFilter {
             componetsView = ComponentsView(view: view)
             type = componetsView?.checkTitleLabel.text ?? ""
-            setupCarouselView()
+            setupComponetsView()
+            componentsButtonActions()
         } else {
             insuranceView = InsuranceView(view: view)
-            setupCustomCarouselView()
+            setupInsuranceView()
+            insuranceButtonActions()
         }
     }
     
@@ -37,7 +37,7 @@ class PageViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    private func setupCarouselView() {
+    private func setupComponetsView() {
         view.addSubview(componetsView!)
         
         componetsView!.snp.makeConstraints {
@@ -45,7 +45,7 @@ class PageViewController: UIViewController {
         }
     }
     
-    private func setupCustomCarouselView() {
+    private func setupInsuranceView() {
         view.addSubview(insuranceView!)
         
         insuranceView!.snp.makeConstraints {
@@ -53,32 +53,7 @@ class PageViewController: UIViewController {
         }
     }
     
-    private func addCarParts(text :String) {
-        switch type {
-        case "엔진 오일은 언제 교체하셨나요?":
-            Constants.carParts.engineOil.currentTime = text
-        case "미션 오일은 언제 교체하셨나요?":
-            Constants.carParts.missionOil.currentTime = text
-        case "브레이크 오일은 언제 교체하셨나요?":
-            Constants.carParts.brakeOil.currentTime = text
-        case "브레이크 패드는 언제 교체하셨나요?":
-            Constants.carParts.brakePad.currentTime = text
-        case "마지막 타이어 로테이션은 언제였나요?":
-            Constants.carParts.tireRotation.currentTime = text
-        case "타이어는 언제 교체하셨나요?":
-            Constants.carParts.tire.currentTime = text
-        case "연료 필터는 언제 교체하셨나요?":
-            Constants.carParts.fuelFilter.currentTime = text
-        case "와이퍼 블레이드는 언제 교체하셨나요?":
-            Constants.carParts.wiper.currentTime = text
-        case "에어컨 필터는 언제 교체하셨나요?":
-            Constants.carParts.airconFilter.currentTime = text
-        default:
-            break
-        }
-    }
-    
-    private func buttonActions() {
+    private func componentsButtonActions() {
         if let view = componetsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
                 self.checkButtonTapped(sender: view.firstAnswerButton)
@@ -98,7 +73,81 @@ class PageViewController: UIViewController {
         }
     }
     
-    func checkButtonTapped(sender: UIButton) {
+    private func insuranceButtonActions() {
+        if let view = insuranceView {
+            [view.calendarView.january, view.calendarView.february, view.calendarView.march, view.calendarView.april, view.calendarView.may, view.calendarView.june, view.calendarView.july, view.calendarView.august, view.calendarView.september, view.calendarView.october, view.calendarView.november, view.calendarView.december].forEach { item in
+                item.addAction(UIAction(handler: { _ in
+                    self.calendarButtonTapped(sender: item)
+                }), for: .touchUpInside)
+            }
+        }
+    }
+    
+    private func calendarButtonTapped(sender: UIButton) {
+        if let view = insuranceView {
+            [view.calendarView.january, view.calendarView.february, view.calendarView.march, view.calendarView.april, view.calendarView.may, view.calendarView.june, view.calendarView.july, view.calendarView.august, view.calendarView.september, view.calendarView.october, view.calendarView.november, view.calendarView.december].forEach { item in
+                item.backgroundColor = .buttonSkyBlueColor
+                item.setTitleColor(.black, for: .normal)
+            }
+            if let text = sender.titleLabel?.text {
+                switch text {
+                case "Jan":
+                    view.calendarView.january.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.january.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "1"
+                case "Feb":
+                    view.calendarView.february.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.february.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "2"
+                case "Mar":
+                    view.calendarView.march.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.march.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "3"
+                case "Apr":
+                    view.calendarView.april.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.april.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "4"
+                case "May":
+                    view.calendarView.may.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.may.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "5"
+                case "Jun":
+                    view.calendarView.june.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.june.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "6"
+                case "Jul":
+                    view.calendarView.july.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.july.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "7"
+                case "Aug":
+                    view.calendarView.august.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.august.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "8"
+                case "Sep":
+                    view.calendarView.september.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.september.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "9"
+                case "Oct":
+                    view.calendarView.october.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.october.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "10"
+                case "Nov":
+                    view.calendarView.november.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.november.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "11"
+                case "Dec":
+                    view.calendarView.december.backgroundColor = .buttonSkyBlueColor
+                    view.calendarView.december.setTitleColor(.white, for: .normal)
+                    Constants.carParts.insurance.currentTime = "12"
+                default:
+                    break
+                }
+            }
+        }
+        NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
+    }
+    
+    private func checkButtonTapped(sender: UIButton) {
         if let view = componetsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
@@ -131,5 +180,32 @@ class PageViewController: UIViewController {
                 break
             }
         }
+        NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
     }
+    
+    private func addCarParts(text :String) {
+        switch type {
+        case "엔진 오일은 언제 교체하셨나요?":
+            Constants.carParts.engineOil.currentTime = text
+        case "미션 오일은 언제 교체하셨나요?":
+            Constants.carParts.missionOil.currentTime = text
+        case "브레이크 오일은 언제 교체하셨나요?":
+            Constants.carParts.brakeOil.currentTime = text
+        case "브레이크 패드는 언제 교체하셨나요?":
+            Constants.carParts.brakePad.currentTime = text
+        case "마지막 타이어 로테이션은 언제였나요?":
+            Constants.carParts.tireRotation.currentTime = text
+        case "타이어는 언제 교체하셨나요?":
+            Constants.carParts.tire.currentTime = text
+        case "연료 필터는 언제 교체하셨나요?":
+            Constants.carParts.fuelFilter.currentTime = text
+        case "와이퍼 블레이드는 언제 교체하셨나요?":
+            Constants.carParts.wiper.currentTime = text
+        case "에어컨 필터는 언제 교체하셨나요?":
+            Constants.carParts.airconFilter.currentTime = text
+        default:
+            break
+        }
+    }
+    
 }
