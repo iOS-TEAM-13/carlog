@@ -19,7 +19,7 @@ class MyCarDetailPageViewController: UIViewController {
     
     private var selectedTitleLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left)
         return label
     }()
     
@@ -33,7 +33,7 @@ class MyCarDetailPageViewController: UIViewController {
     
     private var selectedIntervalLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
         return label
     }()
     
@@ -53,13 +53,13 @@ class MyCarDetailPageViewController: UIViewController {
     
     private let modifiedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
     private let completedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
@@ -93,8 +93,8 @@ class MyCarDetailPageViewController: UIViewController {
     }()
     
     // MARK: Dummy
-    var selectedParts: (String, PartsInfo)?
-    var selectedInsurance: (String, InsuranceInfo)?
+    var selectedParts: PartsInfo?
+//    var selectedInsurance: (String, InsuranceInfo)?
     var selectedProgress: Double?
     var selectedInterval: String?
     var selectedIcon: UIImage?
@@ -103,11 +103,12 @@ class MyCarDetailPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        if selectedInsurance?.0 == nil {
-            configureParts()
-        } else {
-            configureInsurance()
-        }
+//        if selectedInsurance?.0 == nil {
+//            configureParts()
+//        } else {
+//            configureInsurance()
+//        }
+        configureUI()
         setupUI()
         setCollectionView()
         addButtonActions()
@@ -142,6 +143,7 @@ class MyCarDetailPageViewController: UIViewController {
             $0.top.equalTo(selectedTitleLabel.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
+            $0.height.equalTo(4)
         }
         
         selectedIntervalLabel.snp.makeConstraints {
@@ -170,18 +172,25 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
-    private func configureParts() {
-        selectedTitleLabel.text = selectedParts?.0
-        selectedIntervalLabel.text = selectedParts?.1.currentTime
-        selectedImageView.image = selectedIcon
-        selectedIntervalLabel.text = selectedInterval
-        selectedprogressView.progress = Float(selectedProgress ?? 0.0)
-    }
+//    private func configureParts() {
+//        selectedTitleLabel.text = selectedParts?.0
+//        selectedIntervalLabel.text = selectedParts?.1.currentTime
+//        selectedImageView.image = selectedIcon
+//        selectedIntervalLabel.text = selectedInterval
+//        selectedprogressView.progress = Float(selectedProgress ?? 0.0)
+//    }
+//
+//    private func configureInsurance() {
+//        selectedTitleLabel.text = selectedInsurance?.0
+//        selectedIntervalLabel.text = selectedInsurance?.1.currentTime
+//        selectedImageView.image = selectedIcon
+//    }
     
-    private func configureInsurance() {
-        selectedTitleLabel.text = selectedInsurance?.0
-        selectedIntervalLabel.text = selectedInsurance?.1.currentTime
+    private func configureUI() {
+        selectedTitleLabel.text = selectedParts?.name.rawValue
+        selectedIntervalLabel.text = selectedInterval
         selectedImageView.image = selectedIcon
+        selectedprogressView.progress = Float(selectedProgress ?? 0.0)
     }
     
     private func setCollectionView() {
@@ -249,46 +258,59 @@ class MyCarDetailPageViewController: UIViewController {
         textField.inputAccessoryView = toolBar
     }
     
+//    private func showAlert() {
+//        let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
+//        let sucess = UIAlertAction(title: "확인", style: .default) { _ in
+//            print("확인 버튼이 눌렸습니다.")
+//            print("@@@@@@@ \(self.selectedParts)")
+//            print("@@@@@@@ \(self.selectedInsurance)")
+//            if var info = self.selectedParts {
+//                print("@@@@@@@@ \(self.selectedInsurance?.0)")
+//                if self.selectedInsurance?.0 == nil {
+//                    print("@@@@@@@@ 2")
+//                    info.1.currentTime = "최근"
+//                    switch info.0 {
+//                    case "엔진 오일":
+//                        print("@@@@@@@@ 3")
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .engineOil)
+//                    case "미션 오일":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .missionOil)
+//                    case "브레이크 오일":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakeOil)
+//                    case "브레이크 패드":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakePad)
+//                    case "타이어 로테이션":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tireRotation)
+//                    case "타이어 교체":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tire)
+//                    case "연료 필터":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .fuelFilter)
+//                    case "와이퍼 블레이드":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .wiperBlade)
+//                    case "에어컨 필터":
+//                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .airconFilter)
+//                    default:
+//                        break
+//                    }
+//                } else {
+//                    self.selectedInsurance?.1.currentTime = Date().toString()
+//                    FirestoreService.firestoreService.updateInsurance(insuranceInfo: self.selectedInsurance!.1, type: .insurance)
+//                }
+//            }
+//
+//        }
+//        let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
+//            print("취소 버튼이 눌렸습니다.")
+//        }
+//        alert.addAction(sucess)
+//        alert.addAction(cancel)
+//        present(alert, animated: true)
+//    }
+    
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            print("확인 버튼이 눌렸습니다.")
-            print("@@@@@@@ \(self.selectedParts)")
-            print("@@@@@@@ \(self.selectedInsurance)")
-            if var info = self.selectedParts {
-                print("@@@@@@@@ \(self.selectedInsurance?.0)")
-                if self.selectedInsurance?.0 == nil {
-                    print("@@@@@@@@ 2")
-                    info.1.currentTime = "최근"
-                    switch info.0 {
-                    case "엔진 오일":
-                        print("@@@@@@@@ 3")
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .engineOil)
-                    case "미션 오일":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .missionOil)
-                    case "브레이크 오일":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakeOil)
-                    case "브레이크 패드":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .brakePad)
-                    case "타이어 로테이션":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tireRotation)
-                    case "타이어 교체":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .tire)
-                    case "연료 필터":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .fuelFilter)
-                    case "와이퍼 블레이드":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .wiperBlade)
-                    case "에어컨 필터":
-                        FirestoreService.firestoreService.updateCarPart(partsInfo: info.1, type: .airconFilter)
-                    default:
-                        break
-                    }
-                } else {
-                    self.selectedInsurance?.1.currentTime = Date().toString()
-                    FirestoreService.firestoreService.updateInsurance(insuranceInfo: self.selectedInsurance!.1, type: .insurance)
-                }
-            }
-               
+            
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
@@ -311,21 +333,22 @@ class MyCarDetailPageViewController: UIViewController {
 
 extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if selectedInsurance?.0 == nil {
-            return selectedParts?.1.fixHistory.count ?? 0
-        } else {
-            return selectedInsurance?.1.fixHistory.count ?? 0
-        }
+//        if selectedInsurance?.0 == nil {
+//            return selectedParts?.1.fixHistory.count ?? 0
+//        } else {
+//            return selectedInsurance?.1.fixHistory.count ?? 0
+//        }
+        return selectedParts?.fixHistory.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        
-        if selectedInsurance?.0 == nil {
-            cell.bind(date: selectedParts?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
-        } else {
-            cell.bind(date: selectedInsurance?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedInsurance?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
-        }
+//        if selectedInsurance?.0 == nil {
+//            cell.bind(date: selectedParts?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+//        } else {
+//            cell.bind(date: selectedInsurance?.1.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedInsurance?.1.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+//        }
+        cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         return cell
     }
     

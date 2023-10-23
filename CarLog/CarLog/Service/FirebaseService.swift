@@ -196,6 +196,25 @@ final class FirestoreService {
         }
     }
     
+//    func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
+//        db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").getDocument { querySnapshot, error in
+//            if let error = error {
+//                print("데이터를 가져오지 못했습니다: \(error)")
+//                completion(nil)
+//            } else {
+//                var carParts: CarPart?
+//                    do {
+//                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: querySnapshot?.data() ?? CarPart(engineOil: PartsInfo(fixHistory: []), missionOil: PartsInfo(fixHistory: []), brakeOil: PartsInfo(fixHistory: []), brakePad: PartsInfo(fixHistory: []), tireRotation: PartsInfo(fixHistory: []), tire: PartsInfo(fixHistory: []), fuelFilter: PartsInfo(fixHistory: []), wiper: PartsInfo(fixHistory: []), airconFilter: PartsInfo(fixHistory: []), insurance: InsuranceInfo(fixHistory: [])))
+//                        carParts = carPart
+//                    } catch {
+//                        completion(nil)
+//                        return
+//                    }
+//                    completion(carParts)
+//            }
+//        }
+//    }
+    
     func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
         db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").getDocument { querySnapshot, error in
             if let error = error {
@@ -204,7 +223,7 @@ final class FirestoreService {
             } else {
                 var carParts: CarPart?
                     do {
-                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: querySnapshot?.data() ?? CarPart(engineOil: PartsInfo(fixHistory: []), missionOil: PartsInfo(fixHistory: []), brakeOil: PartsInfo(fixHistory: []), brakePad: PartsInfo(fixHistory: []), tireRotation: PartsInfo(fixHistory: []), tire: PartsInfo(fixHistory: []), fuelFilter: PartsInfo(fixHistory: []), wiper: PartsInfo(fixHistory: []), airconFilter: PartsInfo(fixHistory: []), insurance: InsuranceInfo(fixHistory: [])))
+                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: querySnapshot?.data() ?? CarPart(parts: []))
                         carParts = carPart
                     } catch {
                         completion(nil)
@@ -216,22 +235,22 @@ final class FirestoreService {
     }
     
     
-    func updateCarPart(partsInfo: PartsInfo, type: componentsType) {
-        switch type {
-        case .engineOil:
-            do {
-                let data = try Firestore.Encoder().encode(partsInfo)
-                db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
-                    "engineOil": partsInfo,
-                ])
-            } catch  {
-                print("실패")
-            }
-        case .engineOil:
-            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
-                "engineOil": partsInfo,
-                "engineOil":
-            ])
+//    func updateCarPart(partsInfo: PartsInfo, type: componentsType) {
+//        switch type {
+//        case .engineOil:
+//            do {
+//                let data = try Firestore.Encoder().encode(partsInfo)
+//                db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+//                    "engineOil": partsInfo,
+//                ])
+//            } catch  {
+//                print("실패")
+//            }
+//        case .engineOil:
+//            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+//                "engineOil": partsInfo,
+//                "engineOil":
+//            ])
 //        case .missionOil:
 //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
 //                "missionOil": partsInfo
@@ -267,13 +286,13 @@ final class FirestoreService {
 //        case .insurance:
 //            break
 //        }
-    }
+//    }
     
-    func updateInsurance(insuranceInfo: InsuranceInfo, type: componentsType) {
-            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
-                "insurance": insuranceInfo
-        ])
-    }
+//    func updateInsurance(insuranceInfo: InsuranceInfo, type: componentsType) {
+//            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+//                "insurance": insuranceInfo
+//        ])
+//    }
     
     //MARK: - Driving
     func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {

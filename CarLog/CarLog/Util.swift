@@ -10,33 +10,31 @@ import Foundation
 class Util {
     static let util = Util()
     
-    func toInterval(seletedDate: Int, type: String) -> Date {
+    func toInterval(seletedDate: Int, type: componentsType) -> Date {
         let currentDate = Date()
         let calendar = Calendar.current
         var value = 0
         switch type {
-        case "엔진 오일":
+        case .engineOil:
             value = 6 - seletedDate
-        case "미션 오일":
+        case .missionOil:
             value = 24 - seletedDate
-        case "브레이크 오일":
+        case .brakeOil:
             value = 24 - seletedDate
-        case "브레이크 패드":
+        case .brakePad:
             value = 12 - seletedDate
-        case "타이어 로테이션":
+        case .tireRotation:
             value = 12 - seletedDate
-        case "타이어 교체":
+        case .tire:
             value = 36 - seletedDate
-        case "연료 필터":
+        case .fuelFilter:
             value = 12 - seletedDate
-        case "와이퍼 블레이드":
+        case .wiperBlade:
             value = 12 - seletedDate
-        case "에어컨 필터":
+        case .airconFilter:
             value = 12 - seletedDate
-        case "보험":
+        case .insurance:
             value = 12 - seletedDate
-        default:
-            break
         }
         guard let newDate = calendar.date(byAdding: .month, value: value, to: currentDate) else { return Date() }
         return newDate
@@ -76,6 +74,5 @@ class Util {
         } else {
             return (thisYearDate, nextYearDate)
         }
-        return (Date(), Date())
     }
 }
