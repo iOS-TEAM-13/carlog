@@ -36,9 +36,6 @@ class LoginPageViewController: UIViewController {
 
             LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
                 if isSuccess {
-                    let tabBarController = Constants.mainTabBarController()
-                    self.navigationController?.modalPresentationStyle = .fullScreen
-                    self.present(tabBarController, animated: true)
                 } else {
                     if error != nil {
                         // 로그인 실패 시 에러 메시지 표시

@@ -299,9 +299,9 @@ extension JoinupPageViewController {
                     nickName: self.nickNameView.carNickNameTextField.text,
                     totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
                     userEmail: self.joinupView.emailTextField.text),
-                completion: { _ in })
-            self.dismiss(animated: true)
-            self.keepLogin()
+                completion: { _ in
+                    self.keepLogin()
+                })
         }), for: .touchUpInside)
     }
 
