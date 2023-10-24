@@ -183,7 +183,7 @@ class DriveDetailView: UIView {
     
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
-        let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
+        let buttonStackView = UIStackView(arrangedSubviews: [removeButton, saveButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
         buttonStackView.distribution = .fillEqually
         return buttonStackView
@@ -196,11 +196,11 @@ class DriveDetailView: UIView {
         return saveButton
     }()
     
-    lazy var cancelButton: UIButton = {
-        let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        cancelButton.layer.cornerRadius = Constants.cornerRadius
-        return cancelButton
+    lazy var removeButton: UIButton = {
+        let removeButton = UIButton()
+        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        removeButton.layer.cornerRadius = Constants.cornerRadius
+        return removeButton
     }()
     
     override init(frame: CGRect) {

@@ -49,7 +49,7 @@ class DriveDetailViewController: UIViewController {
         loadDrivingData()
         
         driveDetailView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
-        driveDetailView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
+        driveDetailView.removeButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
         
     }
     
@@ -77,7 +77,7 @@ class DriveDetailViewController: UIViewController {
     }
     
     @objc func didCancelButton() {
-        print("---> driveDetailView 취소 버튼 눌렀어요")
+        print("---> driveDetailView 삭제 버튼 눌렀어요")
         //        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
     }
     
