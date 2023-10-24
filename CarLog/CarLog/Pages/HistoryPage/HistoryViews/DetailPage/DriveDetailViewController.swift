@@ -3,28 +3,33 @@
 //  CarLog
 //
 //  Created by 김지훈 on 2023/10/18.
-// 취소 수정버튼 히든처리 , 네비게이션바 아이템 수정 버튼 추가 // 주행기록 문구 네비게이션컨트롤러로 
+// 취소 수정버튼 히든처리 , 네비게이션바 아이템 수정 버튼 추가 // 주행기록 문구 네비게이션컨트롤러로
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class DriveDetailViewController: UIViewController {
     
+    let db = Firestore.firestore()
+    
     var drivingData: Driving?
     
-//    lazy var plusButton: UIBarButtonItem = {
-//        let plusButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(doDeleted))
-//        plusButton.tintColor = .mainNavyColor
-//        return plusButton
-//    }()
-//    
-//    @objc func doDeleted() {
-//        print("--> go to AddPage")
-//        
-//    }
-//    
-//    func navigationUI() {
-//        self.navigationItem.rightBarButtonItem = self.plusButton
-//    }
+    //    lazy var plusButton: UIBarButtonItem = {
+    //        let plusButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(doDeleted))
+    //        plusButton.tintColor = .mainNavyColor
+    //        return plusButton
+    //    }()
+    //
+    //    @objc func doDeleted() {
+    //        print("--> go to AddPage")
+    //
+    //    }
+    //
+    //    func navigationUI() {
+    //        self.navigationItem.rightBarButtonItem = self.plusButton
+    //    }
     
     lazy var driveDetailView: DriveDetailView = {
         let driveDetailView = DriveDetailView()
@@ -36,7 +41,7 @@ class DriveDetailViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.white
         
-//        navigationUI()
+        //        navigationUI()
         
         view.addSubview(driveDetailView)
         driveDetailView.snp.makeConstraints { make in
@@ -78,7 +83,21 @@ class DriveDetailViewController: UIViewController {
     
     @objc func didCancelButton() {
         print("---> driveDetailView 삭제 버튼 눌렀어요")
-        //        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
+        
+        if let drivingID = drivingData?.documentID {
+            FirestoreService.firestoreService.removeDriving(drivingID: drivingID) { error in
+                if let error = error {
+                    print("주행 데이터 삭제 실패: \(error)")
+                } else {
+                    print("주행 데이터 삭제 성공")
+                    HistoryPageViewController().drivingCollectionView.drivingCollectionView.reloadData()
+                    
+                    if let navigationController = self.navigationController {
+                        navigationController.popViewController(animated: true)
+                    }
+                }
+            }
+        }
     }
     
     

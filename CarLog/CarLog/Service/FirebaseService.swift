@@ -253,7 +253,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-    
+
     func loadDriving(completion: @escaping ([Driving]?) -> Void) {
         db.collection("drivings").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
             if let error = error {
@@ -262,12 +262,9 @@ final class FirestoreService {
             } else {
                 var drivings: [Driving] = []
                 for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let driving = try Firestore.Decoder().decode(Driving.self, from: document.data())
-                        drivings.append(driving)
-                    } catch {
-                        completion(nil)
-                        return
+                    if var drivingData = try? Firestore.Decoder().decode(Driving.self, from: document.data()) {
+                        drivingData.documentID = document.documentID
+                        drivings.append(drivingData)
                     }
                 }
                 completion(drivings)
@@ -277,7 +274,6 @@ final class FirestoreService {
     
     func removeDriving(drivingID: String, completion: @escaping (Error?) -> Void) {
         // Firestore에서 주행 데이터를 삭제
-        
         db.collection("drivings").document(drivingID).delete { error in
             if let error = error {
                 print("주행 데이터를 삭제하지 못했습니다.: \(error)")

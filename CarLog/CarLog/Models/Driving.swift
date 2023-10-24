@@ -8,6 +8,7 @@
 import Foundation
 
 struct Driving: Codable {
+    var documentID: String?
     let timeStamp: String?
     let id: String?
     let departDistance: Double?
