@@ -38,7 +38,16 @@ class AddDrivingView: UIView {
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 10000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 10000", attributes: attributes)
+        totalDistanceTextField.attributedPlaceholder = attributedPlaceholder
+        
         totalDistanceTextField.layer.borderWidth = 1.5
         totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
@@ -88,7 +97,16 @@ class AddDrivingView: UIView {
     
     lazy var arriveDistanceTextField: UITextField = {
         let arriveDistanceTextField = UITextField()
-        arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 17665", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: arriveDistanceTextField.frame.size.height)))
+        arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 10010", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: arriveDistanceTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 10010", attributes: attributes)
+        arriveDistanceTextField.attributedPlaceholder = attributedPlaceholder
+        
         arriveDistanceTextField.layer.borderWidth = 1.5
         arriveDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         arriveDistanceTextField.keyboardType = .decimalPad
@@ -138,6 +156,14 @@ class AddDrivingView: UIView {
     lazy var driveDistenceTextField: UITextField = {
         let driveDistenceTextField = UITextField()
         driveDistenceTextField.historyCustomTextField(placeholder: "ex) 10", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: driveDistenceTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 10", attributes: attributes)
+        driveDistenceTextField.attributedPlaceholder = attributedPlaceholder
         
         driveDistenceTextField.layer.borderWidth = 1.5
         driveDistenceTextField.layer.cornerRadius = Constants.cornerRadius

@@ -32,6 +32,7 @@ class HistoryPageViewController: UIViewController {
         drivingCollectionView.drivingCollectionView.dataSource = self
         drivingCollectionView.drivingCollectionView.delegate = self
         drivingCollectionView.drivingCollectionView.register(DrivingCollectionViewCell.self, forCellWithReuseIdentifier: DrivingCollectionViewCell.identifier)
+        drivingCollectionView.drivingCollectionView.backgroundColor = .white
         return drivingCollectionView
     }()
     
@@ -40,6 +41,7 @@ class HistoryPageViewController: UIViewController {
         fuelingCollectionView.fuelingCollectionView.dataSource = self
         fuelingCollectionView.fuelingCollectionView.delegate = self
         fuelingCollectionView.fuelingCollectionView.register(FuelingCollectionViewCell.self, forCellWithReuseIdentifier: FuelingCollectionViewCell.identifier)
+        fuelingCollectionView.fuelingCollectionView.backgroundColor = .white
         return fuelingCollectionView
     }()
     
@@ -235,6 +237,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == drivingCollectionView.drivingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
+            cell.backgroundColor = .buttonSkyBlueColor
             cell.layer.borderWidth = 2
             cell.layer.cornerRadius = Constants.cornerRadius * 4
             
@@ -253,6 +256,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FuelingCollectionViewCell.identifier, for: indexPath) as? FuelingCollectionViewCell else { return UICollectionViewCell() }
             
+            cell.backgroundColor = .white
             cell.layer.borderWidth = 2
             cell.layer.cornerRadius = Constants.cornerRadius
             

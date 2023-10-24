@@ -60,20 +60,16 @@ class DriveDetailViewController: UIViewController {
     }
     
     func loadDrivingData() {
-        FirestoreService.firestoreService.loadDriving { result in
-            if let drivings = result {
-                HistoryPageViewController().drivingDummy = drivings
-                DispatchQueue.main.async {
-                    self.driveDetailView.totalDistanceTextField.text = "\(self.drivingData?.departDistance ?? 0)"
-                    self.driveDetailView.arriveDistanceTextField.text = "\(self.drivingData?.arriveDistance ?? 0)"
-                    self.driveDetailView.driveDistenceTextField.text = "\(self.drivingData?.driveDistance ?? 0)"
-                }
+        FirestoreService.firestoreService.loadDriving { drivingData in
+            if let drivings = self.drivingData {
+                self.driveDetailView.totalDistanceTextField.text = "\(drivings.departDistance ?? 0)"
+                self.driveDetailView.arriveDistanceTextField.text = "\(drivings.arriveDistance ?? 0)"
+                self.driveDetailView.driveDistenceTextField.text = "\(drivings.driveDistance ?? 0)"
             } else {
                 print("데이터 로드 중 오류 발생")
             }
         }
     }
-    
     
     @objc func didUpDateButton() {
         print("---> driveDetailView 수정 버튼 눌렀어요")
