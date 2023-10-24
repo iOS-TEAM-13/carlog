@@ -8,30 +8,51 @@ extension JoinupPageViewController {
 
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
-            if self.joinupView.emailTextField.text?.isEmpty == true {
+            guard let email = self.joinupView.emailTextField.text else {
                 self.joinupView.emailAlertLabel.isHidden = false
+                return
             }
-        }), for: .editingDidBegin)
+
+            if email.isEmpty || !email.isValidEmail() {
+                self.joinupView.emailAlertLabel.isHidden = false
+            } else {
+                self.joinupView.emailAlertLabel.isHidden = true
+            }
+        }), for: .editingDidEnd)
 
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
 
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
-            if self.joinupView.passwordTextField.text?.isEmpty == true {
+            guard let password = self.joinupView.passwordTextField.text else {
                 self.joinupView.passwordAlertLabel.isHidden = false
+                return
             }
-        }), for: .editingDidBegin)
+
+            if password.isEmpty || !password.isValidPassword() {
+                self.joinupView.passwordAlertLabel.isHidden = false
+            } else {
+                self.joinupView.passwordAlertLabel.isHidden = true
+            }
+        }), for: .editingDidEnd)
 
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
 
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
-            if self.joinupView.confirmPasswordTextField.text?.isEmpty == true {
+            guard let password = self.joinupView.confirmPasswordTextField.text else {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
+                return
             }
-        }), for: .editingDidBegin)
+
+            if password.isEmpty || !password.isValidPassword() {
+                self.joinupView.confirmPasswordAlertLabel.isHidden = false
+            } else {
+                self.joinupView.confirmPasswordAlertLabel.isHidden = true
+            }
+        }), for: .editingDidEnd)
 
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
@@ -39,10 +60,28 @@ extension JoinupPageViewController {
 
         joinupView.smtpEmailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
+            if let smtpEmailText = self.joinupView.smtpEmailTextField.text, !smtpEmailText.isEmpty, smtpEmailText.isValidEmail() {
+                self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.smtpButton.backgroundColor = .mainNavyColor
+                self.joinupView.smtpButton.isEnabled = true
+            } else {
+                self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
+                self.joinupView.smtpButton.backgroundColor = .lightGray
+                self.joinupView.smtpButton.isEnabled = false
+            }
         }), for: .editingChanged)
 
         joinupView.smtpNumberTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
+            if let smtpNumberText = self.joinupView.smtpNumberTextField.text, !smtpNumberText.isEmpty, smtpNumberText.count == 6 {
+                self.joinupView.smtpNumberButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.smtpNumberButton.backgroundColor = .mainNavyColor
+                self.joinupView.smtpNumberButton.isEnabled = true
+            } else {
+                self.joinupView.smtpNumberButton.setTitleColor(.gray, for: .normal)
+                self.joinupView.smtpNumberButton.backgroundColor = .lightGray
+                self.joinupView.smtpNumberButton.isEnabled = false
+            }
         }), for: .editingChanged)
     }
 
@@ -111,7 +150,15 @@ extension JoinupPageViewController {
 
     func addSMTPNumberButtonAction() {
         joinupView.smtpNumberButton.addAction(UIAction(handler: { _ in
-            self.checkVerificationCode()
+            self.checkVerificationCode { success in
+                if success {
+                    self.showAlert(message: "인증이 성공적으로 처리되었습니다")
+                    self.joinupView.smtpTimerLabel.isHidden = true
+//                    self.joinupView.smtpNumberTextField.isHidden = true
+//                    self.joinupView.smtpNumberButton.isHidden = true
+                    self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
+                }
+            }
         }), for: .touchUpInside)
     }
 
@@ -121,6 +168,14 @@ extension JoinupPageViewController {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
+            
+            if self.joinupView.smtpNumberButton.title(for: .normal) != "완료" {
+                self.showAlert(message: "인증번호를 확인해주세요")
+            }
+
+            if self.joinupView.smtpButton.isEnabled == false, self.joinupView.smtpNumberButton.isEnabled == false {
+                print("")
+            } else {}
 
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
@@ -140,11 +195,24 @@ extension JoinupPageViewController {
             if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber {
                 LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
-                self.view.addSubview(self.carNumberView)
-                self.joinupView.isHidden = true
-                self.carNumberView.isHidden = false
-                self.carNumberView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
+                self.checkVerificationCode { success in
+                    if success {
+                        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                            self.view.addSubview(self.carNumberView)
+                            self.joinupView.isHidden = true
+                            self.carNumberView.isHidden = false
+                            self.carNumberView.snp.makeConstraints { make in
+                                make.edges.equalToSuperview()
+                            }
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        if self.joinupView.smtpNumberTextField.text?.count == 6 {
+                            self.joinupView.smtpNumberTextField.text = "" // 6자리이고 일치하지 않으면 입력값 초기화
+                            self.showAlert(message: "인증번호가 일치하지 않습니다")
+                        }
+                    }
                 }
             } else {
                 // 조건을 만족하지 않을 때 경고 표시
@@ -167,35 +235,34 @@ extension JoinupPageViewController {
 
     // MARK: - SMTP 인증관련 코드
 
-    func checkVerificationCode() {
+    func checkVerificationCode(completion: @escaping (Bool) -> Void) {
         guard let userInputCode = joinupView.smtpNumberTextField.text else {
+            completion(false)
             return
         }
 
         if let savedCode = UserDefaults.standard.string(forKey: "emailVerificationCode"), savedCode == userInputCode {
-            showAlert(message: "인증에 성공하였습니다!")
-
-            joinupView.smtpTimerLabel.isHidden = true
-            joinupView.smtpNumberTextField.isHidden = true
-            joinupView.smtpNumberButton.isHidden = true
+            completion(true)
         } else {
-            joinupView.smtpNumberButton.isEnabled = false
+            joinupView.smtpNumberButton.isEnabled = true
+            joinupView.smtpNumberTextField.text = ""
             showAlert(message: "인증번호가 일치하지 않습니다.")
+
+            // 인증에 실패한 경우 false를 반환
+            completion(false)
         }
     }
 
     func verifyButtonPressed(_ sender: UIButton) {
-        checkVerificationCode()
+        checkVerificationCode { _ in
+            print("success")
+        }
     }
 
     @objc func updateTimerLabel() {
         if seconds > 0 {
             seconds -= 1
             joinupView.smtpTimerLabel.text = timeString(time: TimeInterval(seconds))
-        } else {
-            timer?.invalidate()
-            timer = nil
-            joinupView.smtpNumberButton.isEnabled = false
         }
     }
 
@@ -299,9 +366,9 @@ extension JoinupPageViewController {
                     nickName: self.nickNameView.carNickNameTextField.text,
                     totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
                     userEmail: self.joinupView.emailTextField.text),
-                completion: { _ in })
-            self.dismiss(animated: true)
-            self.keepLogin()
+                completion: { _ in
+                    self.keepLogin()
+                })
         }), for: .touchUpInside)
     }
 
