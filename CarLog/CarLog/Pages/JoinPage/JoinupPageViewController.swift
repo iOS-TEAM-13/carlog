@@ -20,21 +20,20 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+
         joinupView.joinInButton.isEnabled = false
-        joinupView.scrollView.delegate = self
+        // joinupView.scrollView.delegate = self
         setupUI()
     }
 
     deinit {
         registerForKeyboardNotifications()
     }
- 
+
     func setupUI() {
         view.addSubview(joinupView) // 첫 view
         forHiddenViews() // 다음 버튼들의 숨겨진 views
         registerForKeyboardNotifications() // 키보드 기능들
-        //setDetailKeyboardNotification()
         addTargets() // 기능 구현 한 곳
 
         joinupView.snp.makeConstraints { make in
@@ -91,6 +90,20 @@ class JoinupPageViewController: UIViewController {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
         let buttonLists: [UIView] = [carNumberView.nextButton, carModelView.nextButton, nickNameView.nextButton, totalDistanceView.nextButton]
 
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return
+        }
+
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        joinupView.scrollView.contentInset = contentInset
+        joinupView.scrollView.scrollIndicatorInsets = contentInset
+
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
         {
@@ -109,13 +122,16 @@ class JoinupPageViewController: UIViewController {
     }
 
     @objc private func keyboardWillHide(_ notification: Notification) {
-        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        for list in lists {
-            list.frame.origin.y = 0
-        }
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0)
+        joinupView.scrollView.contentInset = contentInset
+        joinupView.scrollView.scrollIndicatorInsets = contentInset
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) { 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         joinupView.endEditing(true)
         carNumberView.endEditing(true)
         carModelView.endEditing(true)
@@ -125,9 +141,9 @@ class JoinupPageViewController: UIViewController {
     }
 }
 
-extension JoinupPageViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        view.endEditing(true)
-        print("### yes")
-    }
-}
+// extension JoinupPageViewController: UIScrollViewDelegate {
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        view.endEditing(true)
+//        print("### yes")
+//    }
+// }
