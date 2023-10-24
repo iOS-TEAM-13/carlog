@@ -284,11 +284,6 @@ extension JoinupPageViewController {
             self.present(alert, animated: true, completion: nil)
         }), for: .touchUpInside)
 
-        carNumberView.popButton.addAction(UIAction(handler: { _ in
-            self.joinupView.isHidden = false
-            self.carNumberView.isHidden = true
-        }), for: .touchUpInside)
-
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
@@ -296,11 +291,6 @@ extension JoinupPageViewController {
             self.carMakerView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-        }), for: .touchUpInside)
-
-        carMakerView.popButton.addAction(UIAction(handler: { _ in
-            self.carNumberView.isHidden = false
-            self.carMakerView.isHidden = true
         }), for: .touchUpInside)
 
         carMakerView.nextButton.addAction(UIAction(handler: { _ in
@@ -312,11 +302,6 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
 
-        carModelView.popButton.addAction(UIAction(handler: { _ in
-            self.carMakerView.isHidden = false
-            self.carModelView.isHidden = true
-        }), for: .touchUpInside)
-
         carModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
@@ -326,10 +311,6 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
 
-        oilModelView.popButton.addAction(UIAction(handler: { _ in
-            self.carModelView.isHidden = false
-            self.oilModelView.isHidden = true
-        }), for: .touchUpInside)
         oilModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
@@ -338,10 +319,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        nickNameView.popButton.addAction(UIAction(handler: { _ in
-            self.oilModelView.isHidden = false
-            self.nickNameView.isHidden = true
-        }), for: .touchUpInside)
+
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.totalDistanceView)
             self.nickNameView.isHidden = true
@@ -350,10 +328,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        totalDistanceView.popButton.addAction(UIAction(handler: { _ in
-            self.nickNameView.isHidden = false
-            self.totalDistanceView.isHidden = true
-        }), for: .touchUpInside)
+        
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
 

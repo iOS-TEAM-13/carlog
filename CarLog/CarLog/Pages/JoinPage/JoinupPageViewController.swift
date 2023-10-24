@@ -87,7 +87,7 @@ class JoinupPageViewController: UIViewController {
 
     @objc private func keyboardWillShow(_ notification: Notification) {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+        let buttonLists: [UIView] = [carNumberView.nextButton, carModelView.nextButton, nickNameView.nextButton, totalDistanceView.nextButton]
 
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
