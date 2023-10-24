@@ -85,18 +85,19 @@ class MyCarDetailPageViewController: UIViewController {
     var selectedInterval: String?
     var selectedIcon: UIImage?
     
-    var saveData: CarPart?
+    var saveData = Constants.carParts
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        loadCarParts()
         configureUI()
         setupUI()
         setCollectionView()
         addButtonActions()
-        loadCarParts()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(completedModified), name: Notification.Name("completedModified"), object: nil)
     }
     
     private func setupUI() {
@@ -157,22 +158,22 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
-    private func configureUI() {
-        selectedTitleLabel.text = selectedParts?.name.rawValue
-        selectedIntervalLabel.text = selectedInterval
-        selectedImageView.image = selectedIcon
-        selectedprogressView.progress = Float(selectedProgress ?? 0.0)
+    private func updateSelectParts() {
+        for i in 0...saveData.parts.count - 1 {
+            if saveData.parts[i].name == selectedParts?.name {
+                self.selectedParts = saveData.parts[i]
+            }
+        }
     }
     
-    private func configureNewUI() {
-        if let newParts = saveData?.parts.first(where: { $0.name == selectedParts?.name }) {
-            let firstInterval = Util.util.toInterval(seletedDate: newParts.currentTimeToMonth!).toString()
-            let secondInterval = Util.util.toInterval(seletedDate: newParts.currentTimeToMonth ?? 0, type: newParts.name).toString()
+    private func configureUI() {
+        let firstInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth! ?? 0).toString()
+        let secondInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth ?? 0, type: selectedParts!.name).toString()
             let progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-            self.selectedTitleLabel.text = newParts.name.rawValue
+            self.selectedImageView.image = selectedIcon
+        self.selectedTitleLabel.text = selectedParts!.name.rawValue
             self.selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
             self.selectedprogressView.progress = Float(progress)
-        }
     }
     
     private func setCollectionView() {
@@ -191,6 +192,18 @@ class MyCarDetailPageViewController: UIViewController {
     
     private func modifiedButtonTapped() {
         let vc = ModifiedDatePickerViewController()
+        vc.onDateSelected = { date in
+            for i in 0...(self.saveData.parts.count) - 1 {
+                if self.saveData.parts[i].name == self.selectedParts?.name {
+                    self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date.toSaveDate(), changedType: .isModifiedDate), at: 0)
+                    self.saveData.parts[i].currentTime = date
+                }
+            }
+            self.saveCarParts()
+            self.updateSelectParts()
+            self.configureUI()
+            NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
+        }
         present(vc, animated: true)
     }
     
@@ -200,26 +213,31 @@ class MyCarDetailPageViewController: UIViewController {
     
     private func loadCarParts() {
         FirestoreService.firestoreService.loadCarPart{ data in
-            DispatchQueue.main.async {
-                if let data = data {
-                    self.saveData = data
-                }
+            if let data = data {
+                self.saveData = data
+                self.detailCollectionView.reloadData()
             }
+        }
+    }
+    
+    private func saveCarParts() {
+        FirestoreService.firestoreService.saveCarPart(carPart: self.saveData) { error in
+            print("error : \(String(describing: error))")
         }
     }
     
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            for i in 0...(self.saveData?.parts.count ?? 0) - 1 {
-                if self.saveData?.parts[i].name == self.selectedParts?.name {
-                    self.saveData?.parts[i].currentTime = "최근"
+            for i in 0...(self.saveData.parts.count) - 1 {
+                if self.saveData.parts[i].name == self.selectedParts?.name {
+                    self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: Date(), changedType: .isFixedParts), at: 0)
+                    self.saveData.parts[i].currentTime = "최근"
                 }
             }
-            FirestoreService.firestoreService.saveCarPart(carPart: self.saveData ?? CarPart(parts: [])) { error in
-                print("carPart 저장 실패")
-            }
-            self.configureNewUI()
+            self.saveCarParts()
+            self.updateSelectParts()
+            self.configureUI()
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
@@ -227,6 +245,10 @@ class MyCarDetailPageViewController: UIViewController {
         alert.addAction(sucess)
         alert.addAction(cancel)
         present(alert, animated: true)
+    }
+    
+    @objc func completedModified() {
+        loadCarParts()
     }
 }
 

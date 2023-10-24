@@ -48,10 +48,11 @@ struct PartsInfo: Codable {
         case "3년 전":
             return 36
         default:
-            return 0
+            guard let time = currentTime?.components(separatedBy: ".")[1] else { return 0 }
+            return Int(time)
         }
     }
-    let fixHistory: [FixHistory?]
+    var fixHistory: [FixHistory?]
 }
 
 //struct InsuranceInfo: Codable {
