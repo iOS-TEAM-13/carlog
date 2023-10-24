@@ -4,7 +4,20 @@ import SnapKit
 
 final class JoinupView: UIView {
     let duplicateComponents = DuplicateComponents()
-    var isSecure = true  
+    var isSecure = true
+    
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+        
+    let contentView: UIView = {
+        let contentView = UIView()
+        contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        return contentView
+    }()
+    
     lazy var emailLabel = makeLabel(text: "아이디", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
@@ -63,7 +76,7 @@ final class JoinupView: UIView {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "유효한 이메일을 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         textField.delegate = self
-        textField.keyboardType = .emailAddress      
+        textField.keyboardType = .emailAddress
         return textField
     }()
     
@@ -80,6 +93,7 @@ final class JoinupView: UIView {
     lazy var smtpNumberTextField: UITextField = {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: "인증번호를 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.keyboardType = .numberPad
         return textField
     }()
 
@@ -115,23 +129,37 @@ final class JoinupView: UIView {
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
-        addSubview(allTextFieldStackView)
-        addSubview(buttonStackView)
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: self.contentView.frame.size.height)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(allTextFieldStackView)
+        contentView.addSubview(buttonStackView)
         
         smtpTimerLabel.isHidden = true
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeArea)
+        }
+                    
+        contentView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.leading.equalTo(safeArea.snp.leading)
+            make.trailing.equalTo(safeArea.snp.trailing)
+        }
    
         allTextFieldStackView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea).offset(-Constants.horizontalMargin)
+            make.top.equalTo(contentView).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
-
+    
         buttonStackView.snp.makeConstraints { make in
-            make.bottom.equalTo(safeArea.snp.bottom).offset(-Constants.verticalMargin * 2)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(smtpNumberButton.snp.bottom).offset(100)
+            //make.bottom.equalTo(contentView.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
     }
     
@@ -148,14 +176,14 @@ final class JoinupView: UIView {
 
 extension JoinupView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == self.emailTextField {
-            self.passwordTextField.becomeFirstResponder()
-        } else if textField == self.passwordTextField {
-            self.confirmPasswordTextField.becomeFirstResponder()
-        } else if textField == self.confirmPasswordTextField {
-            self.smtpEmailTextField.becomeFirstResponder()
-        } else if textField == self.smtpEmailTextField {
-            self.smtpNumberTextField.becomeFirstResponder()
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
+            confirmPasswordTextField.becomeFirstResponder()
+        } else if textField == confirmPasswordTextField {
+            smtpEmailTextField.becomeFirstResponder()
+        } else if textField == smtpEmailTextField {
+            smtpNumberTextField.becomeFirstResponder()
         }
         return true
     }

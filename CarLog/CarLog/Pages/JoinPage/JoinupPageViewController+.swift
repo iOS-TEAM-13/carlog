@@ -5,7 +5,6 @@ import SwiftSMTP
 
 extension JoinupPageViewController {
     // MARK: - 회원가입의 주요 기능 구현 코드
-
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             guard let email = self.joinupView.emailTextField.text else {
@@ -154,8 +153,6 @@ extension JoinupPageViewController {
                 if success {
                     self.showAlert(message: "인증이 성공적으로 처리되었습니다")
                     self.joinupView.smtpTimerLabel.isHidden = true
-//                    self.joinupView.smtpNumberTextField.isHidden = true
-//                    self.joinupView.smtpNumberButton.isHidden = true
                     self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
                 }
             }
