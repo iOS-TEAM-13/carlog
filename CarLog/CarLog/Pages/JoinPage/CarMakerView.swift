@@ -7,17 +7,14 @@ class CarMakerView: UIView {
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "제조사를\n입력해주세요")
     lazy var carMakerTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "제조사 입력")
-    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
-    lazy var spaceView = UIView()
-    lazy var buttonStackView: UIStackView = duplicateComponents.buttonStackView(list: [popButton, spaceView, nextButton])
     
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
         addSubview(label)
         addSubview(carMakerTextField)
-        addSubview(buttonStackView)
+        addSubview(nextButton)
         
         label.snp.makeConstraints { make in
             make.top.equalTo(carMakerTextField.snp.top).offset(-150)
@@ -31,7 +28,7 @@ class CarMakerView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
-        buttonStackView.snp.makeConstraints { make in
+        nextButton.snp.makeConstraints { make in
             make.top.equalTo(carMakerTextField.snp.bottom).offset(75)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)

@@ -22,17 +22,19 @@ class JoinupPageViewController: UIViewController {
         view.backgroundColor = .white
         
         joinupView.joinInButton.isEnabled = false
+        joinupView.scrollView.delegate = self
         setupUI()
     }
 
     deinit {
         registerForKeyboardNotifications()
     }
-
+ 
     func setupUI() {
         view.addSubview(joinupView) // 첫 view
         forHiddenViews() // 다음 버튼들의 숨겨진 views
         registerForKeyboardNotifications() // 키보드 기능들
+        //setDetailKeyboardNotification()
         addTargets() // 기능 구현 한 곳
 
         joinupView.snp.makeConstraints { make in
@@ -87,7 +89,7 @@ class JoinupPageViewController: UIViewController {
 
     @objc private func keyboardWillShow(_ notification: Notification) {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+        let buttonLists: [UIView] = [carNumberView.nextButton, carModelView.nextButton, nickNameView.nextButton, totalDistanceView.nextButton]
 
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
@@ -113,12 +115,19 @@ class JoinupPageViewController: UIViewController {
         }
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) { 
         joinupView.endEditing(true)
         carNumberView.endEditing(true)
         carModelView.endEditing(true)
         oilModelView.endEditing(true)
         nickNameView.endEditing(true)
         totalDistanceView.endEditing(true)
+    }
+}
+
+extension JoinupPageViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        view.endEditing(true)
+        print("### yes")
     }
 }
