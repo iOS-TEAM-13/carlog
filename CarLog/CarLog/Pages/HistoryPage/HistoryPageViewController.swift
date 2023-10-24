@@ -9,6 +9,13 @@ class HistoryPageViewController: UIViewController {
         Fueling(timeStamp: "2023.10.15", id: "1", totalDistance: 23, price: 1789, count: 10, totalPrice: 17890, userEmail: "hhn0212@naver.com")
     ]
     
+    lazy var noDataLabel: UILabel = {
+        let noDataLabel = UILabel()
+        noDataLabel.customLabel(text: "주행기록을 추가해서 차를 관리하세요!", textColor: .gray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
+        noDataLabel.isHidden = true
+        return noDataLabel
+    }()
+    
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
@@ -99,7 +106,7 @@ class HistoryPageViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
+            make.height.equalTo(60)
         }
         
         drivingCollectionView.snp.makeConstraints { make in
@@ -120,7 +127,7 @@ class HistoryPageViewController: UIViewController {
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
-        
+    
     }
     
     func buttonActions() {
@@ -210,6 +217,7 @@ class HistoryPageViewController: UIViewController {
             }
         }
     }
+
 }
 
 extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
