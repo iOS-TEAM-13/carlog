@@ -272,8 +272,21 @@ final class FirestoreService {
         }
     }
     
+    func updateDriving(drivingID: String, updatedData: [String: Any], completion: @escaping (Error?) -> Void) {
+        let documentReference = db.collection("drivings").document(drivingID)
+        
+        documentReference.updateData(updatedData) { error in
+            if let error = error {
+                print("업데이트 못했어요.: \(error)")
+                completion(error)
+            } else {
+                print("업데이트 했어요.")
+                completion(nil)
+            }
+        }
+    }
+    
     func removeDriving(drivingID: String, completion: @escaping (Error?) -> Void) {
-        // Firestore에서 주행 데이터를 삭제
         db.collection("drivings").document(drivingID).delete { error in
             if let error = error {
                 print("주행 데이터를 삭제하지 못했습니다.: \(error)")

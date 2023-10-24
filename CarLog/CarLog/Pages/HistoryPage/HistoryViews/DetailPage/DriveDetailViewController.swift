@@ -16,6 +16,7 @@ class DriveDetailViewController: UIViewController {
     
     var drivingData: Driving?
     
+    //네비게이션바에 삭제 버튼 혹시나해서 만들어놓은거
     //    lazy var plusButton: UIBarButtonItem = {
     //        let plusButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(doDeleted))
     //        plusButton.tintColor = .mainNavyColor
@@ -53,7 +54,7 @@ class DriveDetailViewController: UIViewController {
         
         loadDrivingData()
         
-        driveDetailView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
+        driveDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
         driveDetailView.removeButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
         
     }
@@ -74,11 +75,38 @@ class DriveDetailViewController: UIViewController {
     }
     
     
-    @objc func didSaveButton() {
+    @objc func didUpDateButton() {
         print("---> driveDetailView 수정 버튼 눌렀어요")
-        //        navigationController?.pushViewController(HistoryPageViewController(), animated: true)
         
-        
+        if let drivingID = drivingData?.documentID {
+            // 업데이트할 필드와 새 값의 딕셔너리를 구성합니다.
+            var updatedData: [String: Any] = [:]
+            
+            if let totalDistanceText = self.driveDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
+                updatedData["departDistance"] = totalDistance
+            }
+            
+            if let arriveDistanceText = self.driveDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
+                updatedData["arriveDistance"] = arriveDistance
+            }
+            
+            if let driveDistanceText = self.driveDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
+                updatedData["driveDistance"] = driveDistance
+            }
+            
+            FirestoreService.firestoreService.updateDriving(drivingID: drivingID, updatedData: updatedData) { error in
+                if let error = error {
+                    print("주행 데이터 업데이트 실패: \(error)")
+                } else {
+                    print("주행 데이터 업데이트 성공")
+                    HistoryPageViewController().drivingCollectionView.drivingCollectionView.reloadData()
+                    
+                    if let navigationController = self.navigationController {
+                        navigationController.popViewController(animated: true)
+                    }
+                }
+            }
+        }
     }
     
     @objc func didCancelButton() {

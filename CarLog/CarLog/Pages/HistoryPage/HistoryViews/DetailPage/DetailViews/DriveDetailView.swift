@@ -183,17 +183,17 @@ class DriveDetailView: UIView {
     
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
-        let buttonStackView = UIStackView(arrangedSubviews: [removeButton, saveButton])
+        let buttonStackView = UIStackView(arrangedSubviews: [removeButton, upDateButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
         buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
     
-    lazy var saveButton: UIButton = {
-        let saveButton = UIButton()
-        saveButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        saveButton.layer.cornerRadius = Constants.cornerRadius
-        return saveButton
+    lazy var upDateButton: UIButton = {
+        let upDateButton = UIButton()
+        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        upDateButton.layer.cornerRadius = Constants.cornerRadius
+        return upDateButton
     }()
     
     lazy var removeButton: UIButton = {
