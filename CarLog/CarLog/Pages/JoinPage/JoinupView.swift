@@ -14,7 +14,7 @@ final class JoinupView: UIView {
         
     let contentView: UIView = {
         let contentView = UIView()
-        contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+//        contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
         return contentView
     }()
     
@@ -26,8 +26,23 @@ final class JoinupView: UIView {
         textField.rightView = checkEmailButton
         textField.delegate = self
         textField.rightViewMode = .always
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+        
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        textField.inputAccessoryView = toolbar
         return textField
     }()
+    
+    @objc func closeKeyboard(){
+        emailTextField.resignFirstResponder()
+        
+    }
     
     lazy var checkEmailButton: UIButton = {
         var configuration = UIButton.Configuration.tinted()
@@ -121,6 +136,20 @@ final class JoinupView: UIView {
         return stackView
     }()
     
+    lazy var spaceView: UIView = {
+        let spaceView = UIView()
+        spaceView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        spaceView.backgroundColor = .yellow
+        return spaceView
+    }()
+    
+    lazy var allStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [allTextFieldStackView, buttonStackView])
+        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
 
@@ -129,37 +158,37 @@ final class JoinupView: UIView {
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
-        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: self.contentView.frame.size.height)
+//        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: self.contentView.frame.size.height)
         addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubview(allTextFieldStackView)
-        contentView.addSubview(buttonStackView)
+        contentView.addSubview(allStackView)
+        //contentView.addSubview(buttonStackView)
         
         smtpTimerLabel.isHidden = true
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(safeArea)
+            make.edges.equalTo(safeArea) // 832
         }
                     
         contentView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalTo(safeArea.snp.leading)
+            make.edges.equalTo(scrollView)
+            make.height.equalTo(scrollView)
             make.trailing.equalTo(safeArea.snp.trailing)
         }
    
-        allTextFieldStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(Constants.verticalMargin)
+//        allTextFieldStackView.snp.makeConstraints { make in
+//            make.top.equalTo(contentView).offset(Constants.verticalMargin)
+//            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+//            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
+//            //make.height.equalTo(300)
+//        }
+    
+        allStackView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(contentView)
             make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
-        }
-    
-        buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(smtpNumberButton.snp.bottom).offset(100)
-            //make.bottom.equalTo(contentView.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
     }
     
