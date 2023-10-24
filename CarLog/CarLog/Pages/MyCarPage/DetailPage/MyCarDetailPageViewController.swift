@@ -73,7 +73,7 @@ class MyCarDetailPageViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
         view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.register(MyCarDetialViewCell.self, forCellWithReuseIdentifier: MyCarDetialViewCell.identifier)
         return view
@@ -89,13 +89,14 @@ class MyCarDetailPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-
+        view.backgroundColor = .white
+        
         configureUI()
         setupUI()
         setCollectionView()
         addButtonActions()
         loadCarParts()
+        
     }
     
     private func setupUI() {
@@ -155,7 +156,7 @@ class MyCarDetailPageViewController: UIViewController {
             $0.height.equalTo(60)
         }
     }
-
+    
     private func configureUI() {
         selectedTitleLabel.text = selectedParts?.name.rawValue
         selectedIntervalLabel.text = selectedInterval
@@ -189,7 +190,8 @@ class MyCarDetailPageViewController: UIViewController {
     }
     
     private func modifiedButtonTapped() {
-        // 수정
+        let vc = ModifiedDatePickerViewController()
+        present(vc, animated: true)
     }
     
     private func completedButtonTapped() {

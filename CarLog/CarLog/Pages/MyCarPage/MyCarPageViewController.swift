@@ -16,7 +16,7 @@ class MyCarPageViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
         view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
@@ -37,7 +37,7 @@ class MyCarPageViewController: UIViewController {
     //MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.systemBackground
+        self.view.backgroundColor = UIColor.white
         
         setupUI()
         checkFirst()

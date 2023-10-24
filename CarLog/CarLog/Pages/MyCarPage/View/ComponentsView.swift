@@ -131,7 +131,7 @@ class ComponentsView: UIView {
             $0.width.equalTo(200)
         }
         
-        [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton].forEach{ item in
+        [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton].forEach { item in
             item.snp.makeConstraints {
                 $0.height.equalTo(80)
             }
