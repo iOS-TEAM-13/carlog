@@ -17,7 +17,7 @@ final class LoginService {
 
             if let email = authResult?.user.email {
                 FirestoreService.firestoreService.saveUsers(user: User(email: email, password: password)) { err in
-                    print("err: \(err)")
+                    print("err: \(String(describing: err?.localizedDescription))")
                 }
             }
         }
@@ -30,7 +30,7 @@ final class LoginService {
                 print("로그인 실패: \(error.localizedDescription)")
                 isSuccess = false
             } else {
-                print("로그인 성공: \(user?.user.email ?? "사용자 정보 없음")")
+                print("(로그인 성공): \(user?.user.email ?? "사용자 정보 없음")")
             }
             completion(isSuccess, error)
         }
