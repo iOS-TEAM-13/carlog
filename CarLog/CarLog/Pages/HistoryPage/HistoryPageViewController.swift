@@ -295,4 +295,3 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     }
 
 }
-

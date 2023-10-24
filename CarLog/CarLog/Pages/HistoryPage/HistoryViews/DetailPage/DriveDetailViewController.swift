@@ -9,8 +9,22 @@ import UIKit
 
 class DriveDetailViewController: UIViewController {
     
-    //
     var drivingData: Driving?
+    
+//    lazy var plusButton: UIBarButtonItem = {
+//        let plusButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(doDeleted))
+//        plusButton.tintColor = .mainNavyColor
+//        return plusButton
+//    }()
+//    
+//    @objc func doDeleted() {
+//        print("--> go to AddPage")
+//        
+//    }
+//    
+//    func navigationUI() {
+//        self.navigationItem.rightBarButtonItem = self.plusButton
+//    }
     
     lazy var driveDetailView: DriveDetailView = {
         let driveDetailView = DriveDetailView()
@@ -22,6 +36,8 @@ class DriveDetailViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.white
         
+//        navigationUI()
+        
         view.addSubview(driveDetailView)
         driveDetailView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -30,15 +46,28 @@ class DriveDetailViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
-        //
-        driveDetailView.totalDistanceTextField.text = "\(drivingData?.departDistance ?? 0)"
-        driveDetailView.arriveDistanceTextField.text = "\(drivingData?.arriveDistance ?? 0)"
-        driveDetailView.driveDistenceTextField.text = "\(drivingData?.driveDistance ?? 0)"
+        loadDrivingData()
         
         driveDetailView.saveButton.addTarget(self, action: #selector(didSaveButton), for: .touchUpInside)
         driveDetailView.cancelButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
         
     }
+    
+    func loadDrivingData() {
+        FirestoreService.firestoreService.loadDriving { result in
+            if let drivings = result {
+                HistoryPageViewController().drivingDummy = drivings
+                DispatchQueue.main.async {
+                    self.driveDetailView.totalDistanceTextField.text = "\(self.drivingData?.departDistance ?? 0)"
+                    self.driveDetailView.arriveDistanceTextField.text = "\(self.drivingData?.arriveDistance ?? 0)"
+                    self.driveDetailView.driveDistenceTextField.text = "\(self.drivingData?.driveDistance ?? 0)"
+                }
+            } else {
+                print("데이터 로드 중 오류 발생")
+            }
+        }
+    }
+    
     
     @objc func didSaveButton() {
         print("---> driveDetailView 수정 버튼 눌렀어요")

@@ -243,7 +243,7 @@ final class FirestoreService {
             if let currentTime = driving.timeStamp?.toDateDetail()?.toStringDetail() {
                 documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
             } else {
-                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")123124123"
+                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
             }
 
             db.collection("drivings").document(documentID).setData(data) { error in
@@ -277,6 +277,7 @@ final class FirestoreService {
     
     func removeDriving(drivingID: String, completion: @escaping (Error?) -> Void) {
         // Firestore에서 주행 데이터를 삭제
+        
         db.collection("drivings").document(drivingID).delete { error in
             if let error = error {
                 print("주행 데이터를 삭제하지 못했습니다.: \(error)")
