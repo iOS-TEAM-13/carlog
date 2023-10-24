@@ -18,7 +18,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private var collectionViewTitle: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left)
         return label
     }()
 
@@ -84,6 +84,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(collectionViewTitle.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
+            $0.height.equalTo(4)
             $0.centerY.equalTo(contentView)
         }
         

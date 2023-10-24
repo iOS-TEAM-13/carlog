@@ -84,7 +84,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-
+    
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
         db.collection("posts").getDocuments { querySnapshot, error in
             if let error = error {
@@ -117,7 +117,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-
+    
     func loadComments(completion: @escaping ([Comment]?) -> Void) {
         db.collection("comments").getDocuments { querySnapshot, error in
             if let error = error {
@@ -139,34 +139,18 @@ final class FirestoreService {
         }
     }
     
+    //
+    //        func deleteInfoDocument() {
+    //            db.collection("aaa").document("aaa").delete(){ err in
+    //                if let err = err {
+    //                    print("Error updating document: \(err)")
+    //                } else {
+    //                    print("Document successfully updated")
+    //                }
+    //            }
+    //        }
+    //    }
     
-//    func editUserData(post: Post, completion: @escaping (Post?) -> Void) {
-//            var result: UserModel?
-//
-//            db.collection("users").document("y527FpLxOC4LWg2jMO01").updateData ([
-//                "id": userID,
-//                "name" : name,
-//                "animalName" : animalName,
-//                "birth" : birth,
-//                "gender" : gender,
-//                "imageURL" : imageURL,
-//                "type" : type
-//            ])
-//            result = self.dicToObject(objectType: UserModel.self, dictionary: names)
-//            completion(result)
-//        }
-//
-//        func deleteInfoDocument() {
-//            db.collection("aaa").document("aaa").delete(){ err in
-//                if let err = err {
-//                    print("Error updating document: \(err)")
-//                } else {
-//                    print("Document successfully updated")
-//                }
-//            }
-//        }
-//    }
-
     //MARK: - Car
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
@@ -204,7 +188,7 @@ final class FirestoreService {
     func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(carPart)
-            db.collection("carParts").addDocument(data: data) { error in
+            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -212,26 +196,102 @@ final class FirestoreService {
         }
     }
     
+    //    func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
+    //        db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").getDocument { querySnapshot, error in
+    //            if let error = error {
+    //                print("데이터를 가져오지 못했습니다: \(error)")
+    //                completion(nil)
+    //            } else {
+    //                var carParts: CarPart?
+    //                    do {
+    //                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: querySnapshot?.data() ?? CarPart(engineOil: PartsInfo(fixHistory: []), missionOil: PartsInfo(fixHistory: []), brakeOil: PartsInfo(fixHistory: []), brakePad: PartsInfo(fixHistory: []), tireRotation: PartsInfo(fixHistory: []), tire: PartsInfo(fixHistory: []), fuelFilter: PartsInfo(fixHistory: []), wiper: PartsInfo(fixHistory: []), airconFilter: PartsInfo(fixHistory: []), insurance: InsuranceInfo(fixHistory: [])))
+    //                        carParts = carPart
+    //                    } catch {
+    //                        completion(nil)
+    //                        return
+    //                    }
+    //                    completion(carParts)
+    //            }
+    //        }
+    //    }
+    
     func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
-        db.collection("carParts").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+        db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").getDocument { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
             } else {
                 var carParts: CarPart?
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: document.data())
-                        carParts = carPart
-                    } catch {
-                        completion(nil)
-                        return
-                    }
-                    completion(carParts)
+                do {
+                    let carPart = try Firestore.Decoder().decode(CarPart.self, from: querySnapshot?.data() ?? CarPart(parts: []))
+                    carParts = carPart
+                } catch {
+                    completion(nil)
+                    return
                 }
+                completion(carParts)
             }
         }
     }
+    
+    //    func updateCarPart(partsInfo: PartsInfo, type: componentsType) {
+    //        switch type {
+    //        case .engineOil:
+    //            do {
+    //                let data = try Firestore.Encoder().encode(partsInfo)
+    //                db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                    "engineOil": partsInfo,
+    //                ])
+    //            } catch  {
+    //                print("실패")
+    //            }
+    //        case .engineOil:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "engineOil": partsInfo,
+    //                "engineOil":
+    //            ])
+    //        case .missionOil:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "missionOil": partsInfo
+    //            ])
+    //        case .brakeOil:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "brakeOil": partsInfo
+    //            ])
+    //        case .brakePad:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "brakePad": partsInfo
+    //            ])
+    //        case .tireRotation:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "tireRotation": partsInfo
+    //            ])
+    //        case .tire:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "tire": partsInfo
+    //            ])
+    //        case .fuelFilter:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "fuelFilter": partsInfo
+    //            ])
+    //        case .wiperBlade:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "wiperBlade": partsInfo
+    //            ])
+    //        case .airconFilter:
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "airconFilter": partsInfo
+    //            ])
+    //        case .insurance:
+    //            break
+    //        }
+    //    }
+    
+    //    func updateInsurance(insuranceInfo: InsuranceInfo, type: componentsType) {
+    //            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").updateData ([
+    //                "insurance": insuranceInfo
+    //        ])
+    //    }
     
     //MARK: - Driving
     func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {

@@ -90,58 +90,63 @@ class PageViewController: UIViewController {
                 item.setTitleColor(.black, for: .normal)
             }
             if let text = sender.titleLabel?.text {
-                switch text {
-                case "Jan":
-                    view.calendarView.january.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.january.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "1"
-                case "Feb":
-                    view.calendarView.february.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.february.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "2"
-                case "Mar":
-                    view.calendarView.march.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.march.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "3"
-                case "Apr":
-                    view.calendarView.april.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.april.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "4"
-                case "May":
-                    view.calendarView.may.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.may.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "5"
-                case "Jun":
-                    view.calendarView.june.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.june.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "6"
-                case "Jul":
-                    view.calendarView.july.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.july.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "7"
-                case "Aug":
-                    view.calendarView.august.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.august.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "8"
-                case "Sep":
-                    view.calendarView.september.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.september.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "9"
-                case "Oct":
-                    view.calendarView.october.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.october.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "10"
-                case "Nov":
-                    view.calendarView.november.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.november.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "11"
-                case "Dec":
-                    view.calendarView.december.backgroundColor = .buttonSkyBlueColor
-                    view.calendarView.december.setTitleColor(.white, for: .normal)
-                    Constants.carParts.insurance.currentTime = "12"
-                default:
-                    break
+                for i in 0...Constants.carParts.parts.count - 1 {
+                    if Constants.carParts.parts[i].name == .insurance {
+                        switch text {
+                        case "Jan":
+                            view.calendarView.january.backgroundColor = .mainNavyColor
+                            view.calendarView.january.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "1"
+                        case "Feb":
+                            view.calendarView.february.backgroundColor = .mainNavyColor
+                            view.calendarView.february.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "2"
+                        case "Mar":
+                            view.calendarView.march.backgroundColor = .mainNavyColor
+                            view.calendarView.march.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "3"
+                        case "Apr":
+                            view.calendarView.april.backgroundColor = .mainNavyColor
+                            view.calendarView.april.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "4"
+                        case "May":
+                            view.calendarView.may.backgroundColor = .mainNavyColor
+                            view.calendarView.may.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "5"
+                        case "Jun":
+                            view.calendarView.june.backgroundColor = .mainNavyColor
+                            view.calendarView.june.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "6"
+                        case "Jul":
+                            view.calendarView.july.backgroundColor = .mainNavyColor
+                            view.calendarView.july.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "7"
+                        case "Aug":
+                            view.calendarView.august.backgroundColor = .mainNavyColor
+                            view.calendarView.august.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "8"
+                        case "Sep":
+                            view.calendarView.september.backgroundColor = .mainNavyColor
+                            view.calendarView.september.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "9"
+                        case "Oct":
+                            view.calendarView.october.backgroundColor = .mainNavyColor
+                            view.calendarView.october.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "10"
+                        case "Nov":
+                            view.calendarView.november.backgroundColor = .mainNavyColor
+                            view.calendarView.november.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "11"
+                        case "Dec":
+                            view.calendarView.december.backgroundColor = .mainNavyColor
+                            view.calendarView.december.setTitleColor(.white, for: .normal)
+                            Constants.carParts.parts[i].currentTime = "12"
+                        default:
+                            break
+                        }
+                    }
                 }
+                
             }
         }
         NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
@@ -154,7 +159,6 @@ class PageViewController: UIViewController {
                 item.backgroundColor = .buttonSkyBlueColor
                 item.setTitleColor(.black, for: .normal)
             }
-            
             switch sender.tag {
             case 1:
                 view.firstAnswerButton.backgroundColor = .mainNavyColor
@@ -182,30 +186,31 @@ class PageViewController: UIViewController {
         }
         NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
     }
-    
+ 
     private func addCarParts(text :String) {
-        switch type {
-        case "엔진 오일은 언제 교체하셨나요?":
-            Constants.carParts.engineOil.currentTime = text
-        case "미션 오일은 언제 교체하셨나요?":
-            Constants.carParts.missionOil.currentTime = text
-        case "브레이크 오일은 언제 교체하셨나요?":
-            Constants.carParts.brakeOil.currentTime = text
-        case "브레이크 패드는 언제 교체하셨나요?":
-            Constants.carParts.brakePad.currentTime = text
-        case "마지막 타이어 로테이션은 언제였나요?":
-            Constants.carParts.tireRotation.currentTime = text
-        case "타이어는 언제 교체하셨나요?":
-            Constants.carParts.tire.currentTime = text
-        case "연료 필터는 언제 교체하셨나요?":
-            Constants.carParts.fuelFilter.currentTime = text
-        case "와이퍼 블레이드는 언제 교체하셨나요?":
-            Constants.carParts.wiper.currentTime = text
-        case "에어컨 필터는 언제 교체하셨나요?":
-            Constants.carParts.airconFilter.currentTime = text
-        default:
-            break
+        for i in 0...Constants.carParts.parts.count - 1 {
+            switch (type, Constants.carParts.parts[i].name) {
+            case ("엔진 오일은 언제 교체하셨나요?", .engineOil):
+                Constants.carParts.parts[i].currentTime = text
+            case ("미션 오일은 언제 교체하셨나요?", .missionOil):
+                Constants.carParts.parts[i].currentTime = text
+            case ("브레이크 오일은 언제 교체하셨나요?", .brakeOil):
+                Constants.carParts.parts[i].currentTime = text
+            case ("브레이크 패드는 언제 교체하셨나요?", .brakePad):
+                Constants.carParts.parts[i].currentTime = text
+            case ("마지막 타이어 로테이션은 언제였나요?", .tireRotation):
+                Constants.carParts.parts[i].currentTime = text
+            case ("타이어는 언제 교체하셨나요?", .tire):
+                Constants.carParts.parts[i].currentTime = text
+            case ("연료 필터는 언제 교체하셨나요?", .fuelFilter):
+                Constants.carParts.parts[i].currentTime = text
+            case ("와이퍼 블레이드는 언제 교체하셨나요?", .wiperBlade):
+                Constants.carParts.parts[i].currentTime = text
+            case ("에어컨 필터는 언제 교체하셨나요?", .airconFilter):
+                Constants.carParts.parts[i].currentTime = text
+            default:
+                break
+            }
         }
     }
-    
 }
