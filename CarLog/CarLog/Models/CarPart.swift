@@ -31,7 +31,7 @@ struct PartsInfo: Codable {
     var currentTime: String?
     var currentTimeToMonth: Int? {
         switch currentTime {
-        case "모르겠음":
+        case "모르겠어요":
             return 0
         case "최근":
             return 0
