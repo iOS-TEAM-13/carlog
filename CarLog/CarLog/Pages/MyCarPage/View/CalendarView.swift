@@ -6,40 +6,43 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class CalendarView: UIView {
+    // MARK: Properties
+
     private let calendarView = UIView()
     
-    lazy private var totalStackView: UIStackView = {
+    private lazy var totalStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [firstStackView, secondStackView, thirdStackView, fourthStackView])
         view.customStackView(spacing: 10, axis: .vertical, alignment: .fill)
         view.distribution = .fillEqually
         return view
     }()
     
-    lazy private var firstStackView: UIStackView = {
+    private lazy var firstStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [january, february, march])
         view.customStackView(spacing: 10, axis: .horizontal, alignment: .fill)
         view.distribution = .fillEqually
         return view
     }()
     
-    lazy private var secondStackView: UIStackView = {
+    private lazy var secondStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [april, may, june])
         view.customStackView(spacing: 10, axis: .horizontal, alignment: .fill)
         view.distribution = .fillEqually
         return view
     }()
     
-    lazy private var thirdStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [july, august, september, ])
+    private lazy var thirdStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [july, august, september])
         view.customStackView(spacing: 10, axis: .horizontal, alignment: .fill)
         view.distribution = .fillEqually
         return view
     }()
     
-    lazy private var fourthStackView: UIStackView = {
+    private lazy var fourthStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [october, november, december])
         view.customStackView(spacing: 10, axis: .horizontal, alignment: .fill)
         view.distribution = .fillEqually
@@ -59,17 +62,22 @@ class CalendarView: UIView {
     lazy var november = self.customButton(text: "Nov")
     lazy var december = self.customButton(text: "Dec")
     
+    // MARK: LifeCycle
+
     init() {
         super.init(frame: .zero)
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
+
     private func setupUI() {
-        self.addSubview(totalStackView)
+        addSubview(totalStackView)
         
         totalStackView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()

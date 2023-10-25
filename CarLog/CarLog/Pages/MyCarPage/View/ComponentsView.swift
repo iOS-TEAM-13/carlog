@@ -5,10 +5,13 @@
 //  Created by t2023-m0056 on 2023/10/12.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class ComponentsView: UIView {
+    // MARK: Properties
+
     private let CheckScrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
@@ -24,7 +27,7 @@ class ComponentsView: UIView {
         return label
     }()
     
-    lazy private var answerStackView: UIStackView = {
+    private lazy var answerStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [firstAnswerButton, secondAnswerButton, thirdAnswerButton, fourthAnswerButton, fifthAnswerButton])
         view.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
         view.distribution = .fill
@@ -42,7 +45,7 @@ class ComponentsView: UIView {
         return btn
     }()
     
-     let secondAnswerButton: UIButton = {
+    let secondAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "두번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 2
@@ -53,7 +56,7 @@ class ComponentsView: UIView {
         return btn
     }()
     
-     let thirdAnswerButton: UIButton = {
+    let thirdAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "세번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 3
@@ -64,7 +67,7 @@ class ComponentsView: UIView {
         return btn
     }()
   
-     let fourthAnswerButton: UIButton = {
+    let fourthAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "네번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 4
@@ -75,7 +78,7 @@ class ComponentsView: UIView {
         return btn
     }()
     
-     let fifthAnswerButton: UIButton = {
+    let fifthAnswerButton: UIButton = {
         let btn = UIButton()
         btn.customButton(text: "다섯번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         btn.tag = 5
@@ -94,18 +97,23 @@ class ComponentsView: UIView {
         return view
     }()
 
+    // MARK: LifeCycle
+
     init(view: CheckingView) {
         super.init(frame: .zero)
         setupUI()
         configureUI(view: view)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
+
     private func setupUI() {
-        self.addSubview(customView)
+        addSubview(customView)
         
         customView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -139,12 +147,12 @@ class ComponentsView: UIView {
     }
     
     private func configureUI(view: CheckingView) {
-        self.checkTitleLabel.text = view.title
-        self.firstAnswerButton.setTitle(view.firstButton, for: .normal)
-        self.secondAnswerButton.setTitle(view.secondButton, for: .normal)
-        self.thirdAnswerButton.setTitle(view.thirdbutton, for: .normal)
-        self.fourthAnswerButton.setTitle(view.fourthButton, for: .normal)
-        self.fifthAnswerButton.setTitle(view.fifthButton, for: .normal)
+        checkTitleLabel.text = view.title
+        firstAnswerButton.setTitle(view.firstButton, for: .normal)
+        secondAnswerButton.setTitle(view.secondButton, for: .normal)
+        thirdAnswerButton.setTitle(view.thirdbutton, for: .normal)
+        fourthAnswerButton.setTitle(view.fourthButton, for: .normal)
+        fifthAnswerButton.setTitle(view.fifthButton, for: .normal)
     }
     
     func bind(checkingView: CheckingView) {

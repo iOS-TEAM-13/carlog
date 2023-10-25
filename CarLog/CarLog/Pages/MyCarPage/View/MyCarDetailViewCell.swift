@@ -5,10 +5,13 @@
 //  Created by t2023-m0056 on 2023/10/18.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class MyCarDetialViewCell: UICollectionViewCell {
+    // MARK: Properties
+
     private let replacedDateLabel: UILabel = {
         var label = UILabel()
         label.customLabel(text: "날짜", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .left)
@@ -21,15 +24,20 @@ class MyCarDetialViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: LifeCycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
+
     private func setupUI() {
         contentView.addSubview(replacedTypeLabel)
         contentView.addSubview(replacedDateLabel)
@@ -48,7 +56,7 @@ class MyCarDetialViewCell: UICollectionViewCell {
     }
     
     func bind(date: String, type: String) {
-        self.replacedDateLabel.text = date
-        self.replacedTypeLabel.text = type
+        replacedDateLabel.text = date
+        replacedTypeLabel.text = type
     }
 }
