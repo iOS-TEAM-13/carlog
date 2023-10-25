@@ -343,7 +343,7 @@ extension JoinupPageViewController {
                     name: self.carModelView.carModelTextField.text,
                     oilType: selectedOilType ?? "",
                     nickName: self.nickNameView.carNickNameTextField.text,
-                    totalDistance: Double(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0.0,
+                    totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
                     userEmail: self.joinupView.emailTextField.text),
                 completion: { _ in
                     self.keepLogin()
