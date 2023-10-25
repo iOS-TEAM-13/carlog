@@ -8,7 +8,7 @@ class MyPageViewController: UIViewController {
     // MARK: - Properties
     let myPageView = MyPageView()
     
-    var carDummy: [Car] = [] 
+    var carDummy: [Car] = []
     
     var isEditMode = false
     
@@ -23,15 +23,19 @@ class MyPageViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         addTargetButton()
+        registerForKeyboardNotifications()
     }
     
+    deinit {
+        registerForKeyboardNotifications()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        DispatchQueue.main.async {
-//            self.loadCarData() // ⭐ 내 차 정보 가져오기
-//            self.configureUI() // ⭐ 내 차 정보 데이터 맵핑
-//        }
+        DispatchQueue.main.async {
+            self.loadCarData() // ⭐ 내 차 정보 가져오기
+            
+        }
         
     }
     
@@ -62,14 +66,14 @@ class MyPageViewController: UIViewController {
             let image = UIImage(systemName: "checkmark.circle", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
             myPageView.editButton.setImage(image, for: .normal)
-            myPageView.myWritingButton.isHidden = true
+            //            myPageView.myWritingButton.isHidden = true
             myPageView.myPageDesignStackView.isHidden = true
             myPageView.phoneCallButton.isHidden = true
         } else {
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
             let image = UIImage(systemName: "highlighter", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
-            myPageView.myWritingButton.isHidden = false
+            //            myPageView.myWritingButton.isHidden = false
             myPageView.myPageDesignStackView.isHidden = false
             myPageView.phoneCallButton.isHidden = false
             // ⭐ 택스트필드 6개 입력한 값들을 저장해서 파이어베이스에 넣어주기!
@@ -83,15 +87,29 @@ class MyPageViewController: UIViewController {
     }
     
     private func configureUI() {
-        myPageView.mainTitleLabel.text = "\(carDummy[0].userEmail) 님"
-        myPageView.carNumberTextField.text = carDummy[0].number
-        myPageView.carMakerTextField.text = carDummy[0].maker
-        myPageView.carNameTextField.text = carDummy[0].name //name 으로 통일!
-        myPageView.carOilTypeTextField.text = carDummy[0].oilType
-        myPageView.carNickNameTextField.text = carDummy[0].nickName
-        myPageView.carTotalDistanceTextField.text = String(carDummy[0].totalDistance ?? 0.0) // ⭐⭐⭐(Optional unwrapping)
+        if let userCar = carDummy.first { // 배열에서 첫 번째 요소 가져오기
+            if let userEmail = userCar.userEmail {
+                    if let atIndex = userEmail.firstIndex(of: "@") {
+                        let emailPrefix = String(userEmail[..<atIndex])
+                        myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
+                    } else {
+                        myPageView.mainTitleLabel.text = "\(userEmail) 님"
+                    }
+                }
+            myPageView.carNumberTextField.text = userCar.number
+            myPageView.carMakerTextField.text = userCar.maker
+            myPageView.carNameTextField.text = userCar.name // name 으로 통일!
+            myPageView.carOilTypeTextField.text = userCar.oilType
+            myPageView.carNickNameTextField.text = userCar.nickName
+            if let totalDistance = userCar.totalDistance {
+                myPageView.carTotalDistanceTextField.text = String(totalDistance)
+            } else {
+                myPageView.carTotalDistanceTextField.text = "0.0" // 만약 totalDistance가 nil인 경우 기본값 설정
+            }
+        } else {
+            // carDummy 배열이 비어있을 때 대응할 내용을 여기에 추가할 수 있습니다.
+        }
     }
-    
     @objc func logoutButtonTapped() {
         if Auth.auth().currentUser != nil {
             LoginService.loginService.logout {
@@ -109,39 +127,27 @@ class MyPageViewController: UIViewController {
         }
     }
     
-//    //MyPageViewController.swift
-//    @objc func quitUserButtonTapped() {
-//        if let email = Auth.auth().currentUser?.email {
-//            LoginService.loginService.quitUser(email: email) { error in
-//                if error == nil {
-//                    self.dismiss(animated: true)
-//                } else {
-//                    print("회원탈퇴 실패 또는 오류: \(error?.localizedDescription ?? "알 수 없는 오류")")
-//                }
-//            }
-//        }
-        
-        @objc func quitUserButtonTapped() {
-            if Auth.auth().currentUser != nil {
-                let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
-                [UIAlertAction(title: "탈퇴하기", style: .default),
-                 UIAlertAction(title: "취소", style: .cancel)].forEach{alert.addAction($0)}; present(alert, animated: true)
-                // 회원탈퇴 하기전, alert 창에 확인버튼으로 감싸기
-                LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { error in
-                    let loginViewController = LoginPageViewController()
-                    self.dismiss(animated: true) {
-                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                           let sceneDelegate = windowScene.delegate as? SceneDelegate
-                        {
-                            sceneDelegate.window?.rootViewController = loginViewController
-                        }
+    @objc func quitUserButtonTapped() {
+        if Auth.auth().currentUser != nil {
+            let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
+            [UIAlertAction(title: "탈퇴하기", style: .default),
+             UIAlertAction(title: "취소", style: .cancel)].forEach{alert.addAction($0)}; present(alert, animated: true)
+            // 회원탈퇴 하기전, alert 창에 확인버튼으로 감싸기
+            LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { error in
+                let loginViewController = LoginPageViewController()
+                self.dismiss(animated: true) {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate
+                    {
+                        sceneDelegate.window?.rootViewController = loginViewController
                     }
                 }
-            } else {
-                dismiss(animated: true)
             }
+        } else {
+            dismiss(animated: true)
         }
-
+    }
+    
     @objc private func dialPhoneNumber() {
         if let phoneCallURL = URL(string: "tel://000-000-0000") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
@@ -159,14 +165,49 @@ class MyPageViewController: UIViewController {
         FirestoreService.firestoreService.loadCar { result in
             if let car = result {
                 self.carDummy = car
+                self.configureUI()
             } else {
                 print("데이터 로드 중 오류 발생")
             }
         }
     }
     
+    // MARK: - Keyboard 관련
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return
+        }
+        
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        myPageView.scrollView.contentInset = contentInset
+        myPageView.scrollView.scrollIndicatorInsets = contentInset
+        
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0)
+        myPageView.scrollView.contentInset = contentInset
+        myPageView.scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        myPageView.endEditing(true)
+    }
 }
-
-
-
-
