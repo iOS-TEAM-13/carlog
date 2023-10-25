@@ -38,7 +38,16 @@ class AddFuelingView: UIView {
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 10000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 10000", attributes: attributes)
+        totalDistanceTextField.attributedPlaceholder = attributedPlaceholder
+        
         totalDistanceTextField.layer.borderWidth = 1.5
         totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
@@ -89,6 +98,15 @@ class AddFuelingView: UIView {
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
         priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 35, height: priceTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 1765", attributes: attributes)
+        priceTextField.attributedPlaceholder = attributedPlaceholder
+        
         priceTextField.layer.borderWidth = 1.5
         priceTextField.layer.cornerRadius = Constants.cornerRadius
         priceTextField.keyboardType = .decimalPad
@@ -139,6 +157,15 @@ class AddFuelingView: UIView {
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
         countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 30, height: countTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 55.123 / 55", attributes: attributes)
+        countTextField.attributedPlaceholder = attributedPlaceholder
+        
         countTextField.layer.borderWidth = 1.5
         countTextField.layer.cornerRadius = Constants.cornerRadius
         countTextField.keyboardType = .decimalPad
@@ -181,6 +208,15 @@ class AddFuelingView: UIView {
     lazy var totalPriceTextField: UITextField = {
         let totalPriceTextField = UITextField()
         totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 35, height: totalPriceTextField.frame.size.height)))
+        
+        //placeholder color 적용
+        let placeholderColor = UIColor.systemGray
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "ex) 100000", attributes: attributes)
+        totalPriceTextField.attributedPlaceholder = attributedPlaceholder
+        
         totalPriceTextField.layer.borderWidth = 1.5
         totalPriceTextField.layer.cornerRadius = Constants.cornerRadius
         totalPriceTextField.keyboardType = .decimalPad

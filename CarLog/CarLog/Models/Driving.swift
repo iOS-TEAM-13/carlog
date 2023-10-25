@@ -11,8 +11,8 @@ struct Driving: Codable {
     var documentID: String?
     let timeStamp: String?
     let id: String?
-    let departDistance: Double?
-    let arriveDistance: Double?
-    let driveDistance: Double?
+    let departDistance: Int?
+    let arriveDistance: Int?
+    let driveDistance: Int?
     let userEmail: String?
 }
