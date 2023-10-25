@@ -63,7 +63,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .buttonSkyBlueColor
         
         contentView.snp.makeConstraints {
-            $0.top.trailing.equalToSuperview()
+//            $0.top.trailing.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)
             $0.height.equalTo(100)
         }
@@ -75,7 +75,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         }
         
         collectionViewTitle.snp.makeConstraints {
-            $0.top.trailing.equalTo(contentView).inset(Constants.verticalMargin)
+            $0.top.equalTo(contentView).inset(Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
         }

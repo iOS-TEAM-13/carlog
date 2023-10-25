@@ -7,20 +7,6 @@
 
 import Foundation
 
-//struct CarPart: Codable {
-//    var engineOil: PartsInfo
-//    var missionOil: PartsInfo
-//    var brakeOil: PartsInfo
-//    var brakePad: PartsInfo
-//    var tire: PartsInfo
-//    var tireRotation: PartsInfo
-//    var fuelFilter: PartsInfo
-//    var wiper: PartsInfo
-//    var airconFilter: PartsInfo
-//    var insurance: InsuranceInfo
-//    var userEmail: String?
-//}
-
 struct CarPart: Codable {
     var parts: [PartsInfo]
     var userEmail: String?
@@ -54,11 +40,6 @@ struct PartsInfo: Codable {
     }
     var fixHistory: [FixHistory?]
 }
-
-//struct InsuranceInfo: Codable {
-//    var currentTime: String?
-//    let fixHistory: [FixHistory?]
-//}
 
 struct FixHistory: Codable {
     let changedDate: Date?
