@@ -71,6 +71,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         setupMapView()
         getLocationUsagePermission()
         addDummyPin()
+        fetchCoordinateCurrentLocation()
         fetchList()
     }
     
@@ -121,41 +122,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         if annotation is MKUserLocation {
             return nil
         }
-        // 클러스터 어노테이션 처리
-//        if let cluster = annotation as? MKClusterAnnotation {
-//            let identifier = "Cluster"
-//            var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-//            var label: UILabel?
-//            
-//            if clusterView == nil {
-//                clusterView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//                
-//                // 원 형태의 뷰 생성
-//                let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-//                circleView.layer.cornerRadius = 15
-//                circleView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.5)
-//                
-//                label = UILabel(frame: circleView.bounds)
-//                label?.textColor = .black
-//                label?.textAlignment = .center
-//                label?.font = UIFont(name: "Jua", size: 20)
-//                label?.text = "\(cluster.memberAnnotations.count)"
-//                circleView.addSubview(label!)
-//                
-//                clusterView?.addSubview(circleView)
-//            } else {
-//                if let lbl = clusterView?.subviews.first?.subviews.first as? UILabel {
-//                    lbl.text = "\(cluster.memberAnnotations.count)"
-//                    label = lbl
-//                }
-//            }
-//            
-//            // 여기에서 원하는대로 label의 텍스트를 업데이트
-//            label?.text = "\(cluster.memberAnnotations.count)"
-//            
-//            return clusterView
-//        }
-        
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Custom")
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Custom")
@@ -300,6 +266,21 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     //MARK : FETCH DATA
     
+    func fetchCoordinateCurrentLocation() {
+        let networkManager = NetworkManager()
+        networkManager.fetchCoordinateChange(fromLat: "37.5665", fromLon: "126.9780") { coordinate in
+                DispatchQueue.main.async {  // 메인 스레드에서 실행
+                    if let coordinate = coordinate {
+ //                       print("Latitude: \(coordinate.lat), Longitude: \(coordinate.lon)")
+                        // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
+                    } else {
+                        print("Failed to fetch coordinate")
+                        // 에러 상황에 대한 처리를 수행할 수 있습니다.
+                    }
+                }
+            }
+    }
+    
     func fetchList() {
         let networkManager = NetworkManager()
         
@@ -315,7 +296,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-    
 }
 
 extension MapPageViewController: UIGestureRecognizerDelegate {
