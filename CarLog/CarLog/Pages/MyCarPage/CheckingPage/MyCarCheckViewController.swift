@@ -41,6 +41,9 @@ class MyCarCheckViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        tabBarController?.tabBar.isHidden = true
+        
         setupUI()
         setupDelegate()
         setPageViewController()
