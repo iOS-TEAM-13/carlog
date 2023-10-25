@@ -149,6 +149,7 @@ final class LoginService {
                     }
                 }
             }
+            UserDefaults.standard.removeObject(forKey: Auth.auth().currentUser?.email ?? "")
         } else {
             // 사용자가 로그인되어 있지 않음
             completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "사용자가 로그인되어 있지 않습니다."]))
