@@ -22,7 +22,6 @@ class JoinupPageViewController: UIViewController {
         view.backgroundColor = .white
 
         joinupView.joinInButton.isEnabled = false
-        // joinupView.scrollView.delegate = self
         setupUI()
     }
 
@@ -141,9 +140,3 @@ class JoinupPageViewController: UIViewController {
     }
 }
 
-// extension JoinupPageViewController: UIScrollViewDelegate {
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        view.endEditing(true)
-//        print("### yes")
-//    }
-// }

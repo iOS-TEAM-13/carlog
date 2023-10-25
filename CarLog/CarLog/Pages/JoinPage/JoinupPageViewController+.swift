@@ -5,6 +5,7 @@ import SwiftSMTP
 
 extension JoinupPageViewController {
     // MARK: - 회원가입의 주요 기능 구현 코드
+
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             guard let email = self.joinupView.emailTextField.text else {
@@ -119,6 +120,11 @@ extension JoinupPageViewController {
                 return
             }
 
+            if let timer = self.timer {
+                timer.invalidate()
+                self.timer = nil
+            }
+
             // smtp 로직
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
 
@@ -140,10 +146,7 @@ extension JoinupPageViewController {
             self.joinupView.smtpTimerLabel.isHidden = false
 
             // 타이머
-            if self.timer == nil {
-                // 타이머 시작
-                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
-            }
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
         }), for: .touchUpInside)
     }
 
@@ -165,7 +168,7 @@ extension JoinupPageViewController {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
-            
+
             if self.joinupView.smtpNumberButton.title(for: .normal) != "완료" {
                 self.showAlert(message: "인증번호를 확인해주세요")
             }
@@ -260,6 +263,10 @@ extension JoinupPageViewController {
         if seconds > 0 {
             seconds -= 1
             joinupView.smtpTimerLabel.text = timeString(time: TimeInterval(seconds))
+        } else if seconds == 0 {
+            joinupView.smtpTimerLabel.isHidden = true
+            self.joinupView.smtpTimerLabel.text = "인증 대기 중..."
+            seconds = 180
         }
     }
 
@@ -325,7 +332,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
 
