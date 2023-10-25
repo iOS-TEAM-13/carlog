@@ -4,10 +4,11 @@
 //
 //  Created by 김지훈 on 2023/10/18.
 
-import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SnapKit
+import UIKit
 
 class DriveDetailViewController: UIViewController {
     
@@ -15,25 +16,9 @@ class DriveDetailViewController: UIViewController {
     
     var drivingData: Driving?
     
-    //네비게이션바에 삭제 버튼 혹시나해서 만들어놓은거
-    //    lazy var plusButton: UIBarButtonItem = {
-    //        let plusButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(doDeleted))
-    //        plusButton.tintColor = .mainNavyColor
-    //        return plusButton
-    //    }()
-    //
-    //    @objc func doDeleted() {
-    //        print("--> go to AddPage")
-    //
-    //    }
-    //
-    //    func navigationUI() {
-    //        self.navigationItem.rightBarButtonItem = self.plusButton
-    //    }
-    
-    lazy var driveDetailView: DriveDetailView = {
-        let driveDetailView = DriveDetailView()
-        return driveDetailView
+    lazy var drivingDetailView: DrivingDetailView = {
+        let drivingDetailView = DrivingDetailView()
+        return drivingDetailView
     }()
     
     override func viewDidLoad() {
@@ -41,10 +26,8 @@ class DriveDetailViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.white
         
-        //        navigationUI()
-        
-        view.addSubview(driveDetailView)
-        driveDetailView.snp.makeConstraints { make in
+        view.addSubview(drivingDetailView)
+        drivingDetailView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -53,19 +36,18 @@ class DriveDetailViewController: UIViewController {
         
         loadDrivingData()
         
-        driveDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
-        driveDetailView.removeButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
+        drivingDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
+        drivingDetailView.removeButton.addTarget(self, action: #selector(didRemoveButton), for: .touchUpInside)
         
         print(drivingData)
     }
     
-    //뭐가 문제일까 왜 처음으로 진입하면 삭제 수정이 안될까ㅠ
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { drivingData in
             if let drivings = self.drivingData {
-                self.driveDetailView.totalDistanceTextField.text = "\(drivings.departDistance ?? 0)"
-                self.driveDetailView.arriveDistanceTextField.text = "\(drivings.arriveDistance ?? 0)"
-                self.driveDetailView.driveDistenceTextField.text = "\(drivings.driveDistance ?? 0)"
+                self.drivingDetailView.totalDistanceTextField.text = "\(drivings.departDistance ?? 0)"
+                self.drivingDetailView.arriveDistanceTextField.text = "\(drivings.arriveDistance ?? 0)"
+                self.drivingDetailView.driveDistenceTextField.text = "\(drivings.driveDistance ?? 0)"
             } else {
                 print("데이터 로드 중 오류 발생")
             }
@@ -75,18 +57,17 @@ class DriveDetailViewController: UIViewController {
     @objc func didUpDateButton() {
         print("---> driveDetailView 수정 버튼 눌렀어요")
         if let drivingID = drivingData?.documentID {
-            //업데이트할 필드와 새 값의 딕셔너리를 구성합니다.
             var updatedData: [String: Any] = [:]
             
-            if let totalDistanceText = self.driveDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
+            if let totalDistanceText = self.drivingDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
                 updatedData["departDistance"] = totalDistance
             }
             
-            if let arriveDistanceText = self.driveDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
+            if let arriveDistanceText = self.drivingDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
                 updatedData["arriveDistance"] = arriveDistance
             }
             
-            if let driveDistanceText = self.driveDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
+            if let driveDistanceText = self.drivingDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
                 updatedData["driveDistance"] = driveDistance
             }
             
@@ -105,7 +86,7 @@ class DriveDetailViewController: UIViewController {
         }
     }
     
-    @objc func didCancelButton() {
+    @objc func didRemoveButton() {
         print("---> driveDetailView 삭제 버튼 눌렀어요")
         
         if let drivingID = drivingData?.documentID {
