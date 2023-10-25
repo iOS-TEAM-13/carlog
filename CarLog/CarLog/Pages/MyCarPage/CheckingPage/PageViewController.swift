@@ -5,16 +5,20 @@
 //  Created by t2023-m0056 on 2023/10/17.
 //
 
-import FirebaseAuth
-import SnapKit
 import UIKit
 
+import FirebaseAuth
+import SnapKit
+
 class PageViewController: UIViewController {
-    
+    // MARK: Properties
+
     var componetsView: ComponentsView?
     var insuranceView: InsuranceView?
     var type = ""
     
+    // MARK: LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -37,6 +41,8 @@ class PageViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
+    // MARK: Method
+
     private func setupComponetsView() {
         view.addSubview(componetsView!)
         
@@ -53,6 +59,8 @@ class PageViewController: UIViewController {
         }
     }
     
+    // MARK: ComponentsView
+
     private func componentsButtonActions() {
         if let view = componetsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
@@ -73,6 +81,70 @@ class PageViewController: UIViewController {
         }
     }
     
+    private func checkButtonTapped(sender: UIButton) {
+        if let view = componetsView {
+            let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
+            temp.forEach { item in
+                item.backgroundColor = .buttonSkyBlueColor
+                item.setTitleColor(.black, for: .normal)
+            }
+            switch sender.tag {
+            case 1:
+                view.firstAnswerButton.backgroundColor = .mainNavyColor
+                view.firstAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.firstAnswerButton.titleLabel?.text ?? "")
+            case 2:
+                view.secondAnswerButton.backgroundColor = .mainNavyColor
+                view.secondAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.secondAnswerButton.titleLabel?.text ?? "")
+            case 3:
+                view.thirdAnswerButton.backgroundColor = .mainNavyColor
+                view.thirdAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.thirdAnswerButton.titleLabel?.text ?? "")
+            case 4:
+                view.fourthAnswerButton.backgroundColor = .mainNavyColor
+                view.fourthAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.fourthAnswerButton.titleLabel?.text ?? "")
+            case 5:
+                view.fifthAnswerButton.backgroundColor = .mainNavyColor
+                view.fifthAnswerButton.setTitleColor(.white, for: .normal)
+                addCarParts(text: view.fifthAnswerButton.titleLabel?.text ?? "")
+            default:
+                break
+            }
+        }
+        NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
+    }
+    
+    private func addCarParts(text: String) {
+        for i in 0...Constants.carParts.parts.count - 1 {
+            switch (type, Constants.carParts.parts[i].name) {
+            case ("엔진 오일은 언제 교체하셨나요?", .engineOil):
+                Constants.carParts.parts[i].currentTime = text
+            case ("미션 오일은 언제 교체하셨나요?", .missionOil):
+                Constants.carParts.parts[i].currentTime = text
+            case ("브레이크 오일은 언제 교체하셨나요?", .brakeOil):
+                Constants.carParts.parts[i].currentTime = text
+            case ("브레이크 패드는 언제 교체하셨나요?", .brakePad):
+                Constants.carParts.parts[i].currentTime = text
+            case ("마지막 타이어 로테이션은 언제였나요?", .tireRotation):
+                Constants.carParts.parts[i].currentTime = text
+            case ("타이어는 언제 교체하셨나요?", .tire):
+                Constants.carParts.parts[i].currentTime = text
+            case ("연료 필터는 언제 교체하셨나요?", .fuelFilter):
+                Constants.carParts.parts[i].currentTime = text
+            case ("와이퍼 블레이드는 언제 교체하셨나요?", .wiperBlade):
+                Constants.carParts.parts[i].currentTime = text
+            case ("에어컨 필터는 언제 교체하셨나요?", .airconFilter):
+                Constants.carParts.parts[i].currentTime = text
+            default:
+                break
+            }
+        }
+    }
+    
+    // MARK: InsuranceView
+
     private func insuranceButtonActions() {
         if let view = insuranceView {
             [view.calendarView.january, view.calendarView.february, view.calendarView.march, view.calendarView.april, view.calendarView.may, view.calendarView.june, view.calendarView.july, view.calendarView.august, view.calendarView.september, view.calendarView.october, view.calendarView.november, view.calendarView.december].forEach { item in
@@ -146,71 +218,8 @@ class PageViewController: UIViewController {
                         }
                     }
                 }
-                
             }
         }
         NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
-    }
-    
-    private func checkButtonTapped(sender: UIButton) {
-        if let view = componetsView {
-            let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
-            temp.forEach { item in
-                item.backgroundColor = .buttonSkyBlueColor
-                item.setTitleColor(.black, for: .normal)
-            }
-            switch sender.tag {
-            case 1:
-                view.firstAnswerButton.backgroundColor = .mainNavyColor
-                view.firstAnswerButton.setTitleColor(.white, for: .normal)
-                addCarParts(text: view.firstAnswerButton.titleLabel?.text ?? "")
-            case 2:
-                view.secondAnswerButton.backgroundColor = .mainNavyColor
-                view.secondAnswerButton.setTitleColor(.white, for: .normal)
-                addCarParts(text: view.secondAnswerButton.titleLabel?.text ?? "")
-            case 3:
-                view.thirdAnswerButton.backgroundColor = .mainNavyColor
-                view.thirdAnswerButton.setTitleColor(.white, for: .normal)
-                addCarParts(text: view.thirdAnswerButton.titleLabel?.text ?? "")
-            case 4:
-                view.fourthAnswerButton.backgroundColor = .mainNavyColor
-                view.fourthAnswerButton.setTitleColor(.white, for: .normal)
-                addCarParts(text: view.fourthAnswerButton.titleLabel?.text ?? "")
-            case 5:
-                view.fifthAnswerButton.backgroundColor = .mainNavyColor
-                view.fifthAnswerButton.setTitleColor(.white, for: .normal)
-                addCarParts(text: view.fifthAnswerButton.titleLabel?.text ?? "")
-            default:
-                break
-            }
-        }
-        NotificationCenter.default.post(name: Notification.Name("completedCheckingView"), object: nil)
-    }
- 
-    private func addCarParts(text :String) {
-        for i in 0...Constants.carParts.parts.count - 1 {
-            switch (type, Constants.carParts.parts[i].name) {
-            case ("엔진 오일은 언제 교체하셨나요?", .engineOil):
-                Constants.carParts.parts[i].currentTime = text
-            case ("미션 오일은 언제 교체하셨나요?", .missionOil):
-                Constants.carParts.parts[i].currentTime = text
-            case ("브레이크 오일은 언제 교체하셨나요?", .brakeOil):
-                Constants.carParts.parts[i].currentTime = text
-            case ("브레이크 패드는 언제 교체하셨나요?", .brakePad):
-                Constants.carParts.parts[i].currentTime = text
-            case ("마지막 타이어 로테이션은 언제였나요?", .tireRotation):
-                Constants.carParts.parts[i].currentTime = text
-            case ("타이어는 언제 교체하셨나요?", .tire):
-                Constants.carParts.parts[i].currentTime = text
-            case ("연료 필터는 언제 교체하셨나요?", .fuelFilter):
-                Constants.carParts.parts[i].currentTime = text
-            case ("와이퍼 블레이드는 언제 교체하셨나요?", .wiperBlade):
-                Constants.carParts.parts[i].currentTime = text
-            case ("에어컨 필터는 언제 교체하셨나요?", .airconFilter):
-                Constants.carParts.parts[i].currentTime = text
-            default:
-                break
-            }
-        }
     }
 }

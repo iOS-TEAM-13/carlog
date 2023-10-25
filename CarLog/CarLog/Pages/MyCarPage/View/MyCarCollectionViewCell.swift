@@ -6,10 +6,12 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class MyCarCollectionViewCell: UICollectionViewCell {
-    
+    // MARK: Properties
+
     private var collectionViewImage: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "photo")
@@ -21,8 +23,8 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left)
         return label
     }()
-
-    lazy private var progressView: UIProgressView = {
+    
+    private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
         view.progressTintColor = .mainNavyColor
@@ -43,15 +45,20 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    // MARK: LifeCycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
- 
- required init?(coder: NSCoder) {
-     fatalError("init(coder:) has not been implemented")
- }
     
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Method
+
     private func setupUI() {
         contentView.addSubview(collectionViewImage)
         contentView.addSubview(clickedIcon)
@@ -63,7 +70,6 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .buttonSkyBlueColor
         
         contentView.snp.makeConstraints {
-            $0.top.trailing.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)
             $0.height.equalTo(100)
         }
@@ -75,7 +81,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         }
         
         collectionViewTitle.snp.makeConstraints {
-            $0.top.trailing.equalTo(contentView).inset(Constants.verticalMargin)
+            $0.top.equalTo(contentView).inset(Constants.verticalMargin)
             $0.leading.equalTo(collectionViewImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(clickedIcon.snp.leading).inset(-Constants.horizontalMargin)
         }
@@ -106,8 +112,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     func bind(title: String, interval: String, icon: UIImage, progress: Double) {
         collectionViewTitle.text = title
         self.interval.text = interval
-        self.progressView.progress = Float(progress)
+        progressView.progress = Float(progress)
         collectionViewImage.image = icon
     }
-
 }
