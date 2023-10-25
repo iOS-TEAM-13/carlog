@@ -32,7 +32,7 @@ class ModifiedDatePickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .buttonSkyBlueColor
+//        view.backgroundColor = .buttonSkyBlueColor
         
         if let sheetPresentationController = sheetPresentationController {
             sheetPresentationController.detents = [.medium(), .large()]
@@ -55,6 +55,11 @@ class ModifiedDatePickerViewController: UIViewController {
         completeButton.snp.makeConstraints {
             $0.top.equalTo(datePicker.snp.bottom).inset(Constants.verticalMargin)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
+        }
+        if self.traitCollection.userInterfaceStyle == .dark {
+            view.backgroundColor = .mainNavyColor
+        } else {
+            view.backgroundColor = .buttonSkyBlueColor
         }
     }
     
