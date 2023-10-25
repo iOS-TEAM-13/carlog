@@ -134,7 +134,7 @@ class NetworkManager {
         task.resume()
     }
     
-    func fetchCoordinateChangeAgain(fromLat lat: String, fromLon lon: String, completion: @escaping (Coordinate?) -> Void) {
+    func fetchCoordinateChangeAgain(fromLat lat: String, fromLon lon: String, completion: @escaping (ReverseCoordinate?) -> Void) {
         
         let baseURL = "https://apis.openapi.sk.com/tmap/geo/coordconvert?"
         let query = "version=1&lat=\(lat)&lon=\(lon)&fromCoord=KATECH&toCoord=WGS84GEO"
@@ -161,7 +161,7 @@ class NetworkManager {
                 }
                 switch urlResponse.statusCode {
                 case 200..<300 :
-                    let decodedData = try JSONDecoder().decode(Coordinate.self, from: data!)
+                    let decodedData = try JSONDecoder().decode(ReverseCoordinate.self, from: data!)
                     completion(decodedData)
                     
                 default :
