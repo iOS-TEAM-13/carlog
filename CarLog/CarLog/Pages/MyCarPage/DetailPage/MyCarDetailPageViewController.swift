@@ -202,16 +202,7 @@ class MyCarDetailPageViewController: UIViewController {
     private func modifiedButtonTapped() {
         let vc = ModifiedDatePickerViewController()
         vc.onDateSelected = { date in
-            for i in 0...(self.saveData.parts.count) - 1 {
-                if self.saveData.parts[i].name == self.selectedParts?.name {
-                    self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date.toSaveDate(), changedType: .isModifiedDate), at: 0)
-                    self.saveData.parts[i].currentTime = date
-                }
-            }
-            self.saveCarParts()
-            self.updateSelectParts()
-            self.configureUI()
-            NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
+            self.addHistory(date: Date(), currentTime: date)
         }
         present(vc, animated: true)
     }
@@ -234,18 +225,23 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
+    private func addHistory(date: Date, currentTime: String) {
+        for i in 0...(self.saveData.parts.count) - 1 {
+            if self.saveData.parts[i].name == self.selectedParts?.name {
+                self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: .isFixedParts), at: 0)
+                self.saveData.parts[i].currentTime = currentTime
+            }
+        }
+        self.saveCarParts()
+        self.updateSelectParts()
+        self.configureUI()
+        NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
+    }
+    
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            for i in 0...(self.saveData.parts.count) - 1 {
-                if self.saveData.parts[i].name == self.selectedParts?.name {
-                    self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: Date(), changedType: .isFixedParts), at: 0)
-                    self.saveData.parts[i].currentTime = "최근"
-                }
-            }
-            self.saveCarParts()
-            self.updateSelectParts()
-            self.configureUI()
+            self.addHistory(date: Date(), currentTime: "최근")
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")

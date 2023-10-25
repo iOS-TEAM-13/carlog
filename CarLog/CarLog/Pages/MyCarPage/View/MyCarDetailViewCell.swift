@@ -20,7 +20,7 @@ class MyCarDetialViewCell: UICollectionViewCell {
     
     private let replacedTypeLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "구분", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .left)
+        label.customLabel(text: "구분", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), alignment: .left)
         return label
     }()
     
