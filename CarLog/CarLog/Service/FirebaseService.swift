@@ -143,7 +143,7 @@ final class FirestoreService {
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(car)
-            db.collection("cars").addDocument(data: data) { error in
+            db.collection("cars").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -152,7 +152,7 @@ final class FirestoreService {
     }
     
     func loadCar(completion: @escaping ([Car]?) -> Void) {
-        db.collection("cars").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+        db.collection("cars").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
