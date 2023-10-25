@@ -2,12 +2,39 @@ import SnapKit
 import UIKit
 
 class GasStationDetailView: UIView {
-    
     // 라벨, 이미지 등 ui 요소
+    
+    var gasStation: GasStationDetailSummary? {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    private func updateUI() {
+        nameLabel.text = gasStation?.osNm
+        storeImage.isHidden = gasStation?.cvsYn != "Y"
+        carWashImage.isHidden = gasStation?.carWashYn != "Y"
+        let oilPrices = gasStation?.oilPrice ?? []
+        if let latestOilPrice = oilPrices.max(by: { $0.tradeDt < $1.tradeDt }) {
+            dateLabel.text = "\(latestOilPrice.tradeDt ?? "")" + "기준"
+            } else {
+                dateLabel.text = "날짜 정보 없음"
+            }
+            
+            if let yellowOilPrice = oilPrices.first(where: { $0.prodcd == "B027" }) {
+                yellowOilPriceLabel.text = "휘발유 \(yellowOilPrice.price)원"
+            } else {
+                yellowOilPriceLabel.text = "휘발유 정보 없음"
+            }
+        if let greenOilPrice = oilPrices.first(where: { $0.prodcd == "D047"}) {
+            greenOilPriceLabel.text = "경유 \(greenOilPrice.price)원"
+        } else {
+            greenOilPriceLabel.text = "경유 정보 없음"
+        }
+    }
     
     private let nameLabel = {
         let label = UILabel()
-        label.text = "가나다라마바사아자차카타파하아야어여야랄랄라"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
         label.numberOfLines = 2
