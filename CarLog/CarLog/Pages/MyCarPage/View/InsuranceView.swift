@@ -11,7 +11,7 @@ import UIKit
 class InsuranceView: UIView {
     private lazy var customView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         return view

@@ -16,7 +16,7 @@ class MyCarPageViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
         view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
@@ -37,7 +37,7 @@ class MyCarPageViewController: UIViewController {
     //MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.systemBackground
+        self.view.backgroundColor = UIColor.white
         
         setupUI()
         checkFirst()
@@ -69,11 +69,9 @@ class MyCarPageViewController: UIViewController {
     
     private func loadData() {
         FirestoreService.firestoreService.loadCarPart() { data in
-            DispatchQueue.main.async {
-                if let data = data {
-                    self.carParts = data
-                    self.myCarCollectionView.reloadData()
-                }
+            if let data = data {
+                self.carParts = data
+                self.myCarCollectionView.reloadData()
             }
         }
     }
@@ -114,6 +112,11 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
             progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
         }
         vc.selectedParts = carParts.parts[indexPath.row]
+        for i in 0...vc.saveData.parts.count - 1 {
+            if vc.saveData.parts[i].name == carParts.parts[indexPath.row].name {
+                vc.saveData.parts[i] = carParts.parts[indexPath.row]
+            }
+        }
         vc.selectedProgress = progress
         vc.selectedInterval = "\(firstInterval) ~ \(secondInterval)"
         vc.selectedIcon = menuIcon[indexPath.row]
