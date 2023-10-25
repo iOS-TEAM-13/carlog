@@ -202,7 +202,7 @@ class MyCarDetailPageViewController: UIViewController {
     private func modifiedButtonTapped() {
         let vc = ModifiedDatePickerViewController()
         vc.onDateSelected = { date in
-            self.addHistory(date: Date(), currentTime: date)
+            self.addHistory(date: Date(), currentTime: date, type: .isModifiedDate)
         }
         present(vc, animated: true)
     }
@@ -225,10 +225,10 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
-    private func addHistory(date: Date, currentTime: String) {
+    private func addHistory(date: Date, currentTime: String, type: ChangedType) {
         for i in 0...(self.saveData.parts.count) - 1 {
             if self.saveData.parts[i].name == self.selectedParts?.name {
-                self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: .isFixedParts), at: 0)
+                self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: type), at: 0)
                 self.saveData.parts[i].currentTime = currentTime
             }
         }
@@ -241,7 +241,7 @@ class MyCarDetailPageViewController: UIViewController {
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            self.addHistory(date: Date(), currentTime: "최근")
+            self.addHistory(date: Date(), currentTime: "최근", type: .isFixedParts)
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
