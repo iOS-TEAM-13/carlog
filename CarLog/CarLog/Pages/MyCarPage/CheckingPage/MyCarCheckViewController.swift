@@ -32,10 +32,9 @@ class MyCarCheckViewController: UIViewController {
         return vc
     }()
     
-    private lazy var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
-        FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { _ in
-            print("데이터 저장 성공")
-            self.dismiss(animated: true, completion: nil)
+    private lazy var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { [weak self] _ in
+        FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
     }))
     
