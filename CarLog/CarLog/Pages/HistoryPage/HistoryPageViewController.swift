@@ -84,6 +84,7 @@ class HistoryPageViewController: UIViewController {
     //NotificationCenter newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
+            loadDrivingData()
             drivingDummy.insert(newDriving, at: 0)
             drivingCollectionView.drivingCollectionView.reloadData()
         }
