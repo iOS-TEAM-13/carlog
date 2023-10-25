@@ -22,6 +22,7 @@ class FloatingButtonStackView: UIView {
         let floatingButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
+        config.baseBackgroundColor = .mainNavyColor
         config.image = UIImage(systemName: "plus.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
         floatingButton.configuration = config
         floatingButton.layer.shadowRadius = 10
@@ -33,6 +34,7 @@ class FloatingButtonStackView: UIView {
         let fuelingButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
+        config.baseBackgroundColor = .mainNavyColor
         config.image = UIImage(systemName: "fuelpump.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
         fuelingButton.configuration = config
         fuelingButton.layer.shadowRadius = 10
@@ -46,6 +48,7 @@ class FloatingButtonStackView: UIView {
         let drivingButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
+        config.baseBackgroundColor = .mainNavyColor
         config.image = UIImage(systemName: "steeringwheel")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
         drivingButton.configuration = config
         drivingButton.layer.shadowRadius = 10
