@@ -10,6 +10,17 @@ import SnapKit
 
 final class MyPageView: UIView {
     
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+        
+    let contentView: UIView = {
+        let contentView = UIView()
+        return contentView
+    }()
+    
     // MARK: -
     lazy var mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
@@ -29,46 +40,106 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
-    //텍스트 폰트에 따른 언더라인 수정
-    lazy var myWritingButton: UIButton = {
-        let myWritingButton = UIButton()
-        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
-    }()
+//    //텍스트 폰트에 따른 언더라인 수정
+//    lazy var myWritingButton: UIButton = {
+//        let myWritingButton = UIButton()
+//        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+//        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
+//    }()
     
     lazy var carNumberTextField: UITextField = {
         let carNumbertextField = UITextField()
         carNumbertextField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+           
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        carNumbertextField.inputAccessoryView = toolbar
         return carNumbertextField
     }()
     
     lazy var carNameTextField: UITextField = {
         let carNametextField = UITextField()
         carNametextField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+           
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        carNametextField.inputAccessoryView = toolbar
         return carNametextField
     }()
     
     lazy var carMakerTextField: UITextField = {
         let carMakertextField = UITextField()
         carMakertextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+           
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        carMakertextField.inputAccessoryView = toolbar
         return carMakertextField
     }()
     
     lazy var carOilTypeTextField: UITextField = {
         let carOilTypetextField = UITextField()
         carOilTypetextField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+           
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        carOilTypetextField.inputAccessoryView = toolbar
         return carOilTypetextField
     }()
     
     lazy var carNickNameTextField: UITextField = {
         let carNickNametextField = UITextField()
         carNickNametextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+           
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        carNickNametextField.inputAccessoryView = toolbar
         return carNickNametextField
     }()
     
     lazy var carTotalDistanceTextField: UITextField = {
         let carTotalDistancetextField = UITextField()
         carTotalDistancetextField.mypageCustomTextField(placeholder: "최종 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+           
+        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
+        toolbar.setItems([flexibleSpace, closeButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        carTotalDistancetextField.inputAccessoryView = toolbar
         return carTotalDistancetextField
     }()
     
@@ -124,20 +195,31 @@ final class MyPageView: UIView {
         return phoneCallButton
     }()
     
+    @objc func closeKeyboard() {
+        carNumberTextField.resignFirstResponder()
+        carNameTextField.resignFirstResponder()
+        carMakerTextField.resignFirstResponder()
+        carOilTypeTextField.resignFirstResponder()
+        carNickNameTextField.resignFirstResponder()
+        carTotalDistanceTextField.resignFirstResponder()
+    }
+    
     // MARK: -
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
-        addSubview(mainTitleLabel)
-        addSubview(editButton)
-        addSubview(myWritingButton)
-        addSubview(carNumberTextField)
-        addSubview(carNameTextField)
-        addSubview(carMakerTextField)
-        addSubview(carOilTypeTextField)
-        addSubview(carNickNameTextField)
-        addSubview(carTotalDistanceTextField)
-        addSubview(myPageDesignStackView)
-        addSubview(phoneCallButton)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(mainTitleLabel)
+        contentView.addSubview(editButton)
+//      contentView.addSubview(myWritingButton)
+        contentView.addSubview(carNumberTextField)
+        contentView.addSubview(carNameTextField)
+        contentView.addSubview(carMakerTextField)
+        contentView.addSubview(carOilTypeTextField)
+        contentView.addSubview(carNickNameTextField)
+        contentView.addSubview(carTotalDistanceTextField)
+        contentView.addSubview(myPageDesignStackView)
+        contentView.addSubview(phoneCallButton)
         
         carNumberTextField.isUserInteractionEnabled = false
         carNameTextField.isUserInteractionEnabled = false
@@ -146,69 +228,79 @@ final class MyPageView: UIView {
         carNickNameTextField.isUserInteractionEnabled = false
         carTotalDistanceTextField.isUserInteractionEnabled = false
         
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeArea)
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.height.equalTo(scrollView)
+            make.trailing.equalTo(safeArea.snp.trailing)
+        }
+        
         mainTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(contentView)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
         editButton.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(Constants.verticalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(contentView)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
-        myWritingButton.snp.makeConstraints { make in
-            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.width.equalTo(100)
-            make.height.equalTo(70)
-        }
+//        myWritingButton.snp.makeConstraints { make in
+//            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
+//            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+//            make.width.equalTo(100)
+//            make.height.equalTo(70)
+//        }
         
         carNumberTextField.snp.makeConstraints { make in
-            make.top.equalTo(myWritingButton.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(editButton.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carNameTextField.snp.makeConstraints { make in
             make.top.equalTo(carNumberTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carMakerTextField.snp.makeConstraints { make in
             make.top.equalTo(carNameTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carOilTypeTextField.snp.makeConstraints { make in
             make.top.equalTo(carMakerTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carNickNameTextField.snp.makeConstraints { make in
             make.top.equalTo(carOilTypeTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carTotalDistanceTextField.snp.makeConstraints { make in
             make.top.equalTo(carNickNameTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         myPageDesignStackView.snp.makeConstraints { make in
-            make.bottom.equalTo(safeArea).offset(-Constants.verticalMargin * 2)
-            make.leading.equalTo(safeArea.snp.leading).offset(UIScreen.main.bounds.width * 0.3)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
+            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin * 2)
+            make.leading.equalTo(contentView.snp.leading).offset(UIScreen.main.bounds.width * 0.3)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
         }
         
         phoneCallButton.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(-110)
+            make.bottom.equalToSuperview().offset(-30)
             make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(CGSize(width: 55, height: 55))
         }

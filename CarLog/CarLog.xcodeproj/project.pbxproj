@@ -25,7 +25,7 @@
 		B85A0F452ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */; };
 		B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F462ADDAF22009E0A00 /* FuelingCollectionViewCell.swift */; };
 		B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4B2ADEFB57009E0A00 /* DriveDetailViewController.swift */; };
-		B85A0F4F2ADEFB8F009E0A00 /* DriveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4E2ADEFB8F009E0A00 /* DriveDetailView.swift */; };
+		B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */; };
 		B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */; };
 		B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */; };
 		FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B96A22ADF5D39003827B1 /* LoginService.swift */; };
@@ -113,7 +113,7 @@
 		B85A0F442ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingCollectionViewCell.swift; sourceTree = "<group>"; };
 		B85A0F462ADDAF22009E0A00 /* FuelingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingCollectionViewCell.swift; sourceTree = "<group>"; };
 		B85A0F4B2ADEFB57009E0A00 /* DriveDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveDetailViewController.swift; sourceTree = "<group>"; };
-		B85A0F4E2ADEFB8F009E0A00 /* DriveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveDetailView.swift; sourceTree = "<group>"; };
+		B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingDetailView.swift; sourceTree = "<group>"; };
 		B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailViewController.swift; sourceTree = "<group>"; };
 		B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailView.swift; sourceTree = "<group>"; };
 		FB1B96A22ADF5D39003827B1 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 		B85A0F4D2ADEFB65009E0A00 /* DetailViews */ = {
 			isa = PBXGroup;
 			children = (
-				B85A0F4E2ADEFB8F009E0A00 /* DriveDetailView.swift */,
+				B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */,
 				B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */,
 			);
 			path = DetailViews;
@@ -575,7 +575,7 @@
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
-				B85A0F4F2ADEFB8F009E0A00 /* DriveDetailView.swift in Sources */,
+				B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FFFFAF842AE1644800A7677E /* Date+.swift in Sources */,
 				FF50716E2AD6BC5100713A81 /* Car.swift in Sources */,
@@ -769,7 +769,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V7K58MBUV9;
+				DEVELOPMENT_TEAM = 785X8Q9TA9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치정보를 받아오려고 합니다.";
@@ -799,7 +799,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V7K58MBUV9;
+				DEVELOPMENT_TEAM = 785X8Q9TA9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치정보를 받아오려고 합니다.";

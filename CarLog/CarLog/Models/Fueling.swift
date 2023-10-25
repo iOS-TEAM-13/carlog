@@ -8,6 +8,7 @@
 import Foundation
 
 struct Fueling: Codable {
+    var documentID: String?
     let timeStamp: String?
     let id: String?
     let totalDistance: Int?

@@ -5,14 +5,15 @@
 //  Created by 김지훈 on 2023/10/18.
 //
 
+import SnapKit
 import UIKit
 
-class DriveDetailView: UIView {
+class DrivingDetailView: UIView {
 
-    lazy var addDrivingPageLabel: UILabel = {
-        let addDrivingPageLabel = UILabel()
-        addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
-        return addDrivingPageLabel
+    lazy var drivingDetailPageLabel: UILabel = {
+        let drivingDetailPageLabel = UILabel()
+        drivingDetailPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
+        return drivingDetailPageLabel
     }()
     
     lazy var inputDrivingStackView: UIStackView = {
@@ -37,7 +38,7 @@ class DriveDetailView: UIView {
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 17655", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: totalDistanceTextField.frame.size.height)))
+        totalDistanceTextField.historyCustomTextField(placeholder: "", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
         totalDistanceTextField.layer.borderWidth = 1.5
         totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
@@ -87,7 +88,7 @@ class DriveDetailView: UIView {
     
     lazy var arriveDistanceTextField: UITextField = {
         let arriveDistanceTextField = UITextField()
-        arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 17665", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: arriveDistanceTextField.frame.size.height)))
+        arriveDistanceTextField.historyCustomTextField(placeholder: "", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: arriveDistanceTextField.frame.size.height)))
         arriveDistanceTextField.layer.borderWidth = 1.5
         arriveDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         arriveDistanceTextField.keyboardType = .decimalPad
@@ -136,7 +137,7 @@ class DriveDetailView: UIView {
     
     lazy var driveDistenceTextField: UITextField = {
         let driveDistenceTextField = UITextField()
-        driveDistenceTextField.historyCustomTextField(placeholder: "ex) 10", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 40, height: driveDistenceTextField.frame.size.height)))
+        driveDistenceTextField.historyCustomTextField(placeholder: "", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: driveDistenceTextField.frame.size.height)))
         driveDistenceTextField.layer.borderWidth = 1.5
         driveDistenceTextField.layer.cornerRadius = Constants.cornerRadius
         driveDistenceTextField.keyboardType = .decimalPad
@@ -183,24 +184,24 @@ class DriveDetailView: UIView {
     
     //MARK: - 버튼
     lazy var buttonStackView: UIStackView = {
-        let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
+        let buttonStackView = UIStackView(arrangedSubviews: [removeButton, upDateButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
         buttonStackView.distribution = .fillEqually
         return buttonStackView
     }()
     
-    lazy var saveButton: UIButton = {
-        let saveButton = UIButton()
-        saveButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        saveButton.layer.cornerRadius = Constants.cornerRadius
-        return saveButton
+    lazy var upDateButton: UIButton = {
+        let upDateButton = UIButton()
+        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        upDateButton.layer.cornerRadius = Constants.cornerRadius
+        return upDateButton
     }()
     
-    lazy var cancelButton: UIButton = {
-        let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        cancelButton.layer.cornerRadius = Constants.cornerRadius
-        return cancelButton
+    lazy var removeButton: UIButton = {
+        let removeButton = UIButton()
+        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        removeButton.layer.cornerRadius = Constants.cornerRadius
+        return removeButton
     }()
     
     override init(frame: CGRect) {
@@ -214,7 +215,7 @@ class DriveDetailView: UIView {
     }
     
     private func setupUI() {
-        addSubview(addDrivingPageLabel)
+        addSubview(drivingDetailPageLabel)
         addSubview(inputDrivingStackView)
         addSubview(buttonStackView)
         
@@ -222,14 +223,14 @@ class DriveDetailView: UIView {
         arriveDistanceStackView.addSubview(kmLabel2)
         driveDistenceStackView.addSubview(kmLabel3)
         
-        addDrivingPageLabel.snp.makeConstraints { make in
+        drivingDetailPageLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         inputDrivingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(30)
+            make.top.equalTo(drivingDetailPageLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
