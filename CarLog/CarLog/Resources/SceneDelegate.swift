@@ -10,6 +10,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
 
         if Auth.auth().currentUser != nil {
+            print("Auth: \(Auth.auth().currentUser?.email)")
             // 사용자가 로그인되어 있음
             let tabBarController = Constants.mainTabBarController()
             self.window?.rootViewController = tabBarController

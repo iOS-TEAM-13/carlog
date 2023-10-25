@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Alamofire
+
 class NetworkManager {
     //반경 내 주유소 api 파싱
     func fetchGasStationList(x:String,y:String,sort:String,prodcd:String, completion: @escaping (listResponse?) -> Void){
@@ -175,5 +177,6 @@ class NetworkManager {
             }
         }
         task.resume()
+
     }
 }

@@ -5,13 +5,16 @@
 //  Created by t2023-m0056 on 2023/10/13.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class InsuranceView: UIView {
+    // MARK: Properties
+
     private lazy var customView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         return view
@@ -28,20 +31,23 @@ class InsuranceView: UIView {
     
     let calendarView = CalendarView()
     
-    static let identifier = "CustomCarouselViewCell"
-    
+    // MARK: LifeCycle
+
     init(view: CheckingView) {
         super.init(frame: .zero)
         setupUI()
         configureUI(view: view)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
+
     private func setupUI() {
-        self.addSubview(customView)
+        addSubview(customView)
         customView.addSubview(checkTitleLabel)
         customView.addSubview(calendarView)
         
@@ -62,7 +68,7 @@ class InsuranceView: UIView {
     }
     
     private func configureUI(view: CheckingView) {
-        self.checkTitleLabel.text = view.title
+        checkTitleLabel.text = view.title
     }
     
     func bind(title: String) {

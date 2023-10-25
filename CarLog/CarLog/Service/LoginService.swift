@@ -7,6 +7,7 @@ import FirebaseFirestore
 final class LoginService {
     static let loginService = LoginService()
     let db = Firestore.firestore()
+    let collectionsToDelete = ["carParts", "cars", "fuelings", "drivings"]
 
     func signUpUser(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -61,8 +62,75 @@ final class LoginService {
                     completion(error)
                 } else {
                     // 2. 사용자 정보를 이메일을 기반으로 검색하여 Firestore에서 삭제
-                    let db = Firestore.firestore()
-                    db.collection("users").whereField("email", isEqualTo: email).getDocuments { querySnapshot, error in
+                    self.db.collection("users").whereField("email", isEqualTo: email).getDocuments { querySnapshot, error in
+                        if let error = error {
+                            // 에러 처리
+                            completion(error)
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete { error in
+                                    if let error = error {
+                                        completion(error)
+                                    } else {
+                                        // 성공
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.db.collection("carParts").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
+                        if let error = error {
+                            // 에러 처리
+                            completion(error)
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete { error in
+                                    if let error = error {
+                                        completion(error)
+                                    } else {
+                                        // 성공
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.db.collection("cars").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
+                        if let error = error {
+                            // 에러 처리
+                            completion(error)
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete { error in
+                                    if let error = error {
+                                        completion(error)
+                                    } else {
+                                        // 성공
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.db.collection("drivings").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
+                        if let error = error {
+                            // 에러 처리
+                            completion(error)
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete { error in
+                                    if let error = error {
+                                        completion(error)
+                                    } else {
+                                        // 성공
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.db.collection("fuelings").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
                         if let error = error {
                             // 에러 처리
                             completion(error)
@@ -81,6 +149,7 @@ final class LoginService {
                     }
                 }
             }
+            UserDefaults.standard.removeObject(forKey: Auth.auth().currentUser?.email ?? "")
         } else {
             // 사용자가 로그인되어 있지 않음
             completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "사용자가 로그인되어 있지 않습니다."]))

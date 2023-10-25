@@ -21,7 +21,29 @@ extension String {
     
     func toDate() -> Date? { // "yyyy-MM-dd HH:mm:ss"
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    }
+    
+    func toDateDetail() -> Date? { // "yyyy-MM-dd HH:mm:ss"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    }
+    
+    func toSaveDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         if let date = dateFormatter.date(from: self) {
             return date
@@ -29,6 +51,7 @@ extension String {
             return nil
         }
     }
+    
     func intervalToDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

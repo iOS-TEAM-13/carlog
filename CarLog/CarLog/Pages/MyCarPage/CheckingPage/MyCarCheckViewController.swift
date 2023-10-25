@@ -5,24 +5,26 @@
 //  Created by t2023-m0056 on 2023/10/12.
 //
 
-import SnapKit
 import UIKit
+
+import SnapKit
 
 class MyCarCheckViewController: UIViewController {
     // MARK: Properties
+
     private let engineOilView = PageViewController(view: CheckingView(title: "엔진 오일은 언제 교체하셨나요?", firstButton: "6개월 전", secondButton: "3개월 전", thirdbutton: "1개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .engineOil)
     private let missionOilView = PageViewController(view: CheckingView(title: "미션 오일은 언제 교체하셨나요?", firstButton: "2년 전", secondButton: "1년 전", thirdbutton: "6개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .missionOil)
     private let brakeOilView = PageViewController(view: CheckingView(title: "브레이크 오일은 언제 교체하셨나요?", firstButton: "2년 전", secondButton: "1년 전", thirdbutton: "6개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .brakeOil)
     private let brakePadView = PageViewController(view: CheckingView(title: "브레이크 패드는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .brakePad)
     private let tireRotationView = PageViewController(view: CheckingView(title: "마지막 타이어 로테이션은 언제였나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .tireRotation)
-    private let tireView = PageViewController(view: CheckingView(title: "타이어는 언제 교체하셨나요?", firstButton: "3년 전", secondButton: "2년 전", thirdbutton: "1년 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .tireRotation)
+    private let tireView = PageViewController(view: CheckingView(title: "타이어는 언제 교체하셨나요?", firstButton: "3년 전", secondButton: "2년 전", thirdbutton: "1년 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .tire)
     private let fuelFilterView = PageViewController(view: CheckingView(title: "연료 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .fuelFilter)
     private let wiperBladeView = PageViewController(view: CheckingView(title: "와이퍼 블레이드는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .wiperBlade)
     private let airconFilterView = PageViewController(view: CheckingView(title: "에어컨 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .airconFilter)
-    private let insuranceView = PageViewController(view:  CheckingView(title: "보험 가입 시기는 언제쯤인가요?", firstButton: "", secondButton: "", thirdbutton: "", fourthButton: "", fifthButton: ""), checkingView: .insurance)
+    private let insuranceView = PageViewController(view: CheckingView(title: "보험 가입 시기는 언제쯤인가요?", firstButton: "", secondButton: "", thirdbutton: "", fourthButton: "", fifthButton: ""), checkingView: .insurance)
     
     lazy var dataViewControllers: [UIViewController] = {
-        return [engineOilView, missionOilView, brakeOilView, brakePadView, tireRotationView, tireView, fuelFilterView, wiperBladeView, airconFilterView, insuranceView]
+        [engineOilView, missionOilView, brakeOilView, brakePadView, tireRotationView, tireView, fuelFilterView, wiperBladeView, airconFilterView, insuranceView]
     }()
     
     lazy var pageViewController: UIPageViewController = {
@@ -30,17 +32,20 @@ class MyCarCheckViewController: UIViewController {
         return vc
     }()
     
-    lazy private var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
-        FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { error in
-            print("데이터 저장 성공")
-//            self.dismiss(animated: true, completion: nil)
+    private lazy var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { [weak self] _ in
+        FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
     }))
     
     // MARK: LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
+        
+        tabBarController?.tabBar.isHidden = true
+        
         setupUI()
         setupDelegate()
         setPageViewController()
@@ -52,6 +57,7 @@ class MyCarCheckViewController: UIViewController {
     }
     
     // MARK: Method
+
     private func setupUI() {
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -74,6 +80,7 @@ class MyCarCheckViewController: UIViewController {
     }
     
     // MARK: objc
+
     @objc private func completedCheckingView() {
         if Constants.carParts.parts.filter({ $0.currentTime == nil }).count == 0 {
             navigationItem.rightBarButtonItem = addButton
@@ -82,7 +89,6 @@ class MyCarCheckViewController: UIViewController {
 }
 
 extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let previousIndex = index - 1

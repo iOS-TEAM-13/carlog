@@ -5,15 +5,18 @@
 //  Created by t2023-m0056 on 2023/10/18.
 //
 
-import SnapKit
-import SwiftUI
 import UIKit
 
+import SnapKit
+import SwiftUI
+
 class MyCarDetailPageViewController: UIViewController {
+    // MARK: Properties
+
     private let backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .buttonSkyBlueColor
-        view.layer.cornerRadius = Constants.cornerRadius
+        view.layer.cornerRadius = 20
         return view
     }()
     
@@ -23,7 +26,7 @@ class MyCarDetailPageViewController: UIViewController {
         return label
     }()
     
-    lazy private var selectedprogressView: UIProgressView = {
+    private lazy var selectedprogressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = .white
         view.progressTintColor = .mainNavyColor
@@ -44,7 +47,7 @@ class MyCarDetailPageViewController: UIViewController {
         return view
     }()
     
-    lazy private var buttonStackView: UIStackView = {
+    private lazy var buttonStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [modifiedButton, completedButton])
         view.customStackView(spacing: Constants.horizontalMargin * 2, axis: .horizontal, alignment: .fill)
         view.distribution = .fillEqually
@@ -53,13 +56,13 @@ class MyCarDetailPageViewController: UIViewController {
     
     private let modifiedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
     private let completedButton: UIButton = {
         let button = UIButton()
-        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
         return button
     }()
     
@@ -73,29 +76,45 @@ class MyCarDetailPageViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
         view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.register(MyCarDetialViewCell.self, forCellWithReuseIdentifier: MyCarDetialViewCell.identifier)
         return view
     }()
     
-    // MARK: SeletedData
+    // MARK: Data
+
     var selectedParts: PartsInfo?
     var selectedProgress: Double?
     var selectedInterval: String?
     var selectedIcon: UIImage?
     
-    var saveData: CarPart?
+    var saveData = Constants.carParts
     
+    // MARK: LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-
-        configureUI()
+        view.backgroundColor = .white
+        
+        loadCarParts()
         setupUI()
+        configureUI()
         setCollectionView()
         addButtonActions()
-        loadCarParts()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(completedModified), name: Notification.Name("completedModified"), object: nil)
+    }
+    
+    // MARK: Method
+
+    private func loadCarParts() {
+        FirestoreService.firestoreService.loadCarPart { data in
+            if let data = data {
+                self.saveData = data
+                self.detailCollectionView.reloadData()
+            }
+        }
     }
     
     private func setupUI() {
@@ -155,23 +174,15 @@ class MyCarDetailPageViewController: UIViewController {
             $0.height.equalTo(60)
         }
     }
-
-    private func configureUI() {
-        selectedTitleLabel.text = selectedParts?.name.rawValue
-        selectedIntervalLabel.text = selectedInterval
-        selectedImageView.image = selectedIcon
-        selectedprogressView.progress = Float(selectedProgress ?? 0.0)
-    }
     
-    private func configureNewUI() {
-        if let newParts = saveData?.parts.first(where: { $0.name == selectedParts?.name }) {
-            let firstInterval = Util.util.toInterval(seletedDate: newParts.currentTimeToMonth!).toString()
-            let secondInterval = Util.util.toInterval(seletedDate: newParts.currentTimeToMonth ?? 0, type: newParts.name).toString()
-            let progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-            self.selectedTitleLabel.text = newParts.name.rawValue
-            self.selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
-            self.selectedprogressView.progress = Float(progress)
-        }
+    private func configureUI() {
+        let firstInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth! ?? 0).toString()
+        let secondInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth ?? 0, type: selectedParts!.name).toString()
+        let progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+        selectedImageView.image = selectedIcon
+        selectedTitleLabel.text = selectedParts!.name.rawValue
+        selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
+        selectedprogressView.progress = Float(progress)
     }
     
     private func setCollectionView() {
@@ -189,35 +200,48 @@ class MyCarDetailPageViewController: UIViewController {
     }
     
     private func modifiedButtonTapped() {
-        // 수정
+        let vc = ModifiedDatePickerViewController()
+        vc.onDateSelected = { date in
+            self.addHistory(date: Date(), currentTime: date, type: .isModifiedDate)
+        }
+        present(vc, animated: true)
     }
     
     private func completedButtonTapped() {
         showAlert()
     }
     
-    private func loadCarParts() {
-        FirestoreService.firestoreService.loadCarPart{ data in
-            DispatchQueue.main.async {
-                if let data = data {
-                    self.saveData = data
-                }
+    private func updateSelectParts() {
+        for i in 0...saveData.parts.count - 1 {
+            if saveData.parts[i].name == selectedParts?.name {
+                selectedParts = saveData.parts[i]
             }
         }
+    }
+    
+    private func saveCarParts() {
+        FirestoreService.firestoreService.saveCarPart(carPart: saveData) { error in
+            print("error : \(String(describing: error))")
+        }
+    }
+    
+    private func addHistory(date: Date, currentTime: String, type: ChangedType) {
+        for i in 0...(self.saveData.parts.count) - 1 {
+            if self.saveData.parts[i].name == self.selectedParts?.name {
+                self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: type), at: 0)
+                self.saveData.parts[i].currentTime = currentTime
+            }
+        }
+        self.saveCarParts()
+        self.updateSelectParts()
+        self.configureUI()
+        NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
     }
     
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            for i in 0...(self.saveData?.parts.count ?? 0) - 1 {
-                if self.saveData?.parts[i].name == self.selectedParts?.name {
-                    self.saveData?.parts[i].currentTime = "최근"
-                }
-            }
-            FirestoreService.firestoreService.saveCarPart(carPart: self.saveData ?? CarPart(parts: [])) { error in
-                print("carPart 저장 실패")
-            }
-            self.configureNewUI()
+            self.addHistory(date: Date(), currentTime: "최근", type: .isFixedParts)
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
@@ -226,9 +250,17 @@ class MyCarDetailPageViewController: UIViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
+    
+    // MARK: @Objc
+
+    @objc func completedModified() {
+        loadCarParts()
+    }
 }
 
-extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
+// MARK: Extension
+
+extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedParts?.fixHistory.count ?? 0
     }

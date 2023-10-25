@@ -25,7 +25,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     }()
     
     lazy var cellBottomLabelStackView: UIStackView = {
-        let cellBottomLabelStackView = UIStackView(arrangedSubviews: [driveDistenceLabel, departDistenceLabel])
+        let cellBottomLabelStackView = UIStackView(arrangedSubviews: [driveDistenceLabel, arriveTotalDistenceLabel])
         cellBottomLabelStackView.axis = .horizontal
         cellBottomLabelStackView.distribution = .equalSpacing
         cellBottomLabelStackView.alignment = .bottom
@@ -39,11 +39,11 @@ class DrivingCollectionViewCell: UICollectionViewCell {
         return driveDistenceLabel
     }()
     
-    lazy var departDistenceLabel: UILabel = {
-        let departDistenceLabel = UILabel()
-        departDistenceLabel.textColor = .black
-        departDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
-        return departDistenceLabel
+    lazy var arriveTotalDistenceLabel: UILabel = {
+        let arriveTotalDistenceLabel = UILabel()
+        arriveTotalDistenceLabel.textColor = .black
+        arriveTotalDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        return arriveTotalDistenceLabel
     }()
     
     override init(frame: CGRect) {
