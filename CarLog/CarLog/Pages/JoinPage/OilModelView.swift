@@ -15,17 +15,14 @@ final class OilModelView: UIView {
         return pickerView
     }()
 
-    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
-    lazy var spaceView = UIView()
-    lazy var buttonStackView: UIStackView = duplicateComponents.buttonStackView(list: [popButton, spaceView, nextButton])
 
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
 
         addSubview(label)
         addSubview(oilPickerView)
-        addSubview(buttonStackView)
+        addSubview(nextButton)
 
         label.snp.makeConstraints { make in
             make.top.equalTo(oilPickerView.snp.top).offset(-100)
@@ -40,7 +37,7 @@ final class OilModelView: UIView {
             make.height.equalTo(150)
         }
 
-        buttonStackView.snp.makeConstraints { make in
+        nextButton.snp.makeConstraints { make in
             make.top.equalTo(oilPickerView.snp.bottom).offset(25)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)

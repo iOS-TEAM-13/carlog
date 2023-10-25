@@ -20,13 +20,15 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+
+        joinupView.joinInButton.isEnabled = false
         setupUI()
     }
 
     deinit {
         registerForKeyboardNotifications()
     }
-    
+
     func setupUI() {
         view.addSubview(joinupView) // 첫 view
         forHiddenViews() // 다음 버튼들의 숨겨진 views
@@ -47,6 +49,7 @@ class JoinupPageViewController: UIViewController {
     }
 
     // MARK: - Alert 창 구현
+
     func showAlert(message: String) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -54,23 +57,29 @@ class JoinupPageViewController: UIViewController {
     }
 
     // MARK: 텍스트 필드 변경 관련
+
     func textFieldDidChange() {
         let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
         let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
         let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false
-        let isSMTPEmailVaild = joinupView.smtpEmailTextField.text?.isValidEmail() ?? false
+        let isSMTPEmailValid = joinupView.smtpEmailTextField.text?.isValidEmail() ?? false
         let isSMTPNumber = joinupView.smtpNumberTextField.text?.count == 6
 
         UIView.animate(withDuration: 0.3) {
-            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailVaild, isSMTPNumber {
+            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPEmailValid, isSMTPNumber {
                 self.joinupView.joinInButton.isEnabled = true
-                self.joinupView.joinInButton.setTitleColor(.mainNavyColor, for: .normal)
-                self.joinupView.joinInButton.backgroundColor = .buttonSkyBlueColor
+                self.joinupView.joinInButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.joinInButton.backgroundColor = .mainNavyColor
+            } else {
+                self.joinupView.joinInButton.isEnabled = false
+                self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
+                self.joinupView.joinInButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
             }
         }
     }
 
     // MARK: - Keyboard 관련
+
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -78,7 +87,21 @@ class JoinupPageViewController: UIViewController {
 
     @objc private func keyboardWillShow(_ notification: Notification) {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+        let buttonLists: [UIView] = [carNumberView.nextButton, carModelView.nextButton, nickNameView.nextButton, totalDistanceView.nextButton]
+
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return
+        }
+
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        joinupView.scrollView.contentInset = contentInset
+        joinupView.scrollView.scrollIndicatorInsets = contentInset
 
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
@@ -98,10 +121,13 @@ class JoinupPageViewController: UIViewController {
     }
 
     @objc private func keyboardWillHide(_ notification: Notification) {
-        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        for list in lists {
-            list.frame.origin.y = 0
-        }
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0)
+        joinupView.scrollView.contentInset = contentInset
+        joinupView.scrollView.scrollIndicatorInsets = contentInset
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -113,3 +139,4 @@ class JoinupPageViewController: UIViewController {
         totalDistanceView.endEditing(true)
     }
 }
+

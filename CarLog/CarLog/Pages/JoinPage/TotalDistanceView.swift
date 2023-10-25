@@ -7,17 +7,14 @@ final class TotalDistanceView: UIView {
     
     lazy var label = duplicateComponents.joinupLabel(text: "최종 주행거리는\n얼마인가요?")
     lazy var totalDistanceTextField = duplicateComponents.joinupTextField(placeholder: "최종 주행거리 입력")
-    lazy var popButton: UIButton = duplicateComponents.joininButton(text: "이 전")
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "완 료")
-    lazy var spaceView = UIView()
-    lazy var buttonStackView: UIStackView = duplicateComponents.buttonStackView(list: [popButton, spaceView, nextButton])
     
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
         addSubview(label)
         addSubview(totalDistanceTextField)
-        addSubview(buttonStackView)
+        addSubview(nextButton)
         
         label.snp.makeConstraints { make in
             make.top.equalTo(totalDistanceTextField.snp.top).offset(-150)
@@ -31,7 +28,7 @@ final class TotalDistanceView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
 
-        buttonStackView.snp.makeConstraints { make in
+        nextButton.snp.makeConstraints { make in
             make.top.equalTo(totalDistanceTextField.snp.bottom).offset(75)
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)

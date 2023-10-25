@@ -15,7 +15,7 @@ class MyCarCheckViewController: UIViewController {
     private let brakeOilView = PageViewController(view: CheckingView(title: "브레이크 오일은 언제 교체하셨나요?", firstButton: "2년 전", secondButton: "1년 전", thirdbutton: "6개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .brakeOil)
     private let brakePadView = PageViewController(view: CheckingView(title: "브레이크 패드는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .brakePad)
     private let tireRotationView = PageViewController(view: CheckingView(title: "마지막 타이어 로테이션은 언제였나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .tireRotation)
-    private let tireView = PageViewController(view: CheckingView(title: "타이어는 언제 교체하셨나요?", firstButton: "3년 전", secondButton: "2년 전", thirdbutton: "1년 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .tireRotation)
+    private let tireView = PageViewController(view: CheckingView(title: "타이어는 언제 교체하셨나요?", firstButton: "3년 전", secondButton: "2년 전", thirdbutton: "1년 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .tire)
     private let fuelFilterView = PageViewController(view: CheckingView(title: "연료 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .fuelFilter)
     private let wiperBladeView = PageViewController(view: CheckingView(title: "와이퍼 블레이드는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .wiperBlade)
     private let airconFilterView = PageViewController(view: CheckingView(title: "에어컨 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .airconFilter)
@@ -33,14 +33,14 @@ class MyCarCheckViewController: UIViewController {
     lazy private var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { _ in
         FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { error in
             print("데이터 저장 성공")
-//            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }))
     
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         setupUI()
         setupDelegate()
         setPageViewController()
@@ -75,7 +75,7 @@ class MyCarCheckViewController: UIViewController {
     
     // MARK: objc
     @objc private func completedCheckingView() {
-        if Constants.carParts.engineOil.currentTime != "" && Constants.carParts.missionOil.currentTime != "" && Constants.carParts.brakeOil.currentTime != "" && Constants.carParts.brakePad.currentTime != "" && Constants.carParts.tireRotation.currentTime != "" && Constants.carParts.tire.currentTime != "" && Constants.carParts.fuelFilter.currentTime != "" && Constants.carParts.wiper.currentTime != "" && Constants.carParts.airconFilter.currentTime != "" && Constants.carParts.insurance.currentTime != "" {
+        if Constants.carParts.parts.filter({ $0.currentTime == nil }).count == 0 {
             navigationItem.rightBarButtonItem = addButton
         }
     }

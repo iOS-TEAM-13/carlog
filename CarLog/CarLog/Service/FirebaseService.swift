@@ -84,7 +84,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-
+    
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
         db.collection("posts").getDocuments { querySnapshot, error in
             if let error = error {
@@ -117,7 +117,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-
+    
     func loadComments(completion: @escaping ([Comment]?) -> Void) {
         db.collection("comments").getDocuments { querySnapshot, error in
             if let error = error {
@@ -139,34 +139,6 @@ final class FirestoreService {
         }
     }
     
-    
-//    func editUserData(post: Post, completion: @escaping (Post?) -> Void) {
-//            var result: UserModel?
-//
-//            db.collection("users").document("y527FpLxOC4LWg2jMO01").updateData ([
-//                "id": userID,
-//                "name" : name,
-//                "animalName" : animalName,
-//                "birth" : birth,
-//                "gender" : gender,
-//                "imageURL" : imageURL,
-//                "type" : type
-//            ])
-//            result = self.dicToObject(objectType: UserModel.self, dictionary: names)
-//            completion(result)
-//        }
-//
-//        func deleteInfoDocument() {
-//            db.collection("aaa").document("aaa").delete(){ err in
-//                if let err = err {
-//                    print("Error updating document: \(err)")
-//                } else {
-//                    print("Document successfully updated")
-//                }
-//            }
-//        }
-//    }
-
     //MARK: - Car
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
@@ -204,7 +176,7 @@ final class FirestoreService {
     func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(carPart)
-            db.collection("carParts").addDocument(data: data) { error in
+            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -213,22 +185,20 @@ final class FirestoreService {
     }
     
     func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
-        db.collection("carParts").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+        db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").getDocument { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
             } else {
                 var carParts: CarPart?
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let carPart = try Firestore.Decoder().decode(CarPart.self, from: document.data())
-                        carParts = carPart
-                    } catch {
-                        completion(nil)
-                        return
-                    }
-                    completion(carParts)
+                do {
+                    let carPart = try Firestore.Decoder().decode(CarPart.self, from: querySnapshot?.data() ?? CarPart(parts: []))
+                    carParts = carPart
+                } catch {
+                    completion(nil)
+                    return
                 }
+                completion(carParts)
             }
         }
     }

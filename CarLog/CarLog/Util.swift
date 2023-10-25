@@ -10,33 +10,32 @@ import Foundation
 class Util {
     static let util = Util()
     
-    func toInterval(seletedDate: Int, type: String) -> Date {
+    // MARK: MyCarPage
+    func toInterval(seletedDate: Int, type: componentsType) -> Date {
         let currentDate = Date()
         let calendar = Calendar.current
         var value = 0
         switch type {
-        case "엔진 오일":
+        case .engineOil:
             value = 6 - seletedDate
-        case "미션 오일":
+        case .missionOil:
             value = 24 - seletedDate
-        case "브레이크 오일":
+        case .brakeOil:
             value = 24 - seletedDate
-        case "브레이크 패드":
+        case .brakePad:
             value = 12 - seletedDate
-        case "타이어 로테이션":
+        case .tireRotation:
             value = 12 - seletedDate
-        case "타이어 교체":
+        case .tire:
             value = 36 - seletedDate
-        case "연료 필터":
+        case .fuelFilter:
             value = 12 - seletedDate
-        case "와이퍼 블레이드":
+        case .wiperBlade:
             value = 12 - seletedDate
-        case "에어컨 필터":
+        case .airconFilter:
             value = 12 - seletedDate
-        case "보험":
+        case .insurance:
             value = 12 - seletedDate
-        default:
-            break
         }
         guard let newDate = calendar.date(byAdding: .month, value: value, to: currentDate) else { return Date() }
         return newDate
@@ -76,6 +75,35 @@ class Util {
         } else {
             return (thisYearDate, nextYearDate)
         }
-        return (Date(), Date())
+    }
+    
+    func calculatorProgress(firstInterval: String, secondInterval: String) -> Double {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        guard let first = firstInterval.intervalToDate() else { return 0.0 }
+        guard let second = secondInterval.intervalToDate() else { return 0.0 }
+
+        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
+        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
+        guard let firstDays = totalProgress.day else { return 0.0 }
+        guard let secoundDays = currentProgress.day else { return 0.0 }
+        
+        return Double(secoundDays) / Double(firstDays)
+    }
+    
+    func calculatorProgress(firstInsurance: String, secondInsurance: String) -> Double {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        guard let first = firstInsurance.intervalToDate() else { return 0.0 }
+        guard let second = secondInsurance.intervalToDate() else { return 0.0 }
+
+        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
+        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
+
+        guard let firstDays = totalProgress.day else { return 0.0 }
+        guard let secoundDays = currentProgress.day else { return 0.0 }
+        return Double(secoundDays) / Double(firstDays)
     }
 }

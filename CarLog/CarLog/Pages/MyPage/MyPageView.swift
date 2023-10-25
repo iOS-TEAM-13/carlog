@@ -11,129 +11,142 @@ import SnapKit
 final class MyPageView: UIView {
     
     // MARK: -
-    
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "내 차 정보"
-        label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
-        return label
+    lazy var mainTitleLabel: UILabel = {
+        let mainTitleLabel = UILabel()
+        mainTitleLabel.text = "내 차 정보"
+        mainTitleLabel.textColor = .black
+        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
+        return mainTitleLabel
     }()
     
     lazy var editButton: UIButton = {
-        let button = UIButton()
+        let editButton = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
         let image = UIImage(systemName: "highlighter", withConfiguration: imageConfig)
-        button.setImage(image, for: .normal)
-        button.tintColor = .black
-        return button
+        editButton.setImage(image, for: .normal)
+        editButton.tintColor = .black
+        return editButton
     }()
     
     // MARK: -
-    
     //텍스트 폰트에 따른 언더라인 수정
     lazy var myWritingButton: UIButton = {
         let myWritingButton = UIButton()
         myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        return myWritingButton     // ⭐ 나중에 Community Page 연결 필요
+        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
     }()
     
     lazy var carNumberTextField: UITextField = {
-        let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
-        return textField
+        let carNumbertextField = UITextField()
+        carNumbertextField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        return carNumbertextField
     }()
     
-    lazy var carTypeTextField: UITextField = {
-        let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
-        return textField
+    lazy var carNameTextField: UITextField = {
+        let carNametextField = UITextField()
+        carNametextField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        return carNametextField
     }()
     
     lazy var carMakerTextField: UITextField = {
-        let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
-        return textField
+        let carMakertextField = UITextField()
+        carMakertextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        return carMakertextField
     }()
     
     lazy var carOilTypeTextField: UITextField = {
-        let textField = UITextField()
-        textField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
-        return textField
+        let carOilTypetextField = UITextField()
+        carOilTypetextField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        return carOilTypetextField
+    }()
+    
+    lazy var carNickNameTextField: UITextField = {
+        let carNickNametextField = UITextField()
+        carNickNametextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        return carNickNametextField
+    }()
+    
+    lazy var carTotalDistanceTextField: UITextField = {
+        let carTotalDistancetextField = UITextField()
+        carTotalDistancetextField.mypageCustomTextField(placeholder: "최종 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        return carTotalDistancetextField
     }()
     
     lazy var logoutButton: UIButton = {
-        let logoutbutton = UIButton()
+        let logoutButton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray]
-//            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
+        //            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
         let attributedTitle = NSAttributedString(string: "로그아웃", attributes: attributes)
-        logoutbutton.setAttributedTitle(attributedTitle, for: .normal)
-        logoutbutton.backgroundColor = .clear
-        return logoutbutton
+        logoutButton.setAttributedTitle(attributedTitle, for: .normal)
+        logoutButton.backgroundColor = .clear
+        return logoutButton
     }()
     
     lazy var horizontalDivider: UIView = {
-        let horizontaldivider = UIView()
-        horizontaldivider.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        horizontaldivider.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        horizontaldivider.backgroundColor = .lightGray
-        return horizontaldivider
+        let horizontalDivider = UIView()
+        horizontalDivider.widthAnchor.constraint(equalToConstant: 1).isActive = true
+        horizontalDivider.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        horizontalDivider.backgroundColor = .lightGray
+        return horizontalDivider
     }()
     
-    lazy var membershipWithdrawalButton: UIButton = {
-        let membershipwithdrawalbutton = UIButton()
+    lazy var quitUserButton: UIButton = {
+        let quitUserbutton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray]
-//            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
+        //            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
         let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
-        membershipwithdrawalbutton.setAttributedTitle(attributedTitle, for: .normal)
-        membershipwithdrawalbutton.backgroundColor = .clear
-        return membershipwithdrawalbutton
+        quitUserbutton.setAttributedTitle(attributedTitle, for: .normal)
+        quitUserbutton.backgroundColor = .clear
+        return quitUserbutton
     }()
     
     lazy var myPageDesignStackView = {
-        let mypagedesignstackview = UIStackView(arrangedSubviews: [logoutButton, horizontalDivider, membershipWithdrawalButton])
-        mypagedesignstackview.customStackView(spacing: 5, axis: .horizontal , alignment: .center)
-        mypagedesignstackview.distribution = .equalSpacing
-        return mypagedesignstackview
+        let myPageDesignStackView = UIStackView(arrangedSubviews: [logoutButton, horizontalDivider, quitUserButton])
+        myPageDesignStackView.customStackView(spacing: 5, axis: .horizontal , alignment: .center)
+        myPageDesignStackView.distribution = .equalSpacing
+        return myPageDesignStackView
     }()
     
     lazy var phoneCallButton: UIButton = {
-        let phoneCallbutton = UIButton()
+        let phoneCallButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .mainNavyColor
         config.cornerStyle = .capsule
         config.image = UIImage(named: "Context Icon")
-        phoneCallbutton.configuration = config
-        phoneCallbutton.layer.shadowOffset = CGSize(width: 5, height: 5)
-        phoneCallbutton.layer.shadowRadius = 10
-        phoneCallbutton.layer.shadowOpacity = 0.1
-        return phoneCallbutton
+        phoneCallButton.configuration = config
+        phoneCallButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        phoneCallButton.layer.shadowRadius = 10
+        phoneCallButton.layer.shadowOpacity = 0.1
+        return phoneCallButton
     }()
     
     // MARK: -
-    
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
-        addSubview(titleLabel)
+        addSubview(mainTitleLabel)
         addSubview(editButton)
         addSubview(myWritingButton)
         addSubview(carNumberTextField)
-        addSubview(carTypeTextField)
+        addSubview(carNameTextField)
         addSubview(carMakerTextField)
-        addSubview(carMakerTextField)
+        addSubview(carOilTypeTextField)
+        addSubview(carNickNameTextField)
+        addSubview(carTotalDistanceTextField)
         addSubview(myPageDesignStackView)
         addSubview(phoneCallButton)
         
         carNumberTextField.isUserInteractionEnabled = false
-        carTypeTextField.isUserInteractionEnabled = false
+        carNameTextField.isUserInteractionEnabled = false
         carMakerTextField.isUserInteractionEnabled = false
-        carMakerTextField.isUserInteractionEnabled = false
+        carOilTypeTextField.isUserInteractionEnabled = false
+        carNickNameTextField.isUserInteractionEnabled = false
+        carTotalDistanceTextField.isUserInteractionEnabled = false
         
-        titleLabel.snp.makeConstraints { make in
+        mainTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeArea).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
@@ -145,7 +158,7 @@ final class MyPageView: UIView {
         }
         
         myWritingButton.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
+            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
             make.width.equalTo(100)
@@ -158,20 +171,32 @@ final class MyPageView: UIView {
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        carTypeTextField.snp.makeConstraints { make in
+        carNameTextField.snp.makeConstraints { make in
             make.top.equalTo(carNumberTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carMakerTextField.snp.makeConstraints { make in
-            make.top.equalTo(carTypeTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carNameTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        carMakerTextField.snp.makeConstraints { make in
+        carOilTypeTextField.snp.makeConstraints { make in
             make.top.equalTo(carMakerTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carNickNameTextField.snp.makeConstraints { make in
+            make.top.equalTo(carOilTypeTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carTotalDistanceTextField.snp.makeConstraints { make in
+            make.top.equalTo(carNickNameTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
