@@ -20,7 +20,7 @@ class JoinupPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+
         joinupView.joinInButton.isEnabled = false
         setupUI()
     }
@@ -87,7 +87,21 @@ class JoinupPageViewController: UIViewController {
 
     @objc private func keyboardWillShow(_ notification: Notification) {
         let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        let buttonLists: [UIView] = [carNumberView.buttonStackView, carModelView.buttonStackView, nickNameView.buttonStackView, totalDistanceView.buttonStackView]
+        let buttonLists: [UIView] = [carNumberView.nextButton, carModelView.nextButton, nickNameView.nextButton, totalDistanceView.nextButton]
+
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return
+        }
+
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        joinupView.scrollView.contentInset = contentInset
+        joinupView.scrollView.scrollIndicatorInsets = contentInset
 
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
@@ -107,10 +121,13 @@ class JoinupPageViewController: UIViewController {
     }
 
     @objc private func keyboardWillHide(_ notification: Notification) {
-        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        for list in lists {
-            list.frame.origin.y = 0
-        }
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0)
+        joinupView.scrollView.contentInset = contentInset
+        joinupView.scrollView.scrollIndicatorInsets = contentInset
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -122,3 +139,4 @@ class JoinupPageViewController: UIViewController {
         totalDistanceView.endEditing(true)
     }
 }
+

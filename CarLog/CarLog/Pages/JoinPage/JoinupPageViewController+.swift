@@ -120,6 +120,11 @@ extension JoinupPageViewController {
                 return
             }
 
+            if let timer = self.timer {
+                timer.invalidate()
+                self.timer = nil
+            }
+
             // smtp 로직
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
 
@@ -141,10 +146,7 @@ extension JoinupPageViewController {
             self.joinupView.smtpTimerLabel.isHidden = false
 
             // 타이머
-            if self.timer == nil {
-                // 타이머 시작
-                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
-            }
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
         }), for: .touchUpInside)
     }
 
@@ -154,8 +156,6 @@ extension JoinupPageViewController {
                 if success {
                     self.showAlert(message: "인증이 성공적으로 처리되었습니다")
                     self.joinupView.smtpTimerLabel.isHidden = true
-//                    self.joinupView.smtpNumberTextField.isHidden = true
-//                    self.joinupView.smtpNumberButton.isHidden = true
                     self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
                 }
             }
@@ -168,7 +168,7 @@ extension JoinupPageViewController {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
-            
+
             if self.joinupView.smtpNumberButton.title(for: .normal) != "완료" {
                 self.showAlert(message: "인증번호를 확인해주세요")
             }
@@ -263,6 +263,10 @@ extension JoinupPageViewController {
         if seconds > 0 {
             seconds -= 1
             joinupView.smtpTimerLabel.text = timeString(time: TimeInterval(seconds))
+        } else if seconds == 0 {
+            joinupView.smtpTimerLabel.isHidden = true
+            self.joinupView.smtpTimerLabel.text = "인증 대기 중..."
+            seconds = 180
         }
     }
 
@@ -284,11 +288,6 @@ extension JoinupPageViewController {
             self.present(alert, animated: true, completion: nil)
         }), for: .touchUpInside)
 
-        carNumberView.popButton.addAction(UIAction(handler: { _ in
-            self.joinupView.isHidden = false
-            self.carNumberView.isHidden = true
-        }), for: .touchUpInside)
-
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
@@ -296,11 +295,6 @@ extension JoinupPageViewController {
             self.carMakerView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-        }), for: .touchUpInside)
-
-        carMakerView.popButton.addAction(UIAction(handler: { _ in
-            self.carNumberView.isHidden = false
-            self.carMakerView.isHidden = true
         }), for: .touchUpInside)
 
         carMakerView.nextButton.addAction(UIAction(handler: { _ in
@@ -312,11 +306,6 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
 
-        carModelView.popButton.addAction(UIAction(handler: { _ in
-            self.carMakerView.isHidden = false
-            self.carModelView.isHidden = true
-        }), for: .touchUpInside)
-
         carModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
@@ -326,10 +315,6 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
 
-        oilModelView.popButton.addAction(UIAction(handler: { _ in
-            self.carModelView.isHidden = false
-            self.oilModelView.isHidden = true
-        }), for: .touchUpInside)
         oilModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
@@ -338,10 +323,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        nickNameView.popButton.addAction(UIAction(handler: { _ in
-            self.oilModelView.isHidden = false
-            self.nickNameView.isHidden = true
-        }), for: .touchUpInside)
+
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.totalDistanceView)
             self.nickNameView.isHidden = true
@@ -350,10 +332,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        totalDistanceView.popButton.addAction(UIAction(handler: { _ in
-            self.nickNameView.isHidden = false
-            self.totalDistanceView.isHidden = true
-        }), for: .touchUpInside)
+
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
 
