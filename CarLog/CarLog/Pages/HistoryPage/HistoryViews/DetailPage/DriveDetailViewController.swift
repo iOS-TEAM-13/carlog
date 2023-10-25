@@ -3,7 +3,6 @@
 //  CarLog
 //
 //  Created by 김지훈 on 2023/10/18.
-// 취소 수정버튼 히든처리 , 네비게이션바 아이템 수정 버튼 추가 // 주행기록 문구 네비게이션컨트롤러로
 
 import UIKit
 import FirebaseAuth
@@ -57,8 +56,10 @@ class DriveDetailViewController: UIViewController {
         driveDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
         driveDetailView.removeButton.addTarget(self, action: #selector(didCancelButton), for: .touchUpInside)
         
+        print(drivingData)
     }
     
+    //뭐가 문제일까 왜 처음으로 진입하면 삭제 수정이 안될까ㅠ
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { drivingData in
             if let drivings = self.drivingData {
@@ -73,9 +74,8 @@ class DriveDetailViewController: UIViewController {
     
     @objc func didUpDateButton() {
         print("---> driveDetailView 수정 버튼 눌렀어요")
-        
         if let drivingID = drivingData?.documentID {
-            // 업데이트할 필드와 새 값의 딕셔너리를 구성합니다.
+            //업데이트할 필드와 새 값의 딕셔너리를 구성합니다.
             var updatedData: [String: Any] = [:]
             
             if let totalDistanceText = self.driveDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {

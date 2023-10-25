@@ -289,7 +289,6 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == drivingCollectionView.drivingCollectionView {
             let driveDetailViewController = DriveDetailViewController()
-            //
             driveDetailViewController.drivingData = drivingDummy[indexPath.row]
             self.navigationController?.pushViewController(driveDetailViewController, animated: true)
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
