@@ -73,8 +73,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         setupMapView()
         getLocationUsagePermission()
         addDummyPin()
-        //fetchList()
-       // fetchGasStationDetail()
+      // fetchGasStationDetail()
         //fetchCoordinateCurrentLocationAgain()
         setupLocationManager()
     }
@@ -270,48 +269,50 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     //MARK : FETCH DATA
     
-    func setupLocationManager() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
-        }
-
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            if let currentLocation = locations.last {
-                fetchCoordinateCurrentLocation(currentLocation)
+        func setupLocationManager() {
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.requestWhenInUseAuthorization()
+                locationManager.startUpdatingLocation()
             }
-//            if let currentLocation = locations.last {
-//                        locationManager.stopUpdatingLocation()  // 위치 정보 업데이트 중지
-//                        fetchList(x: currentLocation.coordinate.latitude, y: currentLocation.coordinate.longitude)
-//                    }
-        }
-//WGS 좌표 -> KATECH 좌표
-    func fetchCoordinateCurrentLocation(_ location: CLLocation) {
-        
-        let lat = String(location.coordinate.latitude)
-        let lon = String(location.coordinate.longitude)
-        
-        networkManager.fetchCoordinateChange(fromLat: lat, fromLon: lon) { coordinate in
-                DispatchQueue.main.async {  // 메인 스레드에서 실행
-                    if let coordinate = coordinate {
-                        print("현 위치:" + "Latitude: \(coordinate.coordinate.lat), Longitude: \(coordinate.coordinate.lon)")
-                        // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                        self.fetchList(x: coordinate.coordinate.lat, y: coordinate.coordinate.lon)
-                    } else {
-                        print("Failed to fetch coordinate")
-                        // 에러 상황에 대한 처리를 수행할 수 있습니다.
+
+            func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+                if let currentLocation = locations.last {
+                    fetchCoordinateCurrentLocation(currentLocation)
+                }
+    //            if let currentLocation = locations.last {
+    //                        locationManager.stopUpdatingLocation()  // 위치 정보 업데이트 중지
+    //                        fetchList(x: currentLocation.coordinate.latitude, y: currentLocation.coordinate.longitude)
+    //                    }
+            }
+    //WGS 좌표 -> KATECH 좌표
+        func fetchCoordinateCurrentLocation(_ location: CLLocation) {
+            
+            let lat = String(location.coordinate.latitude)
+            let lon = String(location.coordinate.longitude)
+            
+            networkManager.fetchCoordinateChange(fromLat: lat, fromLon: lon) { coordinate in
+                    DispatchQueue.main.async {  // 메인 스레드에서 실행
+                        if let coordinate = coordinate {
+                            print("현 위치:" + "Longitude: \(coordinate.coordinate.lon), Latitude: \(coordinate.coordinate.lat)")
+                            // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
+                            self.fetchList(x: coordinate.coordinate.lon, y: coordinate.coordinate.lat)
+                        } else {
+                            print("Failed to fetch coordinate")
+                            // 에러 상황에 대한 처리를 수행할 수 있습니다.
+                        }
                     }
                 }
-            }
-    }
-    //반경 내 주유소 api request
+        }
+        //반경 내 주유소 api request
+    
     func fetchList(x: String, y: String) {
         networkManager.fetchGasStationList(x: x, y: y, sort: "1", prodcd: "B027") { listResponse in
                 DispatchQueue.main.async {
                     if let listResponse = listResponse {
                         self.stationList.append(contentsOf: listResponse.result.oil)
-                        print(self.stationList)
+                        self.fetchGasStationDetail()
+                       // print(self.stationList)
                         // 여기에서 UI를 업데이트하거나 다른 처리를 할 수 있습니다.
                     } else {
                         print("데이터 로딩 실패")
@@ -319,20 +320,40 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 }
             }
         }
-    
-    func fetchGasStationDetail() {
-        let networkManager = NetworkManager()
-        networkManager.fetchGasStationDetailList(id: "A0018969") {gasStationResponse in
-            if let gasStationResponse = gasStationResponse {
-                for item in gasStationResponse.result.oil{
-                    self.stationDetailList.append(item)
-                    print(self.stationDetailList)
+/*
+    func fetchList() {
+        
+        networkManager.fetchGasStationList(x: "314223.108646", y: "544419.978154", sort: "1", prodcd: "B027") { listResponse in
+            if let listResponse = listResponse {
+                for item in listResponse.result.oil {
+                    self.stationList.append(item)
+                    print(self.stationList)
                 }
+// 땡겨와서 쪼갠뒤 저장했다.
+                
             } else {
                 print("실패")
             }
         }
     }
+*/
+    func fetchGasStationDetail() {
+        stationList.map{ $0.uniID}.forEach { id in
+            print(id)
+            networkManager.fetchGasStationDetailList(id: id) {gasStationResponse in
+                if let gasStationResponse = gasStationResponse {
+                    for item in gasStationResponse.result.oil{
+                        self.stationDetailList.append(item)
+                        print(self.stationDetailList)
+                    }
+                } else {
+                    print("실패")
+                }
+            }
+        }
+        
+    }
+    
     //KATECH->WGS84
     func fetchCoordinateCurrentLocationAgain() {
         networkManager.fetchCoordinateChangeAgain(fromLat: "314681.8", fromLon: "544837") { coordinate in
