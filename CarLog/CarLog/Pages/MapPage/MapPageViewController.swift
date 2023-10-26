@@ -101,7 +101,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         
         mapView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
         
         myLocationButton.snp.makeConstraints { make in

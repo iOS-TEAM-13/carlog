@@ -123,14 +123,14 @@ class HistoryPageViewController: UIViewController {
             make.top.equalTo(segmentedControl.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         fuelingCollectionView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         floatingButtonStackView.snp.makeConstraints { make in

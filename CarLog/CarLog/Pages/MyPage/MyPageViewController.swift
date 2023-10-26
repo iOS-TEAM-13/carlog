@@ -20,7 +20,8 @@ class MyPageViewController: UIViewController {
         // MARK: - Setup
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         addTargetButton()
         registerForKeyboardNotifications()
