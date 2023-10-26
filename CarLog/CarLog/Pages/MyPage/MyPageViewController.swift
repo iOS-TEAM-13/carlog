@@ -27,16 +27,15 @@ class MyPageViewController: UIViewController {
     }
     
     deinit {
-        registerForKeyboardNotifications()
+        NotificationCenter.default.removeObserver(self)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         DispatchQueue.main.async {
             self.loadCarData() // ⭐ 내 차 정보 가져오기
-            
         }
-        
     }
     
     func addTargetButton() {
@@ -110,6 +109,7 @@ class MyPageViewController: UIViewController {
             // carDummy 배열이 비어있을 때 대응할 내용을 여기에 추가할 수 있습니다.
         }
     }
+    
     @objc func logoutButtonTapped() {
         if Auth.auth().currentUser != nil {
             LoginService.loginService.logout {
