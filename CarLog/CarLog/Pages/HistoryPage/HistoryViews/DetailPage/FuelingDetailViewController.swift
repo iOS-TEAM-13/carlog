@@ -38,8 +38,6 @@ class FuelingDetailViewController: UIViewController {
         
         fuelingDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
         fuelingDetailView.removeButton.addTarget(self, action: #selector(didRemoveButton), for: .touchUpInside)
-        
-        print(fuelingData)
     }
     
     func loadFuelingData() {

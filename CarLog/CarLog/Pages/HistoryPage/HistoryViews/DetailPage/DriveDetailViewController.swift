@@ -38,8 +38,6 @@ class DriveDetailViewController: UIViewController {
         
         drivingDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
         drivingDetailView.removeButton.addTarget(self, action: #selector(didRemoveButton), for: .touchUpInside)
-        
-        print(drivingData)
     }
     
     func loadDrivingData() {
@@ -88,7 +86,6 @@ class DriveDetailViewController: UIViewController {
     
     @objc func didRemoveButton() {
         print("---> driveDetailView 삭제 버튼 눌렀어요")
-        
         if let drivingID = drivingData?.documentID {
             FirestoreService.firestoreService.removeDriving(drivingID: drivingID) { error in
                 if let error = error {
