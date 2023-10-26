@@ -120,11 +120,6 @@ extension JoinupPageViewController {
                 return
             }
 
-            if let timer = self.timer {
-                timer.invalidate()
-                self.timer = nil
-            }
-
             // smtp 로직
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
 
@@ -143,7 +138,11 @@ extension JoinupPageViewController {
                     UserDefaults.standard.set(code, forKey: "emailVerificationCode")
                 }
             }
+
             self.joinupView.smtpTimerLabel.isHidden = false
+            self.joinupView.smtpButton.isEnabled = false
+            self.joinupView.smtpButton.backgroundColor = .lightGray
+            self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
 
             // 타이머
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
@@ -265,6 +264,9 @@ extension JoinupPageViewController {
             joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
         } else if seconds == 0 {
             joinupView.smtpTimerLabel.isHidden = true
+            self.joinupView.smtpButton.isEnabled = true
+            self.joinupView.smtpButton.backgroundColor = .mainNavyColor
+            self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
             self.joinupView.smtpTimerLabel.text = "인증 대기 중..."
             seconds = 180
         }
@@ -353,7 +355,8 @@ extension JoinupPageViewController {
                 let tabBarController = Constants.mainTabBarController()
                 if let windowScene = UIApplication.shared.connectedScenes
                     .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
-                    let window = windowScene.windows.first {
+                    let window = windowScene.windows.first
+                {
                     window.rootViewController = tabBarController
                 }
             }
