@@ -12,20 +12,24 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        keepLogin()
+        //keepLogin()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        addTargets()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         loginView.endEditing(true)
     }
-
+    
     func setupUI() {
         view.addSubview(loginView)
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview() // LoginPageProperties 뷰를 슈퍼뷰에 맞게 설정
         }
         loginView.passwordTextField.isSecureTextEntry = true
-        addTargets()
     }
 
     func addTargets() {
@@ -61,16 +65,16 @@ class LoginPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
 
-    func keepLogin() {
-        LoginService.loginService.keepLogin { user in
-            print("user:\(user?.email ?? "")")
-            if user != nil {
-                let tabBarController = Constants.mainTabBarController()
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true, completion: nil)
-            }
-        }
-    }
+//    func keepLogin() {
+//        LoginService.loginService.keepLogin { user in
+//            print("user:\(user?.email ?? "")")
+//            if user != nil {
+//                let tabBarController = Constants.mainTabBarController()
+//                tabBarController.modalPresentationStyle = .fullScreen
+//                self.present(tabBarController, animated: true, completion: nil)
+//            }
+//        }
+//    }
 
     func textFieldDidChange() {
         let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false

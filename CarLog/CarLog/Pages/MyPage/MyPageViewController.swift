@@ -130,8 +130,8 @@ class MyPageViewController: UIViewController {
     @objc func quitUserButtonTapped() {
         if Auth.auth().currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
-            [UIAlertAction(title: "탈퇴하기", style: .default),
-             UIAlertAction(title: "취소", style: .cancel)].forEach{alert.addAction($0)}; present(alert, animated: true)
+//            [UIAlertAction(title: "탈퇴하기", style: .default),
+//             UIAlertAction(title: "취소", style: .cancel)].forEach{alert.addAction($0)}; present(alert, animated: true)
             // 회원탈퇴 하기전, alert 창에 확인버튼으로 감싸기
             LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { error in
                 let loginViewController = LoginPageViewController()

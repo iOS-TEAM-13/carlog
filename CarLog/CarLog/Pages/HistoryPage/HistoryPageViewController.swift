@@ -7,13 +7,6 @@ class HistoryPageViewController: UIViewController {
     
     var fuelingDummy: [Fueling] = []
     
-//    lazy var noDataLabel: UILabel = {
-//        let noDataLabel = UILabel()
-//        noDataLabel.customLabel(text: "주행기록을 추가해서 차를 관리하세요!", textColor: .gray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
-//        noDataLabel.isHidden = true
-//        return noDataLabel
-//    }()
-    
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
@@ -67,8 +60,8 @@ class HistoryPageViewController: UIViewController {
         self.didChangeValue(segment: self.segmentedControl)
         buttonActions()
         
-        loadDrivingData()
-        loadFuelingData()
+//        loadDrivingData()
+//        loadFuelingData()
         
         //indicator 추가
         ac = UIActivityIndicatorView(style: .medium)
@@ -223,6 +216,12 @@ class HistoryPageViewController: UIViewController {
                     self.drivingCollectionView.drivingCollectionView.reloadData()
                     self.ac.stopAnimating()
                     self.ac.isHidden = true
+                    
+                    if self.drivingDummy.count > 0 {
+                        self.drivingCollectionView.noDataLabel.isHidden = true
+                    } else {
+                        self.drivingCollectionView.noDataLabel.isHidden = false
+                    }
                 }
             } else {
                 print("데이터 로드 중 오류 발생")
@@ -238,6 +237,12 @@ class HistoryPageViewController: UIViewController {
                     self.fuelingCollectionView.fuelingCollectionView.reloadData()
                     self.ac.stopAnimating()
                     self.ac.isHidden = true
+                    
+                    if self.fuelingDummy.count > 0 {
+                        self.fuelingCollectionView.noDataLabel.isHidden = true
+                    } else {
+                        self.fuelingCollectionView.noDataLabel.isHidden = false
+                    }
                 }
             } else {
                 print("데이터 로드 중 오류 발생")
