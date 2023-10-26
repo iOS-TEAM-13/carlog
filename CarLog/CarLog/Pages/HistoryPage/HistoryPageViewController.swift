@@ -75,6 +75,10 @@ class HistoryPageViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //NotificationCenter newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
