@@ -254,7 +254,7 @@ extension JoinupPageViewController {
     }
 
     func verifyButtonPressed(_ sender: UIButton) {
-        checkVerificationCode { _ in
+        self.checkVerificationCode { _ in
             print("success")
         }
     }
@@ -262,7 +262,7 @@ extension JoinupPageViewController {
     @objc func updateTimerLabel() {
         if seconds > 0 {
             seconds -= 1
-            joinupView.smtpTimerLabel.text = timeString(time: TimeInterval(seconds))
+            joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
         } else if seconds == 0 {
             joinupView.smtpTimerLabel.isHidden = true
             self.joinupView.smtpTimerLabel.text = "인증 대기 중..."
@@ -349,33 +349,30 @@ extension JoinupPageViewController {
     func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
             print("user:\(user?.email ?? "")")
-            //rootview로 갈아끼워보기 
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                if user != nil {
-                    let tabBarController = Constants.mainTabBarController()
-                    UIApplication.shared.keyWindow?.replaceRootViewController(tabBarController, animated: true, completion: nil)
-    //                tabBarController.modalPresentationStyle = .fullScreen
-    //                self.present(tabBarController, animated: true, completion: nil)
+            if user != nil {
+                let tabBarController = Constants.mainTabBarController()
+                if let windowScene = UIApplication.shared.connectedScenes
+                    .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
+                    let window = windowScene.windows.first {
+                    window.rootViewController = tabBarController
                 }
             }
-            
         }
     }
 }
 
 extension UIWindow {
-    
     func replaceRootViewController(_ replacementController: UIViewController, animated: Bool, completion: (() -> Void)?) {
         let snapshotImageView = UIImageView(image: self.snapshot())
         self.addSubview(snapshotImageView)
-        let dismissCompletion = { () -> Void in // dismiss all modal view controllers
+        let dismissCompletion = { () in // dismiss all modal view controllers
             self.rootViewController = replacementController
             self.bringSubviewToFront(snapshotImageView)
-            
+
             if animated {
-                UIView.animate(withDuration: 0.4, animations: { () -> Void in
+                UIView.animate(withDuration: 0.4, animations: { () in
                     snapshotImageView.alpha = 0
-                }, completion: { (success) -> Void in
+                }, completion: { _ in
                     snapshotImageView.removeFromSuperview()
                     completion?()
                 })
@@ -384,24 +381,23 @@ extension UIWindow {
                 completion?()
             }
         }
-        
+
         if self.rootViewController!.presentedViewController != nil {
             self.rootViewController!.dismiss(animated: false, completion: dismissCompletion)
         } else {
             dismissCompletion()
         }
     }
-    
+
     func snapshot() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
 
-    UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
 
-    drawHierarchy(in: bounds, afterScreenUpdates: true)
+        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
 
-    guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage.init() }
+        UIGraphicsEndImageContext()
 
-    UIGraphicsEndImageContext()
-
-    return result
+        return result
     }
 }
