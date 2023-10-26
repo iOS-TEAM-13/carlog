@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAuth
 import SnapKit
 
 class MyCarCheckViewController: UIViewController {
@@ -33,6 +34,7 @@ class MyCarCheckViewController: UIViewController {
     }()
     
     private lazy var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { [weak self] _ in
+        Constants.carParts.userEmail = Auth.auth().currentUser?.email
         FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
@@ -45,6 +47,8 @@ class MyCarCheckViewController: UIViewController {
         view.backgroundColor = .white
         
         tabBarController?.tabBar.isHidden = true
+        navigationItem.hidesBackButton = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         setupUI()
         setupDelegate()

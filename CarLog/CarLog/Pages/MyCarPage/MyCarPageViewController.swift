@@ -76,6 +76,9 @@ class MyCarPageViewController: UIViewController {
             if let data = data {
                 self.carParts = data
                 self.myCarCollectionView.reloadData()
+            } else {
+                let vc = MyCarCheckViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }
