@@ -141,6 +141,7 @@ final class FirestoreService {
     
     //MARK: - Car
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
+        print(Auth.auth().currentUser?.email)
         do {
             let data = try Firestore.Encoder().encode(car)
             db.collection("cars").addDocument(data: data) { error in
