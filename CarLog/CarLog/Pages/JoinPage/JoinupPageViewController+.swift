@@ -291,7 +291,6 @@ extension JoinupPageViewController {
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
-            self.carMakerView.isHidden = false
             self.carMakerView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -300,7 +299,6 @@ extension JoinupPageViewController {
         carMakerView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
-            self.carModelView.isHidden = false
             self.carModelView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -309,7 +307,6 @@ extension JoinupPageViewController {
         carModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
-            self.oilModelView.isHidden = false
             self.oilModelView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -318,7 +315,6 @@ extension JoinupPageViewController {
         oilModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
-            self.nickNameView.isHidden = false
             self.nickNameView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -327,7 +323,6 @@ extension JoinupPageViewController {
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.totalDistanceView)
             self.nickNameView.isHidden = true
-            self.totalDistanceView.isHidden = false
             self.totalDistanceView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
