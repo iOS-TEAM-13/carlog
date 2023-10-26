@@ -26,8 +26,8 @@ struct GasStationDetailSummary: Codable {
     let osNm: String
     let carWashYn: String
     let cvsYn: String
-    let gisXCoor: Float
-    let gisYCoor: Float
+    var gisXCoor: Float
+    var gisYCoor: Float
     let oilPrice: [OilPrice]
 
     enum CodingKeys: String, CodingKey {

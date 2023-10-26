@@ -315,7 +315,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 if let listResponse = listResponse {
                     self.stationList.append(contentsOf: listResponse.result.oil)
                     self.fetchGasStationDetail()
-                    self.fetchCoordinateCurrentLocationAgain()
                     // print(self.stationList)
                     // 여기에서 UI를 업데이트하거나 다른 처리를 할 수 있습니다.
                 } else {
@@ -324,52 +323,37 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-    /*
-     func fetchList() {
-     
-     networkManager.fetchGasStationList(x: "314223.108646", y: "544419.978154", sort: "1", prodcd: "B027") { listResponse in
-     if let listResponse = listResponse {
-     for item in listResponse.result.oil {
-     self.stationList.append(item)
-     print(self.stationList)
-     }
-     // 땡겨와서 쪼갠뒤 저장했다.
-     
-     } else {
-     print("실패")
-     }
-     }
-     }
-     */
+
     func fetchGasStationDetail() {
         stationList.map{ $0.uniID}.forEach { id in
-            print(id)
             networkManager.fetchGasStationDetailList(id: id) {gasStationResponse in
                 if let gasStationResponse = gasStationResponse {
-                    for item in gasStationResponse.result.oil{
+                    for item in gasStationResponse.result.oil {
                         self.stationDetailList.append(item)
-                        print(self.stationDetailList)
+                        self.fetchCoordinateCurrentLocationAgain(fromLat: String(item.gisXCoor), fromLon: String(item.gisYCoor))
                     }
                 } else {
                     print("실패")
                 }
             }
         }
-        
     }
     
     //KATECH->WGS84
-    func fetchCoordinateCurrentLocationAgain() {
-        
-        networkManager.fetchCoordinateChangeAgain(fromLat: "314681.8", fromLon: "544837") { coordinate in
+    func fetchCoordinateCurrentLocationAgain(fromLat: String, fromLon: String) {
+        networkManager.fetchCoordinateChangeAgain(fromLat: fromLat, fromLon: fromLon) { coordinate in
             DispatchQueue.main.async {  // 메인 스레드에서 실행
                 if let coordinate = coordinate {
-                    print("Latitude: \(coordinate.reverseCoordinate.lon), Longitude: \(coordinate.reverseCoordinate.lat)")
                     // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
+                    for i in 0...self.stationDetailList.count - 1 {
+                        self.stationDetailList[i].gisXCoor = Float(coordinate.coordinate.lon) ?? 0.0
+                        self.stationDetailList[i].gisYCoor = Float(coordinate.coordinate.lat) ?? 0.0
+                    }
                 } else {
                     print("Failed to fetch coordinate")
                     // 에러 상황에 대한 처리를 수행할 수 있습니다.
                 }
+                // 여기서 stationDetailList로 어노테이션 띄우고 데이터 매핑해주세요
             }
         }
     }

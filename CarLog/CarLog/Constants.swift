@@ -16,7 +16,7 @@ struct Constants {
     static let fontJua36: CGFloat = 36
     static let fontJua40: CGFloat = 40
     
-    static var carParts = CarPart(parts: [PartsInfo(name: .engineOil, fixHistory: []), PartsInfo(name: .missionOil, fixHistory: []), PartsInfo(name: .brakeOil, fixHistory: []), PartsInfo(name: .brakePad, fixHistory: []), PartsInfo(name: .tireRotation, fixHistory: []), PartsInfo(name: .tire, fixHistory: []), PartsInfo(name: .fuelFilter, fixHistory: []), PartsInfo(name: .wiperBlade, fixHistory: []), PartsInfo(name: .airconFilter, fixHistory: []), PartsInfo(name: .insurance, fixHistory: [])], userEmail: Auth.auth().currentUser?.email)
+    static var carParts = CarPart(parts: [PartsInfo(name: .engineOil, fixHistory: []), PartsInfo(name: .missionOil, fixHistory: []), PartsInfo(name: .brakeOil, fixHistory: []), PartsInfo(name: .brakePad, fixHistory: []), PartsInfo(name: .tireRotation, fixHistory: []), PartsInfo(name: .tire, fixHistory: []), PartsInfo(name: .fuelFilter, fixHistory: []), PartsInfo(name: .wiperBlade, fixHistory: []), PartsInfo(name: .airconFilter, fixHistory: []), PartsInfo(name: .insurance, fixHistory: [])], userEmail: "")
     
     static func mainTabBarController() -> UITabBarController {
         let tabBarController = TabBarController()
