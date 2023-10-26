@@ -41,12 +41,15 @@ class LoginPageViewController: UIViewController {
             LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
                 if isSuccess {
                     let tabBarController = Constants.mainTabBarController()
-                    self.tabBarController?.modalPresentationStyle = .fullScreen
-                    self.present(tabBarController, animated: true)
+                    if let windowScene = UIApplication.shared.connectedScenes
+                        .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
+                        let window = windowScene.windows.first {
+                        window.rootViewController = tabBarController
+                    }
                 } else {
                     if error != nil {
                         // 로그인 실패 시 에러 메시지 표시
-                        let alert = UIAlertController(title: "로그인 실패", message: "로그인과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "로그인 실패", message: "이메일과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .default))
                         self.present(alert, animated: true, completion: nil)
                     } else {
