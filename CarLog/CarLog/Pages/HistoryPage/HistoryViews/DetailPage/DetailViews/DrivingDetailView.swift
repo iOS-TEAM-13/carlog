@@ -5,14 +5,15 @@
 //  Created by 김지훈 on 2023/10/18.
 //
 
+import SnapKit
 import UIKit
 
-class DriveDetailView: UIView {
+class DrivingDetailView: UIView {
 
-    lazy var addDrivingPageLabel: UILabel = {
-        let addDrivingPageLabel = UILabel()
-        addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
-        return addDrivingPageLabel
+    lazy var drivingDetailPageLabel: UILabel = {
+        let drivingDetailPageLabel = UILabel()
+        drivingDetailPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
+        return drivingDetailPageLabel
     }()
     
     lazy var inputDrivingStackView: UIStackView = {
@@ -214,7 +215,7 @@ class DriveDetailView: UIView {
     }
     
     private func setupUI() {
-        addSubview(addDrivingPageLabel)
+        addSubview(drivingDetailPageLabel)
         addSubview(inputDrivingStackView)
         addSubview(buttonStackView)
         
@@ -222,14 +223,14 @@ class DriveDetailView: UIView {
         arriveDistanceStackView.addSubview(kmLabel2)
         driveDistenceStackView.addSubview(kmLabel3)
         
-        addDrivingPageLabel.snp.makeConstraints { make in
+        drivingDetailPageLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
         inputDrivingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(30)
+            make.top.equalTo(drivingDetailPageLabel.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }

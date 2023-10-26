@@ -144,7 +144,7 @@ final class FirestoreService {
         print(Auth.auth().currentUser?.email)
         do {
             let data = try Firestore.Encoder().encode(car)
-            db.collection("cars").addDocument(data: data) { error in
+            db.collection("cars").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -153,7 +153,7 @@ final class FirestoreService {
     }
     
     func loadCar(completion: @escaping ([Car]?) -> Void) {
-        db.collection("cars").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
+        db.collection("cars").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
@@ -273,14 +273,23 @@ final class FirestoreService {
     func saveFueling(fueling: Fueling, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(fueling)
-            db.collection("fuelings").addDocument(data: data) { error in
+            
+            var documentID = ""
+            
+            if let currentTime = fueling.timeStamp?.toDateDetail()?.toStringDetail() {
+                documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
+            } else {
+                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
+            }
+
+            db.collection("fuelings").document(documentID).setData(data) { error in
                 completion(error)
             }
         } catch {
             completion(error)
         }
     }
-    
+
     func loadFueling(completion: @escaping ([Fueling]?) -> Void) {
         db.collection("fuelings").whereField("userEmail", in: [Auth.auth().currentUser?.email ?? ""]).getDocuments { querySnapshot, error in
             if let error = error {
@@ -289,15 +298,38 @@ final class FirestoreService {
             } else {
                 var fuelings: [Fueling] = []
                 for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let fueling = try Firestore.Decoder().decode(Fueling.self, from: document.data())
-                        fuelings.append(fueling)
-                    } catch {
-                        completion(nil)
-                        return
+                    if var fuelingData = try? Firestore.Decoder().decode(Fueling.self, from: document.data()) {
+                        fuelingData.documentID = document.documentID
+                        fuelings.append(fuelingData)
                     }
                 }
                 completion(fuelings)
+            }
+        }
+    }
+    
+    func updateFueling(fuelingID: String, updatedData: [String: Any], completion: @escaping (Error?) -> Void) {
+        let documentReference = db.collection("fuelings").document(fuelingID)
+        
+        documentReference.updateData(updatedData) { error in
+            if let error = error {
+                print("업데이트 못했어요.: \(error)")
+                completion(error)
+            } else {
+                print("업데이트 했어요.")
+                completion(nil)
+            }
+        }
+    }
+    
+    func removeFueling(fuelingID: String, completion: @escaping (Error?) -> Void) {
+        db.collection("fuelings").document(fuelingID).delete { error in
+            if let error = error {
+                print("주행 데이터를 삭제하지 못했습니다.: \(error)")
+                completion(error)
+            } else {
+                print("주행 데이터를 성공적으로 삭제했습니다.")
+                completion(nil)
             }
         }
     }

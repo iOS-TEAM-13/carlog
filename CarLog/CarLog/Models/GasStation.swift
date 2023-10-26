@@ -1,13 +1,8 @@
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let gasStation = try? JSONDecoder().decode(GasStation.self, from: jsonData)
-
 import Foundation
 
-// MARK: - GasStation
-struct GasStation: Codable {
-    let result: Result
+// MARK: - Gasstaion
+struct gasStationResponse: Codable {
+    let result: GasStation
 
     enum CodingKeys: String, CodingKey {
         case result = "RESULT"
@@ -15,8 +10,8 @@ struct GasStation: Codable {
 }
 
 // MARK: - Result
-struct Result: Codable {
-    let oil: [Oil]
+struct GasStation: Codable {
+    let oil: [GasStationDetailSummary]
 
     enum CodingKeys: String, CodingKey {
         case oil = "OIL"
@@ -24,10 +19,15 @@ struct Result: Codable {
 }
 
 // MARK: - Oil
-struct Oil: Codable {
-    let uniID, pollDivCo, gpollDivCo, osNm: String
-    let carWashYn, cvsYn: String
-    let gisXCoor, gisYCoor: Double
+struct GasStationDetailSummary: Codable {
+    let uniID: String
+    let pollDivCo: String
+    let gpollDivCo: String
+    let osNm: String
+    let carWashYn: String
+    let cvsYn: String
+    let gisXCoor: Float
+    let gisYCoor: Float
     let oilPrice: [OilPrice]
 
     enum CodingKeys: String, CodingKey {

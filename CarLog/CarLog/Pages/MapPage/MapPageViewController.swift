@@ -7,12 +7,16 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     let mapView = MKMapView()
     var stationList : [GasStationSummary] = []
+    var stationDetailList: [GasStationDetailSummary] = []
     
-    var locationManager = CLLocationManager()
+    var gasStationDetailView: GasStationDetailView?
+    
+    let locationManager = CLLocationManager()
+    let networkManager = NetworkManager()
     //dummyData
     let dummyData = CLLocationCoordinate2D(latitude: 37.29611185603856, longitude: 127.05515403584008)
     
-        //  private var overlayView: UIView!
+    //  private var overlayView: UIView!
     private var detailView: UIView!
     
     private lazy var myLocationButton = {
@@ -63,15 +67,17 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         locationManager.delegate = self
         
         mapView.setRegion(MKCoordinateRegion(center: dummyData, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
-   
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideDetailView(_:)))
-           mapView.addGestureRecognizer(tapGesture)
-           tapGesture.delegate = self
+        mapView.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+        
+        gasStationDetailView = GasStationDetailView()
         
         setupMapView()
         getLocationUsagePermission()
         addDummyPin()
-        fetchList()
+        setupLocationManager()
     }
     
     func setupMapView() {
@@ -121,41 +127,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         if annotation is MKUserLocation {
             return nil
         }
-        // 클러스터 어노테이션 처리
-//        if let cluster = annotation as? MKClusterAnnotation {
-//            let identifier = "Cluster"
-//            var clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-//            var label: UILabel?
-//            
-//            if clusterView == nil {
-//                clusterView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//                
-//                // 원 형태의 뷰 생성
-//                let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-//                circleView.layer.cornerRadius = 15
-//                circleView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.5)
-//                
-//                label = UILabel(frame: circleView.bounds)
-//                label?.textColor = .black
-//                label?.textAlignment = .center
-//                label?.font = UIFont(name: "Jua", size: 20)
-//                label?.text = "\(cluster.memberAnnotations.count)"
-//                circleView.addSubview(label!)
-//                
-//                clusterView?.addSubview(circleView)
-//            } else {
-//                if let lbl = clusterView?.subviews.first?.subviews.first as? UILabel {
-//                    lbl.text = "\(cluster.memberAnnotations.count)"
-//                    label = lbl
-//                }
-//            }
-//            
-//            // 여기에서 원하는대로 label의 텍스트를 업데이트
-//            label?.text = "\(cluster.memberAnnotations.count)"
-//            
-//            return clusterView
-//        }
-        
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Custom")
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Custom")
@@ -182,7 +153,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-     //디테일 뷰 상단만 코너래디우스 주기
+    //디테일 뷰 상단만 코너래디우스 주기
     func applyTopCornersRadius(to view: UIView, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius))
         
@@ -292,7 +263,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             hideDetailView()
         }
     }
-
+    
     func hideDetailView() {
         UIView.animate(withDuration: 0.3) {
             self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
@@ -300,26 +271,112 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     //MARK : FETCH DATA
     
-    func fetchList() {
-        let networkManager = NetworkManager()
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let currentLocation = locations.last {
+            fetchCoordinateCurrentLocation(currentLocation)
+        }
+        //            if let currentLocation = locations.last {
+        //                        locationManager.stopUpdatingLocation()  // 위치 정보 업데이트 중지
+        //                        fetchList(x: currentLocation.coordinate.latitude, y: currentLocation.coordinate.longitude)
+        //                    }
+    }
+    //WGS 좌표 -> KATECH 좌표
+    
+    func fetchCoordinateCurrentLocation(_ location: CLLocation) {
         
-        networkManager.fetchGasStationList(x: "314681.8", y: "544837", sort: "1", prodcd: "B027") { listResponse in
-            if let listResponse = listResponse {
-                for item in listResponse.result.oil {
-                    self.stationList.append(item)
+        let lat = String(location.coordinate.latitude)
+        let lon = String(location.coordinate.longitude)
+        
+        networkManager.fetchCoordinateChange(fromLat: lat, fromLon: lon) { coordinate in
+            DispatchQueue.main.async {  // 메인 스레드에서 실행
+                if let coordinate = coordinate {
+                    print("현 위치:" + "Longitude: \(coordinate.coordinate.lon), Latitude: \(coordinate.coordinate.lat)")
+                    // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
+                    self.fetchList(x: coordinate.coordinate.lon, y: coordinate.coordinate.lat)
+                } else {
+                    print("Failed to fetch coordinate")
+                    // 에러 상황에 대한 처리를 수행할 수 있습니다.
                 }
-// 땡겨와서 쪼갠뒤 저장했다.
-                
-            } else {
-                print("실패")
             }
         }
     }
+    //반경 내 주유소 api request
     
+    func fetchList(x: String, y: String) {
+        networkManager.fetchGasStationList(x: x, y: y, sort: "1", prodcd: "B027") { listResponse in
+            DispatchQueue.main.async {
+                if let listResponse = listResponse {
+                    self.stationList.append(contentsOf: listResponse.result.oil)
+                    self.fetchGasStationDetail()
+                    self.fetchCoordinateCurrentLocationAgain()
+                    // print(self.stationList)
+                    // 여기에서 UI를 업데이트하거나 다른 처리를 할 수 있습니다.
+                } else {
+                    print("데이터 로딩 실패")
+                }
+            }
+        }
+    }
+    /*
+     func fetchList() {
+     
+     networkManager.fetchGasStationList(x: "314223.108646", y: "544419.978154", sort: "1", prodcd: "B027") { listResponse in
+     if let listResponse = listResponse {
+     for item in listResponse.result.oil {
+     self.stationList.append(item)
+     print(self.stationList)
+     }
+     // 땡겨와서 쪼갠뒤 저장했다.
+     
+     } else {
+     print("실패")
+     }
+     }
+     }
+     */
+    func fetchGasStationDetail() {
+        stationList.map{ $0.uniID}.forEach { id in
+            print(id)
+            networkManager.fetchGasStationDetailList(id: id) {gasStationResponse in
+                if let gasStationResponse = gasStationResponse {
+                    for item in gasStationResponse.result.oil{
+                        self.stationDetailList.append(item)
+                        print(self.stationDetailList)
+                    }
+                } else {
+                    print("실패")
+                }
+            }
+        }
+        
+    }
+    
+    //KATECH->WGS84
+    func fetchCoordinateCurrentLocationAgain() {
+        
+        networkManager.fetchCoordinateChangeAgain(fromLat: "314681.8", fromLon: "544837") { coordinate in
+            DispatchQueue.main.async {  // 메인 스레드에서 실행
+                if let coordinate = coordinate {
+                    print("Latitude: \(coordinate.reverseCoordinate.lon), Longitude: \(coordinate.reverseCoordinate.lat)")
+                    // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
+                } else {
+                    print("Failed to fetch coordinate")
+                    // 에러 상황에 대한 처리를 수행할 수 있습니다.
+                }
+            }
+        }
+    }
 }
-
-extension MapPageViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    
+    extension MapPageViewController: UIGestureRecognizerDelegate {
+        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
             return !(touch.view?.isDescendant(of: mapDetailView) ?? false)
         }
-}
+    }
