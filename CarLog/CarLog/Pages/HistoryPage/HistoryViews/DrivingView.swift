@@ -21,7 +21,8 @@ class DrivingView: UIView {
     
     lazy var noDataLabel: UILabel = {
         let noDataLabel = UILabel()
-        noDataLabel.customLabel(text: "주행기록을 추가하여 차량 관리를 시작하세요!", textColor: .gray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
+        noDataLabel.customLabel(text: "주행기록을 추가하여\n차량 관리를 시작하세요!", textColor: .gray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
+        noDataLabel.numberOfLines = 2
         return noDataLabel
     }()
     
