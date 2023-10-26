@@ -93,16 +93,19 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
-        guard let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth else { return UICollectionViewCell() }
-        guard let time = carParts.parts[indexPath.row].currentTime else { return UICollectionViewCell() }
         if let icon = menuIcon[indexPath.row] {
             if carParts.parts[indexPath.row].name != .insurance {
-                firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-                secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
+                if let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth {
+                    firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
+                    secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
+                }
                 progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
             } else {
-                firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
-                secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
+                if let time = carParts.parts[indexPath.row].currentTime{
+                    firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
+                    secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
+                }
+                
                 progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
             }
             cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
@@ -116,6 +119,8 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         guard let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth else { return }
         guard let time = carParts.parts[indexPath.row].currentTime else { return }
         if carParts.parts[indexPath.row].name != .insurance {
+            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
+            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
             firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
             secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
             progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
