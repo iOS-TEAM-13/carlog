@@ -13,8 +13,8 @@ class NetworkManager {
     //반경 내 주유소 api 파싱
     func fetchGasStationList(x:String,y:String,sort:String,prodcd:String, completion: @escaping (listResponse?) -> Void){
         // GET 요청을 보낸다
-        let baseURL = "https://www.opinet.co.kr/api/aroundAll.do?code=F231013280&"
-        let query = "x=\(x)&y=\(y)&radius=5000&sort=\(sort)&prodcd=\(prodcd)&out=json"
+        let baseURL = "https://www.opinet.co.kr/api/aroundAll.do?code=F231011278&"
+        let query = "x=\(x)&y=\(y)&radius=1000&sort=\(sort)&prodcd=\(prodcd)&out=json"
         let urlString = baseURL + query
         
         guard let url = URL(string: urlString) else {
@@ -97,7 +97,7 @@ class NetworkManager {
     //주유소 상세정보 api 파싱
     func fetchGasStationDetailList(id: String,completion: @escaping (gasStationResponse?) -> Void){
         // GET 요청을 보낸다
-        let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231013280&"
+        let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231011278&"
         let query = "id=\(id)&out=json"
         let urlString = baseURL + query
         
@@ -136,8 +136,7 @@ class NetworkManager {
         task.resume()
     }
     
-    func fetchCoordinateChangeAgain(fromLat lat: String, fromLon lon: String, completion: @escaping (ReverseCoordinate?) -> Void) {
-        
+    func fetchCoordinateChangeAgain(fromLat lat: String, fromLon lon: String, completion: @escaping (Coordinate?) -> Void) {
         let baseURL = "https://apis.openapi.sk.com/tmap/geo/coordconvert?"
         let query = "version=1&lat=\(lat)&lon=\(lon)&fromCoord=KATECH&toCoord=WGS84GEO"
         let urlString = baseURL + query
@@ -163,7 +162,7 @@ class NetworkManager {
                 }
                 switch urlResponse.statusCode {
                 case 200..<300 :
-                    let decodedData = try JSONDecoder().decode(ReverseCoordinate.self, from: data!)
+                    let decodedData = try JSONDecoder().decode(Coordinate.self, from: data!)
                     completion(decodedData)
                     
                 default :
