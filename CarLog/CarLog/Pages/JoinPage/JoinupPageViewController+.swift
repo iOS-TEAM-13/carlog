@@ -341,19 +341,67 @@ extension JoinupPageViewController {
                     totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
                     userEmail: self.joinupView.emailTextField.text),
                 completion: { _ in
-                    self.keepLogin()
+                    self.doneButtonTapped()
                 })
         }), for: .touchUpInside)
     }
 
-    func keepLogin() {
+    func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
             print("user:\(user?.email ?? "")")
-            if user != nil {
-                let tabBarController = Constants.mainTabBarController()
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true, completion: nil)
+            //rootview로 갈아끼워보기 
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                if user != nil {
+                    let tabBarController = Constants.mainTabBarController()
+                    UIApplication.shared.keyWindow?.replaceRootViewController(tabBarController, animated: true, completion: nil)
+    //                tabBarController.modalPresentationStyle = .fullScreen
+    //                self.present(tabBarController, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+}
+
+extension UIWindow {
+    
+    func replaceRootViewController(_ replacementController: UIViewController, animated: Bool, completion: (() -> Void)?) {
+        let snapshotImageView = UIImageView(image: self.snapshot())
+        self.addSubview(snapshotImageView)
+        let dismissCompletion = { () -> Void in // dismiss all modal view controllers
+            self.rootViewController = replacementController
+            self.bringSubviewToFront(snapshotImageView)
+            
+            if animated {
+                UIView.animate(withDuration: 0.4, animations: { () -> Void in
+                    snapshotImageView.alpha = 0
+                }, completion: { (success) -> Void in
+                    snapshotImageView.removeFromSuperview()
+                    completion?()
+                })
+            } else {
+                snapshotImageView.removeFromSuperview()
+                completion?()
             }
         }
+        
+        if self.rootViewController!.presentedViewController != nil {
+            self.rootViewController!.dismiss(animated: false, completion: dismissCompletion)
+        } else {
+            dismissCompletion()
+        }
+    }
+    
+    func snapshot() -> UIImage {
+
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+
+    drawHierarchy(in: bounds, afterScreenUpdates: true)
+
+    guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage.init() }
+
+    UIGraphicsEndImageContext()
+
+    return result
     }
 }
