@@ -16,7 +16,7 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        navigationController?.navigationBar.barTintColor = .white
         // MARK: - Setup
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
