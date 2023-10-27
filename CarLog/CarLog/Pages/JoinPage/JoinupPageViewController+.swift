@@ -172,10 +172,6 @@ extension JoinupPageViewController {
                 self.showAlert(message: "인증번호를 확인해주세요")
             }
 
-            if self.joinupView.smtpButton.isEnabled == false, self.joinupView.smtpNumberButton.isEnabled == false {
-                print("")
-            } else {}
-
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text,
