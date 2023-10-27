@@ -46,7 +46,7 @@ class FuelingDetailViewController: UIViewController {
                 self.fuelingDetailView.totalDistanceTextField.text = "\(fuelings.totalDistance ?? 0)"
                 self.fuelingDetailView.priceTextField.text = "\(fuelings.price ?? 0)"
                 self.fuelingDetailView.countTextField.text = "\(fuelings.count ?? 0.0)"
-                self.fuelingDetailView.totalPriceTextField.text = "\(fuelings.totalDistance ?? 0)"
+                self.fuelingDetailView.totalPriceTextField.text = "\(fuelings.totalPrice ?? 0)"
             } else {
                 print("데이터 로드 중 오류 발생")
             }
