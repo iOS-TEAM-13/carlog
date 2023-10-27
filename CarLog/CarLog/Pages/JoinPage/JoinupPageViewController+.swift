@@ -5,72 +5,75 @@ import SwiftSMTP
 
 extension JoinupPageViewController {
     // MARK: - 회원가입의 주요 기능 구현 코드
-
+    
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             guard let email = self.joinupView.emailTextField.text else {
                 self.joinupView.emailAlertLabel.isHidden = false
                 return
             }
-
+            
             if email.isEmpty || !email.isValidEmail() {
                 self.joinupView.emailAlertLabel.isHidden = false
             } else {
                 self.joinupView.emailAlertLabel.isHidden = true
             }
         }), for: .editingDidEnd)
-
+        
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
-
+        
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
             guard let password = self.joinupView.passwordTextField.text else {
                 self.joinupView.passwordAlertLabel.isHidden = false
                 return
             }
-
+            
             if password.isEmpty || !password.isValidPassword() {
                 self.joinupView.passwordAlertLabel.isHidden = false
             } else {
                 self.joinupView.passwordAlertLabel.isHidden = true
             }
         }), for: .editingDidEnd)
-
+        
         joinupView.passwordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
-
+        
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
             guard let password = self.joinupView.confirmPasswordTextField.text else {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
                 return
             }
-
+            
             if password.isEmpty || !password.isValidPassword() {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = false
             } else {
                 self.joinupView.confirmPasswordAlertLabel.isHidden = true
             }
         }), for: .editingDidEnd)
-
+        
         joinupView.confirmPasswordTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
         }), for: .editingChanged)
-
+        
         joinupView.smtpEmailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
             if let smtpEmailText = self.joinupView.smtpEmailTextField.text, !smtpEmailText.isEmpty, smtpEmailText.isValidEmail() {
-                self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-                self.joinupView.smtpButton.backgroundColor = .mainNavyColor
-                self.joinupView.smtpButton.isEnabled = true
-            } else {
-                self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
-                self.joinupView.smtpButton.backgroundColor = .lightGray
-                self.joinupView.smtpButton.isEnabled = false
+                if self.isCheckedEmail == false {
+                    self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                    self.joinupView.smtpButton.backgroundColor = .mainNavyColor
+                    self.joinupView.smtpButton.isEnabled = true
+                } else {
+                    self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
+                    self.joinupView.smtpButton.backgroundColor = .lightGray
+                    self.joinupView.smtpButton.isEnabled = false
+                    self.isCheckedEmail = true
+                }
             }
         }), for: .editingChanged)
-
+        
         joinupView.smtpNumberTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
             if let smtpNumberText = self.joinupView.smtpNumberTextField.text, !smtpNumberText.isEmpty, smtpNumberText.count == 6 {
@@ -84,19 +87,19 @@ extension JoinupPageViewController {
             }
         }), for: .editingChanged)
     }
-
+    
     func addCheckEmailButtonAction() {
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty, emailToCheck.isValidEmail() else {
                 return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
             }
-
+            
             FirestoreService.firestoreService.checkingEmail(email: emailToCheck) { isEmailAvailable, error in
                 if let error = error {
                     print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
                     return
                 }
-
+                
                 if isEmailAvailable {
                     self.joinupView.checkEmailButton.setTitleColor(.mainNavyColor, for: .normal)
                     self.joinupView.checkEmailButton.setTitle("가능", for: .normal)
@@ -109,7 +112,7 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
     }
-
+    
     func addSMTPButtonAction() {
         joinupView.smtpButton.addAction(UIAction(handler: { _ in
             guard let emailText = self.joinupView.smtpEmailTextField.text,
@@ -119,17 +122,17 @@ extension JoinupPageViewController {
                 self.showAlert(message: "유효하지 않는 이메일 형식이거나 이메일이 비어 있습니다")
                 return
             }
-
+            
             // smtp 로직
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
-
+            
             let from = Mail.User(name: "CarLog", email: "user3rum@gmail.com")
             let to = Mail.User(name: "User", email: self.joinupView.smtpEmailTextField.text!)
-
+            
             let code = "\(Int.random(in: 100000 ... 999999))"
-
+            
             let mail = Mail(from: from, to: [to], subject: "[CarLog] E-MAIL VERIFICATION", text: "인증번호 \(code) \n" + "APP으로 돌아가 인증번호를 입력해주세요.")
-
+            
             DispatchQueue.global().async {
                 smtp.send(mail) { error in
                     if let error = error {
@@ -140,17 +143,17 @@ extension JoinupPageViewController {
                     }
                 }
             }
-
+            
             self.joinupView.smtpTimerLabel.isHidden = false
             self.joinupView.smtpButton.isEnabled = false
             self.joinupView.smtpButton.backgroundColor = .lightGray
             self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
-
+            
             // 타이머
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
         }), for: .touchUpInside)
     }
-
+    
     func addSMTPNumberButtonAction() {
         joinupView.smtpNumberButton.addAction(UIAction(handler: { _ in
             self.checkVerificationCode { success in
@@ -162,18 +165,18 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
     }
-
+    
     func addJoinInButtonAction() {
         joinupView.joinInButton.addAction(UIAction(handler: { _ in
             if self.joinupView.checkEmailButton.title(for: .normal) != "가능" {
                 self.showAlert(message: "아이디 중복검사를 해주세요")
                 return
             }
-
+            
             if self.joinupView.smtpNumberButton.title(for: .normal) != "완료" {
                 self.showAlert(message: "인증번호를 확인해주세요")
             }
-
+            
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text,
@@ -182,14 +185,14 @@ extension JoinupPageViewController {
             else {
                 return
             }
-
+            
             let isEmailValid = email.isValidEmail()
             let isPasswordValid = password.isValidPassword()
             let isConfirmPasswordValid = confirmPassword == password
             let isSMTPEmailValid = smtpEmail.isValidEmail()
             let isSMTPNumber = smtpNumber.count == 6
             let personalInfoCheck = self.joinupView.checkboxButton.isSelected == !self.isChecked
-
+            
             if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber, personalInfoCheck {
                 LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
@@ -245,36 +248,37 @@ extension JoinupPageViewController {
             }
         }), for: .touchUpInside)
     }
-
+    
     // MARK: - SMTP 인증관련 코드
-
+    
     func checkVerificationCode(completion: @escaping (Bool) -> Void) {
         guard let userInputCode = joinupView.smtpNumberTextField.text else {
             completion(false)
             return
         }
-
+        
         if let savedCode = UserDefaults.standard.string(forKey: "emailVerificationCode"), savedCode == userInputCode {
             completion(true)
         } else {
             joinupView.smtpNumberButton.isEnabled = true
             joinupView.smtpNumberTextField.text = ""
             showAlert(message: "인증번호가 일치하지 않습니다.")
-
+            
             // 인증에 실패한 경우 false를 반환
             completion(false)
         }
     }
-
+    
     func verifyButtonPressed(_ sender: UIButton) {
         self.checkVerificationCode { _ in
             print("success")
         }
     }
-
+    
     @objc func updateTimerLabel() {
         if seconds > 0 {
             seconds -= 1
+//            self.isCheckedEmail = true
             joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
         } else if seconds == 0 {
             joinupView.smtpTimerLabel.isHidden = true
@@ -282,18 +286,19 @@ extension JoinupPageViewController {
             self.joinupView.smtpButton.backgroundColor = .mainNavyColor
             self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
             self.joinupView.smtpTimerLabel.text = "대기중"
+            self.isCheckedEmail = false
             seconds = 180
         }
     }
-
+    
     func timeString(time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02i:%02i", minutes, seconds)
     }
-
+    
     // MARK: - View 관련 로직 + 회원가입할 때 기능 구현
-
+    
     func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
             let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
@@ -303,7 +308,7 @@ extension JoinupPageViewController {
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             self.present(alert, animated: true, completion: nil)
         }), for: .touchUpInside)
-
+        
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
@@ -311,7 +316,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-
+        
         carMakerView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
@@ -319,7 +324,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-
+        
         carModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
@@ -327,7 +332,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-
+        
         oilModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
@@ -335,7 +340,7 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-
+        
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.totalDistanceView)
             self.nickNameView.isHidden = true
@@ -343,10 +348,10 @@ extension JoinupPageViewController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-
+        
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
-
+            
             FirestoreService.firestoreService.saveCar(
                 car: Car(
                     number: self.carNumberView.carNumberTextField.text,
@@ -361,7 +366,7 @@ extension JoinupPageViewController {
                 })
         }), for: .touchUpInside)
     }
-
+    
     func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
             if user != nil {
@@ -384,7 +389,7 @@ extension UIWindow {
         let dismissCompletion = { () in // dismiss all modal view controllers
             self.rootViewController = replacementController
             self.bringSubviewToFront(snapshotImageView)
-
+            
             if animated {
                 UIView.animate(withDuration: 0.4, animations: { () in
                     snapshotImageView.alpha = 0
@@ -397,23 +402,23 @@ extension UIWindow {
                 completion?()
             }
         }
-
+        
         if self.rootViewController!.presentedViewController != nil {
             self.rootViewController!.dismiss(animated: false, completion: dismissCompletion)
         } else {
             dismissCompletion()
         }
     }
-
+    
     func snapshot() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
-
+        
         drawHierarchy(in: bounds, afterScreenUpdates: true)
-
+        
         guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-
+        
         UIGraphicsEndImageContext()
-
+        
         return result
     }
 }

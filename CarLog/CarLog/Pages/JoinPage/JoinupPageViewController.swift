@@ -17,6 +17,7 @@ class JoinupPageViewController: UIViewController {
     var seconds: Int = 180
     var isChecked = false
     let dummyData = ["휘발유", "경유", "LPG"]
+    var isCheckedEmail = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
