@@ -1,40 +1,24 @@
-//
-//  SceneDelegate.swift
-//  CarLog
-//
-//  Created by t2023-m0050 on 2023/10/10.
-//
-
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+import FirebaseAuth
 
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        window?.makeKeyAndVisible()
-        
-        let tabBarController = TabBarController()
-        
-        let tabs: [(root: UIViewController, icon: String)] = [
-            (MyCarPageViewController(), "car"),
-            (HistoryPageViewController(), "book"),
-            (MapPageViewController(), "map"),
-            (CommunityPageViewController(), "play"),
-            (MyPageViewController(), "person"),
-            
-        ]
-        
-        tabBarController.setViewControllers(tabs.map { root, icon in
-            let navigationController = UINavigationController(rootViewController: root)
-            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
-            navigationController.tabBarItem = tabBarItem
-            return navigationController
-        }, animated: false)
-        
-        window?.rootViewController = tabBarController
+        guard let windowScene = scene as? UIWindowScene else { return }
+        self.window = UIWindow(windowScene: windowScene)
+
+        if Auth.auth().currentUser != nil {
+            // 사용자가 로그인되어 있음
+            let tabBarController = Util.mainTabBarController()
+            self.window?.rootViewController = tabBarController
+        } else {
+            // 사용자가 로그인되어 있지 않음
+            let loginPageViewController = LoginPageViewController()
+            self.window?.rootViewController = loginPageViewController
+        }
+        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -64,7 +48,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-
