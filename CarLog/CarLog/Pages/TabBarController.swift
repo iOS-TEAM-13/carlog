@@ -3,7 +3,9 @@ import UIKit
 final class TabBarController: UITabBarController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tabBar.tintColor = .label
+        tabBar.tintColor = .mainNavyColor
+        tabBar.barTintColor = .white
+        tabBar.unselectedItemTintColor = .gray
 
         let paddingTop: CGFloat = 10.0
         tabBar.frame = .init(

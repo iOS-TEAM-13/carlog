@@ -20,23 +20,23 @@ class MyPageViewController: UIViewController {
         // MARK: - Setup
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         addTargetButton()
         registerForKeyboardNotifications()
     }
     
     deinit {
-        registerForKeyboardNotifications()
+        NotificationCenter.default.removeObserver(self)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         DispatchQueue.main.async {
             self.loadCarData() // ⭐ 내 차 정보 가져오기
-            
         }
-        
     }
     
     func addTargetButton() {
@@ -110,6 +110,7 @@ class MyPageViewController: UIViewController {
             // carDummy 배열이 비어있을 때 대응할 내용을 여기에 추가할 수 있습니다.
         }
     }
+    
     @objc func logoutButtonTapped() {
         if Auth.auth().currentUser != nil {
             LoginService.loginService.logout {
@@ -130,19 +131,22 @@ class MyPageViewController: UIViewController {
     @objc func quitUserButtonTapped() {
         if Auth.auth().currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
-//            [UIAlertAction(title: "탈퇴하기", style: .default),
-//             UIAlertAction(title: "취소", style: .cancel)].forEach{alert.addAction($0)}; present(alert, animated: true)
-            // 회원탈퇴 하기전, alert 창에 확인버튼으로 감싸기
-            LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { error in
-                let loginViewController = LoginPageViewController()
-                self.dismiss(animated: true) {
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let sceneDelegate = windowScene.delegate as? SceneDelegate
-                    {
-                        sceneDelegate.window?.rootViewController = loginViewController
+            alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
+                LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { error in
+                    let loginViewController = LoginPageViewController()
+                    self.dismiss(animated: true) {
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let sceneDelegate = windowScene.delegate as? SceneDelegate
+                        {
+                            sceneDelegate.window?.rootViewController = loginViewController
+                        }
                     }
                 }
-            }
+            }))
+            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
+            present(alert, animated: true)
+            // 회원탈퇴 하기전, alert 창에 확인버튼으로 감싸기
+            
         } else {
             dismiss(animated: true)
         }

@@ -101,7 +101,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         
         mapView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
         
         myLocationButton.snp.makeConstraints { make in
@@ -328,9 +328,9 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         stationList.map{ $0.uniID}.forEach { id in
             networkManager.fetchGasStationDetailList(id: id) {gasStationResponse in
                 if let gasStationResponse = gasStationResponse {
-                    for item in gasStationResponse.result.oil {
-                        self.stationDetailList.append(item)
-                        self.fetchCoordinateCurrentLocationAgain(fromLat: String(item.gisXCoor), fromLon: String(item.gisYCoor))
+                    for i in 0...gasStationResponse.result.oil.count - 1 {
+                        self.stationDetailList.append(gasStationResponse.result.oil[i])
+                        self.fetchCoordinateCurrentLocationAgain(fromLat: String(gasStationResponse.result.oil[i].gisXCoor), fromLon: String(gasStationResponse.result.oil[i].gisYCoor), index: i)
                     }
                 } else {
                     print("실패")
@@ -340,15 +340,14 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     //KATECH->WGS84
-    func fetchCoordinateCurrentLocationAgain(fromLat: String, fromLon: String) {
+    func fetchCoordinateCurrentLocationAgain(fromLat: String, fromLon: String, index: Int) {
         networkManager.fetchCoordinateChangeAgain(fromLat: fromLat, fromLon: fromLon) { coordinate in
             DispatchQueue.main.async {  // 메인 스레드에서 실행
                 if let coordinate = coordinate {
                     // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                    for i in 0...self.stationDetailList.count - 1 {
-                        self.stationDetailList[i].gisXCoor = Float(coordinate.coordinate.lon) ?? 0.0
-                        self.stationDetailList[i].gisYCoor = Float(coordinate.coordinate.lat) ?? 0.0
-                    }
+                        self.stationDetailList[index].gisXCoor = Float(coordinate.coordinate.lon) ?? 0.0
+                        self.stationDetailList[index].gisYCoor = Float(coordinate.coordinate.lat) ?? 0.0
+                    print(self.stationDetailList[index].gisXCoor)
                 } else {
                     print("Failed to fetch coordinate")
                     // 에러 상황에 대한 처리를 수행할 수 있습니다.

@@ -26,7 +26,7 @@ class JoinupPageViewController: UIViewController {
     }
 
     deinit {
-        registerForKeyboardNotifications()
+        NotificationCenter.default.removeObserver(self)
     }
 
     func setupUI() {
