@@ -40,7 +40,7 @@ class MyCarPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        
+        navigationController?.navigationBar.barTintColor = .white
         setupUI()
 //        checkFirst()
     }
