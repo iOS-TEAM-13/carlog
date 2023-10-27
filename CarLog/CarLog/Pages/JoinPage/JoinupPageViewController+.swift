@@ -186,8 +186,9 @@ extension JoinupPageViewController {
             let isConfirmPasswordValid = confirmPassword == password
             let isSMTPEmailValid = smtpEmail.isValidEmail()
             let isSMTPNumber = smtpNumber.count == 6
+            let personalInfoCheck = self.joinupView.checkboxButton.isSelected == !self.isChecked
 
-            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber {
+            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber, personalInfoCheck {
                 LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
@@ -222,8 +223,23 @@ extension JoinupPageViewController {
                     alertMessage = "이메일 인증을 해주세요"
                 } else if smtpNumber.isEmpty {
                     alertMessage = "인증번호를 확인해주세요"
+                } else if personalInfoCheck == self.isChecked {
+                    alertMessage = "개인정보수집에 동의해주세요"
                 }
                 self.showAlert(message: alertMessage)
+            }
+        }), for: .touchUpInside)
+    }
+    
+    func personalInfoVerifiedCheck() {
+        joinupView.checkboxButton.addAction(UIAction(handler: { _ in
+            self.isChecked = !self.isChecked
+            if self.isChecked {
+                let checkedImage = UIImage(named: "check")
+                self.joinupView.checkboxButton.setImage(checkedImage, for: .normal)
+            } else {
+                let uncheckedImage = UIImage(named: "checkbox")
+                self.joinupView.checkboxButton.setImage(uncheckedImage, for: .normal)
             }
         }), for: .touchUpInside)
     }
