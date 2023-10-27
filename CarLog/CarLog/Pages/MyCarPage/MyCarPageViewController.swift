@@ -42,7 +42,6 @@ class MyCarPageViewController: UIViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.barTintColor = .white
         setupUI()
-//        checkFirst()
     }
     
     override func viewWillAppear(_ animated: Bool) {
