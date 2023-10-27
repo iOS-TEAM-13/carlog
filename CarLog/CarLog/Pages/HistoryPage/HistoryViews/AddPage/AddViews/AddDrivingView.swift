@@ -53,6 +53,7 @@ class AddDrivingView: UIView {
         totalDistanceTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
@@ -112,6 +113,7 @@ class AddDrivingView: UIView {
         arriveDistanceTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
@@ -170,6 +172,7 @@ class AddDrivingView: UIView {
         driveDistenceTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
