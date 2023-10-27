@@ -279,7 +279,7 @@ extension JoinupPageViewController {
             self.joinupView.smtpButton.isEnabled = true
             self.joinupView.smtpButton.backgroundColor = .mainNavyColor
             self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-            self.joinupView.smtpTimerLabel.text = "인증 대기 중..."
+            self.joinupView.smtpTimerLabel.text = "대기중"
             seconds = 180
         }
     }
