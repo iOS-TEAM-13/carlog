@@ -150,7 +150,6 @@ final class MyPageView: UIView {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray]
-        //            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
         let attributedTitle = NSAttributedString(string: "로그아웃", attributes: attributes)
         logoutButton.setAttributedTitle(attributedTitle, for: .normal)
         logoutButton.backgroundColor = .clear
@@ -170,7 +169,6 @@ final class MyPageView: UIView {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray]
-        //            .underlineStyle: NSUnderlineStyle.single.rawValue] // 글씨 언더라인 메서드
         let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
         quitUserbutton.setAttributedTitle(attributedTitle, for: .normal)
         quitUserbutton.backgroundColor = .clear
