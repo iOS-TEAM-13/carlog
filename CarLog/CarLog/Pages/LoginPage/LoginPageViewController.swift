@@ -12,18 +12,17 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        //keepLogin()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         addTargets()
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         loginView.endEditing(true)
     }
-    
+
     func setupUI() {
         view.addSubview(loginView)
         loginView.snp.makeConstraints { make in
@@ -43,7 +42,8 @@ class LoginPageViewController: UIViewController {
                     let tabBarController = Constants.mainTabBarController()
                     if let windowScene = UIApplication.shared.connectedScenes
                         .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
-                        let window = windowScene.windows.first {
+                        let window = windowScene.windows.first
+                    {
                         window.rootViewController = tabBarController
                     }
                 } else {
@@ -61,23 +61,13 @@ class LoginPageViewController: UIViewController {
                 }
             }
         }), for: .touchUpInside)
+        
         loginView.joinupButton.addAction(UIAction(handler: { _ in
             let joinPageViewController = JoinupPageViewController()
             joinPageViewController.modalPresentationStyle = .fullScreen
             self.present(joinPageViewController, animated: true, completion: nil)
         }), for: .touchUpInside)
     }
-
-//    func keepLogin() {
-//        LoginService.loginService.keepLogin { user in
-//            print("user:\(user?.email ?? "")")
-//            if user != nil {
-//                let tabBarController = Constants.mainTabBarController()
-//                tabBarController.modalPresentationStyle = .fullScreen
-//                self.present(tabBarController, animated: true, completion: nil)
-//            }
-//        }
-//    }
 
     func textFieldDidChange() {
         let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
