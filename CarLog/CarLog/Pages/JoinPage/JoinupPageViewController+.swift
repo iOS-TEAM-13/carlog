@@ -350,7 +350,6 @@ extension JoinupPageViewController {
 
     func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
-            print("user:\(user?.email ?? "")")
             if user != nil {
                 let tabBarController = Constants.mainTabBarController()
                 if let windowScene = UIApplication.shared.connectedScenes

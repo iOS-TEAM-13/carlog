@@ -42,7 +42,6 @@ final class JoinupView: UIView {
         
         let button = UIButton(configuration: configuration)
         button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
-        button.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         return button
     }()
     
@@ -92,7 +91,7 @@ final class JoinupView: UIView {
 
     lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
     
-    lazy var smtpTimerLabel: UILabel = makeLabel(text: "인증 대기 중...", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+    lazy var smtpTimerLabel: UILabel = makeLabel(text: "대기중", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
     
     lazy var smtpNumberStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])

@@ -12,7 +12,6 @@ class LoginPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        //keepLogin()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -67,17 +66,6 @@ class LoginPageViewController: UIViewController {
             self.present(joinPageViewController, animated: true, completion: nil)
         }), for: .touchUpInside)
     }
-
-//    func keepLogin() {
-//        LoginService.loginService.keepLogin { user in
-//            print("user:\(user?.email ?? "")")
-//            if user != nil {
-//                let tabBarController = Constants.mainTabBarController()
-//                tabBarController.modalPresentationStyle = .fullScreen
-//                self.present(tabBarController, animated: true, completion: nil)
-//            }
-//        }
-//    }
 
     func textFieldDidChange() {
         let isEmailValid = loginView.emailTextField.text?.isValidEmail() ?? false
