@@ -15,6 +15,7 @@ class JoinupPageViewController: UIViewController {
 
     var timer: Timer?
     var seconds: Int = 180
+    var isChecked = false
     let dummyData = ["휘발유", "경유", "LPG"]
 
     override func viewDidLoad() {
@@ -46,6 +47,7 @@ class JoinupPageViewController: UIViewController {
         addSMTPButtonAction()
         addSMTPNumberButtonAction()
         addJoinInButtonAction()
+        personalInfoVerifiedCheck()
     }
 
     // MARK: - Alert 창 구현

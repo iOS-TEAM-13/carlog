@@ -61,6 +61,7 @@ class LoginPageViewController: UIViewController {
                 }
             }
         }), for: .touchUpInside)
+        
         loginView.joinupButton.addAction(UIAction(handler: { _ in
             let joinPageViewController = JoinupPageViewController()
             joinPageViewController.modalPresentationStyle = .fullScreen

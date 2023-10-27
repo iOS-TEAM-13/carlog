@@ -120,11 +120,6 @@ extension JoinupPageViewController {
                 return
             }
 
-            if let timer = self.timer {
-                timer.invalidate()
-                self.timer = nil
-            }
-
             // smtp 로직
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
 
@@ -145,7 +140,11 @@ extension JoinupPageViewController {
                     }
                 }
             }
+
             self.joinupView.smtpTimerLabel.isHidden = false
+            self.joinupView.smtpButton.isEnabled = false
+            self.joinupView.smtpButton.backgroundColor = .lightGray
+            self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
 
             // 타이머
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
@@ -189,8 +188,9 @@ extension JoinupPageViewController {
             let isConfirmPasswordValid = confirmPassword == password
             let isSMTPEmailValid = smtpEmail.isValidEmail()
             let isSMTPNumber = smtpNumber.count == 6
+            let personalInfoCheck = self.joinupView.checkboxButton.isSelected == !self.isChecked
 
-            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber {
+            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber, personalInfoCheck {
                 LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
@@ -225,8 +225,23 @@ extension JoinupPageViewController {
                     alertMessage = "이메일 인증을 해주세요"
                 } else if smtpNumber.isEmpty {
                     alertMessage = "인증번호를 확인해주세요"
+                } else if personalInfoCheck == self.isChecked {
+                    alertMessage = "개인정보수집에 동의해주세요"
                 }
                 self.showAlert(message: alertMessage)
+            }
+        }), for: .touchUpInside)
+    }
+    
+    func personalInfoVerifiedCheck() {
+        joinupView.checkboxButton.addAction(UIAction(handler: { _ in
+            self.isChecked = !self.isChecked
+            if self.isChecked {
+                let checkedImage = UIImage(named: "check")
+                self.joinupView.checkboxButton.setImage(checkedImage, for: .normal)
+            } else {
+                let uncheckedImage = UIImage(named: "checkbox")
+                self.joinupView.checkboxButton.setImage(uncheckedImage, for: .normal)
             }
         }), for: .touchUpInside)
     }
@@ -263,7 +278,10 @@ extension JoinupPageViewController {
             joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
         } else if seconds == 0 {
             joinupView.smtpTimerLabel.isHidden = true
-            self.joinupView.smtpTimerLabel.text = "인증 대기 중..."
+            self.joinupView.smtpButton.isEnabled = true
+            self.joinupView.smtpButton.backgroundColor = .mainNavyColor
+            self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+            self.joinupView.smtpTimerLabel.text = "대기중"
             seconds = 180
         }
     }
@@ -346,7 +364,6 @@ extension JoinupPageViewController {
 
     func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
-            print("user:\(user?.email ?? "")")
             if user != nil {
                 let tabBarController = Util.mainTabBarController()
                 if let windowScene = UIApplication.shared.connectedScenes

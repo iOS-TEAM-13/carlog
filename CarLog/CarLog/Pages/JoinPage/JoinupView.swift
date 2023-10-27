@@ -28,6 +28,31 @@ final class JoinupView: UIView {
         return textField
     }()
     
+    lazy var checkboxButton: UIButton = {
+        let button = UIButton()
+        button.widthAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
+        button.heightAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.0
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .white
+        return button
+    }()
+    
+    lazy var personalInfoStatusLabel: UILabel = {
+        let label = UILabel()
+        label.customLabel(text: "귀하는 카로그의 서비스 이용에 필요한 최소한의 개인정보 수집·이용에 동의하지 않을 수 있으나 동의를 거부할 경우 회원제 서비스 이용이 불가합니다.", textColor: .darkGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
+        label.numberOfLines = 3
+        return label
+    }()
+    
+    lazy var personalInfoStatusStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [checkboxButton, personalInfoStatusLabel])
+        stackView.customStackView(spacing: Constants.verticalMargin, axis: .horizontal, alignment: .center)
+        return stackView
+    }()
+
+    
     @objc func closeKeyboard() {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
@@ -91,7 +116,7 @@ final class JoinupView: UIView {
 
     lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
     
-    lazy var smtpTimerLabel: UILabel = makeLabel(text: "인증 대기 중...", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+    lazy var smtpTimerLabel: UILabel = makeLabel(text: "대기중", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
     
     lazy var smtpNumberStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])
@@ -101,7 +126,7 @@ final class JoinupView: UIView {
     }()
     
     lazy var allTextFieldStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, smtpStackView, smtpNumberStackView])
+        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, stmpStackView, smtpNumberStackView, personalInfoStatusStackView])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()

@@ -53,6 +53,7 @@ class FuelingDetailView: UIView {
         totalDistanceTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
@@ -112,6 +113,7 @@ class FuelingDetailView: UIView {
         priceTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
@@ -171,6 +173,7 @@ class FuelingDetailView: UIView {
         countTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
@@ -222,6 +225,7 @@ class FuelingDetailView: UIView {
         totalPriceTextField.keyboardType = .decimalPad
         
         let nextTextField = UIToolbar()
+        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
         nextTextField.barStyle = UIBarStyle.default
         nextTextField.isTranslucent = true
         nextTextField.sizeToFit()
