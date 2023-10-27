@@ -135,12 +135,14 @@ extension JoinupPageViewController {
 
             let mail = Mail(from: from, to: [to], subject: "[CarLog] E-MAIL VERIFICATION", text: "인증번호 \(code) \n" + "APP으로 돌아가 인증번호를 입력해주세요.")
 
-            smtp.send(mail) { error in
-                if let error = error {
-                    print("전송에 실패하였습니다.: \(error)")
-                } else {
-                    print("전송에 성공하였습니다!")
-                    UserDefaults.standard.set(code, forKey: "emailVerificationCode")
+            DispatchQueue.global().async {
+                smtp.send(mail) { error in
+                    if let error = error {
+                        print("전송에 실패하였습니다.: \(error)")
+                    } else {
+                        print("전송에 성공하였습니다!")
+                        UserDefaults.standard.set(code, forKey: "emailVerificationCode")
+                    }
                 }
             }
             self.joinupView.smtpTimerLabel.isHidden = false

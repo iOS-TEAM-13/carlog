@@ -9,6 +9,7 @@ final class JoinupView: UIView {
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.isDirectionalLockEnabled = true
         return scrollView
     }()
         
@@ -42,7 +43,6 @@ final class JoinupView: UIView {
         
         let button = UIButton(configuration: configuration)
         button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
-        button.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         return button
     }()
     
@@ -80,11 +80,10 @@ final class JoinupView: UIView {
     
     lazy var smtpButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
   
-    lazy var stmpStackView: UIStackView = {
+    lazy var smtpStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpEmailTextField, smtpButton])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        smtpEmailTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.75).isActive = true
-        smtpButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.2).isActive = true
+        stackView.distribution = .fillProportionally
         return stackView
     }()
 
@@ -97,13 +96,12 @@ final class JoinupView: UIView {
     lazy var smtpNumberStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        smtpNumberTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.5).isActive = true
-        smtpNumberButton.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.2).isActive = true
+        stackView.distribution = .fillProportionally
         return stackView
     }()
     
     lazy var allTextFieldStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, stmpStackView, smtpNumberStackView])
+        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, smtpStackView, smtpNumberStackView])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
@@ -143,14 +141,17 @@ final class JoinupView: UIView {
                     
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView)
-            make.height.equalTo(scrollView)
-            make.trailing.equalTo(safeArea.snp.trailing)
+            make.width.height.equalTo(scrollView)
         }
 
         allStackView.snp.makeConstraints { make in
             make.top.bottom.equalTo(contentView)
             make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
+        }
+
+        smtpNumberButton.snp.makeConstraints {
+            $0.width.equalTo(smtpButton)
         }
     }
     
@@ -200,12 +201,12 @@ extension JoinupView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
+        toolbar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
            
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
         textField.inputAccessoryView = toolbar
-           
         return textField
     }
     
