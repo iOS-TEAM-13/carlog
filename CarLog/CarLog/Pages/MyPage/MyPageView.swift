@@ -15,7 +15,7 @@ final class MyPageView: UIView {
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-        
+    
     let contentView: UIView = {
         let contentView = UIView()
         return contentView
@@ -40,12 +40,14 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
-//    //텍스트 폰트에 따른 언더라인 수정
-//    lazy var myWritingButton: UIButton = {
-//        let myWritingButton = UIButton()
-//        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-//        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
-//    }()
+    //    //텍스트 폰트에 따른 언더라인 수정
+    //    lazy var myWritingButton: UIButton = {
+    //        let myWritingButton = UIButton()
+    //        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+    //        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
+    //    }()
+    
+    lazy var carNumberLabel = makeLabel(text: "차량 번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
     lazy var carNumberTextField: UITextField = {
         let carNumbertextField = UITextField()
@@ -55,7 +57,7 @@ final class MyPageView: UIView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
-           
+        
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -71,7 +73,7 @@ final class MyPageView: UIView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
-           
+        
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -87,7 +89,7 @@ final class MyPageView: UIView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
-           
+        
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -103,7 +105,7 @@ final class MyPageView: UIView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
-           
+        
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -119,7 +121,7 @@ final class MyPageView: UIView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
-           
+        
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -135,7 +137,7 @@ final class MyPageView: UIView {
         toolbar.barStyle = .default
         toolbar.isTranslucent = true
         toolbar.sizeToFit()
-           
+        
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -195,6 +197,12 @@ final class MyPageView: UIView {
         return phoneCallButton
     }()
     
+    private func makeLabel(text: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) -> UILabel {
+        let label = UILabel()
+        label.customLabel(text: text, textColor: textColor, font: font, alignment: alignment)
+        return label
+    }
+    
     @objc func closeKeyboard() {
         carNumberTextField.resignFirstResponder()
         carNameTextField.resignFirstResponder()
@@ -211,7 +219,7 @@ final class MyPageView: UIView {
         scrollView.addSubview(contentView)
         contentView.addSubview(mainTitleLabel)
         contentView.addSubview(editButton)
-//      contentView.addSubview(myWritingButton)
+        //      contentView.addSubview(myWritingButton)
         contentView.addSubview(carNumberTextField)
         contentView.addSubview(carNameTextField)
         contentView.addSubview(carMakerTextField)
@@ -249,13 +257,13 @@ final class MyPageView: UIView {
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
-//        myWritingButton.snp.makeConstraints { make in
-//            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
-//            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-//            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-//            make.width.equalTo(100)
-//            make.height.equalTo(70)
-//        }
+        //        myWritingButton.snp.makeConstraints { make in
+        //            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
+        //            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+        //            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        //            make.width.equalTo(100)
+        //            make.height.equalTo(70)
+        //        }
         
         carNumberTextField.snp.makeConstraints { make in
             make.top.equalTo(editButton.snp.bottom).offset(Constants.verticalMargin)
