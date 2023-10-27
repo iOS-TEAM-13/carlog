@@ -126,7 +126,7 @@ final class JoinupView: UIView {
     }()
     
     lazy var allTextFieldStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, stmpStackView, smtpNumberStackView, personalInfoStatusStackView])
+        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, smtpNumberStackView, personalInfoStatusStackView])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
