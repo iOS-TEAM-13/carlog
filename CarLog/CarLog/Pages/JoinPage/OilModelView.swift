@@ -60,10 +60,10 @@ extension OilModelView: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-            return NSAttributedString(string: self.oilOptions[row], attributes: [.foregroundColor:UIColor.gray])
-        }
+        return NSAttributedString(string: oilOptions[row], attributes: [.foregroundColor: UIColor.gray])
+    }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return oilOptions.count

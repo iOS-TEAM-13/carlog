@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Gasstaion
+
 struct gasStationResponse: Codable {
     let result: GasStation
 
@@ -10,6 +11,7 @@ struct gasStationResponse: Codable {
 }
 
 // MARK: - Result
+
 struct GasStation: Codable {
     let oil: [GasStationDetailSummary]
 
@@ -19,6 +21,7 @@ struct GasStation: Codable {
 }
 
 // MARK: - Oil
+
 struct GasStationDetailSummary: Codable {
     let uniID: String
     let pollDivCo: String
@@ -44,6 +47,7 @@ struct GasStationDetailSummary: Codable {
 }
 
 // MARK: - OilPrice
+
 struct OilPrice: Codable {
     let prodcd: String
     let price: Int

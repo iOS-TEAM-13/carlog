@@ -1,19 +1,19 @@
+import UIKit
+
 import CoreLocation
 import MapKit
 import SnapKit
-import UIKit
 
 class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    
     let mapView = MKMapView()
-    var stationList : [GasStationSummary] = []
+    var stationList: [GasStationSummary] = []
     var stationDetailList: [GasStationDetailSummary] = []
     
     var gasStationDetailView: GasStationDetailView?
     
     let locationManager = CLLocationManager()
     let networkManager = NetworkManager()
-    //dummyData
+    // dummyData
     let dummyData = CLLocationCoordinate2D(latitude: 37.29611185603856, longitude: 127.05515403584008)
     
     //  private var overlayView: UIView!
@@ -21,7 +21,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     private lazy var myLocationButton = {
         let button = UIButton()
-        if let image = UIImage(named: "currentLocate"){
+        if let image = UIImage(named: "currentLocate") {
             button.setImage(image, for: .normal)
             button.addTarget(self, action: #selector(myLocationButtonTapped), for: .touchUpInside)
         }
@@ -30,7 +30,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     private lazy var zoomInButton = {
         let button = UIButton()
-        if let image = UIImage(named: "zoomin"){
+        if let image = UIImage(named: "zoomin") {
             button.setImage(image, for: .normal)
             button.addTarget(self, action: #selector(zoomInButtonTapped), for: .touchUpInside)
         }
@@ -39,7 +39,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     private lazy var zoomOutButton = {
         let button = UIButton()
-        if let image = UIImage(named: "zoomout"){
+        if let image = UIImage(named: "zoomout") {
             button.setImage(image, for: .normal)
             button.addTarget(self, action: #selector(zoomOutButtonTapped), for: .touchUpInside)
         }
@@ -61,7 +61,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         
         mapView.delegate = self
         locationManager.delegate = self
@@ -85,8 +85,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         view.addSubview(myLocationButton)
         view.addSubview(zoomInButton)
         view.addSubview(zoomOutButton)
-        self.view.addSubview(mapDetailView)
-        
+        view.addSubview(mapDetailView)
         
         // 나침반 표시 여부
         mapView.showsCompass = true
@@ -95,8 +94,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         // 위치 사용 시 사용자의 연재 위치 표시
         mapView.showsUserLocation = true
         // 사용자 위치를 표시하고 사용자가 움직일 때마다 지도도 함께 움직여 사용자의 현재 위치를 중심으로 유지
-        //mapView.setUserTrackingMode(.follow, animated: true)
-        //사용자의 방향에 따라 회전(나침반 기능과 함께 사용)
+        // mapView.setUserTrackingMode(.follow, animated: true)
+        // 사용자의 방향에 따라 회전(나침반 기능과 함께 사용)
         mapView.setUserTrackingMode(.followWithHeading, animated: true)
         
         mapView.snp.makeConstraints { make in
@@ -118,9 +117,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             make.leftMargin.equalToSuperview().offset(10)
             make.bottomMargin.equalToSuperview().offset(-148)
         }
-        
-        
-        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -153,7 +149,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-    //디테일 뷰 상단만 코너래디우스 주기
+
+    // 디테일 뷰 상단만 코너래디우스 주기
     func applyTopCornersRadius(to view: UIView, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius))
         
@@ -162,6 +159,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         
         view.layer.mask = mask
     }
+
     // 어노테이션 클릭 시 관련 코드
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("어노테이션이 클릭되었습니다.")
@@ -171,10 +169,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 250 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 250) // 높이와 y 위치를 200으로 변경
                 mapView.deselectAnnotation(view.annotation, animated: false)
             }
-            self.applyTopCornersRadius(to: self.mapDetailView, radius: 15)
+            applyTopCornersRadius(to: mapDetailView, radius: 15)
         }
-        
-        
     }
     
     func updateAnnotationToCustomView(_ annotationView: MKAnnotationView, annotation: MKAnnotation) {
@@ -208,7 +204,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     // 현재위치 버튼 입력 시 동작
     @objc func myLocationButtonTapped() {
-        
         guard let currentLocation = locationManager.location else {
             locationManager.requestWhenInUseAuthorization()
             return
@@ -216,6 +211,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let region = MKCoordinateRegion(center: currentLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
     }
+
     // +버튼 입력 시 동작
     @objc func zoomInButtonTapped() {
         let zoom = 0.5 // 원하는 축척 변경 비율
@@ -224,6 +220,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let newRegion = MKCoordinateRegion(center: region.center, span: newSpan)
         mapView.setRegion(newRegion, animated: true)
     }
+
     // -버튼 입력 시 동작
     @objc func zoomOutButtonTapped() {
         let zoom = 2.0 // 원하는 축척 변경 비율
@@ -234,17 +231,16 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func getLocationUsagePermission() {
-        //location4
-        self.locationManager.requestWhenInUseAuthorization()
-        
+        // location4
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        //location5
+        // location5
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
             print("GPS 권한 설정됨")
-            self.locationManager.startUpdatingLocation() // 중요!
+            locationManager.startUpdatingLocation() // 중요!
         case .restricted, .notDetermined:
             print("GPS 권한 설정되지 않음")
             getLocationUsagePermission()
@@ -257,7 +253,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     @objc func handleTapOutsideDetailView(_ gesture: UITapGestureRecognizer) {
-        let location = gesture.location(in: self.view)
+        let location = gesture.location(in: view)
         if !mapDetailView.frame.contains(location) {
             // mapDetailView 바깥 영역을 탭했을 경우
             hideDetailView()
@@ -269,7 +265,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
         }
     }
-    //MARK : FETCH DATA
+
+    // MARK: FETCH DATA
     
     func setupLocationManager() {
         locationManager.delegate = self
@@ -287,15 +284,15 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         //                        fetchList(x: currentLocation.coordinate.latitude, y: currentLocation.coordinate.longitude)
         //                    }
     }
-    //WGS 좌표 -> KATECH 좌표
+
+    // WGS 좌표 -> KATECH 좌표
     
     func fetchCoordinateCurrentLocation(_ location: CLLocation) {
-        
         let lat = String(location.coordinate.latitude)
         let lon = String(location.coordinate.longitude)
         
         networkManager.fetchCoordinateChange(fromLat: lat, fromLon: lon) { coordinate in
-            DispatchQueue.main.async {  // 메인 스레드에서 실행
+            DispatchQueue.main.async { // 메인 스레드에서 실행
                 if let coordinate = coordinate {
                     print("현 위치:" + "Longitude: \(coordinate.coordinate.lon), Latitude: \(coordinate.coordinate.lat)")
                     // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
@@ -307,7 +304,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-    //반경 내 주유소 api request
+
+    // 반경 내 주유소 api request
     
     func fetchList(x: String, y: String) {
         networkManager.fetchGasStationList(x: x, y: y, sort: "1", prodcd: "B027") { listResponse in
@@ -325,10 +323,10 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
 
     func fetchGasStationDetail() {
-        stationList.map{ $0.uniID}.forEach { id in
-            networkManager.fetchGasStationDetailList(id: id) {gasStationResponse in
+        stationList.map { $0.uniID }.forEach { id in
+            networkManager.fetchGasStationDetailList(id: id) { gasStationResponse in
                 if let gasStationResponse = gasStationResponse {
-                    for i in 0...gasStationResponse.result.oil.count - 1 {
+                    for i in 0 ... gasStationResponse.result.oil.count - 1 {
                         self.stationDetailList.append(gasStationResponse.result.oil[i])
                         self.fetchCoordinateCurrentLocationAgain(fromLat: String(gasStationResponse.result.oil[i].gisXCoor), fromLon: String(gasStationResponse.result.oil[i].gisYCoor), index: i)
                     }
@@ -339,14 +337,14 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
     }
     
-    //KATECH->WGS84
+    // KATECH->WGS84
     func fetchCoordinateCurrentLocationAgain(fromLat: String, fromLon: String, index: Int) {
         networkManager.fetchCoordinateChangeAgain(fromLat: fromLat, fromLon: fromLon) { coordinate in
-            DispatchQueue.main.async {  // 메인 스레드에서 실행
+            DispatchQueue.main.async { // 메인 스레드에서 실행
                 if let coordinate = coordinate {
                     // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                        self.stationDetailList[index].gisXCoor = Float(coordinate.coordinate.lon) ?? 0.0
-                        self.stationDetailList[index].gisYCoor = Float(coordinate.coordinate.lat) ?? 0.0
+                    self.stationDetailList[index].gisXCoor = Float(coordinate.coordinate.lon) ?? 0.0
+                    self.stationDetailList[index].gisYCoor = Float(coordinate.coordinate.lat) ?? 0.0
                     print(self.stationDetailList[index].gisXCoor)
                 } else {
                     print("Failed to fetch coordinate")
@@ -358,8 +356,8 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
 }
     
-    extension MapPageViewController: UIGestureRecognizerDelegate {
-        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-            return !(touch.view?.isDescendant(of: mapDetailView) ?? false)
-        }
+extension MapPageViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return !(touch.view?.isDescendant(of: mapDetailView) ?? false)
     }
+}

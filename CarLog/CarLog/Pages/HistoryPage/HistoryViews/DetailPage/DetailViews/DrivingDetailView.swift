@@ -5,11 +5,11 @@
 //  Created by 김지훈 on 2023/10/18.
 //
 
-import SnapKit
 import UIKit
 
-class DrivingDetailView: UIView {
+import SnapKit
 
+class DrivingDetailView: UIView {
     lazy var drivingDetailPageLabel: UILabel = {
         let drivingDetailPageLabel = UILabel()
         drivingDetailPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
@@ -61,15 +61,15 @@ class DrivingDetailView: UIView {
     }()
     
     @objc func toDriveDistanceTextField() {
-        self.driveDistenceTextField.becomeFirstResponder()
+        driveDistenceTextField.becomeFirstResponder()
     }
     
     @objc func toArriveDistanceTextField() {
-        self.arriveDistanceTextField.becomeFirstResponder()
+        arriveDistanceTextField.becomeFirstResponder()
     }
     
     @objc func closeTotalDistanceTextField() {
-        self.totalDistanceTextField.resignFirstResponder()
+        totalDistanceTextField.resignFirstResponder()
     }
     
     lazy var arriveDistanceStackView: UIStackView = {
@@ -111,15 +111,15 @@ class DrivingDetailView: UIView {
     }()
     
     @objc func toTotalDistanceTextField() {
-        self.totalDistanceTextField.becomeFirstResponder()
+        totalDistanceTextField.becomeFirstResponder()
     }
     
     @objc func tpDriveDistanceTextField() {
-        self.driveDistenceTextField.becomeFirstResponder()
+        driveDistenceTextField.becomeFirstResponder()
     }
     
     @objc func closeArriveDistanceTextField() {
-        self.arriveDistanceTextField.resignFirstResponder()
+        arriveDistanceTextField.resignFirstResponder()
     }
     
     lazy var driveDistenceStackView: UIStackView = {
@@ -160,10 +160,11 @@ class DrivingDetailView: UIView {
     }()
     
     @objc func closeDriveDistenceTextField() {
-        self.driveDistenceTextField.resignFirstResponder()
+        driveDistenceTextField.resignFirstResponder()
     }
     
-    //MARK: - 단위 Label
+    // MARK: - 단위 Label
+
     lazy var kmLabel: UILabel = {
         let kmLabel = UILabel()
         kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
@@ -182,7 +183,8 @@ class DrivingDetailView: UIView {
         return kmLabel
     }()
     
-    //MARK: - 버튼
+    // MARK: - 버튼
+
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [removeButton, upDateButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
@@ -269,5 +271,4 @@ class DrivingDetailView: UIView {
             make.height.equalTo(50)
         }
     }
-
 }

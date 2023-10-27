@@ -6,10 +6,10 @@
 //
 
 import UIKit
+
 import SnapKit
 
 final class MyPageView: UIView {
-    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -22,6 +22,7 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
+
     lazy var mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "내 차 정보"
@@ -40,6 +41,7 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
+
     //    //텍스트 폰트에 따른 언더라인 수정
     //    lazy var myWritingButton: UIButton = {
     //        let myWritingButton = UIButton()
@@ -149,7 +151,8 @@ final class MyPageView: UIView {
         let logoutButton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
-            .foregroundColor: UIColor.lightGray]
+            .foregroundColor: UIColor.lightGray,
+        ]
         let attributedTitle = NSAttributedString(string: "로그아웃", attributes: attributes)
         logoutButton.setAttributedTitle(attributedTitle, for: .normal)
         logoutButton.backgroundColor = .clear
@@ -168,7 +171,8 @@ final class MyPageView: UIView {
         let quitUserbutton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
-            .foregroundColor: UIColor.lightGray]
+            .foregroundColor: UIColor.lightGray,
+        ]
         let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
         quitUserbutton.setAttributedTitle(attributedTitle, for: .normal)
         quitUserbutton.backgroundColor = .clear
@@ -177,7 +181,7 @@ final class MyPageView: UIView {
     
     lazy var myPageDesignStackView = {
         let myPageDesignStackView = UIStackView(arrangedSubviews: [logoutButton, horizontalDivider, quitUserButton])
-        myPageDesignStackView.customStackView(spacing: 5, axis: .horizontal , alignment: .center)
+        myPageDesignStackView.customStackView(spacing: 5, axis: .horizontal, alignment: .center)
         myPageDesignStackView.distribution = .equalSpacing
         return myPageDesignStackView
     }()
@@ -211,6 +215,7 @@ final class MyPageView: UIView {
     }
     
     // MARK: -
+
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
         addSubview(scrollView)
@@ -305,12 +310,11 @@ final class MyPageView: UIView {
             make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
         }
         
-        phoneCallButton.snp.makeConstraints { (make) in
+        phoneCallButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-30)
             make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(CGSize(width: 55, height: 55))
         }
-        
     }
     
     override init(frame: CGRect) {
@@ -322,6 +326,4 @@ final class MyPageView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }

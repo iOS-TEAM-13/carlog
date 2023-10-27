@@ -100,7 +100,7 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
                 }
                 progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
             } else {
-                if let time = carParts.parts[indexPath.row].currentTime{
+                if let time = carParts.parts[indexPath.row].currentTime {
                     firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
                     secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
                 }

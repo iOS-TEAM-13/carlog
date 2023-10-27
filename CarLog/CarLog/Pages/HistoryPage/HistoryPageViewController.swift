@@ -1,8 +1,8 @@
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class HistoryPageViewController: UIViewController {
-    
     var drivingDummy: [Driving] = []
     
     var fuelingDummy: [Fueling] = []
@@ -54,19 +54,19 @@ class HistoryPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         
         setupUI()
-        self.didChangeValue(segment: self.segmentedControl)
+        didChangeValue(segment: segmentedControl)
         buttonActions()
         
-        //indicator 추가
+        // indicator 추가
         ac = UIActivityIndicatorView(style: .medium)
         ac.center = view.center
         view.addSubview(ac)
         ac.startAnimating()
         
-        //NotificationCenter addDriving 연결하기
+        // NotificationCenter addDriving 연결하기
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewDrivingRecordAdded(_:)), name: .newDrivingRecordAdded, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
@@ -76,7 +76,7 @@ class HistoryPageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    //NotificationCenter newDriving 배열 맨 위에 저장하기
+    // NotificationCenter newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
             loadDrivingData()
@@ -100,7 +100,7 @@ class HistoryPageViewController: UIViewController {
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
-        self.shouldHideFirstView = segment.selectedSegmentIndex != 0
+        shouldHideFirstView = segment.selectedSegmentIndex != 0
     }
     
     func setupUI() {
@@ -134,24 +134,22 @@ class HistoryPageViewController: UIViewController {
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
-    
     }
     
     func buttonActions() {
-        floatingButtonStackView.floatingButton.addAction(UIAction(handler: {_ in
+        floatingButtonStackView.floatingButton.addAction(UIAction(handler: { _ in
             self.isActive.toggle()
         }), for: .touchUpInside)
         
-        floatingButtonStackView.fuelingButton.addAction(UIAction(handler: {_ in
+        floatingButtonStackView.fuelingButton.addAction(UIAction(handler: { _ in
             self.navigationController?.present(AddFuelingViewController(), animated: true)
             self.navigationController?.modalPresentationStyle = .fullScreen
         }), for: .touchUpInside)
         
-        floatingButtonStackView.drivingButton.addAction(UIAction(handler: {_ in
+        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
             self.navigationController?.present(AddDrivingViewController(), animated: true)
             self.navigationController?.modalPresentationStyle = .fullScreen
         }), for: .touchUpInside)
-        
     }
     
     private var animation: UIViewPropertyAnimator?
@@ -212,7 +210,7 @@ class HistoryPageViewController: UIViewController {
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { result in
             if let drivings = result {
-                self.drivingDummy = drivings.sorted(by: { $0.timeStamp?.toDateDetail() ?? Date() < $1.timeStamp?.toDateDetail() ?? Date() })
+                self.drivingDummy = drivings.sorted(by: { $0.timeStamp?.toDate() ?? Date() < $1.timeStamp?.toDate() ?? Date() })
                 DispatchQueue.main.async {
                     self.drivingCollectionView.drivingCollectionView.reloadData()
                     self.ac.stopAnimating()
@@ -233,7 +231,7 @@ class HistoryPageViewController: UIViewController {
     func loadFuelingData() {
         FirestoreService.firestoreService.loadFueling { result in
             if let fuelings = result {
-                self.fuelingDummy = fuelings.sorted(by: { $0.timeStamp?.toDateDetail() ?? Date() < $1.timeStamp?.toDateDetail() ?? Date() })
+                self.fuelingDummy = fuelings.sorted(by: { $0.timeStamp?.toDate() ?? Date() < $1.timeStamp?.toDate() ?? Date() })
                 DispatchQueue.main.async {
                     self.fuelingCollectionView.fuelingCollectionView.reloadData()
                     self.ac.stopAnimating()
@@ -250,12 +248,10 @@ class HistoryPageViewController: UIViewController {
             }
         }
     }
-
 }
 
 extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         if collectionView == drivingCollectionView.drivingCollectionView {
             return drivingDummy.count
         } else {
@@ -264,7 +260,6 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         if collectionView == drivingCollectionView.drivingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
@@ -306,11 +301,10 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         return UICollectionViewCell()
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - Constants.horizontalMargin * 4), height: 100)
+        return CGSize(width: collectionView.bounds.width - Constants.horizontalMargin * 4, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -321,13 +315,12 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == drivingCollectionView.drivingCollectionView {
             let driveDetailViewController = DriveDetailViewController()
             driveDetailViewController.drivingData = drivingDummy[indexPath.row]
-            self.navigationController?.pushViewController(driveDetailViewController, animated: true)
+            navigationController?.pushViewController(driveDetailViewController, animated: true)
             
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
             let fuelingDetailViewController = FuelingDetailViewController()
             fuelingDetailViewController.fuelingData = fuelingDummy[indexPath.row]
-            self.navigationController?.pushViewController(fuelingDetailViewController, animated: true)
+            navigationController?.pushViewController(fuelingDetailViewController, animated: true)
         }
     }
-
 }

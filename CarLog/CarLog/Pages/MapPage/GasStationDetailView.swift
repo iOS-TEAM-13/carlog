@@ -1,5 +1,6 @@
-import SnapKit
 import UIKit
+
+import SnapKit
 
 class GasStationDetailView: UIView {
     // 라벨, 이미지 등 ui 요소
@@ -16,17 +17,17 @@ class GasStationDetailView: UIView {
         carWashImage.isHidden = gasStation?.carWashYn != "Y"
         let oilPrices = gasStation?.oilPrice ?? []
         if let latestOilPrice = oilPrices.max(by: { $0.tradeDt < $1.tradeDt }) {
-            dateLabel.text = "\(latestOilPrice.tradeDt ?? "")" + "기준"
-            } else {
-                dateLabel.text = "날짜 정보 없음"
-            }
+            dateLabel.text = "\(latestOilPrice.tradeDt)" + "기준"
+        } else {
+            dateLabel.text = "날짜 정보 없음"
+        }
             
-            if let yellowOilPrice = oilPrices.first(where: { $0.prodcd == "B027" }) {
-                yellowOilPriceLabel.text = "휘발유 \(yellowOilPrice.price)원"
-            } else {
-                yellowOilPriceLabel.text = "휘발유 정보 없음"
-            }
-        if let greenOilPrice = oilPrices.first(where: { $0.prodcd == "D047"}) {
+        if let yellowOilPrice = oilPrices.first(where: { $0.prodcd == "B027" }) {
+            yellowOilPriceLabel.text = "휘발유 \(yellowOilPrice.price)원"
+        } else {
+            yellowOilPriceLabel.text = "휘발유 정보 없음"
+        }
+        if let greenOilPrice = oilPrices.first(where: { $0.prodcd == "D047" }) {
             greenOilPriceLabel.text = "경유 \(greenOilPrice.price)원"
         } else {
             greenOilPriceLabel.text = "경유 정보 없음"
@@ -122,7 +123,7 @@ class GasStationDetailView: UIView {
         addSubview(greenOilPriceLabel)
         addSubview(yellowOilPriceLabel)
         
-        self.backgroundColor = .white
+        backgroundColor = .white
         
         nameLabel.snp.makeConstraints { make in
             make.leftMargin.equalToSuperview().offset(20)
@@ -172,8 +173,5 @@ class GasStationDetailView: UIView {
             make.leftMargin.equalToSuperview().offset(94)
             make.bottomMargin.equalToSuperview().offset(-20)
         }
-        
     }
-    
-    
 }

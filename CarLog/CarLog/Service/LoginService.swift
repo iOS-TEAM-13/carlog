@@ -17,7 +17,7 @@ final class LoginService {
             }
 
             if let email = authResult?.user.email {
-                FirestoreService.firestoreService.saveUsers(user: User(email: email, password: password)) { err in
+                FirestoreService.firestoreService.saveUsers(user: User(email: email)) { err in
                     print("err: \(String(describing: err?.localizedDescription))")
                 }
             }

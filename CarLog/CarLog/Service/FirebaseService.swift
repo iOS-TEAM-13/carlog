@@ -4,19 +4,19 @@
 //
 //  Created by t2023-m0056 on 2023/10/15.
 //
+import Foundation
 
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Foundation
 
 final class FirestoreService {
-    
     static let firestoreService = FirestoreService()
     
     let db = Firestore.firestore()
     
-    //MARK: - User
+    // MARK: - User
+
     func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(user)
@@ -73,7 +73,8 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - Post
+    // MARK: - Post
+
     func savePosts(post: Post, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(post)
@@ -106,7 +107,8 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - Comment
+    // MARK: - Comment
+
     func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(comment)
@@ -139,9 +141,9 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - Car
+    // MARK: - Car
+
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
-        print(Auth.auth().currentUser?.email)
         do {
             let data = try Firestore.Encoder().encode(car)
             db.collection("cars").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
@@ -173,7 +175,8 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - CarParts
+    // MARK: - CarParts
+
     func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(carPart)
@@ -185,7 +188,7 @@ final class FirestoreService {
         }
     }
     
-    func loadCarPart(completion: @escaping (CarPart?) -> Void ) {
+    func loadCarPart(completion: @escaping (CarPart?) -> Void) {
         db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").getDocument { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
@@ -204,14 +207,15 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - Driving / timeStamp를 Date로 변환하고, 그걸 다시 String으로 변환하는데 없으면 거기다가 현재 시간을 넣어라 / currentTime값이 nil인 경우를 위해 if let 사용
+    // MARK: - Driving / timeStamp를 Date로 변환하고, 그걸 다시 String으로 변환하는데 없으면 거기다가 현재 시간을 넣어라 / currentTime값이 nil인 경우를 위해 if let 사용
+
     func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(driving)
             
             var documentID = ""
             
-            if let currentTime = driving.timeStamp?.toDateDetail()?.toStringDetail() {
+            if let currentTime = driving.timeStamp?.toDate()?.toStringDetail() {
                 documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
             } else {
                 documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
@@ -269,14 +273,15 @@ final class FirestoreService {
         }
     }
     
-    //MARK: - Fueling
+    // MARK: - Fueling
+
     func saveFueling(fueling: Fueling, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(fueling)
             
             var documentID = ""
             
-            if let currentTime = fueling.timeStamp?.toDateDetail()?.toStringDetail() {
+            if let currentTime = fueling.timeStamp?.toDate()?.toStringDetail() {
                 documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
             } else {
                 documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
@@ -333,6 +338,4 @@ final class FirestoreService {
             }
         }
     }
-    
 }
-

@@ -4,26 +4,25 @@
 //
 //  Created by t2023-m0075 on 10/22/23.
 
-
 import Foundation
 
-struct listResponse:Codable {
-    let result : GasStationList
-    
+struct listResponse: Codable {
+    let result: GasStationList
+
     enum CodingKeys: String, CodingKey {
         case result = "RESULT"
     }
 }
 
 struct GasStationList: Codable {
-    let oil : [GasStationSummary]
-    
+    let oil: [GasStationSummary]
+
     enum CodingKeys: String, CodingKey {
         case oil = "OIL"
     }
 }
 
-struct GasStationSummary:Codable {
+struct GasStationSummary: Codable {
     let uniID: String
     let pollDivCD: String
     let osNM: String
@@ -31,7 +30,7 @@ struct GasStationSummary:Codable {
     let distance: Float
     let gisX: Float
     let gisY: Float
-    
+
     enum CodingKeys: String, CodingKey {
         case uniID = "UNI_ID"
         case pollDivCD = "POLL_DIV_CD"

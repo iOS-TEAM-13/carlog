@@ -226,15 +226,15 @@ class MyCarDetailPageViewController: UIViewController {
     }
     
     private func addHistory(date: Date, currentTime: String, type: ChangedType) {
-        for i in 0...(self.saveData.parts.count) - 1 {
-            if self.saveData.parts[i].name == self.selectedParts?.name {
-                self.saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: type), at: 0)
-                self.saveData.parts[i].currentTime = currentTime
+        for i in 0...(saveData.parts.count) - 1 {
+            if saveData.parts[i].name == selectedParts?.name {
+                saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: type), at: 0)
+                saveData.parts[i].currentTime = currentTime
             }
         }
-        self.saveCarParts()
-        self.updateSelectParts()
-        self.configureUI()
+        saveCarParts()
+        updateSelectParts()
+        configureUI()
         NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
     }
     

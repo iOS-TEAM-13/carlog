@@ -5,17 +5,17 @@
 //  Created by 김지훈 on 2023/10/13.
 //
 
-import FirebaseAuth
-import SnapKit
 import UIKit
 
-//노티피케이션
+import FirebaseAuth
+import SnapKit
+
+// 노티피케이션
 extension Notification.Name {
     static let newDrivingRecordAdded = Notification.Name("newDrivingRecordAdded")
 }
 
 class AddDrivingViewController: UIViewController {
-    
     lazy var addDrivingView: AddDrivingView = {
         let addDrivingView = AddDrivingView()
         return addDrivingView
@@ -24,7 +24,7 @@ class AddDrivingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         
         view.addSubview(addDrivingView)
         addDrivingView.snp.makeConstraints { make in
@@ -60,12 +60,12 @@ class AddDrivingViewController: UIViewController {
                 }
             }
             
-            self.dismiss(animated: true)}), for: .touchUpInside)
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
         
         addDrivingView.cancelButton.addAction(UIAction(handler: { _ in
             print("---> addDrivingView 취소 버튼 클릭 했어요")
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }
-    
 }

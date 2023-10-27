@@ -4,14 +4,14 @@
 //
 //  Created by 김지훈 on 2023/10/18.
 
+import UIKit
+
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SnapKit
-import UIKit
 
 class FuelingDetailViewController: UIViewController {
-    
     let db = Firestore.firestore()
     
     var fuelingData: Fueling?
@@ -24,7 +24,7 @@ class FuelingDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         
         view.addSubview(fuelingDetailView)
         fuelingDetailView.snp.makeConstraints { make in
@@ -41,7 +41,7 @@ class FuelingDetailViewController: UIViewController {
     }
     
     func loadFuelingData() {
-        FirestoreService.firestoreService.loadFueling { fuelingData in
+        FirestoreService.firestoreService.loadFueling { _ in
             if let fuelings = self.fuelingData {
                 self.fuelingDetailView.totalDistanceTextField.text = "\(fuelings.totalDistance ?? 0)"
                 self.fuelingDetailView.priceTextField.text = "\(fuelings.price ?? 0)"
@@ -58,19 +58,19 @@ class FuelingDetailViewController: UIViewController {
         if let fuelingID = fuelingData?.documentID {
             var updatedData: [String: Any] = [:]
             
-            if let totalDistanceText = self.fuelingDetailView.totalDistanceTextField.text, let totalDistance = Int(totalDistanceText) {
+            if let totalDistanceText = fuelingDetailView.totalDistanceTextField.text, let totalDistance = Int(totalDistanceText) {
                 updatedData["totalDistance"] = totalDistance
             }
             
-            if let priceText = self.fuelingDetailView.priceTextField.text, let price = Int(priceText) {
+            if let priceText = fuelingDetailView.priceTextField.text, let price = Int(priceText) {
                 updatedData["price"] = price
             }
             
-            if let countText = self.fuelingDetailView.countTextField.text, let count = Double(countText) {
+            if let countText = fuelingDetailView.countTextField.text, let count = Double(countText) {
                 updatedData["count"] = count
             }
             
-            if let totalPriceText = self.fuelingDetailView.totalPriceTextField.text, let totalPrice = Double(totalPriceText) {
+            if let totalPriceText = fuelingDetailView.totalPriceTextField.text, let totalPrice = Double(totalPriceText) {
                 updatedData["totalPrice"] = totalPrice
             }
             
@@ -107,5 +107,4 @@ class FuelingDetailViewController: UIViewController {
             }
         }
     }
-    
 }

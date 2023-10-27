@@ -5,11 +5,11 @@
 //  Created by 김지훈 on 2023/10/13.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class AddDrivingView: UIView {
-    
     lazy var addDrivingPageLabel: UILabel = {
         let addDrivingPageLabel = UILabel()
         addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
@@ -40,7 +40,7 @@ class AddDrivingView: UIView {
         let totalDistanceTextField = UITextField()
         totalDistanceTextField.historyCustomTextField(placeholder: "ex) 10000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -70,15 +70,15 @@ class AddDrivingView: UIView {
     }()
     
     @objc func toDriveDistanceTextField() {
-        self.driveDistenceTextField.becomeFirstResponder()
+        driveDistenceTextField.becomeFirstResponder()
     }
     
     @objc func toArriveDistanceTextField() {
-        self.arriveDistanceTextField.becomeFirstResponder()
+        arriveDistanceTextField.becomeFirstResponder()
     }
     
     @objc func closeTotalDistanceTextField() {
-        self.totalDistanceTextField.resignFirstResponder()
+        totalDistanceTextField.resignFirstResponder()
     }
     
     lazy var arriveDistanceStackView: UIStackView = {
@@ -99,7 +99,7 @@ class AddDrivingView: UIView {
         let arriveDistanceTextField = UITextField()
         arriveDistanceTextField.historyCustomTextField(placeholder: "ex) 10010", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: arriveDistanceTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -129,15 +129,15 @@ class AddDrivingView: UIView {
     }()
     
     @objc func toTotalDistanceTextField() {
-        self.totalDistanceTextField.becomeFirstResponder()
+        totalDistanceTextField.becomeFirstResponder()
     }
     
     @objc func tpDriveDistanceTextField() {
-        self.driveDistenceTextField.becomeFirstResponder()
+        driveDistenceTextField.becomeFirstResponder()
     }
     
     @objc func closeArriveDistanceTextField() {
-        self.arriveDistanceTextField.resignFirstResponder()
+        arriveDistanceTextField.resignFirstResponder()
     }
     
     lazy var driveDistenceStackView: UIStackView = {
@@ -157,7 +157,7 @@ class AddDrivingView: UIView {
         let driveDistenceTextField = UITextField()
         driveDistenceTextField.historyCustomTextField(placeholder: "ex) 10", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: driveDistenceTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -187,10 +187,11 @@ class AddDrivingView: UIView {
     }()
     
     @objc func closeDriveDistenceTextField() {
-        self.driveDistenceTextField.resignFirstResponder()
+        driveDistenceTextField.resignFirstResponder()
     }
     
-    //MARK: - 단위 Label
+    // MARK: - 단위 Label
+
     lazy var kmLabel: UILabel = {
         let kmLabel = UILabel()
         kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
@@ -209,7 +210,8 @@ class AddDrivingView: UIView {
         return kmLabel
     }()
     
-    //MARK: - 버튼
+    // MARK: - 버튼
+
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
@@ -296,5 +298,4 @@ class AddDrivingView: UIView {
             make.height.equalTo(50)
         }
     }
-    
 }

@@ -139,4 +139,3 @@ class JoinupPageViewController: UIViewController {
         totalDistanceView.endEditing(true)
     }
 }
-

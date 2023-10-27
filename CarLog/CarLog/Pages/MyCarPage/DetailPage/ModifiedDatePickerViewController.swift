@@ -22,7 +22,9 @@ class ModifiedDatePickerViewController: UIViewController {
     let completeButton: UIButton = {
         let button = UIButton()
         button.setTitle("선택", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = Constants.cornerRadius
+        button.backgroundColor = .mainNavyColor
         return button
     }()
     
@@ -32,7 +34,6 @@ class ModifiedDatePickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .buttonSkyBlueColor
         
         if let sheetPresentationController = sheetPresentationController {
             sheetPresentationController.detents = [.medium(), .large()]
@@ -56,7 +57,7 @@ class ModifiedDatePickerViewController: UIViewController {
             $0.top.equalTo(datePicker.snp.bottom).inset(Constants.verticalMargin)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
         }
-        if self.traitCollection.userInterfaceStyle == .dark {
+        if traitCollection.userInterfaceStyle == .dark {
             view.backgroundColor = .mainNavyColor
         } else {
             view.backgroundColor = .buttonSkyBlueColor

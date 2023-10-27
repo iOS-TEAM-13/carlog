@@ -1,7 +1,7 @@
 import UIKit
 
 extension UITextField {
-    func customTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment){
+    func customTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) {
         self.placeholder = placeholder
         self.font = font
         self.sizeToFit()
@@ -9,7 +9,7 @@ extension UITextField {
         self.textColor = textColor
     }
     
-    func loginCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView){
+    func loginCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView) {
         self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.font = font
         self.sizeToFit()
@@ -25,7 +25,7 @@ extension UITextField {
         self.autocapitalizationType = .none
     }
     
-    func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment){
+    func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) {
         self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.backgroundColor = .white
         let border = CALayer()
@@ -42,7 +42,7 @@ extension UITextField {
         self.leftViewMode = .always
     }
     
-    func historyCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView){
+    func historyCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView) {
         self.placeholder = placeholder
         self.font = font
         self.sizeToFit()
@@ -54,6 +54,4 @@ extension UITextField {
         self.rightView = paddingView
         self.rightViewMode = .always
     }
-     
-
 }

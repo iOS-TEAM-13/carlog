@@ -4,14 +4,14 @@
 //
 //  Created by 김지훈 on 2023/10/18.
 
+import UIKit
+
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SnapKit
-import UIKit
 
 class DriveDetailViewController: UIViewController {
-    
     let db = Firestore.firestore()
     
     var drivingData: Driving?
@@ -24,7 +24,7 @@ class DriveDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         
         view.addSubview(drivingDetailView)
         drivingDetailView.snp.makeConstraints { make in
@@ -41,7 +41,7 @@ class DriveDetailViewController: UIViewController {
     }
     
     func loadDrivingData() {
-        FirestoreService.firestoreService.loadDriving { drivingData in
+        FirestoreService.firestoreService.loadDriving { _ in
             if let drivings = self.drivingData {
                 self.drivingDetailView.totalDistanceTextField.text = "\(drivings.departDistance ?? 0)"
                 self.drivingDetailView.arriveDistanceTextField.text = "\(drivings.arriveDistance ?? 0)"
@@ -57,15 +57,15 @@ class DriveDetailViewController: UIViewController {
         if let drivingID = drivingData?.documentID {
             var updatedData: [String: Any] = [:]
             
-            if let totalDistanceText = self.drivingDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
+            if let totalDistanceText = drivingDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
                 updatedData["departDistance"] = totalDistance
             }
             
-            if let arriveDistanceText = self.drivingDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
+            if let arriveDistanceText = drivingDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
                 updatedData["arriveDistance"] = arriveDistance
             }
             
-            if let driveDistanceText = self.drivingDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
+            if let driveDistanceText = drivingDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
                 updatedData["driveDistance"] = driveDistance
             }
             
@@ -101,6 +101,4 @@ class DriveDetailViewController: UIViewController {
             }
         }
     }
-    
-    
 }

@@ -5,11 +5,11 @@
 //  Created by 김지훈 on 2023/10/16.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class DrivingCollectionViewCell: UICollectionViewCell {
-    
     lazy var cellLabelStackView: UIStackView = {
         let cellLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, cellBottomLabelStackView])
         cellLabelStackView.axis = .vertical
@@ -51,6 +51,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not implemented required init?(coder: NSCoder)")
     }
@@ -65,5 +66,4 @@ class DrivingCollectionViewCell: UICollectionViewCell {
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
     }
-    
 }

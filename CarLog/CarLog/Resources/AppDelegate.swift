@@ -5,8 +5,9 @@
 //  Created by t2023-m0050 on 2023/10/10.
 //
 
-import FirebaseCore
 import UIKit
+
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -1,11 +1,12 @@
+import UIKit
+
 import FirebaseAuth
 import FirebaseFirestore
 import SnapKit
-import UIKit
 
 class MyPageViewController: UIViewController {
-    
     // MARK: - Properties
+
     let myPageView = MyPageView()
     
     var carDummy: [Car] = []
@@ -13,11 +14,14 @@ class MyPageViewController: UIViewController {
     var isEditMode = false
     
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.barTintColor = .white
+
         // MARK: - Setup
+
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -47,6 +51,7 @@ class MyPageViewController: UIViewController {
     }
     
     // MARK: - Actions
+
     @objc private func editButtonTapped() {
         isEditMode = !isEditMode
         toggleTextFieldsEditing(enable: isEditMode)
@@ -56,7 +61,7 @@ class MyPageViewController: UIViewController {
     private func toggleTextFieldsEditing(enable: Bool) {
         [myPageView.carNumberTextField, myPageView.carNameTextField, myPageView.carMakerTextField, myPageView.carOilTypeTextField, myPageView.carNickNameTextField, myPageView.carTotalDistanceTextField].forEach {
             $0.isUserInteractionEnabled = enable
-            $0.borderStyle = enable ? .roundedRect : .none   // 라운더 없음으로 해도 글씨 창 라운더 생김 현상(커스텀 때문인지;;)
+            $0.borderStyle = enable ? .roundedRect : .none // 라운더 없음으로 해도 글씨 창 라운더 생김 현상(커스텀 때문인지;;)
         }
     }
     
@@ -80,22 +85,21 @@ class MyPageViewController: UIViewController {
             guard let distanceText = myPageView.carTotalDistanceTextField.text else {
                 return
             } // ⭐⭐⭐(Optional unwrapping) distanceText Text (String?)형태라서 nil 일수도 있어서... guard let으로 Optional unwrapping
-            FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Auth.auth().currentUser?.email)) { error in
+            FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Auth.auth().currentUser?.email)) { _ in
             }
         }
-        
     }
     
     private func configureUI() {
         if let userCar = carDummy.first { // 배열에서 첫 번째 요소 가져오기
             if let userEmail = userCar.userEmail {
-                    if let atIndex = userEmail.firstIndex(of: "@") {
-                        let emailPrefix = String(userEmail[..<atIndex])
-                        myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
-                    } else {
-                        myPageView.mainTitleLabel.text = "\(userEmail) 님"
-                    }
+                if let atIndex = userEmail.firstIndex(of: "@") {
+                    let emailPrefix = String(userEmail[..<atIndex])
+                    myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
+                } else {
+                    myPageView.mainTitleLabel.text = "\(userEmail) 님"
                 }
+            }
             myPageView.carNumberTextField.text = userCar.number
             myPageView.carMakerTextField.text = userCar.maker
             myPageView.carNameTextField.text = userCar.name // name 으로 통일!
@@ -132,7 +136,7 @@ class MyPageViewController: UIViewController {
         if Auth.auth().currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
-                LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { error in
+                LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { _ in
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {
                         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -184,7 +188,6 @@ class MyPageViewController: UIViewController {
     }
     
     @objc private func keyboardWillShow(_ notification: Notification) {
-        
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
         else {
@@ -198,7 +201,6 @@ class MyPageViewController: UIViewController {
             right: 0.0)
         myPageView.scrollView.contentInset = contentInset
         myPageView.scrollView.scrollIndicatorInsets = contentInset
-        
     }
     
     @objc private func keyboardWillHide(_ notification: Notification) {

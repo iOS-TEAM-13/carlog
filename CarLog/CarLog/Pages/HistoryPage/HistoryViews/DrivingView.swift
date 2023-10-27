@@ -5,11 +5,11 @@
 //  Created by 김지훈 on 2023/10/12.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class DrivingView: UIView {
-    
     var navigationController: UINavigationController?
     
     lazy var drivingCollectionView: UICollectionView = {
@@ -47,5 +47,4 @@ class DrivingView: UIView {
             make.edges.equalToSuperview()
         }
     }
-    
 }

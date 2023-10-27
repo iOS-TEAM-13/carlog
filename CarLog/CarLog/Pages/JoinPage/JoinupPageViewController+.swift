@@ -173,10 +173,6 @@ extension JoinupPageViewController {
                 self.showAlert(message: "인증번호를 확인해주세요")
             }
 
-            if self.joinupView.smtpButton.isEnabled == false, self.joinupView.smtpNumberButton.isEnabled == false {
-                print("")
-            } else {}
-
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text,
@@ -350,10 +346,11 @@ extension JoinupPageViewController {
         LoginService.loginService.keepLogin { user in
             print("user:\(user?.email ?? "")")
             if user != nil {
-                let tabBarController = Constants.mainTabBarController()
+                let tabBarController = Util.mainTabBarController()
                 if let windowScene = UIApplication.shared.connectedScenes
                     .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
-                    let window = windowScene.windows.first {
+                    let window = windowScene.windows.first
+                {
                     window.rootViewController = tabBarController
                 }
             }

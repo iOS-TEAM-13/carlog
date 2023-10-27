@@ -5,11 +5,11 @@
 //  Created by 김지훈 on 2023/10/18.
 //
 
-import SnapKit
 import UIKit
 
+import SnapKit
+
 class FuelingDetailView: UIView {
-    
     lazy var fuelingDetailPageLabel: UILabel = {
         let fuelingDetailPageLabel = UILabel()
         fuelingDetailPageLabel.customLabel(text: "주유 내역", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
@@ -40,7 +40,7 @@ class FuelingDetailView: UIView {
         let totalDistanceTextField = UITextField()
         totalDistanceTextField.historyCustomTextField(placeholder: "ex) 10000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -71,15 +71,15 @@ class FuelingDetailView: UIView {
     }()
     
     @objc func toTotalPriceTextField() {
-        self.totalPriceTextField.becomeFirstResponder()
+        totalPriceTextField.becomeFirstResponder()
     }
     
     @objc func toPriceTextField() {
-        self.priceTextField.becomeFirstResponder()
+        priceTextField.becomeFirstResponder()
     }
     
     @objc func closeTotalDistanceTextField() {
-        self.totalDistanceTextField.resignFirstResponder()
+        totalDistanceTextField.resignFirstResponder()
     }
     
     lazy var priceStackView: UIStackView = {
@@ -99,7 +99,7 @@ class FuelingDetailView: UIView {
         let priceTextField = UITextField()
         priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 35, height: priceTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -130,15 +130,15 @@ class FuelingDetailView: UIView {
     }()
     
     @objc func toTotalDistanceTextField() {
-        self.totalDistanceTextField.becomeFirstResponder()
+        totalDistanceTextField.becomeFirstResponder()
     }
     
     @objc func toCountTextField() {
-        self.countTextField.becomeFirstResponder()
+        countTextField.becomeFirstResponder()
     }
     
     @objc func closePriceTextField() {
-        self.priceTextField.resignFirstResponder()
+        priceTextField.resignFirstResponder()
     }
     
     lazy var countStackView: UIStackView = {
@@ -158,7 +158,7 @@ class FuelingDetailView: UIView {
         let countTextField = UITextField()
         countTextField.historyCustomTextField(placeholder: "", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 30, height: countTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -189,7 +189,7 @@ class FuelingDetailView: UIView {
     }()
     
     @objc func closeCountTextField() {
-        self.countTextField.resignFirstResponder()
+        countTextField.resignFirstResponder()
     }
     
     lazy var totalPriceStackView: UIStackView = {
@@ -209,7 +209,7 @@ class FuelingDetailView: UIView {
         let totalPriceTextField = UITextField()
         totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 35, height: totalPriceTextField.frame.size.height)))
         
-        //placeholder color 적용
+        // placeholder color 적용
         let placeholderColor = UIColor.systemGray
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor, // 텍스트 색상 설정
@@ -240,10 +240,11 @@ class FuelingDetailView: UIView {
     }()
     
     @objc func closeTotalPriceTextField() {
-        self.totalPriceTextField.resignFirstResponder()
+        totalPriceTextField.resignFirstResponder()
     }
     
-    //MARK: - 단위 Label
+    // MARK: - 단위 Label
+
     lazy var kmLabel: UILabel = {
         let kmLabel = UILabel()
         kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
@@ -268,7 +269,8 @@ class FuelingDetailView: UIView {
         return wonLabel2
     }()
     
-    //MARK: - 버튼
+    // MARK: - 버튼
+
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [removeButton, upDateButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
@@ -365,5 +367,4 @@ class FuelingDetailView: UIView {
             make.height.equalTo(50)
         }
     }
-
 }

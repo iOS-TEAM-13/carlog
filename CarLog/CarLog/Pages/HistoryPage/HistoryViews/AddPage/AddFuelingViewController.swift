@@ -5,17 +5,17 @@
 //  Created by 김지훈 on 2023/10/13.
 //
 
-import FirebaseAuth
-import SnapKit
 import UIKit
 
-//노티피케이션
+import FirebaseAuth
+import SnapKit
+
+// 노티피케이션
 extension Notification.Name {
     static let newFuelingRecordAdded = Notification.Name("newFuelingRecordAdded")
 }
 
 class AddFuelingViewController: UIViewController {
-
     lazy var addFuelingView: AddFuelingView = {
         let addFuelingView = AddFuelingView()
         return addFuelingView
@@ -24,7 +24,7 @@ class AddFuelingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         
         view.addSubview(addFuelingView)
         addFuelingView.snp.makeConstraints { make in
@@ -34,7 +34,7 @@ class AddFuelingViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
-        buttonActions()   
+        buttonActions()
     }
     
     func buttonActions() {
@@ -61,12 +61,12 @@ class AddFuelingViewController: UIViewController {
                 }
             }
             
-            self.dismiss(animated: true)}), for: .touchUpInside)
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
         
         addFuelingView.cancelButton.addAction(UIAction(handler: { _ in
             print("---> addFuelingView 취소 버튼 클릭 했어요")
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }
-    
 }

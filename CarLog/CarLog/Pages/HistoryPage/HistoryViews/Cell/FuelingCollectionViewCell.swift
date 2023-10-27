@@ -5,8 +5,9 @@
 //  Created by 김지훈 on 2023/10/17.
 //
 
-import SnapKit
 import UIKit
+
+import SnapKit
 
 class FuelingCollectionViewCell: UICollectionViewCell {
     lazy var cellLabelStackView: UIStackView = {
@@ -65,6 +66,7 @@ class FuelingCollectionViewCell: UICollectionViewCell {
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not implemented required init?(coder: NSCoder)")
     }
@@ -79,5 +81,4 @@ class FuelingCollectionViewCell: UICollectionViewCell {
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
     }
-    
 }

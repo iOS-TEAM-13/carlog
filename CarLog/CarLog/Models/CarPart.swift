@@ -33,8 +33,8 @@ struct PartsInfo: Codable {
             return 24
         case "3년 전":
             return 36
-        case "1","2","3","4","5","6","7","8","9","10","11","12":
-            guard let time = currentTime else { return 0}
+        case "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12":
+            guard let time = currentTime else { return 0 }
             return Int(time)
         default:
             guard let time = currentTime?.components(separatedBy: ".")[1] else { return 0 }
@@ -48,6 +48,7 @@ struct PartsInfo: Codable {
             }
         }
     }
+
     var fixHistory: [FixHistory?]
 }
 

@@ -5,12 +5,35 @@
 //  Created by t2023-m0056 on 2023/10/20.
 //
 
-import Foundation
+import UIKit
 
 class Util {
     static let util = Util()
     
+    // TabBar
+    static func mainTabBarController() -> UITabBarController {
+        let tabBarController = TabBarController()
+
+        let tabs: [(root: UIViewController, icon: String)] = [
+            (MyCarPageViewController(), "car"),
+            (HistoryPageViewController(), "book"),
+            //        (MapPageViewController(), "map"),
+            //        (CommunityPageViewController(), "play"),
+            (MyPageViewController(), "person"),
+        ]
+
+        tabBarController.setViewControllers(tabs.map { root, icon in
+            let navigationController = UINavigationController(rootViewController: root)
+            let tabBarItem = UITabBarItem(title: nil, image: .init(systemName: icon), selectedImage: .init(systemName: "\(icon).fill"))
+            navigationController.tabBarItem = tabBarItem
+            return navigationController
+        }, animated: false)
+
+        return tabBarController
+    }
+
     // MARK: MyCarPage
+
     func toInterval(seletedDate: Int, type: componentsType) -> Date {
         let currentDate = Date()
         let calendar = Calendar.current

@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIButton {
-    func customButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor){
+    func customButton(text: String, font: UIFont, titleColor: UIColor, backgroundColor: UIColor) {
         self.setTitleColor(titleColor, for: .normal)
         self.setTitle(text, for: .normal)
         self.titleLabel?.font = font
