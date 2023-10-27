@@ -60,9 +60,6 @@ class HistoryPageViewController: UIViewController {
         self.didChangeValue(segment: self.segmentedControl)
         buttonActions()
         
-//        loadDrivingData()
-//        loadFuelingData()
-        
         //indicator 추가
         ac = UIActivityIndicatorView(style: .medium)
         ac.center = view.center
