@@ -42,6 +42,7 @@ class MyCarPageViewController: UIViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.barTintColor = .white
         setupUI()
+        NotificationService.service.setAuthorization()
     }
     
     override func viewWillAppear(_ animated: Bool) {
