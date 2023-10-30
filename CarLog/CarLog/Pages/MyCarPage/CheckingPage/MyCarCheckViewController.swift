@@ -8,6 +8,7 @@
 import UIKit
 
 import FirebaseAuth
+import Lottie
 import SnapKit
 
 class MyCarCheckViewController: UIViewController {
@@ -46,6 +47,8 @@ class MyCarCheckViewController: UIViewController {
         }
     }))
     
+    let animationView: LottieAnimationView = .init(name: "slideAnimation")
+    
     // MARK: LifeCycle
 
     override func viewDidLoad() {
@@ -72,15 +75,25 @@ class MyCarCheckViewController: UIViewController {
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
         view.addSubview(checkCountLabel)
-        
+        view.addSubview(animationView)
+
         pageViewController.view.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         pageViewController.didMove(toParent: self)
-        
+
         checkCountLabel.snp.makeConstraints {
             $0.top.equalTo(pageViewController.view.snp.bottom)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
+        }
+        
+        animationView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        animationView.play { _ in
+            self.animationView.isHidden = true
+            self.animationView.removeFromSuperview()
         }
     }
     
