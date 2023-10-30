@@ -161,6 +161,7 @@ extension JoinupPageViewController {
                 if success {
                     self.showAlert(message: "인증이 성공적으로 처리되었습니다")
                     self.joinupView.smtpTimerLabel.isHidden = true
+                    self.timer?.invalidate()
                     self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
                     self.joinupView.verifiedEmailButton.isEnabled = false
                     self.joinupView.verifiedEmailButton.setTitleColor(.gray, for: .normal)

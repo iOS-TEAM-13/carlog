@@ -21,7 +21,7 @@ final class JoinupView: UIView {
     lazy var emailLabel = makeLabel(text: "이메일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
-        let textField = makeTextField(placeholder: "유효한 이메일을 입력해주세요")
+        let textField = makeTextField(placeholder: "유효한 이메일")
         textField.rightView = checkEmailButton
         textField.delegate = self
         textField.rightViewMode = .always
