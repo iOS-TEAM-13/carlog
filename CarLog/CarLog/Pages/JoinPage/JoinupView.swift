@@ -155,6 +155,10 @@ final class JoinupView: UIView {
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
+        smtpTimerLabel.snp.makeConstraints { make in
+            make.width.equalTo(50)
+        }
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(safeArea)
         }
@@ -205,7 +209,7 @@ extension JoinupView {
         textField.loginCustomTextField(
             placeholder: placeholder,
             textColor: .black,
-            font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium),
             alignment: .left,
             paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)
             )
@@ -236,7 +240,7 @@ extension JoinupView {
 
     private func makeAlertLabel(text: String, textColor: UIColor) -> UILabel {
         let label = UILabel()
-        label.customLabel(text: text, textColor: textColor, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: text, textColor: textColor, font: UIFont.spoqaHanSansNeo(size: 12, weight: .medium), alignment: .left)
         label.isHidden = true
         return label
     }
