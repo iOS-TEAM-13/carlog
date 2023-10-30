@@ -36,56 +36,31 @@ class ComponentsView: UIView {
     
     let firstAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "첫번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
-        btn.tag = 1
-        btn.layer.shadowColor = UIColor.black.cgColor
-        btn.layer.shadowOpacity = 0.4
-        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
-        btn.layer.shadowRadius = 4
+        btn.checkingViewButton(text: "첫번째", tag: 1)
         return btn
     }()
     
     let secondAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "두번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
-        btn.tag = 2
-        btn.layer.shadowColor = UIColor.black.cgColor
-        btn.layer.shadowOpacity = 0.4
-        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
-        btn.layer.shadowRadius = 4
+        btn.checkingViewButton(text: "두번째", tag: 2)
         return btn
     }()
     
     let thirdAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "세번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
-        btn.tag = 3
-        btn.layer.shadowColor = UIColor.black.cgColor
-        btn.layer.shadowOpacity = 0.4
-        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
-        btn.layer.shadowRadius = 4
+        btn.checkingViewButton(text: "세번째", tag: 3)
         return btn
     }()
   
     let fourthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "네번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
-        btn.tag = 4
-        btn.layer.shadowColor = UIColor.black.cgColor
-        btn.layer.shadowOpacity = 0.4
-        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
-        btn.layer.shadowRadius = 4
+        btn.checkingViewButton(text: "네번째", tag: 4)
         return btn
     }()
     
     let fifthAnswerButton: UIButton = {
         let btn = UIButton()
-        btn.customButton(text: "다섯번째", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
-        btn.tag = 5
-        btn.layer.shadowColor = UIColor.black.cgColor
-        btn.layer.shadowOpacity = 0.4
-        btn.layer.shadowOffset = CGSize(width: 0, height: 4)
-        btn.layer.shadowRadius = 4
+        btn.checkingViewButton(text: "다섯번째", tag: 5)
         return btn
     }()
     
