@@ -79,6 +79,7 @@
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
 		FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */; };
+		FF5D5F9A2AEFF276000AFAFD /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5F992AEFF276000AFAFD /* NotificationService.swift */; };
 		FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */; };
 		FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AF59B2ADDA55D0067960E /* PageViewController.swift */; };
 		FFA5DF8C2ADD145900B25A07 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF8B2ADD145900B25A07 /* FirebaseAuth */; };
@@ -171,6 +172,7 @@
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
 		FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCollectionViewCell.swift; sourceTree = "<group>"; };
+		FF5D5F992AEFF276000AFAFD /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FFB0CC4D2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedDatePickerViewController.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			children = (
 				FF126E212ADAE67E00B2A109 /* FirebaseService.swift */,
 				FB1B96A22ADF5D39003827B1 /* LoginService.swift */,
+				FF5D5F992AEFF276000AFAFD /* NotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
+				FF5D5F9A2AEFF276000AFAFD /* NotificationService.swift in Sources */,
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
 				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
