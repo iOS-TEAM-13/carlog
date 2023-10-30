@@ -49,18 +49,18 @@ class CalendarView: UIView {
         return view
     }()
     
-    lazy var january = self.customButton(text: "Jan")
-    lazy var february = self.customButton(text: "Feb")
-    lazy var march = self.customButton(text: "Mar")
-    lazy var april = self.customButton(text: "Apr")
-    lazy var may = self.customButton(text: "May")
-    lazy var june = self.customButton(text: "Jun")
-    lazy var july = self.customButton(text: "Jul")
-    lazy var august = self.customButton(text: "Aug")
-    lazy var september = self.customButton(text: "Sep")
-    lazy var october = self.customButton(text: "Oct")
-    lazy var november = self.customButton(text: "Nov")
-    lazy var december = self.customButton(text: "Dec")
+    lazy var january = self.customButton(text: "1월")
+    lazy var february = self.customButton(text: "2월")
+    lazy var march = self.customButton(text: "3월")
+    lazy var april = self.customButton(text: "4월")
+    lazy var may = self.customButton(text: "5월")
+    lazy var june = self.customButton(text: "6월")
+    lazy var july = self.customButton(text: "7월")
+    lazy var august = self.customButton(text: "8월")
+    lazy var september = self.customButton(text: "9월")
+    lazy var october = self.customButton(text: "10월")
+    lazy var november = self.customButton(text: "11월")
+    lazy var december = self.customButton(text: "12월")
     
     // MARK: LifeCycle
 
@@ -86,8 +86,7 @@ class CalendarView: UIView {
     
     private func customButton(text: String) -> UIButton {
         let button = UIButton()
-        button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        button.backgroundColor = .buttonSkyBlueColor
+        button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = false

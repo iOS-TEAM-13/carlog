@@ -58,17 +58,17 @@ extension JoinupPageViewController {
             self.textFieldDidChange()
         }), for: .editingChanged)
         
-        joinupView.smtpEmailTextField.addAction(UIAction(handler: { _ in
+        joinupView.emailTextField.addAction(UIAction(handler: { _ in
             self.textFieldDidChange()
-            if let smtpEmailText = self.joinupView.smtpEmailTextField.text, !smtpEmailText.isEmpty, smtpEmailText.isValidEmail() {
+            if let smtpEmailText = self.joinupView.emailTextField.text, !smtpEmailText.isEmpty, smtpEmailText.isValidEmail() {
                 if self.isCheckedEmail == false {
-                    self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-                    self.joinupView.smtpButton.backgroundColor = .mainNavyColor
-                    self.joinupView.smtpButton.isEnabled = true
+                    self.joinupView.verifiedEmailButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                    self.joinupView.verifiedEmailButton.backgroundColor = .mainNavyColor
+                    self.joinupView.verifiedEmailButton.isEnabled = true
                 } else {
-                    self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
-                    self.joinupView.smtpButton.backgroundColor = .lightGray
-                    self.joinupView.smtpButton.isEnabled = false
+                    self.joinupView.verifiedEmailButton.setTitleColor(.gray, for: .normal)
+                    self.joinupView.verifiedEmailButton.backgroundColor = .lightGray
+                    self.joinupView.verifiedEmailButton.isEnabled = false
                     self.isCheckedEmail = true
                 }
             }
@@ -114,8 +114,13 @@ extension JoinupPageViewController {
     }
     
     func addSMTPButtonAction() {
-        joinupView.smtpButton.addAction(UIAction(handler: { _ in
-            guard let emailText = self.joinupView.smtpEmailTextField.text,
+        // 이메일 인증버튼
+        joinupView.verifiedEmailButton.addAction(UIAction(handler: { _ in
+            
+            // 중복 타이머 멈추기
+            self.stopTimer()
+            
+            guard let emailText = self.joinupView.emailTextField.text,
                   !emailText.isEmpty,
                   emailText.isValidEmail()
             else {
@@ -127,7 +132,7 @@ extension JoinupPageViewController {
             let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
             
             let from = Mail.User(name: "CarLog", email: "user3rum@gmail.com")
-            let to = Mail.User(name: "User", email: self.joinupView.smtpEmailTextField.text!)
+            let to = Mail.User(name: "User", email: self.joinupView.emailTextField.text!)
             
             let code = "\(Int.random(in: 100000 ... 999999))"
             
@@ -145,13 +150,28 @@ extension JoinupPageViewController {
             }
             
             self.joinupView.smtpTimerLabel.isHidden = false
-            self.joinupView.smtpButton.isEnabled = false
-            self.joinupView.smtpButton.backgroundColor = .lightGray
-            self.joinupView.smtpButton.setTitleColor(.gray, for: .normal)
+            self.joinupView.verifiedEmailButton.isEnabled = false
+            self.joinupView.verifiedEmailButton.backgroundColor = .lightGray
+            self.joinupView.verifiedEmailButton.setTitleColor(.gray, for: .normal)
+            self.joinupView.smtpNumberStackView.isHidden = false
+            
+            self.seconds = 180
             
             // 타이머
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
         }), for: .touchUpInside)
+    }
+    
+    // 타이머 시작 함수
+    func startTimer() {
+        self.stopTimer() // 중복 타이머 중지
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
+    }
+
+    // 타이머 중지 함수
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil // 타이머 객체 해제
     }
     
     func addSMTPNumberButtonAction() {
@@ -160,7 +180,11 @@ extension JoinupPageViewController {
                 if success {
                     self.showAlert(message: "인증이 성공적으로 처리되었습니다")
                     self.joinupView.smtpTimerLabel.isHidden = true
+                    self.stopTimer()
                     self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
+                    self.joinupView.verifiedEmailButton.isEnabled = false
+                    self.joinupView.verifiedEmailButton.setTitleColor(.gray, for: .normal)
+                    self.joinupView.verifiedEmailButton.backgroundColor = .lightGray
                 }
             }
         }), for: .touchUpInside)
@@ -180,7 +204,7 @@ extension JoinupPageViewController {
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text,
-                  let smtpEmail = self.joinupView.smtpEmailTextField.text,
+                  // let smtpEmail = self.joinupView.smtpEmailTextField.text,
                   let smtpNumber = self.joinupView.smtpNumberTextField.text
             else {
                 return
@@ -189,11 +213,10 @@ extension JoinupPageViewController {
             let isEmailValid = email.isValidEmail()
             let isPasswordValid = password.isValidPassword()
             let isConfirmPasswordValid = confirmPassword == password
-            let isSMTPEmailValid = smtpEmail.isValidEmail()
             let isSMTPNumber = smtpNumber.count == 6
             let personalInfoCheck = self.joinupView.checkboxButton.isSelected == !self.isChecked
             
-            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPEmailValid, isSMTPNumber, personalInfoCheck {
+            if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPNumber, personalInfoCheck {
                 LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
@@ -224,8 +247,6 @@ extension JoinupPageViewController {
                     alertMessage = "올바른 비밀번호를 써주세요 (대/소문자,특수기호,8글자이상)"
                 } else if !isConfirmPasswordValid {
                     alertMessage = "비밀번호와 다릅니다, 다시 입력해주세요"
-                } else if !isSMTPEmailValid {
-                    alertMessage = "이메일 인증을 해주세요"
                 } else if smtpNumber.isEmpty {
                     alertMessage = "인증번호를 확인해주세요"
                 } else if personalInfoCheck == self.isChecked {
@@ -278,15 +299,16 @@ extension JoinupPageViewController {
     @objc func updateTimerLabel() {
         if seconds > 0 {
             seconds -= 1
-//            self.isCheckedEmail = true
             joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
         } else if seconds == 0 {
             joinupView.smtpTimerLabel.isHidden = true
-            self.joinupView.smtpButton.isEnabled = true
-            self.joinupView.smtpButton.backgroundColor = .mainNavyColor
-            self.joinupView.smtpButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+            self.joinupView.verifiedEmailButton.isEnabled = true
+            self.joinupView.verifiedEmailButton.backgroundColor = .mainNavyColor
+            self.joinupView.verifiedEmailButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
             self.joinupView.smtpTimerLabel.text = "대기중"
-            self.isCheckedEmail = false
+            isCheckedEmail = false
+            self.stopTimer()
+            // 재설정
             seconds = 180
         }
     }
@@ -379,46 +401,5 @@ extension JoinupPageViewController {
                 }
             }
         }
-    }
-}
-
-extension UIWindow {
-    func replaceRootViewController(_ replacementController: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        let snapshotImageView = UIImageView(image: self.snapshot())
-        self.addSubview(snapshotImageView)
-        let dismissCompletion = { () in // dismiss all modal view controllers
-            self.rootViewController = replacementController
-            self.bringSubviewToFront(snapshotImageView)
-            
-            if animated {
-                UIView.animate(withDuration: 0.4, animations: { () in
-                    snapshotImageView.alpha = 0
-                }, completion: { _ in
-                    snapshotImageView.removeFromSuperview()
-                    completion?()
-                })
-            } else {
-                snapshotImageView.removeFromSuperview()
-                completion?()
-            }
-        }
-        
-        if self.rootViewController!.presentedViewController != nil {
-            self.rootViewController!.dismiss(animated: false, completion: dismissCompletion)
-        } else {
-            dismissCompletion()
-        }
-    }
-    
-    func snapshot() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
-        
-        drawHierarchy(in: bounds, afterScreenUpdates: true)
-        
-        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-        
-        UIGraphicsEndImageContext()
-        
-        return result
     }
 }

@@ -228,8 +228,8 @@ class MyCarDetailPageViewController: UIViewController {
     private func addHistory(date: Date, currentTime: String, type: ChangedType) {
         for i in 0...(saveData.parts.count) - 1 {
             if saveData.parts[i].name == selectedParts?.name {
-                saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, changedType: type), at: 0)
                 saveData.parts[i].currentTime = currentTime
+                saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, newDate: currentTime, changedType: type), at: 0)
             }
         }
         saveCarParts()
@@ -241,7 +241,7 @@ class MyCarDetailPageViewController: UIViewController {
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            self.addHistory(date: Date(), currentTime: "최근", type: .isFixedParts)
+            self.addHistory(date: Date(), currentTime: Date().toString(), type: .isFixedParts)
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
@@ -267,11 +267,11 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+        cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", newDate: selectedParts?.fixHistory[indexPath.row]?.newDate ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 50)
+        .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 70)
     }
 }

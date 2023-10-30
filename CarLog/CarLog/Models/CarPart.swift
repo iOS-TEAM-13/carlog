@@ -54,6 +54,7 @@ struct PartsInfo: Codable {
 
 struct FixHistory: Codable {
     let changedDate: Date?
+    let newDate: String?
     let changedType: ChangedType?
 }
 

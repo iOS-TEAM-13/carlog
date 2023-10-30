@@ -12,8 +12,8 @@ import SnapKit
 
 class PageViewController: UIViewController {
     // MARK: Properties
-
-    var componetsView: ComponentsView?
+    
+    var componentsView: ComponentsView?
     var insuranceView: InsuranceView?
     var type = ""
     
@@ -26,8 +26,8 @@ class PageViewController: UIViewController {
     init(view: CheckingView, checkingView: componentsType) {
         super.init(nibName: nil, bundle: nil)
         if checkingView == .engineOil || checkingView == .missionOil || checkingView == .brakeOil || checkingView == .brakePad || checkingView == .tireRotation || checkingView == .tire || checkingView == .fuelFilter || checkingView == .wiperBlade || checkingView == .airconFilter {
-            componetsView = ComponentsView(view: view)
-            type = componetsView?.checkTitleLabel.text ?? ""
+            componentsView = ComponentsView(view: view)
+            type = componentsView?.checkTitleLabel.text ?? ""
             setupComponetsView()
             componentsButtonActions()
         } else {
@@ -44,25 +44,27 @@ class PageViewController: UIViewController {
     // MARK: Method
 
     private func setupComponetsView() {
-        view.addSubview(componetsView!)
+        guard let componentsView = componentsView else { return }
+        view.addSubview(componentsView)
         
-        componetsView!.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        componentsView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     private func setupInsuranceView() {
-        view.addSubview(insuranceView!)
+        guard let insuranceView = insuranceView else { return }
+        view.addSubview(insuranceView)
         
-        insuranceView!.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        insuranceView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     // MARK: ComponentsView
 
     private func componentsButtonActions() {
-        if let view = componetsView {
+        if let view = componentsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
                 self.checkButtonTapped(sender: view.firstAnswerButton)
             }), for: .touchUpInside)
@@ -82,7 +84,7 @@ class PageViewController: UIViewController {
     }
     
     private func checkButtonTapped(sender: UIButton) {
-        if let view = componetsView {
+        if let view = componentsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
                 item.backgroundColor = .buttonSkyBlueColor
@@ -165,51 +167,51 @@ class PageViewController: UIViewController {
                 for i in 0...Constants.carParts.parts.count - 1 {
                     if Constants.carParts.parts[i].name == .insurance {
                         switch text {
-                        case "Jan":
+                        case "1월":
                             view.calendarView.january.backgroundColor = .mainNavyColor
                             view.calendarView.january.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "1"
-                        case "Feb":
+                        case "2월":
                             view.calendarView.february.backgroundColor = .mainNavyColor
                             view.calendarView.february.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "2"
-                        case "Mar":
+                        case "3월":
                             view.calendarView.march.backgroundColor = .mainNavyColor
                             view.calendarView.march.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "3"
-                        case "Apr":
+                        case "4월":
                             view.calendarView.april.backgroundColor = .mainNavyColor
                             view.calendarView.april.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "4"
-                        case "May":
+                        case "5월":
                             view.calendarView.may.backgroundColor = .mainNavyColor
                             view.calendarView.may.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "5"
-                        case "Jun":
+                        case "6월":
                             view.calendarView.june.backgroundColor = .mainNavyColor
                             view.calendarView.june.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "6"
-                        case "Jul":
+                        case "7월":
                             view.calendarView.july.backgroundColor = .mainNavyColor
                             view.calendarView.july.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "7"
-                        case "Aug":
+                        case "8월":
                             view.calendarView.august.backgroundColor = .mainNavyColor
                             view.calendarView.august.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "8"
-                        case "Sep":
+                        case "9월":
                             view.calendarView.september.backgroundColor = .mainNavyColor
                             view.calendarView.september.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "9"
-                        case "Oct":
+                        case "10월":
                             view.calendarView.october.backgroundColor = .mainNavyColor
                             view.calendarView.october.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "10"
-                        case "Nov":
+                        case "11월":
                             view.calendarView.november.backgroundColor = .mainNavyColor
                             view.calendarView.november.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "11"
-                        case "Dec":
+                        case "12월":
                             view.calendarView.december.backgroundColor = .mainNavyColor
                             view.calendarView.december.setTitleColor(.white, for: .normal)
                             Constants.carParts.parts[i].currentTime = "12"

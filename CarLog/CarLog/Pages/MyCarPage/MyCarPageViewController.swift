@@ -56,7 +56,8 @@ class MyCarPageViewController: UIViewController {
         view.addSubview(myCarCollectionView)
         
         myCarCollectionView.snp.makeConstraints {
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
@@ -109,7 +110,7 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
             }
             cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
         }
-        cell.layer.cornerRadius = 20
+//        cell.layer.cornerRadius = Constants.cornerRadius * 4
         return cell
     }
     
