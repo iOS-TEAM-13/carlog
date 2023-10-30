@@ -309,7 +309,7 @@ extension JoinupPageViewController {
             isCheckedEmail = false
             self.stopTimer()
             // 재설정
-            seconds = 180 // 또는 다시 설정해야 하는 초의 초기값
+            seconds = 180
         }
     }
     
