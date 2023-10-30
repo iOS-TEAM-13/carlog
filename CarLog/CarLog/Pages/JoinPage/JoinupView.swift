@@ -155,6 +155,10 @@ final class JoinupView: UIView {
         showPasswordButton.addTarget(self, action: #selector(togglePasswordVisibilityTapped), for: .touchUpInside)
         showConfirmPasswordButton.addTarget(self, action: #selector(toggleConfirmVisibilityTapped), for: .touchUpInside)
         
+        smtpTimerLabel.snp.makeConstraints { make in
+            make.width.equalTo(50)
+        }
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(safeArea)
         }
