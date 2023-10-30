@@ -21,11 +21,20 @@ final class JoinupView: UIView {
     lazy var emailLabel = makeLabel(text: "이메일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
-        let textField = makeTextField(placeholder: "test@google.com")
+        let textField = makeTextField(placeholder: "유효한 이메일을 입력해주세요")
         textField.rightView = checkEmailButton
         textField.delegate = self
         textField.rightViewMode = .always
         return textField
+    }()
+    
+    lazy var verifiedEmailButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
+  
+    lazy var emailStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, verifiedEmailButton])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        stackView.distribution = .fillProportionally
+        return stackView
     }()
     
     lazy var checkboxButton: UIButton = {
@@ -52,12 +61,10 @@ final class JoinupView: UIView {
         return stackView
     }()
 
-    
     @objc func closeKeyboard() {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         confirmPasswordTextField.resignFirstResponder()
-        smtpEmailTextField.resignFirstResponder()
         smtpNumberTextField.resignFirstResponder()
     }
     
@@ -98,19 +105,6 @@ final class JoinupView: UIView {
     }()
     
     lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
-    
-    lazy var smtpEmailLabel = makeLabel(text: "이메일 인증", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
-    
-    lazy var smtpEmailTextField: UITextField = makeTextField(placeholder: "유효한 이메일을 입력", keyboardType: .emailAddress)
-    
-    lazy var smtpButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
-  
-    lazy var smtpStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [smtpEmailTextField, smtpButton])
-        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        stackView.distribution = .fillProportionally
-        return stackView
-    }()
 
     lazy var smtpNumberTextField: UITextField = makeTextField(placeholder: "인증번호", keyboardType: .numberPad)
 
@@ -122,11 +116,12 @@ final class JoinupView: UIView {
         let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])
         stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
         stackView.distribution = .fillProportionally
+        stackView.isHidden = true
         return stackView
     }()
     
     lazy var allTextFieldStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailAlertLabel, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, smtpEmailLabel, smtpStackView, smtpNumberStackView, personalInfoStatusStackView])
+        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailStackView, emailAlertLabel, smtpNumberStackView, passwordLabel, passwordTextField, passwordAlertLabel, confirmPasswordLabel, confirmPasswordTextField, confirmPasswordAlertLabel, personalInfoStatusStackView])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
@@ -176,7 +171,7 @@ final class JoinupView: UIView {
         }
 
         smtpNumberButton.snp.makeConstraints {
-            $0.width.equalTo(smtpButton)
+            $0.width.equalTo(verifiedEmailButton)
         }
     }
     
@@ -198,8 +193,6 @@ extension JoinupView: UITextFieldDelegate {
         } else if textField == passwordTextField {
             confirmPasswordTextField.becomeFirstResponder()
         } else if textField == confirmPasswordTextField {
-            smtpEmailTextField.becomeFirstResponder()
-        } else if textField == smtpEmailTextField {
             smtpNumberTextField.becomeFirstResponder()
         }
         return true
