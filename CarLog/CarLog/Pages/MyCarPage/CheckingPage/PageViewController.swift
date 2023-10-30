@@ -8,13 +8,10 @@
 import UIKit
 
 import FirebaseAuth
-import Lottie
 import SnapKit
 
 class PageViewController: UIViewController {
     // MARK: Properties
-    
-    let animationView: LottieAnimationView = .init(name: "slideAnimation")
     
     var componentsView: ComponentsView?
     var insuranceView: InsuranceView?
@@ -24,12 +21,6 @@ class PageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(animationView)
-        animationView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        animationView.loopMode = .loop
     }
     
     init(view: CheckingView, checkingView: componentsType) {
