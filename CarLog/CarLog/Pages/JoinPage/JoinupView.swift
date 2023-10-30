@@ -18,10 +18,10 @@ final class JoinupView: UIView {
         return contentView
     }()
     
-    lazy var emailLabel = makeLabel(text: "아이디", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+    lazy var emailLabel = makeLabel(text: "이메일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
-        let textField = makeTextField(placeholder: "아이디")
+        let textField = makeTextField(placeholder: "test@google.com")
         textField.rightView = checkEmailButton
         textField.delegate = self
         textField.rightViewMode = .always
@@ -30,8 +30,8 @@ final class JoinupView: UIView {
     
     lazy var checkboxButton: UIButton = {
         let button = UIButton()
-        button.widthAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
-        button.heightAnchor.constraint(equalToConstant: Constants.horizontalMargin).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 18).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 18).isActive = true
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 5
@@ -71,7 +71,7 @@ final class JoinupView: UIView {
         return button
     }()
     
-    lazy var emailAlertLabel = makeAlertLabel(text: "아이디는 필수 입력 정보입니다", textColor: .red)
+    lazy var emailAlertLabel = makeAlertLabel(text: "이메일은 필수 입력 정보입니다", textColor: .red)
     
     lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
@@ -84,7 +84,7 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var passwordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이내로 작성하세요", textColor: .red)
+    lazy var passwordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
 
     lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
@@ -97,7 +97,7 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이내로 작성하세요", textColor: .red)
+    lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
     
     lazy var smtpEmailLabel = makeLabel(text: "이메일 인증", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
