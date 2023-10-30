@@ -114,7 +114,12 @@ extension JoinupPageViewController {
     }
     
     func addSMTPButtonAction() {
+        // 이메일 인증버튼
         joinupView.verifiedEmailButton.addAction(UIAction(handler: { _ in
+            
+            // 중복 타이머 멈추기
+            self.stopTimer()
+            
             guard let emailText = self.joinupView.emailTextField.text,
                   !emailText.isEmpty,
                   emailText.isValidEmail()
@@ -150,9 +155,23 @@ extension JoinupPageViewController {
             self.joinupView.verifiedEmailButton.setTitleColor(.gray, for: .normal)
             self.joinupView.smtpNumberStackView.isHidden = false
             
+            self.seconds = 180
+            
             // 타이머
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
         }), for: .touchUpInside)
+    }
+    
+    // 타이머 시작 함수
+    func startTimer() {
+        self.stopTimer() // 중복 타이머 중지
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
+    }
+
+    // 타이머 중지 함수
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil // 타이머 객체 해제
     }
     
     func addSMTPNumberButtonAction() {
@@ -161,7 +180,7 @@ extension JoinupPageViewController {
                 if success {
                     self.showAlert(message: "인증이 성공적으로 처리되었습니다")
                     self.joinupView.smtpTimerLabel.isHidden = true
-                    self.timer?.invalidate()
+                    self.stopTimer()
                     self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
                     self.joinupView.verifiedEmailButton.isEnabled = false
                     self.joinupView.verifiedEmailButton.setTitleColor(.gray, for: .normal)
@@ -185,7 +204,7 @@ extension JoinupPageViewController {
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text,
-                  //let smtpEmail = self.joinupView.smtpEmailTextField.text,
+                  // let smtpEmail = self.joinupView.smtpEmailTextField.text,
                   let smtpNumber = self.joinupView.smtpNumberTextField.text
             else {
                 return
@@ -194,7 +213,6 @@ extension JoinupPageViewController {
             let isEmailValid = email.isValidEmail()
             let isPasswordValid = password.isValidPassword()
             let isConfirmPasswordValid = confirmPassword == password
-            //let isSMTPEmailValid = smtpEmail.isValidEmail()
             let isSMTPNumber = smtpNumber.count == 6
             let personalInfoCheck = self.joinupView.checkboxButton.isSelected == !self.isChecked
             
@@ -281,7 +299,6 @@ extension JoinupPageViewController {
     @objc func updateTimerLabel() {
         if seconds > 0 {
             seconds -= 1
-//            self.isCheckedEmail = true
             joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
         } else if seconds == 0 {
             joinupView.smtpTimerLabel.isHidden = true
@@ -289,8 +306,10 @@ extension JoinupPageViewController {
             self.joinupView.verifiedEmailButton.backgroundColor = .mainNavyColor
             self.joinupView.verifiedEmailButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
             self.joinupView.smtpTimerLabel.text = "대기중"
-            self.isCheckedEmail = false
-            seconds = 180
+            isCheckedEmail = false
+            self.stopTimer()
+            // 재설정
+            seconds = 180 // 또는 다시 설정해야 하는 초의 초기값
         }
     }
     
@@ -384,5 +403,3 @@ extension JoinupPageViewController {
         }
     }
 }
-
-

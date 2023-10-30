@@ -236,7 +236,7 @@ extension JoinupView {
 
     private func makeAlertLabel(text: String, textColor: UIColor) -> UILabel {
         let label = UILabel()
-        label.customLabel(text: text, textColor: textColor, font: UIFont(name: "Jua", size: 12) ?? UIFont(), alignment: .left)
+        label.customLabel(text: text, textColor: textColor, font: UIFont.spoqaHanSansNeo(size: 12, weight: .medium), alignment: .left)
         label.isHidden = true
         return label
     }
