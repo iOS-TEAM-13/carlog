@@ -88,7 +88,7 @@
 		FFB0CC4E2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB0CC4D2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift */; };
 		FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */; };
 		FFEFB0EF2AEF9EA60095956F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FFEFB0EE2AEF9EA60095956F /* Lottie */; };
-		FFEFB0F12AEF9F630095956F /* slideAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = FFEFB0F02AEF9F630095956F /* slideAnimation.json */; };
+		FFEFB0F72AEFA6880095956F /* slideAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = FFEFB0F62AEFA6880095956F /* slideAnimation.json */; };
 		FFFFAF842AE1644800A7677E /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFFAF832AE1644800A7677E /* Date+.swift */; };
 		FFFFAF862AE18A5500A7677E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFFAF852AE18A5500A7677E /* Util.swift */; };
 /* End PBXBuildFile section */
@@ -174,7 +174,8 @@
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FFB0CC4D2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedDatePickerViewController.swift; sourceTree = "<group>"; };
 		FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailViewCell.swift; sourceTree = "<group>"; };
-		FFEFB0F02AEF9F630095956F /* slideAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = slideAnimation.json; path = ../../../../../Downloads/slideAnimation.json; sourceTree = "<group>"; };
+		FFEFB0F62AEFA6880095956F /* slideAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = slideAnimation.json; path = ../../../../Downloads/slideAnimation.json; sourceTree = "<group>"; };
+		FFEFB0F82AEFA68D0095956F /* slideAnimation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = slideAnimation.json; sourceTree = "<group>"; };
 		FFFFAF832AE1644800A7677E /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		FFFFAF852AE18A5500A7677E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +291,7 @@
 		FB748B1E2AD53B5E00CC6A1F /* CarLog */ = {
 			isa = PBXGroup;
 			children = (
+				FFEFB0F62AEFA6880095956F /* slideAnimation.json */,
 				FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */,
 				FF126E202ADAE66D00B2A109 /* Service */,
 				FBE051782AD652D800F39E7F /* Constants.swift */,
@@ -307,7 +309,7 @@
 		FB748B332AD53B7B00CC6A1F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FFEFB0F02AEF9F630095956F /* slideAnimation.json */,
+				FFEFB0F82AEFA68D0095956F /* slideAnimation.json */,
 				FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */,
 				FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */,
 				FB748B2A2AD53B5F00CC6A1F /* LaunchScreen.storyboard */,
@@ -558,7 +560,7 @@
 			files = (
 				FBE051772AD62C9600F39E7F /* Jua.ttf in Resources */,
 				FB748B2C2AD53B5F00CC6A1F /* LaunchScreen.storyboard in Resources */,
-				FFEFB0F12AEF9F630095956F /* slideAnimation.json in Resources */,
+				FFEFB0F72AEFA6880095956F /* slideAnimation.json in Resources */,
 				FB748B292AD53B5F00CC6A1F /* Assets.xcassets in Resources */,
 				FBC7128A2AD6B895006C2BB0 /* GoogleService-Info.plist in Resources */,
 			);
