@@ -12,8 +12,8 @@ import SnapKit
 
 class PageViewController: UIViewController {
     // MARK: Properties
-
-    var componetsView: ComponentsView?
+    
+    var componentsView: ComponentsView?
     var insuranceView: InsuranceView?
     var type = ""
     
@@ -26,8 +26,8 @@ class PageViewController: UIViewController {
     init(view: CheckingView, checkingView: componentsType) {
         super.init(nibName: nil, bundle: nil)
         if checkingView == .engineOil || checkingView == .missionOil || checkingView == .brakeOil || checkingView == .brakePad || checkingView == .tireRotation || checkingView == .tire || checkingView == .fuelFilter || checkingView == .wiperBlade || checkingView == .airconFilter {
-            componetsView = ComponentsView(view: view)
-            type = componetsView?.checkTitleLabel.text ?? ""
+            componentsView = ComponentsView(view: view)
+            type = componentsView?.checkTitleLabel.text ?? ""
             setupComponetsView()
             componentsButtonActions()
         } else {
@@ -44,25 +44,27 @@ class PageViewController: UIViewController {
     // MARK: Method
 
     private func setupComponetsView() {
-        view.addSubview(componetsView!)
+        guard let componentsView = componentsView else { return }
+        view.addSubview(componentsView)
         
-        componetsView!.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        componentsView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     private func setupInsuranceView() {
-        view.addSubview(insuranceView!)
+        guard let insuranceView = insuranceView else { return }
+        view.addSubview(insuranceView)
         
-        insuranceView!.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        insuranceView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     // MARK: ComponentsView
 
     private func componentsButtonActions() {
-        if let view = componetsView {
+        if let view = componentsView {
             view.firstAnswerButton.addAction(UIAction(handler: { _ in
                 self.checkButtonTapped(sender: view.firstAnswerButton)
             }), for: .touchUpInside)
@@ -82,7 +84,7 @@ class PageViewController: UIViewController {
     }
     
     private func checkButtonTapped(sender: UIButton) {
-        if let view = componetsView {
+        if let view = componentsView {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
                 item.backgroundColor = .buttonSkyBlueColor

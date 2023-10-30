@@ -24,6 +24,12 @@ class MyCarCheckViewController: UIViewController {
     private let airconFilterView = PageViewController(view: CheckingView(title: "에어컨 필터는 언제 교체하셨나요?", firstButton: "1년 전", secondButton: "6개월 전", thirdbutton: "3개월 전", fourthButton: "최근", fifthButton: "모르겠어요"), checkingView: .airconFilter)
     private let insuranceView = PageViewController(view: CheckingView(title: "보험 가입 시기는 언제쯤인가요?", firstButton: "", secondButton: "", thirdbutton: "", fourthButton: "", fifthButton: ""), checkingView: .insurance)
     
+    var checkCountLabel: UILabel = {
+        let label = UILabel()
+        label.customLabel(text: "0/10", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
+       return label
+    }()
+    
     lazy var dataViewControllers: [UIViewController] = {
         [engineOilView, missionOilView, brakeOilView, brakePadView, tireRotationView, tireView, fuelFilterView, wiperBladeView, airconFilterView, insuranceView]
     }()
@@ -65,11 +71,17 @@ class MyCarCheckViewController: UIViewController {
     private func setupUI() {
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
+        view.addSubview(checkCountLabel)
         
         pageViewController.view.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         pageViewController.didMove(toParent: self)
+        
+        checkCountLabel.snp.makeConstraints {
+            $0.top.equalTo(pageViewController.view.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
+        }
     }
     
     private func setPageViewController() {
@@ -86,9 +98,11 @@ class MyCarCheckViewController: UIViewController {
     // MARK: objc
 
     @objc private func completedCheckingView() {
-        if Constants.carParts.parts.filter({ $0.currentTime == nil }).count == 0 {
+        let count = Constants.carParts.parts.filter({ $0.currentTime != nil }).count
+        if count == 10 {
             navigationItem.rightBarButtonItem = addButton
         }
+        checkCountLabel.text = "\(count)/10"
     }
 }
 
@@ -109,9 +123,5 @@ extension MyCarCheckViewController: UIPageViewControllerDataSource, UIPageViewCo
             return nil
         }
         return dataViewControllers[nextIndex]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        completedCheckingView()
     }
 }
