@@ -175,7 +175,6 @@
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FFB0CC4D2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedDatePickerViewController.swift; sourceTree = "<group>"; };
 		FFD5F7502ADFC02000A06771 /* MyCarDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailViewCell.swift; sourceTree = "<group>"; };
-		FFEFB0F82AEFA68D0095956F /* slideAnimation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = slideAnimation.json; sourceTree = "<group>"; };
 		FFFFAF832AE1644800A7677E /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		FFFFAF852AE18A5500A7677E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -308,7 +307,6 @@
 		FB748B332AD53B7B00CC6A1F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FFEFB0F82AEFA68D0095956F /* slideAnimation.json */,
 				FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */,
 				FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */,
 				FB748B2A2AD53B5F00CC6A1F /* LaunchScreen.storyboard */,

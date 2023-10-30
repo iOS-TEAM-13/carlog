@@ -267,7 +267,6 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-//        cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", newDate: selectedParts?.fixHistory[indexPath.row]?.newDate ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         return cell
     }

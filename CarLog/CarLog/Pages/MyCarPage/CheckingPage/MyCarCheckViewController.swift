@@ -91,6 +91,7 @@ class MyCarCheckViewController: UIViewController {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
+        animationView.loopMode = .playOnce
         animationView.play { _ in
             self.animationView.isHidden = true
             self.animationView.removeFromSuperview()
