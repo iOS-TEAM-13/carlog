@@ -21,7 +21,7 @@ final class JoinupView: UIView {
     lazy var emailLabel = makeLabel(text: "이메일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
-        let textField = makeTextField(placeholder: "유효한 이메일")
+        let textField = makeTextField(placeholder: "sample@email.com/co.kr/net")
         textField.rightView = checkEmailButton
         textField.delegate = self
         textField.rightViewMode = .always
@@ -39,8 +39,8 @@ final class JoinupView: UIView {
     
     lazy var checkboxButton: UIButton = {
         let button = UIButton()
-        button.widthAnchor.constraint(equalToConstant: 18).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 18).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 20).isActive = true
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 5
@@ -83,7 +83,7 @@ final class JoinupView: UIView {
     lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
     lazy var passwordTextField: UITextField = {
-        let textField = makeTextField(placeholder: "비밀번호", isSecure: isSecure)
+        let textField = makeTextField(placeholder: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상", isSecure: isSecure)
         textField.isSecureTextEntry = isSecure
         textField.rightView = showPasswordButton
         textField.rightViewMode = .always
@@ -91,12 +91,12 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var passwordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
+    lazy var passwordAlertLabel = makeAlertLabel(text: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
 
     lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
     
     lazy var confirmPasswordTextField: UITextField = {
-        let textField = makeTextField(placeholder: "비밀번호 재확인", isSecure: isSecure)
+        let textField = makeTextField(placeholder: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상", isSecure: isSecure)
         textField.isSecureTextEntry = isSecure
         textField.rightView = showConfirmPasswordButton
         textField.rightViewMode = .always
@@ -104,7 +104,7 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "영대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
+    lazy var confirmPasswordAlertLabel = makeAlertLabel(text: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
 
     lazy var smtpNumberTextField: UITextField = makeTextField(placeholder: "인증번호", keyboardType: .numberPad)
 
