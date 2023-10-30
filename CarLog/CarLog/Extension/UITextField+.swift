@@ -34,14 +34,14 @@ extension UITextField {
         let border = CALayer()
         let width = CGFloat(1)
         border.borderColor = UIColor.systemGray.cgColor
-        border.frame = CGRect(x: 0, y: 45, width: UIScreen.main.bounds.width - 40, height: 1)
+        border.frame = CGRect(x: 0, y: 40, width: UIScreen.main.bounds.width - 40, height: 1)
         border.borderWidth = width
         self.layer.addSublayer(border)
         self.font = font
         self.sizeToFit()
         self.textAlignment = alignment
         self.textColor = textColor
-        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
         self.leftViewMode = .always
     }
     

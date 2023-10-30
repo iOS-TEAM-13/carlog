@@ -22,7 +22,7 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
-
+    
     lazy var mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "내 차 정보"
@@ -41,7 +41,7 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
-
+    
     //    //텍스트 폰트에 따른 언더라인 수정
     //    lazy var myWritingButton: UIButton = {
     //        let myWritingButton = UIButton()
@@ -49,7 +49,14 @@ final class MyPageView: UIView {
     //        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
     //    }()
     
-    lazy var carNumberLabel = makeLabel(text: "차량 번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+    lazy var carNumberLabel: UILabel = {
+        let carNumberLabel = UILabel()
+        carNumberLabel.text = "차량 번호"
+        carNumberLabel.textColor = .mainNavyColor
+        carNumberLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        return carNumberLabel
+    }()
+    
     
     lazy var carNumberTextField: UITextField = {
         let carNumbertextField = UITextField()
@@ -65,6 +72,14 @@ final class MyPageView: UIView {
         toolbar.isUserInteractionEnabled = true
         carNumbertextField.inputAccessoryView = toolbar
         return carNumbertextField
+    }()
+    
+    lazy var carNameLabel: UILabel = {
+        let carNameLabel = UILabel()
+        carNameLabel.text = "차 종류"
+        carNameLabel.textColor = .mainNavyColor
+        carNameLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        return carNameLabel
     }()
     
     lazy var carNameTextField: UITextField = {
@@ -83,6 +98,14 @@ final class MyPageView: UIView {
         return carNametextField
     }()
     
+    lazy var carMakerLabel: UILabel = {
+        let carMakerLabel = UILabel()
+        carMakerLabel.text = "제조사"
+        carMakerLabel.textColor = .mainNavyColor
+        carMakerLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        return carMakerLabel
+    }()
+    
     lazy var carMakerTextField: UITextField = {
         let carMakertextField = UITextField()
         carMakertextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
@@ -97,6 +120,14 @@ final class MyPageView: UIView {
         toolbar.isUserInteractionEnabled = true
         carMakertextField.inputAccessoryView = toolbar
         return carMakertextField
+    }()
+    
+    lazy var carOilTypeLabel: UILabel = {
+        let carOilTypeLabel = UILabel()
+        carOilTypeLabel.text = "연료 종류"
+        carOilTypeLabel.textColor = .mainNavyColor
+        carOilTypeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        return carOilTypeLabel
     }()
     
     lazy var carOilTypeTextField: UITextField = {
@@ -115,6 +146,14 @@ final class MyPageView: UIView {
         return carOilTypetextField
     }()
     
+    lazy var carNickNameLabel: UILabel = {
+        let carNickNameLabel = UILabel()
+        carNickNameLabel.text = "차량 별명"
+        carNickNameLabel.textColor = .mainNavyColor
+        carNickNameLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        return carNickNameLabel
+    }()
+    
     lazy var carNickNameTextField: UITextField = {
         let carNickNametextField = UITextField()
         carNickNametextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
@@ -129,6 +168,14 @@ final class MyPageView: UIView {
         toolbar.isUserInteractionEnabled = true
         carNickNametextField.inputAccessoryView = toolbar
         return carNickNametextField
+    }()
+    
+    lazy var carTotalDistanceLabel: UILabel = {
+        let carTotalDistanceLabel = UILabel()
+        carTotalDistanceLabel.text = "최종 주행거리"
+        carTotalDistanceLabel.textColor = .mainNavyColor
+        carTotalDistanceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        return carTotalDistanceLabel
     }()
     
     lazy var carTotalDistanceTextField: UITextField = {
@@ -215,19 +262,25 @@ final class MyPageView: UIView {
     }
     
     // MARK: -
-
+    
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(mainTitleLabel)
         contentView.addSubview(editButton)
+        contentView.addSubview(carNumberLabel)
         //      contentView.addSubview(myWritingButton)
         contentView.addSubview(carNumberTextField)
+        contentView.addSubview(carNameLabel)
         contentView.addSubview(carNameTextField)
+        contentView.addSubview(carMakerLabel)
         contentView.addSubview(carMakerTextField)
+        contentView.addSubview(carOilTypeLabel)
         contentView.addSubview(carOilTypeTextField)
+        contentView.addSubview(carNickNameLabel)
         contentView.addSubview(carNickNameTextField)
+        contentView.addSubview(carTotalDistanceLabel)
         contentView.addSubview(carTotalDistanceTextField)
         contentView.addSubview(myPageDesignStackView)
         contentView.addSubview(phoneCallButton)
@@ -268,50 +321,86 @@ final class MyPageView: UIView {
         //            make.height.equalTo(70)
         //        }
         
+        carNumberLabel.snp.makeConstraints { make in
+            make.top.equalTo(editButton.snp.bottom).offset(Constants.verticalMargin * 3)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
         carNumberTextField.snp.makeConstraints { make in
-            make.top.equalTo(editButton.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carNumberLabel.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(carNumberTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(carNumberTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carNameLabel.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carMakerLabel.snp.makeConstraints { make in
+            make.top.equalTo(carNameTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carMakerTextField.snp.makeConstraints { make in
-            make.top.equalTo(carNameTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carMakerLabel.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carOilTypeLabel.snp.makeConstraints { make in
+            make.top.equalTo(carMakerTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carOilTypeTextField.snp.makeConstraints { make in
-            make.top.equalTo(carMakerTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carOilTypeLabel.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carNickNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(carOilTypeTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carNickNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(carOilTypeTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carNickNameLabel.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        carTotalDistanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(carNickNameTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         carTotalDistanceTextField.snp.makeConstraints { make in
-            make.top.equalTo(carNickNameTextField.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(carTotalDistanceLabel.snp.bottom)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         myPageDesignStackView.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin * 2)
+            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin)
             make.leading.equalTo(contentView.snp.leading).offset(UIScreen.main.bounds.width * 0.3)
             make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
         }
         
         phoneCallButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-30)
+            make.bottom.equalToSuperview().offset(-10)
             make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(CGSize(width: 55, height: 55))
         }
