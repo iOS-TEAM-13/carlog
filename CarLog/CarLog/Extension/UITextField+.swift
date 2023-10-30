@@ -10,7 +10,10 @@ extension UITextField {
     }
     
     func loginCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView) {
-        self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor.gray,
+            NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: 5, weight: .medium)
+        ])
         self.font = font
         self.sizeToFit()
         self.textAlignment = alignment
