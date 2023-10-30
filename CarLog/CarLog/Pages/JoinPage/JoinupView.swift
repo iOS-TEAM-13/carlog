@@ -205,7 +205,7 @@ extension JoinupView {
         textField.loginCustomTextField(
             placeholder: placeholder,
             textColor: .black,
-            font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium),
             alignment: .left,
             paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)
             )
