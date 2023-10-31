@@ -16,6 +16,7 @@ extension Notification.Name {
 }
 
 class AddDrivingViewController: UIViewController {
+    
     lazy var addDrivingView: AddDrivingView = {
         let addDrivingView = AddDrivingView()
         return addDrivingView
@@ -34,7 +35,25 @@ class AddDrivingViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        autoCalculate()
         buttonActions()
+    }
+    
+    func autoCalculate() {
+        func calculate() {
+            let totalDistanceText = Int(addDrivingView.totalDistanceTextField.text ?? "") ?? 0
+            let arriveDistanceText = Int(addDrivingView.arriveDistanceTextField.text ?? "") ?? 0
+            let driveDistenceText = arriveDistanceText - totalDistanceText
+            addDrivingView.driveDistenceTextField.text = String(driveDistenceText)
+        }
+        
+        addDrivingView.totalDistanceTextField.addAction(UIAction(handler: { _ in
+            calculate()
+        }), for: .editingChanged)
+        
+        addDrivingView.arriveDistanceTextField.addAction(UIAction(handler: { _ in
+            calculate()
+        }), for: .editingChanged)
     }
     
     func buttonActions() {
