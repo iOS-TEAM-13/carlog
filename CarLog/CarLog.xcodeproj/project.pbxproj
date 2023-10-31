@@ -12,6 +12,8 @@
 		136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128F92AE42E1F00B99ACF /* CarMakerView.swift */; };
 		136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */; };
 		139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */; };
+		139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */; };
+		139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */; };
 		3B369D0F2AE661510084BF35 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D0E2AE661510084BF35 /* NetworkManager.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
@@ -99,6 +101,8 @@
 		136128F92AE42E1F00B99ACF /* CarMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMakerView.swift; sourceTree = "<group>"; };
 		136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinupPageViewController+.swift"; sourceTree = "<group>"; };
 		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
+		139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPassWordViewController.swift; sourceTree = "<group>"; };
+		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
 		3B369D0E2AE661510084BF35 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -375,6 +379,8 @@
 			children = (
 				FBC7128D2AD6C89A006C2BB0 /* LoginPageViewController.swift */,
 				FBC712932AD6FC34006C2BB0 /* LoginView.swift */,
+				139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */,
+				139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */,
 			);
 			path = LoginPage;
 			sourceTree = "<group>";
@@ -581,6 +587,7 @@
 				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
 				FBBDA71A2AD7E55A0031C17B /* CarModelView.swift in Sources */,
 				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
+				139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */,
@@ -606,6 +613,7 @@
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */,
+				139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */,
 				B85A0F3D2AD8CFC0009E0A00 /* AddDrivingView.swift in Sources */,
 				FB748B3A2AD571D900CC6A1F /* HistoryPageViewController.swift in Sources */,
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,

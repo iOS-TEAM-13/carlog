@@ -91,7 +91,7 @@ extension JoinupPageViewController {
     
     // MARK: 텍스트 필드 변경 관련
 
-    func textFieldDidChange() {
+    private func textFieldDidChange() {
         let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
         let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
         let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false

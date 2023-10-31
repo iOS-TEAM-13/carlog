@@ -21,8 +21,6 @@ final class LoginService {
                     print("err: \(String(describing: err?.localizedDescription))")
                 }
             }
-            
-            //Auth.auth().currentUser?.sendEmailVerification()
         }
     }
 
