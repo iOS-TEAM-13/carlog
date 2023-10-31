@@ -136,6 +136,31 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
     }
     
+    func CheckCarNumberButtonAction() {
+        carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
+            guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty, carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
+                return self.showAlert(message: "00가0000 형식으로 써주세요")
+            }
+            
+            FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
+                if let error = error {
+                    print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                    return
+                }
+                
+                if isCarAvailable {
+                    self.carNumberView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
+                    self.carNumberView.checkCarNumberButton.setTitle("가능", for: .normal)
+                } else {
+                    self.carNumberView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                    self.carNumberView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 존재하는 차번호입니다")
+                    self.carNumberView.carNumberTextField.text = ""
+                }
+            })
+        }), for: .touchUpInside)
+    }
+    
     // SMTP 인증버튼 코드
     func addSMTPButtonAction() {
         joinupView.verifiedEmailButton.addAction(UIAction(handler: { _ in
@@ -227,7 +252,6 @@ extension JoinupPageViewController {
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
                     if success {
-                        
                         if let user = Auth.auth().currentUser {
                             if user.isEmailVerified {
                                 // 사용자가 이메일 확인을 완료한 경우
