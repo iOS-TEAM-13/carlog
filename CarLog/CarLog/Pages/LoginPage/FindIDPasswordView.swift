@@ -12,7 +12,7 @@ import SnapKit
 class FindIDPasswordView: UIView {
 
     lazy var segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["아이디 찾기", "비밀번호 찾기"])
+        let segmentedControl = UISegmentedControl(items: ["아이디 찾기", "비밀번호 재설정"])
         segmentedControl.selectedSegmentIndex = 0
 
         segmentedControl.selectedSegmentTintColor = .mainNavyColor

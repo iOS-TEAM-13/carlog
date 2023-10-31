@@ -41,6 +41,8 @@ class FindIDPassWordViewController: UIViewController {
     private func addTarget() {
         findIDPassWordView.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
     }
+    
+    
 
     @objc private func didChangeValue(segment: UISegmentedControl) {
         findIDPassWordView.shouldHideFirstView = segment.selectedSegmentIndex != 0
