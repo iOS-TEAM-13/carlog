@@ -116,10 +116,6 @@ extension JoinupPageViewController {
     func addSMTPButtonAction() {
         // 이메일 인증버튼
         joinupView.verifiedEmailButton.addAction(UIAction(handler: { _ in
-            
-            // 중복 타이머 멈추기
-            self.stopTimer()
-            
             guard let emailText = self.joinupView.emailTextField.text,
                   !emailText.isEmpty,
                   emailText.isValidEmail()
@@ -308,8 +304,6 @@ extension JoinupPageViewController {
             self.joinupView.smtpTimerLabel.text = "대기중"
             isCheckedEmail = false
             self.stopTimer()
-            // 재설정
-            seconds = 180
         }
     }
     
