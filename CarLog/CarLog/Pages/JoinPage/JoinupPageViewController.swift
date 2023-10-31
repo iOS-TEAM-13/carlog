@@ -38,7 +38,8 @@ class JoinupPageViewController: JoinupPageHelperController {
         addSMTPNumberButtonAction()
         addJoinInButtonAction()
         personalInfoVerifiedCheck()
-        CheckCarNumberButtonAction()
+        checkCarNumberButtonAction()
+        CheckNickNameButtonAction()
     }
 
     // MARK: - 모든 뷰들

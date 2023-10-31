@@ -136,7 +136,7 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
     }
     
-    func CheckCarNumberButtonAction() {
+    func checkCarNumberButtonAction() {
         carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
             guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty, carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
                 return self.showAlert(message: "00가0000 형식으로 써주세요")
@@ -156,6 +156,29 @@ extension JoinupPageViewController {
                     self.carNumberView.checkCarNumberButton.setTitle("불가능", for: .normal)
                     self.showAlert(message: "이미 존재하는 차번호입니다")
                     self.carNumberView.carNumberTextField.text = ""
+                }
+            })
+        }), for: .touchUpInside)
+    }
+    
+    func CheckNickNameButtonAction() {
+        nickNameView.checkNickNameButton.addAction(UIAction(handler: { _ in
+            guard let nickNameToCheck = self.nickNameView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
+            
+            FirestoreService.firestoreService.checkDuplicate(car: nickNameToCheck, data: "nickName", completion: { isCarAvailable, error in
+                if let error = error {
+                    print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                    return
+                }
+                
+                if isCarAvailable {
+                    self.nickNameView.checkNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
+                    self.nickNameView.checkNickNameButton.setTitle("가능", for: .normal)
+                } else {
+                    self.nickNameView.checkNickNameButton.setTitleColor(.red, for: .normal)
+                    self.nickNameView.checkNickNameButton.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 존재하는 차번호입니다")
+                    self.nickNameView.carNickNameTextField.text = ""
                 }
             })
         }), for: .touchUpInside)
