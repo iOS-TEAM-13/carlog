@@ -139,6 +139,9 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         vc.selectedProgress = progress
         vc.selectedInterval = "\(firstInterval) ~ \(secondInterval)"
         vc.selectedIcon = menuIcon[indexPath.row]
+        
+        NotificationService.service.pushNotification(part: carParts.parts[indexPath.row])
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     
