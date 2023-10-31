@@ -58,15 +58,11 @@ class NotificationService {
             } else {
                 alarmDateComponents.month = (alarmDateComponents.month ?? 0) + month
             }
-            let trigger = UNCalendarNotificationTrigger(dateMatching: alarmDateComponents, repeats: false)
-            let request = UNNotificationRequest(identifier: "\(String(describing: Auth.auth().currentUser?.email))+\(part.name)",
-                                                content: notificationContent,
-                                                trigger: trigger)
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Notification Error: ", error)
-                }
-            }
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: alarmDateComponents , repeats: false)
+            guard let email = Auth.auth().currentUser?.email else { return }
+            let request = UNNotificationRequest(identifier: "\(email)+\(part.name)", content: notificationContent, trigger: trigger)
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         }
     }
 }

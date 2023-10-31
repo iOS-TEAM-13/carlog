@@ -42,13 +42,13 @@ class MyCarPageViewController: UIViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.barTintColor = .white
         setupUI()
-        NotificationService.service.setAuthorization()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
         loadData()
+        NotificationService.service.setAuthorization()
     }
     
     // MARK: Method
@@ -111,7 +111,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
             }
             cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
         }
-//        cell.layer.cornerRadius = Constants.cornerRadius * 4
         return cell
     }
     
@@ -139,9 +138,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         vc.selectedProgress = progress
         vc.selectedInterval = "\(firstInterval) ~ \(secondInterval)"
         vc.selectedIcon = menuIcon[indexPath.row]
-        
-        NotificationService.service.pushNotification(part: carParts.parts[indexPath.row])
-        
         navigationController?.pushViewController(vc, animated: true)
     }
     
