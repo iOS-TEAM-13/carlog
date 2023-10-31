@@ -69,11 +69,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = Constants.cornerRadius * 4
         contentView.backgroundColor = .buttonSkyBlueColor
         contentView.layer.borderWidth = 2
-        contentView.layer.borderColor = UIColor.systemGray5.cgColor
-        contentView.layer.shadowColor = UIColor.gray.cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        contentView.layer.shadowRadius = 3
-        contentView.layer.shadowOpacity = 0.3
+        contentView.layer.borderColor = UIColor.darkGray.cgColor
         
         contentView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)
