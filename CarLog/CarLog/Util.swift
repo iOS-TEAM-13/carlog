@@ -18,7 +18,7 @@ class Util {
             (MyCarPageViewController(), "car"),
             (HistoryPageViewController(), "book"),
             //        (MapPageViewController(), "map"),
-            //        (CommunityPageViewController(), "play"),
+                    (CommunityPageViewController(), "play"),
             (MyPageViewController(), "person"),
         ]
 
