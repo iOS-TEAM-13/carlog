@@ -42,4 +42,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         NotificationService.service.impact(style: .medium)
         completionHandler([.list, .banner])
     }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        
+    }
 }
