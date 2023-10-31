@@ -14,12 +14,16 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         if let image = UIImage(named: "rocket") {
             imageView.image = image
         }
+        imageView.layer.cornerRadius = 16
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     private let userName: UILabel = {
         let label = UILabel()
-        label.text = "사용자 이름"
+        label.text = "왕바우"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
@@ -110,7 +114,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
         
         userProfile.snp.makeConstraints { make in
-            make.width.equalTo(31)
+            make.width.equalTo(32)
             make.height.equalTo(32)
             make.leftMargin.equalToSuperview().offset(16)
             make.topMargin.equalToSuperview().offset(14)
