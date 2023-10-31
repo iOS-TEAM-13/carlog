@@ -8,7 +8,7 @@ final class LoginService {
     static let loginService = LoginService()
     let db = Firestore.firestore()
 
-    //회원가입
+    // 회원가입
     func signUpUser(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -21,15 +21,12 @@ final class LoginService {
                     print("err: \(String(describing: err?.localizedDescription))")
                 }
             }
+            
+            //Auth.auth().currentUser?.sendEmailVerification()
         }
     }
-    
-    //이메일 인증
-    func verifiedEmail() {
-        
-    }
 
-    //로그인
+    // 로그인
     func loginUser(email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { user, error in
             var isSuccess = true
@@ -43,14 +40,14 @@ final class LoginService {
         }
     }
 
-    //로그인 유지
+    // 로그인 유지
     func keepLogin(completion: @escaping (FirebaseAuth.User?) -> Void) {
         Auth.auth().addStateDidChangeListener { _, user in
             completion(user)
         }
     }
 
-    //로그아웃
+    // 로그아웃
     func logout(completion: () -> Void) {
         do {
             try Auth.auth().signOut()
@@ -60,7 +57,7 @@ final class LoginService {
         }
     }
 
-    //회원탈퇴
+    // 회원탈퇴
     func quitUser(email: String, completion: @escaping (Error?) -> Void) {
         // 1. Firebase Authentication에서 사용자 삭제
         if let user = Auth.auth().currentUser {

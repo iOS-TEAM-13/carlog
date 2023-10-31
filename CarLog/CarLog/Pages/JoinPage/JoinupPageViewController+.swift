@@ -3,9 +3,10 @@ import UIKit
 import FirebaseAuth
 import SwiftSMTP
 
+// MARK: - 회원가입의 주요 기능 구현 코드 (addActions)
+
 extension JoinupPageViewController {
-    // MARK: - 회원가입의 주요 기능 구현 코드
-    
+    // textField Events
     func addJoinUserFieldActions() {
         joinupView.emailTextField.addAction(UIAction(handler: { _ in
             guard let email = self.joinupView.emailTextField.text else {
@@ -88,6 +89,28 @@ extension JoinupPageViewController {
         }), for: .editingChanged)
     }
     
+    // MARK: 텍스트 필드 변경 관련
+
+    func textFieldDidChange() {
+        let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
+        let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
+        let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false
+        let isSMTPNumber = joinupView.smtpNumberTextField.text?.count == 6
+
+        UIView.animate(withDuration: 0.3) {
+            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPNumber {
+                self.joinupView.joinInButton.isEnabled = true
+                self.joinupView.joinInButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.joinInButton.backgroundColor = .mainNavyColor
+            } else {
+                self.joinupView.joinInButton.isEnabled = false
+                self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
+                self.joinupView.joinInButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
+            }
+        }
+    }
+    
+    // 아이디 중복체크 코드
     func addCheckEmailButtonAction() {
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty, emailToCheck.isValidEmail() else {
@@ -113,8 +136,8 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
     }
     
+    // SMTP 인증버튼 코드
     func addSMTPButtonAction() {
-        // 이메일 인증버튼
         joinupView.verifiedEmailButton.addAction(UIAction(handler: { _ in
             guard let emailText = self.joinupView.emailTextField.text,
                   !emailText.isEmpty,
@@ -152,24 +175,11 @@ extension JoinupPageViewController {
             self.joinupView.smtpNumberStackView.isHidden = false
             
             self.seconds = 180
-            
-            // 타이머
-            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
+            self.startTimer()
         }), for: .touchUpInside)
     }
-    
-    // 타이머 시작 함수
-    func startTimer() {
-        self.stopTimer() // 중복 타이머 중지
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerLabel), userInfo: nil, repeats: true)
-    }
 
-    // 타이머 중지 함수
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil // 타이머 객체 해제
-    }
-    
+    // SMTP 인증번호 코드
     func addSMTPNumberButtonAction() {
         joinupView.smtpNumberButton.addAction(UIAction(handler: { _ in
             self.checkVerificationCode { success in
@@ -186,6 +196,7 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
     }
     
+    // 회원가입 "다음" 버튼 코드
     func addJoinInButtonAction() {
         joinupView.joinInButton.addAction(UIAction(handler: { _ in
             if self.joinupView.checkEmailButton.title(for: .normal) != "가능" {
@@ -200,7 +211,6 @@ extension JoinupPageViewController {
             guard let email = self.joinupView.emailTextField.text,
                   let password = self.joinupView.passwordTextField.text,
                   let confirmPassword = self.joinupView.confirmPasswordTextField.text,
-                  // let smtpEmail = self.joinupView.smtpEmailTextField.text,
                   let smtpNumber = self.joinupView.smtpNumberTextField.text
             else {
                 return
@@ -217,6 +227,17 @@ extension JoinupPageViewController {
                 // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
                     if success {
+                        
+                        if let user = Auth.auth().currentUser {
+                            if user.isEmailVerified {
+                                // 사용자가 이메일 확인을 완료한 경우
+                                self.showAlert(message: "이메일 확인이 완료되었습니다.")
+                            } else {
+                                // 사용자가 이메일 확인을 아직 하지 않은 경우
+                                self.showAlert(message: "이메일 확인을 하지 않았습니다. 이메일을 확인해주세요.")
+                            }
+                        }
+                        
                         let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                             self.view.addSubview(self.carNumberView)
@@ -253,6 +274,7 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
     }
     
+    // 개인정보 동의 체크버튼 코드
     func personalInfoVerifiedCheck() {
         joinupView.checkboxButton.addAction(UIAction(handler: { _ in
             self.isChecked = !self.isChecked
@@ -268,7 +290,7 @@ extension JoinupPageViewController {
     
     // MARK: - SMTP 인증관련 코드
     
-    func checkVerificationCode(completion: @escaping (Bool) -> Void) {
+    private func checkVerificationCode(completion: @escaping (Bool) -> Void) {
         guard let userInputCode = joinupView.smtpNumberTextField.text else {
             completion(false)
             return
@@ -286,114 +308,9 @@ extension JoinupPageViewController {
         }
     }
     
-    func verifyButtonPressed(_ sender: UIButton) {
+    private func verifyButtonPressed(_ sender: UIButton) {
         self.checkVerificationCode { _ in
             print("success")
-        }
-    }
-    
-    @objc func updateTimerLabel() {
-        if seconds > 0 {
-            seconds -= 1
-            joinupView.smtpTimerLabel.text = self.timeString(time: TimeInterval(seconds))
-        } else if seconds == 0 {
-            joinupView.smtpTimerLabel.isHidden = true
-            self.joinupView.verifiedEmailButton.isEnabled = true
-            self.joinupView.verifiedEmailButton.backgroundColor = .mainNavyColor
-            self.joinupView.verifiedEmailButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-            self.joinupView.smtpTimerLabel.text = "대기중"
-            isCheckedEmail = false
-            self.stopTimer()
-        }
-    }
-    
-    func timeString(time: TimeInterval) -> String {
-        let minutes = Int(time) / 60
-        let seconds = Int(time) % 60
-        return String(format: "%02i:%02i", minutes, seconds)
-    }
-    
-    // MARK: - View 관련 로직 + 회원가입할 때 기능 구현
-    
-    func forHiddenViews() {
-        joinupView.popButton.addAction(UIAction(handler: { _ in
-            let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-                self.dismiss(animated: true, completion: nil)
-            })
-            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-            self.present(alert, animated: true, completion: nil)
-        }), for: .touchUpInside)
-        
-        carNumberView.nextButton.addAction(UIAction(handler: { _ in
-            self.view.addSubview(self.carMakerView)
-            self.carNumberView.isHidden = true
-            self.carMakerView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }), for: .touchUpInside)
-        
-        carMakerView.nextButton.addAction(UIAction(handler: { _ in
-            self.view.addSubview(self.carModelView)
-            self.carMakerView.isHidden = true
-            self.carModelView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }), for: .touchUpInside)
-        
-        carModelView.nextButton.addAction(UIAction(handler: { _ in
-            self.view.addSubview(self.oilModelView)
-            self.carModelView.isHidden = true
-            self.oilModelView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }), for: .touchUpInside)
-        
-        oilModelView.nextButton.addAction(UIAction(handler: { _ in
-            self.view.addSubview(self.nickNameView)
-            self.oilModelView.isHidden = true
-            self.nickNameView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }), for: .touchUpInside)
-        
-        nickNameView.nextButton.addAction(UIAction(handler: { _ in
-            self.view.addSubview(self.totalDistanceView)
-            self.nickNameView.isHidden = true
-            self.totalDistanceView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }), for: .touchUpInside)
-        
-        totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
-            let selectedOilType = self.oilModelView.selectedOil
-            
-            FirestoreService.firestoreService.saveCar(
-                car: Car(
-                    number: self.carNumberView.carNumberTextField.text,
-                    maker: self.carMakerView.carMakerTextField.text,
-                    name: self.carModelView.carModelTextField.text,
-                    oilType: selectedOilType ?? "",
-                    nickName: self.nickNameView.carNickNameTextField.text,
-                    totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
-                    userEmail: self.joinupView.emailTextField.text),
-                completion: { _ in
-                    self.doneButtonTapped()
-                })
-        }), for: .touchUpInside)
-    }
-    
-    func doneButtonTapped() {
-        LoginService.loginService.keepLogin { user in
-            if user != nil {
-                let tabBarController = Util.mainTabBarController()
-                if let windowScene = UIApplication.shared.connectedScenes
-                    .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
-                    let window = windowScene.windows.first
-                {
-                    window.rootViewController = tabBarController
-                }
-            }
         }
     }
 }

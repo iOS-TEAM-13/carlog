@@ -11,6 +11,7 @@
 		131528092AEF9113006121A4 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131528082AEF9113006121A4 /* UIWindow+.swift */; };
 		136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128F92AE42E1F00B99ACF /* CarMakerView.swift */; };
 		136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */; };
+		139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */; };
 		3B369D0F2AE661510084BF35 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D0E2AE661510084BF35 /* NetworkManager.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
@@ -97,6 +98,7 @@
 		131528082AEF9113006121A4 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		136128F92AE42E1F00B99ACF /* CarMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMakerView.swift; sourceTree = "<group>"; };
 		136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinupPageViewController+.swift"; sourceTree = "<group>"; };
+		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
 		3B369D0E2AE661510084BF35 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
 				FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */,
 				136128F92AE42E1F00B99ACF /* CarMakerView.swift */,
+				139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
+				139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */,
 				136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
