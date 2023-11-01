@@ -8,6 +8,15 @@ final class LoginService {
     static let loginService = LoginService()
     let db = Firestore.firestore()
 
+    func sendPasswordReset(email: String) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            guard let error = error else {
+                print("메세지 보내기 성공")
+                return
+            }
+            print("error: \(error.localizedDescription)")
+        }
+    }
     // 회원가입
     func signUpUser(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
