@@ -15,14 +15,14 @@ class NetworkService {
     // 반경 주유소
     func fetchNearbyGasStation(x: String, y: String, sort: String, prodcd: String, completion: @escaping (listResponse?) -> Void) {
         // GET 요청을 보낸다
-        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231011278&"
+        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231027298&"
         let query = "x=\(x)&y=\(y)&radius=1000&sort=\(sort)&prodcd=\(prodcd)&out=json"
         let urlString = url + query
         
         AF.request(urlString).responseDecodable(of: listResponse.self) { response in
             switch response.result {
             case .success(let data):
-                print("@@@@@ nearby: \(data)")
+//                print("@@@@@ nearby: \(data)")
                 completion(data)
             case .failure(let error):
                 print(error)
@@ -43,8 +43,9 @@ class NetworkService {
         AF.request(urlString, headers: headers).responseDecodable(of: Address.self) { response in
             switch response.result {
             case .success(let data):
-                print("@@@@@ change: \(data)")
-                completion(data)
+//                print("@@@@@ change: \(data)")
+//                print("@@@@@ change: \(type(of: data))")
+            completion(data)
             case .failure(let error):
                 print(error)
             }
@@ -53,7 +54,7 @@ class NetworkService {
 
     // 주유소 상세정보
     func fetchDetailGasStation(id: String, completion: @escaping (gasStationResponse?) -> Void) {
-        let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231011278&"
+        let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231027298&"
         let query = "id=\(id)&out=json"
         let urlString = baseURL + query
         
