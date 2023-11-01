@@ -5,8 +5,8 @@
 //  Created by 김은경 on 10/31/23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class FindIDPasswordView: UIView {
     lazy var segmentedControl: UISegmentedControl = {
@@ -52,4 +52,3 @@ class FindIDPasswordView: UIView {
         }
     }
 }
-

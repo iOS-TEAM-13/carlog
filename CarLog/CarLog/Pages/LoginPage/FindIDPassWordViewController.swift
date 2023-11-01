@@ -1,3 +1,9 @@
+//
+//  FindIDPassWordViewController.swift
+//  CarLog
+//
+//  Created by 김은경 on 10/31/23.
+//
 import UIKit
 
 import SnapKit
@@ -10,6 +16,8 @@ class FindIDPassWordViewController: UIViewController {
         view.backgroundColor = .white
         setupUI()
         addTarget() // Call addTarget to set up the action for the segmented control.
+        
+        setupUI()
     }
     
     private func setupUI() {
