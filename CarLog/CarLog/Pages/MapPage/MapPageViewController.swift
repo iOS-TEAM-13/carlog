@@ -296,7 +296,32 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 if let coordinate = coordinate {
                     print("현 위치:" + "Longitude: \(coordinate.coordinate.lon), Latitude: \(coordinate.coordinate.lat)")
                     // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                    self.fetchList(x: coordinate.coordinate.lon, y: coordinate.coordinate.lat)
+//                    self.fetchList(x: coordinate.coordinate.lon, y: coordinate.coordinate.lat)
+                    NetworkService.service.fetchNearbyGasStation(x: coordinate.coordinate.lon, y: coordinate.coordinate.lat, sort: "1", prodcd: "B027") { data in
+                            if let data = data {
+                                self.stationList.append(contentsOf: data.result.oil)
+                                self.stationList.map { $0.uniID }.forEach { id in
+                                    NetworkService.service.fetchDetailGasStation(id: id) { data in
+                                        if let data = data {
+                                            self.stationDetailList.append(contentsOf: data.result.oil)
+                                            for i in 0...data.result.oil.count - 1 {
+                                                NetworkService.service.changeAddress(adress: data.result.oil[i].newAdr) { item in
+                                                    guard let x = item?.addresses.first?.x else { return }
+                                                    guard let y = item?.addresses.first?.y else { return }
+                                                    print("@@@@@ adress x: \(x)")
+                                                    print("@@@@@ adress y: \(y)")
+                                                    self.stationDetailList[i].gisXCoor = Float(x) ?? 0.0
+                                                    self.stationDetailList[i].gisYCoor = Float(y) ?? 0.0
+                                                }
+                                            }
+                                        }
+                                        print("@@@@@ last: \(self.stationDetailList)")
+                                }
+                                   
+                            }
+                               
+                        }
+                    }
                 } else {
                     print("Failed to fetch coordinate")
                     // 에러 상황에 대한 처리를 수행할 수 있습니다.

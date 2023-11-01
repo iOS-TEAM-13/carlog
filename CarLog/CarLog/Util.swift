@@ -17,7 +17,7 @@ class Util {
         let tabs: [(root: UIViewController, icon: String)] = [
             (MyCarPageViewController(), "car"),
             (HistoryPageViewController(), "book"),
-            //        (MapPageViewController(), "map"),
+                    (MapPageViewController(), "map"),
             //        (CommunityPageViewController(), "play"),
             (MyPageViewController(), "person"),
         ]

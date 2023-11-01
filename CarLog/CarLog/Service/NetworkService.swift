@@ -1,0 +1,70 @@
+//
+//  NetworkService.swift
+//  CarLog
+//
+//  Created by t2023-m0056 on 2023/11/01.
+//
+
+import Foundation
+
+import Alamofire
+
+class NetworkService {
+    static let service = NetworkService()
+    
+    // 반경 주유소
+    func fetchNearbyGasStation(x: String, y: String, sort: String, prodcd: String, completion: @escaping (listResponse?) -> Void) {
+        // GET 요청을 보낸다
+        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231011278&"
+        let query = "x=\(x)&y=\(y)&radius=1000&sort=\(sort)&prodcd=\(prodcd)&out=json"
+        let urlString = url + query
+        
+        AF.request(urlString).responseDecodable(of: listResponse.self) { response in
+            switch response.result {
+            case .success(let data):
+                print("@@@@@ nearby: \(data)")
+                completion(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    // 주소 -> 좌표 변환
+    func changeAddress(adress: String, completion: @escaping (Address?) -> Void) {
+        let baseURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?"
+        let query = "query=\(adress.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
+        let urlString = baseURL + query
+        
+        let headers: HTTPHeaders = [
+            "X-NCP-APIGW-API-KEY-ID": "i7ms4hgjyy",
+            "X-NCP-APIGW-API-KEY": "JhLmWJgPjiBV2PZ9qCHfbMtetMbuCZ74zxTFFIej"
+        ]
+        AF.request(urlString, headers: headers).responseDecodable(of: Address.self) { response in
+            switch response.result {
+            case .success(let data):
+                print("@@@@@ change: \(data)")
+                completion(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    // 주유소 상세정보
+    func fetchDetailGasStation(id: String, completion: @escaping (gasStationResponse?) -> Void) {
+        let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231011278&"
+        let query = "id=\(id)&out=json"
+        let urlString = baseURL + query
+        
+        AF.request(urlString).responseDecodable(of: gasStationResponse.self) { response in
+            switch response.result {
+            case .success(let data):
+                print("@@@@@ detail: \(data)")
+                completion(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+}

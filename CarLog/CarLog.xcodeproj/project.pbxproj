@@ -79,6 +79,8 @@
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
 		FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */; };
+		FF5D5F9C2AF15798000AFAFD /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */; };
+		FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5F9D2AF15A9E000AFAFD /* Address.swift */; };
 		FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */; };
 		FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AF59B2ADDA55D0067960E /* PageViewController.swift */; };
 		FFA5DF8C2ADD145900B25A07 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FFA5DF8B2ADD145900B25A07 /* FirebaseAuth */; };
@@ -171,6 +173,8 @@
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
 		FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCollectionViewCell.swift; sourceTree = "<group>"; };
+		FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		FF5D5F9D2AF15A9E000AFAFD /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FFB0CC4D2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedDatePickerViewController.swift; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 				3B369D102AE6619A0084BF35 /* GasStationList.swift */,
 				FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */,
 				3B8620BA2AE819C700ED8757 /* Coordinate.swift */,
+				FF5D5F9D2AF15A9E000AFAFD /* Address.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -458,6 +463,7 @@
 			children = (
 				FF126E212ADAE67E00B2A109 /* FirebaseService.swift */,
 				FB1B96A22ADF5D39003827B1 /* LoginService.swift */,
+				FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -585,6 +591,7 @@
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
+				FF5D5F9C2AF15798000AFAFD /* NetworkService.swift in Sources */,
 				B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FFFFAF842AE1644800A7677E /* Date+.swift in Sources */,
@@ -636,6 +643,7 @@
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
+				FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */,
 				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
 				FF2648762AEBA36A009CD1D7 /* UICollectionViewCell+.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
