@@ -14,7 +14,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
         joinupView.joinInButton.isEnabled = false
         carNumberView.carNumberTextField.delegate = self
-        
+
         setupUI()
     }
 
@@ -55,29 +55,21 @@ class JoinupPageViewController: JoinupPageHelperController {
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             self.present(alert, animated: true, completion: nil)
         }), for: .touchUpInside)
-        
+
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
+
+            guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
+                self.showAlert(message: "사용중인 차 번호입니다")
+                return
+            }
+
             self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
             self.carMakerView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            
-            guard let carNumber = self.carNumberView.carNumberTextField.text,
-                  let fifthCharacter = carNumber.dropFirst(4).first,
-                  String(fifthCharacter).range(of: "[가-힣]*$", options: .regularExpression) == nil
-            else {
-                // 맨 끝에서 5번째 자리가 [가-힣]*$ 패턴과 일치하지 않을 때
-                self.showAlert(message: "올바른 차 번호를 입력해주세요")
-                return
-            }
-            
-            if self.carNumberView.checkCarNumberButton.title(for: .normal) != "가능" {
-                self.showAlert(message: "사용중인 차 번호입니다")
-            }
-            
         }), for: .touchUpInside)
-        
+
         carMakerView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
@@ -85,7 +77,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         carModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
@@ -93,7 +85,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         oilModelView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
@@ -101,7 +93,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.totalDistanceView)
             self.nickNameView.isHidden = true
@@ -109,10 +101,10 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
-            
+
             FirestoreService.firestoreService.saveCar(
                 car: Car(
                     number: self.carNumberView.carNumberTextField.text,
@@ -127,7 +119,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 })
         }), for: .touchUpInside)
     }
-   
+
     // 최종 주행거리 "완료" 버튼
     private func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
