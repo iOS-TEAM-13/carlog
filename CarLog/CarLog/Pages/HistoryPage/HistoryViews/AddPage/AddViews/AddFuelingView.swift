@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class AddFuelingView: UIView {
+    
     lazy var addFuelingPageLabel: UILabel = {
         let addFuelingPageLabel = UILabel()
         addFuelingPageLabel.customLabel(text: "주유 내역", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
