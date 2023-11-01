@@ -53,11 +53,8 @@ extension String {
     }
 
     func isValidateCarNumber(_ carNumber: String) -> Bool {
-        // 입력된 텍스트에서 공백 제거
-        let cleanedCarNumber = carNumber.replacingOccurrences(of: " ", with: "")
-
         // 최소 7자리 길이 검사
-        if cleanedCarNumber.count < 7 {
+        if carNumber.count < 7 {
             print("7자리 이상")
             return false
         }

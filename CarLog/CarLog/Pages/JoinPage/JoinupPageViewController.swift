@@ -13,6 +13,8 @@ class JoinupPageViewController: JoinupPageHelperController {
         view.backgroundColor = .white
 
         joinupView.joinInButton.isEnabled = false
+        carNumberView.carNumberTextField.delegate = self
+        
         setupUI()
     }
 

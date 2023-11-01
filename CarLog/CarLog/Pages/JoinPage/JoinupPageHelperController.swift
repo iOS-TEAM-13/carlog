@@ -64,7 +64,7 @@ open class JoinupPageHelperController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
+
     // MARK: - Keyboard 관련
 
     open func registerForKeyboardNotifications() {
@@ -117,12 +117,21 @@ open class JoinupPageHelperController: UIViewController {
         joinupView.scrollView.scrollIndicatorInsets = contentInset
     }
 
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         joinupView.endEditing(true)
         carNumberView.endEditing(true)
         carModelView.endEditing(true)
         oilModelView.endEditing(true)
         nickNameView.endEditing(true)
         totalDistanceView.endEditing(true)
+    }
+}
+
+extension JoinupPageHelperController: UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == " " {
+            return false // 스페이스 입력 금지
+        }
+        return true
     }
 }

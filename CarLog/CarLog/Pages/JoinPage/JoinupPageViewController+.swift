@@ -129,7 +129,7 @@ extension JoinupPageViewController {
                 } else {
                     self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
                     self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
-                    self.showAlert(message: "이미 사용중인 아이디입니다")
+                    // dfself.showAlert(message: "이미 사용중인 아이디입니다")
                     self.joinupView.emailTextField.text = ""
                 }
             }
@@ -138,9 +138,20 @@ extension JoinupPageViewController {
     
     func checkCarNumberButtonAction() {
         carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
-            guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty, carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
+            guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
                 return self.showAlert(message: "00가0000 형식으로 써주세요")
             }
+            
+            guard carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
+                return self.showAlert(message: "유효한 차 번호 형식이 아닙니다")
+            }
+            
+            // 중간의 스페이스를 제거
+            let cleanedCarNumber = carNumberToCheck.replacingOccurrences(of: " ", with: "")
+            
+            guard cleanedCarNumber.count >= 7 else {
+                        return self.showAlert(message: "7자리 이상 입력하세요")
+                    }
             
             FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
                 if let error = error {
