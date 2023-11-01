@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class FindIDPassWordViewController: UIViewController {
-    let findIDPassWordView = FindIDPasswordView()
+    let findView = FindIDPasswordView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,37 +21,64 @@ class FindIDPassWordViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubview(findIDPassWordView.segmentedControl)
-        view.addSubview(findIDPassWordView.findIDView)
-        view.addSubview(findIDPassWordView.reSettingPasswordView)
+        view.addSubview(findView.segmentedControl)
+        view.addSubview(findView.findIDView)
+        view.addSubview(findView.reSettingPasswordView)
+        findView.reSettingPasswordView.addSubview(findView.emailTextField)
+        findView.reSettingPasswordView.addSubview(findView.buttonStackView)
         
-        findIDPassWordView.segmentedControl.snp.makeConstraints { make in
+        findView.segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.height.equalTo(60)
         }
         
-        findIDPassWordView.findIDView.snp.makeConstraints { make in
-            make.top.equalTo(findIDPassWordView.segmentedControl.snp.bottom).offset(20)
+        findView.findIDView.snp.makeConstraints { make in
+            make.top.equalTo(findView.segmentedControl.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
-        findIDPassWordView.reSettingPasswordView.snp.makeConstraints { make in
-            make.top.equalTo(findIDPassWordView.segmentedControl.snp.bottom).offset(20)
+        findView.reSettingPasswordView.snp.makeConstraints { make in
+            make.top.equalTo(findView.segmentedControl.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
+        
+        findView.emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(findView.reSettingPasswordView.snp.top).offset(Constants.verticalMargin)
+            make.leading.equalTo(findView.reSettingPasswordView.snp.leading).offset(Constants.verticalMargin)
+            make.trailing.equalTo(findView.reSettingPasswordView.snp.trailing).offset(-Constants.verticalMargin)
+        }
+        
+        findView.buttonStackView.snp.makeConstraints { make in
+            make.bottom.equalTo(findView.reSettingPasswordView.snp.bottom).offset(-Constants.verticalMargin)
+            make.leading.equalTo(findView.reSettingPasswordView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(findView.reSettingPasswordView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
     }
     
     private func addTarget() {
-        findIDPassWordView.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        findView.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        findView.sendButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
+        
+        findView.popButton.addAction(UIAction(handler: { _ in
+            self.dismiss(animated: true)
+        }), for: .touchUpInside)
+    }
+    
+    @objc private func sendEmailTapped() {
+        
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
-        findIDPassWordView.shouldHideFirstView = segment.selectedSegmentIndex != 0
+        findView.shouldHideFirstView = segment.selectedSegmentIndex != 0
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
