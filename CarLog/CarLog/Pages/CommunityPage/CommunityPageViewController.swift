@@ -143,19 +143,14 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
                    }
                    return CGSize.zero
        }
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 324, height: 321)
+    //셀 클릭 시 화면 전환
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == communityColletionView {
+            let detailViewController = CommunityDetailPageViewController() // DetailPageViewController는 상세 페이지를 나타내는 뷰 컨트롤러입니다.
+            // 필요하다면 detailViewController에 데이터 전달
+            // 예: detailViewController.item = items[indexPath.item]
+            navigationController?.pushViewController(detailViewController, animated: true)
+        }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommunityPageCollectionViewCell
-        return cell
-    }
-    */
     
 }
