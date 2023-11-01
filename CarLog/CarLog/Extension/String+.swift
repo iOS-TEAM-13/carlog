@@ -58,20 +58,7 @@ extension String {
             print("7자리 이상")
             return false
         }
-
         return true
-//        // 마지막 5번째 문자가 한글인 경우에만 유효
-//        let index = cleanedCarNumber.index(cleanedCarNumber.endIndex, offsetBy: -4)
-//        let lastFiveCharacters = cleanedCarNumber.suffix(4)
-//        let lastCharacter = lastFiveCharacters[lastFiveCharacters.index(before: lastFiveCharacters.endIndex)]
-//
-//        if isValidKoreanString(String(lastCharacter)) {
-//            print("성공")
-//            return true
-//        } else {
-//            print("뭔가가 잘못됨")
-//            return false
-//        }
     }
 
     func isValidKoreanString(_ input: String) -> Bool {

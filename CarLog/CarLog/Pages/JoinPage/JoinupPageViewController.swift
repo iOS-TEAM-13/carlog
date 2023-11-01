@@ -45,6 +45,7 @@ class JoinupPageViewController: JoinupPageHelperController {
     }
 
     // MARK: - 모든 뷰들
+
     private func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
             let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
@@ -61,6 +62,20 @@ class JoinupPageViewController: JoinupPageHelperController {
             self.carMakerView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
+            
+            guard let carNumber = self.carNumberView.carNumberTextField.text,
+                  let fifthCharacter = carNumber.dropFirst(4).first,
+                  String(fifthCharacter).range(of: "[가-힣]*$", options: .regularExpression) == nil
+            else {
+                // 맨 끝에서 5번째 자리가 [가-힣]*$ 패턴과 일치하지 않을 때
+                self.showAlert(message: "올바른 차 번호를 입력해주세요")
+                return
+            }
+            
+            if self.carNumberView.checkCarNumberButton.title(for: .normal) != "가능" {
+                self.showAlert(message: "사용중인 차 번호입니다")
+            }
+            
         }), for: .touchUpInside)
         
         carMakerView.nextButton.addAction(UIAction(handler: { _ in
@@ -113,7 +128,7 @@ class JoinupPageViewController: JoinupPageHelperController {
         }), for: .touchUpInside)
     }
    
-    //최종 주행거리 "완료" 버튼
+    // 최종 주행거리 "완료" 버튼
     private func doneButtonTapped() {
         LoginService.loginService.keepLogin { user in
             if user != nil {
