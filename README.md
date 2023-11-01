@@ -146,21 +146,50 @@
 
 
 **김지훈**
+<table>
+  <tr>
+    <td>
+     - HistoryPage UI 구현 <br>
+     - Firebase FireStore 연결 Service 구현 <br>
+    </td>
+    <td>
+      이미지 넣기
+      <img src="" />
+    </td>
+  </tr>
+</table>
 
-- HistoryPage UI 구현
-- Firebase FireStore 연결 Service 구현
 
 **이동건**
-
-- MyPage UI 구현
-- FireStore에서 Car 정보 가져오기
-- LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현
-- 문의 전화 버튼 구현
+<table width=1000>
+  <tr>
+    <td>
+    - MyPage UI 구현 <br>
+    - FireStore에서 Car 정보 가져오기 <br>
+    - LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
+    - 문의 전화 버튼 구현 <br>
+    </td>
+    <td>
+      이미지 넣기
+      <img src="" />
+    </td>
+  </tr>
+</table>
 
 **조재민**
 
-- MapPage UI 구현
-- 주유소
+<table width = "1000">
+  <tr>
+    <td>
+    - MapPage UI 구현 <br>
+    - 주유소 <br>
+    </td>
+    <td>
+      이미지 넣기
+      <img src="" />
+    </td>
+  </tr>
+</table>
 
 ### ⚙️ Tech Stack
 
