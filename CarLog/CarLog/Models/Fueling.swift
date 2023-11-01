@@ -13,7 +13,7 @@ struct Fueling: Codable {
     let id: String?
     let totalDistance: Int?
     let price: Int?
-    let count: Double?
+    let count: String?
     let totalPrice: Int?
     let userEmail: String?
 }

@@ -230,6 +230,7 @@ class MyCarDetailPageViewController: UIViewController {
             if saveData.parts[i].name == selectedParts?.name {
                 saveData.parts[i].currentTime = currentTime
                 saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, newDate: currentTime, changedType: type), at: 0)
+                NotificationService.service.pushNotification(part: saveData.parts[i])
             }
         }
         saveCarParts()
@@ -273,5 +274,17 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 70)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canEditItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, trailingSwipeActionsConfigurationForItemAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .red
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

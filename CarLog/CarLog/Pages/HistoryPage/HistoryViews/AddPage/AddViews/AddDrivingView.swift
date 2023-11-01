@@ -9,7 +9,8 @@ import UIKit
 
 import SnapKit
 
-class AddDrivingView: UIView {
+class AddDrivingView: UIView, UITextFieldDelegate {
+    
     lazy var addDrivingPageLabel: UILabel = {
         let addDrivingPageLabel = UILabel()
         addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)

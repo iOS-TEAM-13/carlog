@@ -144,11 +144,17 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.fuelingButton.addAction(UIAction(handler: { _ in
             self.navigationController?.present(AddFuelingViewController(), animated: true)
             self.navigationController?.modalPresentationStyle = .fullScreen
+            self.segmentedControl.selectedSegmentIndex = 1
+            self.didChangeValue(segment: self.segmentedControl)
+            self.isActive.toggle()
         }), for: .touchUpInside)
         
         floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
             self.navigationController?.present(AddDrivingViewController(), animated: true)
             self.navigationController?.modalPresentationStyle = .fullScreen
+            self.segmentedControl.selectedSegmentIndex = 0
+            self.didChangeValue(segment: self.segmentedControl)
+            self.isActive.toggle()
         }), for: .touchUpInside)
     }
     
@@ -265,13 +271,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             
             cell.backgroundColor = .buttonSkyBlueColor
             cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor.darkGray.cgColor
             cell.layer.cornerRadius = Constants.cornerRadius * 4
-            
-            cell.layer.borderColor = UIColor.systemGray5.cgColor
-            cell.layer.shadowColor = UIColor.gray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-            cell.layer.shadowRadius = 3
-            cell.layer.shadowOpacity = 0.3
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
             cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0)km")
@@ -284,18 +285,13 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             
             cell.backgroundColor = .buttonSkyBlueColor
             cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor.darkGray.cgColor
             cell.layer.cornerRadius = Constants.cornerRadius * 4
-            
-            cell.layer.borderColor = UIColor.systemGray5.cgColor
-            cell.layer.shadowColor = UIColor.gray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-            cell.layer.shadowRadius = 3
-            cell.layer.shadowOpacity = 0.3
             
             cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp ?? ""
             cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price ?? 0)원")
             cell.totalPriceLabel.text = String("\(fuelingDummy[indexPath.row].totalPrice ?? 0)원")
-            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count ?? 0.0)L")
+            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count ?? "")L")
             
             return cell
         }

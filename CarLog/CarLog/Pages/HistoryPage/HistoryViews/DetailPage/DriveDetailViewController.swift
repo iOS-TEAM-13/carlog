@@ -35,9 +35,8 @@ class DriveDetailViewController: UIViewController {
         }
         
         loadDrivingData()
-        
-        drivingDetailView.upDateButton.addTarget(self, action: #selector(didUpDateButton), for: .touchUpInside)
-        drivingDetailView.removeButton.addTarget(self, action: #selector(didRemoveButton), for: .touchUpInside)
+        autoCalculate()
+        buttonActions()
     }
     
     func loadDrivingData() {
@@ -52,53 +51,72 @@ class DriveDetailViewController: UIViewController {
         }
     }
     
-    @objc func didUpDateButton() {
-        print("---> driveDetailView 수정 버튼 눌렀어요")
-        if let drivingID = drivingData?.documentID {
-            var updatedData: [String: Any] = [:]
-            
-            if let totalDistanceText = drivingDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
-                updatedData["departDistance"] = totalDistance
-            }
-            
-            if let arriveDistanceText = drivingDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
-                updatedData["arriveDistance"] = arriveDistance
-            }
-            
-            if let driveDistanceText = drivingDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
-                updatedData["driveDistance"] = driveDistance
-            }
-            
-            FirestoreService.firestoreService.updateDriving(drivingID: drivingID, updatedData: updatedData) { error in
-                if let error = error {
-                    print("주행 데이터 업데이트 실패: \(error)")
-                } else {
-                    print("주행 데이터 업데이트 성공")
-                    HistoryPageViewController().drivingCollectionView.drivingCollectionView.reloadData()
-                    
-                    if let navigationController = self.navigationController {
-                        navigationController.popViewController(animated: true)
-                    }
-                }
-            }
+    func autoCalculate() {
+        func calculate() {
+            let totalDistanceText = Int(drivingDetailView.totalDistanceTextField.text ?? "") ?? 0
+            let arriveDistanceText = Int(drivingDetailView.arriveDistanceTextField.text ?? "") ?? 0
+            let driveDistenceText = arriveDistanceText - totalDistanceText
+            drivingDetailView.driveDistenceTextField.text = String(driveDistenceText)
         }
+        
+        drivingDetailView.totalDistanceTextField.addAction(UIAction(handler: { _ in
+            calculate()
+        }), for: .editingChanged)
+        
+        drivingDetailView.arriveDistanceTextField.addAction(UIAction(handler: { _ in
+            calculate()
+        }), for: .editingChanged)
     }
     
-    @objc func didRemoveButton() {
-        print("---> driveDetailView 삭제 버튼 눌렀어요")
-        if let drivingID = drivingData?.documentID {
-            FirestoreService.firestoreService.removeDriving(drivingID: drivingID) { error in
-                if let error = error {
-                    print("주행 데이터 삭제 실패: \(error)")
-                } else {
-                    print("주행 데이터 삭제 성공")
-                    HistoryPageViewController().drivingCollectionView.drivingCollectionView.reloadData()
-                    
-                    if let navigationController = self.navigationController {
-                        navigationController.popViewController(animated: true)
+    func buttonActions() {
+        drivingDetailView.upDateButton.addAction(UIAction(handler: { [self] _ in
+            print("---> driveDetailView 수정 버튼 눌렀어요")
+            if let drivingID = drivingData?.documentID {
+                var updatedData: [String: Any] = [:]
+                
+                if let totalDistanceText = drivingDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
+                    updatedData["departDistance"] = totalDistance
+                }
+                
+                if let arriveDistanceText = drivingDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
+                    updatedData["arriveDistance"] = arriveDistance
+                }
+                
+                if let driveDistanceText = drivingDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
+                    updatedData["driveDistance"] = driveDistance
+                }
+                
+                FirestoreService.firestoreService.updateDriving(drivingID: drivingID, updatedData: updatedData) { error in
+                    if let error = error {
+                        print("주행 데이터 업데이트 실패: \(error)")
+                    } else {
+                        print("주행 데이터 업데이트 성공")
+                        HistoryPageViewController().drivingCollectionView.drivingCollectionView.reloadData()
+                        
+                        if let navigationController = self.navigationController {
+                            navigationController.popViewController(animated: true)
+                        }
                     }
                 }
             }
-        }
+        }), for: .touchUpInside)
+        
+        drivingDetailView.removeButton.addAction(UIAction(handler: { [self] _ in
+            print("---> driveDetailView 삭제 버튼 눌렀어요")
+            if let drivingID = drivingData?.documentID {
+                FirestoreService.firestoreService.removeDriving(drivingID: drivingID) { error in
+                    if let error = error {
+                        print("주행 데이터 삭제 실패: \(error)")
+                    } else {
+                        print("주행 데이터 삭제 성공")
+                        HistoryPageViewController().drivingCollectionView.drivingCollectionView.reloadData()
+                        
+                        if let navigationController = self.navigationController {
+                            navigationController.popViewController(animated: true)
+                        }
+                    }
+                }
+            }
+        }), for: .touchUpInside)
     }
 }
