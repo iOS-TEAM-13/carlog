@@ -48,6 +48,7 @@ class MyCarPageViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
         loadData()
+        NotificationService.service.setAuthorization()
     }
     
     // MARK: Method
@@ -110,7 +111,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
             }
             cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
         }
-//        cell.layer.cornerRadius = Constants.cornerRadius * 4
         return cell
     }
     
