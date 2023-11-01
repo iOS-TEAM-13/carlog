@@ -19,7 +19,7 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
         
     // MARK: - Setup
         
