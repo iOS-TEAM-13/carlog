@@ -136,6 +136,7 @@ extension JoinupPageViewController {
         }), for: .touchUpInside)
     }
     
+    // 차 번호 중복검사 버튼
     func checkCarNumberButtonAction() {
         carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
             guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
@@ -146,12 +147,16 @@ extension JoinupPageViewController {
                 return self.showAlert(message: "유효한 차 번호 형식이 아닙니다")
             }
             
-            // 중간의 스페이스를 제거
-            let cleanedCarNumber = carNumberToCheck.replacingOccurrences(of: " ", with: "")
+            guard carNumberToCheck.count >= 7 else {
+                return self.showAlert(message: "7자리 이상 입력하세요")
+            }
             
-            guard cleanedCarNumber.count >= 7 else {
-                        return self.showAlert(message: "7자리 이상 입력하세요")
-                    }
+            let fifthCharacterIndex = carNumberToCheck.index(carNumberToCheck.endIndex, offsetBy: -5)
+            let fifthCharacter = carNumberToCheck[fifthCharacterIndex]
+
+            if String(fifthCharacter).range(of: "[가-힣]+", options: .regularExpression) == nil {
+                return self.showAlert(message: "가운데 한글이 빠졌습니다")
+            }
             
             FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
                 if let error = error {

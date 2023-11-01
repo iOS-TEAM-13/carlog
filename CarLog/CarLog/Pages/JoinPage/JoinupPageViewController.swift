@@ -57,12 +57,10 @@ class JoinupPageViewController: JoinupPageHelperController {
         }), for: .touchUpInside)
 
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
-
             guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
                 self.showAlert(message: "사용중인 차 번호입니다")
                 return
             }
-
             self.view.addSubview(self.carMakerView)
             self.carNumberView.isHidden = true
             self.carMakerView.snp.makeConstraints { make in
