@@ -22,7 +22,6 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
-    
     lazy var mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "내 차 정보"
@@ -41,12 +40,32 @@ final class MyPageView: UIView {
     }()
     
     // MARK: -
+    //    텍스트 폰트에 따른 언더라인 수정
+    lazy var myWritingButton: UIButton = {
+        let myWritingButton = UIButton()
+        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        return myWritingButton
+    }()
     
-    //    //텍스트 폰트에 따른 언더라인 수정
+//    lazy var myWritingButton: UIButton = {
+//        let myWritingButton = UIButton()
+//        myWritingButton.UILabel.titleLabel = "내가 작성한 글"
+//        myWritingButton.subtitleLabel = "12개"
+//        myWritingButton.backgroundColor = .buttonSkyBlueColor
+//        return myWritingButton
+//    }()
+    
     //    lazy var myWritingButton: UIButton = {
     //        let myWritingButton = UIButton()
-    //        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-    //        return myWritingButton  // ⭐ 나중에 Community Page 연결 필요
+    //        var attributedTitle = AttributedString("타이틀")
+    //              attributedTitle.font = .systemFont(ofSize: 25, weight: .bold)
+    //              attributedTitle.foregroundColor = UIColor.black
+    //              let paragraphTitle = NSMutableParagraphStyle()
+    //              paragraphTitle.lineSpacing = 0.3 * (attributedTitle.font?.lineHeight ?? 1)
+    //              paragraphTitle.lineBreakStrategy = .hangulWordPriority\
+    //              attributedTitle.paragraphStyle = paragraphTitle
+    //        myWritingButton.attributedTitle = attributedTitle
+    //        return myWritingButton
     //    }()
     
     lazy var carNumberLabel: UILabel = {
@@ -246,11 +265,20 @@ final class MyPageView: UIView {
         return phoneCallButton
     }()
     
-    private func makeLabel(text: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) -> UILabel {
-        let label = UILabel()
-        label.customLabel(text: text, textColor: textColor, font: font, alignment: alignment)
-        return label
-    }
+    lazy var verLabel: UILabel = {
+        let verLabel = UILabel()
+        verLabel.text = "ver x.x.x"
+        verLabel.textColor = .lightGray
+        verLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        verLabel.textAlignment = .center
+        return verLabel
+    }()
+    
+    lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [myWritingButton, carNumberLabel, carNumberTextField, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, carTotalDistanceLabel, carTotalDistanceTextField])
+        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
+        return stackView
+    }()
     
     @objc func closeKeyboard() {
         carNumberTextField.resignFirstResponder()
@@ -262,28 +290,18 @@ final class MyPageView: UIView {
     }
     
     // MARK: -
-    
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
-        addSubview(scrollView)
-        scrollView.addSubview(contentView)
+
         contentView.addSubview(mainTitleLabel)
         contentView.addSubview(editButton)
         contentView.addSubview(carNumberLabel)
-        //      contentView.addSubview(myWritingButton)
-        contentView.addSubview(carNumberTextField)
-        contentView.addSubview(carNameLabel)
-        contentView.addSubview(carNameTextField)
-        contentView.addSubview(carMakerLabel)
-        contentView.addSubview(carMakerTextField)
-        contentView.addSubview(carOilTypeLabel)
-        contentView.addSubview(carOilTypeTextField)
-        contentView.addSubview(carNickNameLabel)
-        contentView.addSubview(carNickNameTextField)
-        contentView.addSubview(carTotalDistanceLabel)
-        contentView.addSubview(carTotalDistanceTextField)
+        contentView.addSubview(stackView)
         contentView.addSubview(myPageDesignStackView)
         contentView.addSubview(phoneCallButton)
+        contentView.addSubview(verLabel)
+        scrollView.addSubview(contentView)
+        addSubview(scrollView)
         
         carNumberTextField.isUserInteractionEnabled = false
         carNameTextField.isUserInteractionEnabled = false
@@ -292,8 +310,16 @@ final class MyPageView: UIView {
         carNickNameTextField.isUserInteractionEnabled = false
         carTotalDistanceTextField.isUserInteractionEnabled = false
         
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            verLabel.text = "Ver \(version)"
+        }
+        
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(safeArea)
+//            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().offset(10)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
         
         contentView.snp.makeConstraints { make in
@@ -313,96 +339,33 @@ final class MyPageView: UIView {
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
-        //        myWritingButton.snp.makeConstraints { make in
-        //            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin * 2.5)
-        //            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-        //            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        //            make.width.equalTo(100)
-        //            make.height.equalTo(70)
-        //        }
-        
-        carNumberLabel.snp.makeConstraints { make in
-            make.top.equalTo(editButton.snp.bottom).offset(Constants.verticalMargin * 3)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        myWritingButton.snp.makeConstraints { make in
+            make.width.equalTo(80)
+            make.height.equalTo(60)
         }
         
-        carNumberTextField.snp.makeConstraints { make in
-            make.top.equalTo(carNumberLabel.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(carNumberTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(carNameLabel.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carMakerLabel.snp.makeConstraints { make in
-            make.top.equalTo(carNameTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carMakerTextField.snp.makeConstraints { make in
-            make.top.equalTo(carMakerLabel.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carOilTypeLabel.snp.makeConstraints { make in
-            make.top.equalTo(carMakerTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carOilTypeTextField.snp.makeConstraints { make in
-            make.top.equalTo(carOilTypeLabel.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carNickNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(carOilTypeTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carNickNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(carNickNameLabel.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carTotalDistanceLabel.snp.makeConstraints { make in
-            make.top.equalTo(carNickNameTextField.snp.bottom).offset(Constants.verticalMargin * 1.5)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        carTotalDistanceTextField.snp.makeConstraints { make in
-            make.top.equalTo(carTotalDistanceLabel.snp.bottom)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.horizontalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
         myPageDesignStackView.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin)
+            make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 4.5)
             make.leading.equalTo(contentView.snp.leading).offset(UIScreen.main.bounds.width * 0.3)
             make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
         }
         
         phoneCallButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-10)
+            make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 2)
             make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(CGSize(width: 55, height: 55))
+        }
+        
+        verLabel.snp.makeConstraints { make in
+            make.top.equalTo(myPageDesignStackView.snp.bottom).offset(5)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
     }
     

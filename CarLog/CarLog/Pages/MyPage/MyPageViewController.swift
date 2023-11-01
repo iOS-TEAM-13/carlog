@@ -6,7 +6,7 @@ import SnapKit
 
 class MyPageViewController: UIViewController {
     // MARK: - Properties
-
+    
     let myPageView = MyPageView()
     
     var carDummy: [Car] = []
@@ -14,14 +14,15 @@ class MyPageViewController: UIViewController {
     var isEditMode = false
     
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.barTintColor = .white
-
-        // MARK: - Setup
-
+        self.navigationController?.isNavigationBarHidden = true
+        
+    // MARK: - Setup
+        
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -51,7 +52,7 @@ class MyPageViewController: UIViewController {
     }
     
     // MARK: - Actions
-
+    
     @objc private func editButtonTapped() {
         isEditMode = !isEditMode
         toggleTextFieldsEditing(enable: isEditMode)
@@ -61,7 +62,6 @@ class MyPageViewController: UIViewController {
     private func toggleTextFieldsEditing(enable: Bool) {
         [myPageView.carNumberTextField, myPageView.carNameTextField, myPageView.carMakerTextField, myPageView.carOilTypeTextField, myPageView.carNickNameTextField, myPageView.carTotalDistanceTextField].forEach {
             $0.isUserInteractionEnabled = enable
-            $0.borderStyle = enable ? .roundedRect : .none // 라운더 없음으로 해도 글씨 창 라운더 생김 현상(커스텀 때문인지;;)
         }
     }
     
@@ -71,14 +71,14 @@ class MyPageViewController: UIViewController {
             let image = UIImage(systemName: "checkmark.circle", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
             myPageView.editButton.setImage(image, for: .normal)
-            //            myPageView.myWritingButton.isHidden = true
+            myPageView.myWritingButton.isHidden = true
             myPageView.myPageDesignStackView.isHidden = true
             myPageView.phoneCallButton.isHidden = true
         } else {
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
             let image = UIImage(systemName: "highlighter", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
-            //            myPageView.myWritingButton.isHidden = false
+            myPageView.myWritingButton.isHidden = false
             myPageView.myPageDesignStackView.isHidden = false
             myPageView.phoneCallButton.isHidden = false
             // ⭐ 택스트필드 6개 입력한 값들을 저장해서 파이어베이스에 넣어주기!

@@ -41,7 +41,7 @@ extension UITextField {
         self.textAlignment = alignment
         self.textColor = textColor
         self.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.leftViewMode = .always
+        self.borderStyle = .none
     }
     
     func historyCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment, paddingView: UIView) {
