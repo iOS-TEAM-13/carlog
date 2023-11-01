@@ -8,7 +8,7 @@ import UIKit
 
 import SnapKit
 
-class FindIDPassWordViewController: UIViewController {
+class FindIDPassWordViewController: JoinupPageHelperController {
     let findView = FindIDPasswordView()
     
     override func viewDidLoad() {
@@ -71,7 +71,8 @@ class FindIDPassWordViewController: UIViewController {
     }
     
     @objc private func sendEmailTapped() {
-        
+        LoginService.loginService.sendPasswordReset(email: findView.emailTextField.text ?? "")
+        showAlert(message: "이메일에 가서 비밀번호를 재설정해주세요")
     }
     
     @objc private func didChangeValue(segment: UISegmentedControl) {
