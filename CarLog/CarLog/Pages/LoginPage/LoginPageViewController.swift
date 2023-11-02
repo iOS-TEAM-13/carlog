@@ -61,11 +61,15 @@ class LoginPageViewController: UIViewController {
                 }
             }
         }), for: .touchUpInside)
-        
         loginView.joinupButton.addAction(UIAction(handler: { _ in
             let joinPageViewController = JoinupPageViewController()
             joinPageViewController.modalPresentationStyle = .fullScreen
             self.present(joinPageViewController, animated: true, completion: nil)
+        }), for: .touchUpInside)
+        loginView.findIdPassword.addAction(UIAction(handler: { _ in
+            let findIDPasswordViewController = FindIDPassWordViewController()
+            findIDPasswordViewController.modalPresentationStyle = .fullScreen
+            self.present(findIDPasswordViewController, animated: true, completion: nil)
         }), for: .touchUpInside)
     }
 

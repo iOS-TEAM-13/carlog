@@ -5,13 +5,11 @@
 //  Created by APPLE M1 Max on 2023/11/01.
 //
 
-import SnapKit
 import PhotosUI
+import SnapKit
 import UIKit
 
-
 class AddCommunityPageViewController: UIViewController {
-    
     private let mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "제목"
@@ -48,21 +46,19 @@ class AddCommunityPageViewController: UIViewController {
     
     private var selectedImages = [UIImage]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         attribute()
         setupUI()
-        
     }
-    
 }
 
 extension AddCommunityPageViewController {
     @objc func didTapLeftBarButton() {
         dismiss(animated: true)
     }
+
     @objc func didTapRightBarButton() {
         print("didTapRightBarButton is Called!")
         
@@ -117,7 +113,6 @@ private extension AddCommunityPageViewController {
             optionsTableView,
         ].forEach { view.addSubview($0) }
         
-        
         //         snap kit 제약 잡기
         mainTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(commonInset)
@@ -125,7 +120,6 @@ private extension AddCommunityPageViewController {
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
         }
-        
         
         subTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin)
@@ -169,8 +163,6 @@ private extension AddCommunityPageViewController {
             equalTo: imagePickerView.trailingAnchor,
             constant: 8.0
         ).isActive = true
-        
-        
     }
     
     func setupNavigationBar() {
@@ -192,5 +184,4 @@ private extension AddCommunityPageViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
-    
 }

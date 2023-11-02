@@ -7,8 +7,21 @@ import FirebaseFirestore
 final class LoginService {
     static let loginService = LoginService()
     let db = Firestore.firestore()
-    let collectionsToDelete = ["carParts", "cars", "fuelings", "drivings"]
 
+    func sendPasswordReset(email: String, completion: @escaping (Bool, Error?) -> Void) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            var isSuccess = true
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                isSuccess = false
+            } else {
+                print("메세지 보내기 성공")
+            }
+            completion(isSuccess, error)
+        }
+    }
+
+    // 회원가입
     func signUpUser(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -24,6 +37,7 @@ final class LoginService {
         }
     }
 
+    // 로그인
     func loginUser(email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { user, error in
             var isSuccess = true
@@ -37,13 +51,14 @@ final class LoginService {
         }
     }
 
-    //
+    // 로그인 유지
     func keepLogin(completion: @escaping (FirebaseAuth.User?) -> Void) {
         Auth.auth().addStateDidChangeListener { _, user in
             completion(user)
         }
     }
 
+    // 로그아웃
     func logout(completion: () -> Void) {
         do {
             try Auth.auth().signOut()
@@ -53,6 +68,7 @@ final class LoginService {
         }
     }
 
+    // 회원탈퇴
     func quitUser(email: String, completion: @escaping (Error?) -> Void) {
         // 1. Firebase Authentication에서 사용자 삭제
         if let user = Auth.auth().currentUser {

@@ -8,6 +8,7 @@
 import UIKit
 
 import FirebaseCore
+import iNaviMaps
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sleep(2)
         FirebaseApp.configure()
         
+        INVMapSdk.sharedInstance().appKey = "521dd7cf728491a33ace941642e6fc042a282bce"
+
         UNUserNotificationCenter.current().delegate = self
         
         return true
