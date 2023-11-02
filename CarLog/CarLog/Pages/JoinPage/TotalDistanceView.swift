@@ -6,7 +6,7 @@ final class TotalDistanceView: UIView {
     let duplicateComponents = DuplicateComponents()
 
     lazy var label = duplicateComponents.joinupLabel(text: "최종 주행거리는\n얼마인가요?")
-    lazy var totalDistanceTextField = duplicateComponents.joinupTextField(placeholder: "최종 주행거리 입력")
+    lazy var totalDistanceTextField = duplicateComponents.joinupTextField(placeholder: "최종 주행거리 입력", keyboardType: .numberPad)
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "완 료")
 
     private func setupUI() {

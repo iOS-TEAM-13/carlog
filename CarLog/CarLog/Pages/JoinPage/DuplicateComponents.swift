@@ -8,9 +8,10 @@ class DuplicateComponents {
         return label
     }
 
-    func joinupTextField(placeholder: String) -> UITextField {
+    func joinupTextField(placeholder: String, keyboardType: UIKeyboardType) -> UITextField {
         let textField = UITextField()
         textField.loginCustomTextField(placeholder: placeholder, textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.keyboardType = keyboardType
         return textField
     }
 
