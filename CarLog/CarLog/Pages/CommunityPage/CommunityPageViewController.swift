@@ -98,13 +98,13 @@ class CommunityPageViewController: UIViewController {
     }
     @objc func floatingButtonTapped() {
         
-        items.append("New Item")
-        print("새 항목 추가")
-        communityColletionView.reloadData()
-        //📌네비게이션 화면 전환 기능
-//        let editPage = EditPageViewController()
-//                navigationController?.pushViewController(editPage, animated: true)
-    }
+    //    items.append(“New Item”)
+    //    print(“새 항목 추가“)
+    //    communityColletionView.reloadData()
+    //    :압정:네비게이션 화면 전환 기능
+        let editPage = AddCommunityPageViewController()
+            navigationController?.pushViewController(editPage, animated: true)
+      }
     
 }
 
