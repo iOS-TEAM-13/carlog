@@ -54,7 +54,7 @@ class HistoryPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.backgroundCoustomColor
+        view.backgroundColor = .backgroundCoustomColor
         
         setupUI()
         didChangeValue(segment: segmentedControl)

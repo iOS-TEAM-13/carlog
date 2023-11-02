@@ -20,20 +20,19 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     lazy var inputDrivingStackView: UIStackView = {
         let inputDrivingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, arriveDistanceStackView, driveDistenceStackView])
         inputDrivingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
+        inputDrivingStackView.backgroundColor = .white
         return inputDrivingStackView
     }()
     
     lazy var totalDistanceStackView: UIStackView = {
         let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
-        totalDistanceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-        totalDistanceStackView.distribution = .fill
+        totalDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return totalDistanceStackView
     }()
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적(출발)\n주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        totalDistanceLabel.numberOfLines = 2
+        totalDistanceLabel.customLabel(text: "누적(출발) 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return totalDistanceLabel
     }()
     
@@ -49,9 +48,10 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         let attributedPlaceholder = NSAttributedString(string: "ex) 10000", attributes: attributes)
         totalDistanceTextField.attributedPlaceholder = attributedPlaceholder
         
-        totalDistanceTextField.layer.borderWidth = 1.5
+//        totalDistanceTextField.layer.borderWidth = 1.5
         totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
         totalDistanceTextField.keyboardType = .decimalPad
+        totalDistanceTextField.backgroundColor = .backgroundCoustomColor
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -268,21 +268,27 @@ class AddDrivingView: UIView, UITextFieldDelegate {
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
         
-        totalDistanceLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
-        }
+//        totalDistanceLabel.snp.makeConstraints { make in
+//            make.width.equalTo(100)
+//        }
+//        
+//        arriveDistanceLabel.snp.makeConstraints { make in
+//            make.width.equalTo(100)
+//        }
+//        
+//        driveDistenceLabel.snp.makeConstraints { make in
+//            make.width.equalTo(100)
+//        }
         
-        arriveDistanceLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
-        }
-        
-        driveDistenceLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
+        totalDistanceStackView.snp.makeConstraints { make in
+            make.top.equalTo(inputDrivingStackView).offset(Constants.horizontalMargin)
+            make.leading.equalTo(inputDrivingStackView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(inputDrivingStackView).offset(-Constants.horizontalMargin)
         }
         
         kmLabel.snp.makeConstraints { make in
             make.trailing.equalTo(totalDistanceStackView).offset(-Constants.horizontalMargin)
-            make.centerY.equalTo(totalDistanceStackView)
+            make.centerY.equalTo(totalDistanceTextField)
         }
         
         kmLabel2.snp.makeConstraints { make in
