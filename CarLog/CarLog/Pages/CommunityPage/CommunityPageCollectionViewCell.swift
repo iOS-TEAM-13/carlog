@@ -150,17 +150,17 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         collectionViewImage.snp.makeConstraints { make in
             make.width.equalTo(329)
             make.height.equalTo(168)
-            make.leftMargin.equalToSuperview().offset(12)
+            make.leftMargin.equalToSuperview().offset(16)
             make.topMargin.equalToSuperview().offset(57)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(19)
+            make.leftMargin.equalToSuperview().offset(16)
             make.topMargin.equalToSuperview().offset(236)
         }
         
         mainTextLabel.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(19)
+            make.leftMargin.equalToSuperview().offset(16)
             make.topMargin.equalToSuperview().offset(271)
         }
     }

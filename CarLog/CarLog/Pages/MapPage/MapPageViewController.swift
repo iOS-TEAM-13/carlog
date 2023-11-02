@@ -1,22 +1,23 @@
 import UIKit
 
 import CoreLocation
+import iNaviMaps
 import MapKit
 import SnapKit
 
 class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     let mapView = MKMapView()
     var stationList: [GasStationSummary] = []
-    var stationDetailList: [GasStationDetailSummary] = []
+    var stationDetailList: [CustomGasStation] = []
+    var newAddress: [(String, String)]?
     
     var gasStationDetailView: GasStationDetailView?
     
     let locationManager = CLLocationManager()
-    let networkManager = NetworkManager()
-    // dummyData
-    let dummyData = CLLocationCoordinate2D(latitude: 37.29611185603856, longitude: 127.05515403584008)
     
-    //  private var overlayView: UIView!
+    var myLatitude: CLLocationDegrees?
+    var myLongitude: CLLocationDegrees?
+    
     private var detailView: UIView!
     
     private lazy var myLocationButton = {
@@ -46,12 +47,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         return button
     }()
     
-    private func addDummyPin() {
-        let pin = MKPointAnnotation()
-        pin.coordinate = dummyData
-        mapView.addAnnotation(pin)
-    }
-    
     private lazy var mapDetailView: GasStationDetailView = {
         let view = GasStationDetailView()
         view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 250)
@@ -66,7 +61,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         mapView.delegate = self
         locationManager.delegate = self
         
-        mapView.setRegion(MKCoordinateRegion(center: dummyData, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideDetailView(_:)))
         mapView.addGestureRecognizer(tapGesture)
@@ -76,7 +71,6 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         
         setupMapView()
         getLocationUsagePermission()
-        addDummyPin()
         setupLocationManager()
     }
     
@@ -149,7 +143,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             }
         }
     }
-
+    
     // 디테일 뷰 상단만 코너래디우스 주기
     func applyTopCornersRadius(to view: UIView, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius))
@@ -159,7 +153,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         
         view.layer.mask = mask
     }
-
+    
     // 어노테이션 클릭 시 관련 코드
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("어노테이션이 클릭되었습니다.")
@@ -211,7 +205,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let region = MKCoordinateRegion(center: currentLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
     }
-
+    
     // +버튼 입력 시 동작
     @objc func zoomInButtonTapped() {
         let zoom = 0.5 // 원하는 축척 변경 비율
@@ -220,7 +214,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let newRegion = MKCoordinateRegion(center: region.center, span: newSpan)
         mapView.setRegion(newRegion, animated: true)
     }
-
+    
     // -버튼 입력 시 동작
     @objc func zoomOutButtonTapped() {
         let zoom = 2.0 // 원하는 축척 변경 비율
@@ -265,7 +259,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
         }
     }
-
+    
     // MARK: FETCH DATA
     
     func setupLocationManager() {
@@ -278,84 +272,63 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let currentLocation = locations.last {
             fetchCoordinateCurrentLocation(currentLocation)
+            myLatitude = currentLocation.coordinate.latitude
+            myLongitude = currentLocation.coordinate.longitude
+            if let lat = myLatitude, let lon = myLongitude {
+                mapView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lon), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)), animated: true)
+            }
         }
-        //            if let currentLocation = locations.last {
-        //                        locationManager.stopUpdatingLocation()  // 위치 정보 업데이트 중지
-        //                        fetchList(x: currentLocation.coordinate.latitude, y: currentLocation.coordinate.longitude)
-        //                    }
     }
-
-    // WGS 좌표 -> KATECH 좌표
+    
     
     func fetchCoordinateCurrentLocation(_ location: CLLocation) {
-        let lat = String(location.coordinate.latitude)
-        let lon = String(location.coordinate.longitude)
-        
-        networkManager.fetchCoordinateChange(fromLat: lat, fromLon: lon) { coordinate in
-            DispatchQueue.main.async { // 메인 스레드에서 실행
-                if let coordinate = coordinate {
-                    print("현 위치:" + "Longitude: \(coordinate.coordinate.lon), Latitude: \(coordinate.coordinate.lat)")
-                    // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                    self.fetchList(x: coordinate.coordinate.lon, y: coordinate.coordinate.lat)
-                } else {
-                    print("Failed to fetch coordinate")
-                    // 에러 상황에 대한 처리를 수행할 수 있습니다.
-                }
-            }
-        }
+        let lat = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).x)
+        let lon = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).y)
+        self.fetchNearByList(x: lat, y: lon)
+        print("\(lat) + \(lon)")
     }
-
-    // 반경 내 주유소 api request
     
-    func fetchList(x: String, y: String) {
-        networkManager.fetchGasStationList(x: x, y: y, sort: "1", prodcd: "B027") { listResponse in
-            DispatchQueue.main.async {
-                if let listResponse = listResponse {
-                    self.stationList.append(contentsOf: listResponse.result.oil)
-                    self.fetchGasStationDetail()
-                    // print(self.stationList)
-                    // 여기에서 UI를 업데이트하거나 다른 처리를 할 수 있습니다.
-                } else {
-                    print("데이터 로딩 실패")
-                }
-            }
-        }
-    }
-
-    func fetchGasStationDetail() {
-        stationList.map { $0.uniID }.forEach { id in
-            networkManager.fetchGasStationDetailList(id: id) { gasStationResponse in
-                if let gasStationResponse = gasStationResponse {
-                    for i in 0 ... gasStationResponse.result.oil.count - 1 {
-                        self.stationDetailList.append(gasStationResponse.result.oil[i])
-                        self.fetchCoordinateCurrentLocationAgain(fromLat: String(gasStationResponse.result.oil[i].gisXCoor), fromLon: String(gasStationResponse.result.oil[i].gisYCoor), index: i)
-                    }
-                } else {
-                    print("실패")
-                }
+    func fetchNearByList(x: String, y: String) {
+        NetworkService.service.fetchNearbyGasStation(x: x, y: y, sort: "1", prodcd: "B027") { data in
+            if let data = data {
+                self.fetchDetailGasStation(id: data)
             }
         }
     }
     
-    // KATECH->WGS84
-    func fetchCoordinateCurrentLocationAgain(fromLat: String, fromLon: String, index: Int) {
-        networkManager.fetchCoordinateChangeAgain(fromLat: fromLat, fromLon: fromLon) { coordinate in
-            DispatchQueue.main.async { // 메인 스레드에서 실행
-                if let coordinate = coordinate {
-                    // 여기서 UI 업데이트 등의 작업을 수행할 수 있습니다.
-                    self.stationDetailList[index].gisXCoor = Float(coordinate.coordinate.lon) ?? 0.0
-                    self.stationDetailList[index].gisYCoor = Float(coordinate.coordinate.lat) ?? 0.0
-                    print(self.stationDetailList[index].gisXCoor)
-                } else {
-                    print("Failed to fetch coordinate")
-                    // 에러 상황에 대한 처리를 수행할 수 있습니다.
+    func fetchDetailGasStation(id: [String]) {
+        NetworkService.service.fetchDetailGasStation(idList: id) { data in
+            if let data = data {
+                self.stationDetailList = data
+            }
+            self.changeAdress(detail: data.map { $0.map{ $0.address } } as! [String]) {
+                self.stationDetailList.forEach{ item in
+                    self.addPin(data: item)
                 }
-                // 여기서 stationDetailList로 어노테이션 띄우고 데이터 매핑해주세요
+            }
+            
+        }
+    }
+    
+    func changeAdress(detail: [String], completion: @escaping () -> Void) {
+        NetworkService.service.changeAddress(address: detail) { data in
+            if data?.count != 0 {
+                for i in 0...(data?.count ?? 0) - 1 {
+                    self.stationDetailList[i].gisXCoor = Float(data?[i].addresses.first?.x ?? "") ?? 0.0
+                    self.stationDetailList[i].gisYCoor = Float(data?[i].addresses.first?.y ?? "") ?? 0.0
+                }
+                completion()
             }
         }
+    }
+    
+    private func addPin(data: CustomGasStation) {
+        let pin = MKPointAnnotation()
+        pin.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(data.gisYCoor), longitude: CLLocationDegrees(data.gisXCoor))
+        mapView.addAnnotation(pin)
     }
 }
-    
+
 extension MapPageViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return !(touch.view?.isDescendant(of: mapDetailView) ?? false)

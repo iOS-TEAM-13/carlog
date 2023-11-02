@@ -13,8 +13,8 @@ class HistoryPageViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentTintColor = .mainNavyColor
         
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
     
@@ -23,7 +23,7 @@ class HistoryPageViewController: UIViewController {
         drivingCollectionView.drivingCollectionView.dataSource = self
         drivingCollectionView.drivingCollectionView.delegate = self
         drivingCollectionView.drivingCollectionView.register(DrivingCollectionViewCell.self, forCellWithReuseIdentifier: DrivingCollectionViewCell.identifier)
-        drivingCollectionView.drivingCollectionView.backgroundColor = .white
+        drivingCollectionView.drivingCollectionView.backgroundColor = .backgroundCoustomColor
         return drivingCollectionView
     }()
     
@@ -54,7 +54,7 @@ class HistoryPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.backgroundCoustomColor
         
         setupUI()
         didChangeValue(segment: segmentedControl)
@@ -111,28 +111,28 @@ class HistoryPageViewController: UIViewController {
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(80)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-80)
             make.height.equalTo(60)
         }
         
         drivingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         fuelingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         floatingButtonStackView.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }
     }
     
@@ -269,10 +269,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == drivingCollectionView.drivingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.backgroundColor = .buttonSkyBlueColor
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.darkGray.cgColor
-            cell.layer.cornerRadius = Constants.cornerRadius * 4
+            cell.backgroundColor = .white
+            cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
             cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0)km")

@@ -42,7 +42,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var arriveTotalDistenceLabel: UILabel = {
         let arriveTotalDistenceLabel = UILabel()
         arriveTotalDistenceLabel.textColor = .black
-        arriveTotalDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        arriveTotalDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         return arriveTotalDistenceLabel
     }()
     
