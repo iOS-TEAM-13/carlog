@@ -66,17 +66,36 @@ extension AddCommunityPageViewController {
     @objc func didTapRightBarButton() {
         print("didTapRightBarButton is Called!")
         let timeStamp = String.dateFormatter.string(from: currentDate)
-        let image = UIImage(named: "b")
+        let image = UIImage(named: "c")
+        let image2 = UIImage(named: "a")
         guard let user = Auth.auth().currentUser else { return }
         // guard let selectedImage = imageView.image else { return }
-        StorageService.storageService.uploadImage(image: image ?? UIImage()) { [self] url in
+        
+        let dispatchGroup = DispatchGroup()
+        var imageURLs: [URL] = []
+        
+        dispatchGroup.enter()
+        StorageService.storageService.uploadImage(image: image ?? UIImage()) { url in
             if let url = url {
-                let post = Post(id: "1", title: mainTitleLabel.text, content: subTitleLabel.text, image: [url], userEmail: user.email, timeStamp: timeStamp)
+                imageURLs.append(url)
+            }
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.enter()
+        StorageService.storageService.uploadImage(image: image2 ?? UIImage()) { url in
+            if let url = url {
+                imageURLs.append(url)
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [self] in
+            let post = Post(id: "2", title: self.mainTitleLabel.text, content: subTitleLabel.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
                 FirestoreService.firestoreService.savePosts(post: post) { error in
                     print("err: \(String(describing: error?.localizedDescription))")
                 }
             }
-        }
         
         //                activityIndicatorView.startAnimating()
         view.isUserInteractionEnabled = false
