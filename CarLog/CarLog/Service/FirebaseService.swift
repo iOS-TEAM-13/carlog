@@ -73,6 +73,30 @@ final class FirestoreService {
         }
     }
     
+    func checkDuplicate(car: String, data: String, completion: @escaping (Bool, Error?) -> Void) {
+        let usersRef = db.collection("cars")
+        
+        // Firestore에서 모든 사용자 cars 정보 가져오기
+        usersRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                return
+            }
+            
+            var isCarAvailable = true
+            
+            for document in querySnapshot?.documents ?? [] {
+                if let existingCar = document.data()["\(data)"] as? String {
+                    if existingCar == car {
+                        isCarAvailable = false
+                        break
+                    }
+                }
+            }
+            completion(isCarAvailable, nil)
+        }
+    }
+    
     // MARK: - Post
 
     func savePosts(post: Post, completion: @escaping (Error?) -> Void) {

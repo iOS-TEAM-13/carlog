@@ -42,6 +42,9 @@ class MyCarCheckViewController: UIViewController {
     
     private lazy var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { [weak self] _ in
         Constants.carParts.userEmail = Auth.auth().currentUser?.email
+        Constants.carParts.parts.forEach { part in
+            NotificationService.service.pushNotification(part: part)
+        }
         FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }

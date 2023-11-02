@@ -4,26 +4,17 @@ import FirebaseAuth
 import FirebaseFirestore
 import SnapKit
 
-class JoinupPageViewController: UIViewController {
-    let joinupView = JoinupView()
-    let carNumberView = CarNumberView()
-    let carMakerView = CarMakerView()
-    let carModelView = CarModelView()
-    let oilModelView = OilModelView()
-    let nickNameView = NickNameView()
-    let totalDistanceView = TotalDistanceView()
-
-    var timer: Timer?
-    var seconds: Int = 180
+class JoinupPageViewController: JoinupPageHelperController {
     var isChecked = false
     let dummyData = ["휘발유", "경유", "LPG"]
-    var isCheckedEmail = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
 
         joinupView.joinInButton.isEnabled = false
+        carNumberView.carNumberTextField.delegate = self
+
         setupUI()
     }
 
@@ -31,7 +22,7 @@ class JoinupPageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
-    func setupUI() {
+    private func setupUI() {
         view.addSubview(joinupView) // 첫 view
         forHiddenViews() // 다음 버튼들의 숨겨진 views
         registerForKeyboardNotifications() // 키보드 기능들
@@ -42,103 +33,103 @@ class JoinupPageViewController: UIViewController {
         }
     }
 
-    func addTargets() {
+    private func addTargets() {
         addJoinUserFieldActions()
         addCheckEmailButtonAction()
         addSMTPButtonAction()
         addSMTPNumberButtonAction()
         addJoinInButtonAction()
         personalInfoVerifiedCheck()
+        checkCarNumberButtonAction()
+        CheckNickNameButtonAction()
     }
 
-    // MARK: - Alert 창 구현
+    // MARK: - 모든 뷰들
 
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+    private func forHiddenViews() {
+        joinupView.popButton.addAction(UIAction(handler: { _ in
+            let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+                self.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+            self.present(alert, animated: true, completion: nil)
+        }), for: .touchUpInside)
 
-    // MARK: 텍스트 필드 변경 관련
-
-    func textFieldDidChange() {
-        let isEmailValid = joinupView.emailTextField.text?.isValidEmail() ?? false
-        let isPasswordValid = joinupView.passwordTextField.text?.isValidPassword() ?? false
-        let isConfirmPassword = joinupView.confirmPasswordTextField.text?.isValidPassword() ?? false
-        let isSMTPNumber = joinupView.smtpNumberTextField.text?.count == 6
-
-        UIView.animate(withDuration: 0.3) {
-            if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPNumber {
-                self.joinupView.joinInButton.isEnabled = true
-                self.joinupView.joinInButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-                self.joinupView.joinInButton.backgroundColor = .mainNavyColor
-            } else {
-                self.joinupView.joinInButton.isEnabled = false
-                self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
-                self.joinupView.joinInButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
+        carNumberView.nextButton.addAction(UIAction(handler: { _ in
+            guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
+                self.showAlert(message: "사용중인 차 번호입니다")
+                return
             }
-        }
+            self.view.addSubview(self.carMakerView)
+            self.carNumberView.isHidden = true
+            self.carMakerView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+
+        carMakerView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.carModelView)
+            self.carMakerView.isHidden = true
+            self.carModelView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+
+        carModelView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.oilModelView)
+            self.carModelView.isHidden = true
+            self.oilModelView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+
+        oilModelView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.nickNameView)
+            self.oilModelView.isHidden = true
+            self.nickNameView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+
+        nickNameView.nextButton.addAction(UIAction(handler: { _ in
+            self.view.addSubview(self.totalDistanceView)
+            self.nickNameView.isHidden = true
+            self.totalDistanceView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }), for: .touchUpInside)
+
+        totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
+            let selectedOilType = self.oilModelView.selectedOil
+
+            FirestoreService.firestoreService.saveCar(
+                car: Car(
+                    number: self.carNumberView.carNumberTextField.text,
+                    maker: self.carMakerView.carMakerTextField.text,
+                    name: self.carModelView.carModelTextField.text,
+                    oilType: selectedOilType ?? "",
+                    nickName: self.nickNameView.carNickNameTextField.text,
+                    totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
+                    userEmail: self.joinupView.emailTextField.text),
+                completion: { _ in
+                    self.doneButtonTapped()
+                })
+        }), for: .touchUpInside)
     }
 
-    // MARK: - Keyboard 관련
-
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        let lists: [UIView] = [carNumberView, carModelView, nickNameView, totalDistanceView]
-        let buttonLists: [UIView] = [carNumberView.nextButton, carModelView.nextButton, nickNameView.nextButton, totalDistanceView.nextButton]
-
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        else {
-            return
-        }
-
-        let contentInset = UIEdgeInsets(
-            top: 0.0,
-            left: 0.0,
-            bottom: keyboardFrame.size.height,
-            right: 0.0)
-        joinupView.scrollView.contentInset = contentInset
-        joinupView.scrollView.scrollIndicatorInsets = contentInset
-
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        {
-            let keyboardHeight = keyboardFrame.height
-            for buttonList in buttonLists {
-                let textFieldFrameInWindow = buttonList.convert(buttonList.bounds, to: nil)
-                let maxY = textFieldFrameInWindow.maxY
-                for list in lists {
-                    if maxY > (list.frame.size.height - keyboardHeight) {
-                        let scrollOffset = maxY - (list.frame.size.height - keyboardHeight)
-                        list.frame.origin.y = scrollOffset - 100
-                    }
+    // 최종 주행거리 "완료" 버튼
+    private func doneButtonTapped() {
+        LoginService.loginService.keepLogin { user in
+            if user != nil {
+                let tabBarController = Util.mainTabBarController()
+                if let windowScene = UIApplication.shared.connectedScenes
+                    .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
+                    let window = windowScene.windows.first
+                {
+                    window.rootViewController = tabBarController
                 }
             }
         }
     }
-
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        let contentInset = UIEdgeInsets(
-            top: 0.0,
-            left: 0.0,
-            bottom: 0.0,
-            right: 0.0)
-        joinupView.scrollView.contentInset = contentInset
-        joinupView.scrollView.scrollIndicatorInsets = contentInset
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        joinupView.endEditing(true)
-        carNumberView.endEditing(true)
-        carModelView.endEditing(true)
-        oilModelView.endEditing(true)
-        nickNameView.endEditing(true)
-        totalDistanceView.endEditing(true)
-    }
 }
-
