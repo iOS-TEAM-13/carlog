@@ -111,8 +111,8 @@ class HistoryPageViewController: UIViewController {
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(80)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-80)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin * 4)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 4)
             make.height.equalTo(60)
         }
         
