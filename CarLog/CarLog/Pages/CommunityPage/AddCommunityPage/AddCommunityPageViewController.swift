@@ -5,18 +5,18 @@
 //  Created by APPLE M1 Max on 2023/11/01.
 //
 
-import UIKit
 import SnapKit
 import SwiftUI
+import UIKit
 
 class AddCommunityPageViewController: UIViewController {
-    
     let addCommunityPageView = AddCommunityPageView()
+
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .white
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .yellow
         return imageView
     }()
 
@@ -25,7 +25,7 @@ class AddCommunityPageViewController: UIViewController {
         button.setTitle("Choose Image", for: .normal)
         button.backgroundColor = .blue
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
+
         return button
     }()
 
@@ -34,13 +34,14 @@ class AddCommunityPageViewController: UIViewController {
         button.setTitle("Upload", for: .normal)
         button.backgroundColor = .green
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(uploadImage), for: .touchUpInside)
+
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        addTarget()
 
         view.addSubview(addCommunityPageView)
         view.addSubview(imageView)
@@ -69,14 +70,24 @@ class AddCommunityPageViewController: UIViewController {
         }
     }
 
+    func addTarget() {
+        chooseImageButton.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
+        uploadButton.addTarget(self, action: #selector(uploadImage), for: .touchUpInside)
+    }
+
     @objc func chooseImage() {
         // 이미지를 선택하고 imageView에 표시하는 로직을 여기에 추가
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary // 사진첩을 열도록 설정
+
+        present(imagePicker, animated: true, completion: nil)
     }
 
     @objc func uploadImage() {
         // 선택한 이미지를 업로드하는 로직을 여기에 추가
     }
-    
+
     // SwiftUI를 활용한 미리보기
     struct AddCommunityPageViewController_Previews: PreviewProvider {
         static var previews: some View {
@@ -89,9 +100,23 @@ class AddCommunityPageViewController: UIViewController {
             let addCommunityPageVC = AddCommunityPageViewController()
             return UINavigationController(rootViewController: addCommunityPageVC)
         }
-        
+
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
         typealias UIViewControllerType = UIViewController
     }
+}
 
+extension AddCommunityPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            imageView.image = selectedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // 이미지 선택을 취소했을 때 실행할 작업을 구현
+        dismiss(animated: true, completion: nil)
+    }
 }
