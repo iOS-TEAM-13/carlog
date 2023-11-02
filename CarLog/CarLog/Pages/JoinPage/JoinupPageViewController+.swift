@@ -144,7 +144,7 @@ extension JoinupPageViewController {
             }
             
             guard carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
-                return self.showAlert(message: "유효한 차 번호 형식이 아닙니다")
+                return self.showAlert(message: "00가0000 형식으로 써주세요")
             }
             
             guard carNumberToCheck.count >= 7 else {
@@ -193,7 +193,7 @@ extension JoinupPageViewController {
                 } else {
                     self.nickNameView.checkNickNameButton.setTitleColor(.red, for: .normal)
                     self.nickNameView.checkNickNameButton.setTitle("불가능", for: .normal)
-                    self.showAlert(message: "이미 존재하는 차번호입니다")
+                    self.showAlert(message: "이미 존재하는 닉네임입니다")
                     self.nickNameView.carNickNameTextField.text = ""
                 }
             })
