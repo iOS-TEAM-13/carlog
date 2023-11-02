@@ -26,7 +26,6 @@
 		3BF32B352AF3B97B00007122 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B342AF3B97B00007122 /* CommentViewController.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */; };
-		7E7EE0C62AF1E9C000AB4151 /* AddCommunityPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C52AF1E9C000AB4151 /* AddCommunityPageView.swift */; };
 		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
@@ -41,6 +40,7 @@
 		B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */; };
 		B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */; };
 		B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */; };
+		C94DC0550E1194B30AE45F80 /* Pods_CarLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7667BEE61F719035220D9C64 /* Pods_CarLog.framework */; };
 		FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B96A22ADF5D39003827B1 /* LoginService.swift */; };
 		FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */; };
 		FB6311C62ADCEBB80038929A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C52ADCEBB80038929A /* String+.swift */; };
@@ -90,6 +90,8 @@
 		FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071732AD6BC6900713A81 /* Fueling.swift */; };
 		FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071752AD6BC7000713A81 /* GasStation.swift */; };
 		FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */; };
+		FF5D5F9C2AF15798000AFAFD /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */; };
+		FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5F9D2AF15A9E000AFAFD /* Address.swift */; };
 		FF5D5F9A2AEFF276000AFAFD /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5F992AEFF276000AFAFD /* NotificationService.swift */; };
 		FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */; };
 		FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6AF59B2ADDA55D0067960E /* PageViewController.swift */; };
@@ -109,6 +111,10 @@
 		131528082AEF9113006121A4 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		136128F92AE42E1F00B99ACF /* CarMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMakerView.swift; sourceTree = "<group>"; };
 		136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinupPageViewController+.swift"; sourceTree = "<group>"; };
+		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
+		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
+		7667BEE61F719035220D9C64 /* Pods_CarLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
 		139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPassWordViewController.swift; sourceTree = "<group>"; };
 		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
@@ -129,8 +135,8 @@
 		7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
 		7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
 		7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityPageViewController.swift; sourceTree = "<group>"; };
-		7E7EE0C52AF1E9C000AB4151 /* AddCommunityPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityPageView.swift; sourceTree = "<group>"; };
 		7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		9BA5765F838EDB353BDABB5B /* Pods-CarLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.debug.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.debug.xcconfig"; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonStackView.swift; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 		B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingDetailView.swift; sourceTree = "<group>"; };
 		B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailViewController.swift; sourceTree = "<group>"; };
 		B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailView.swift; sourceTree = "<group>"; };
+		EAA11E4444771AE8A4F99ACA /* Pods-CarLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.release.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.release.xcconfig"; sourceTree = "<group>"; };
 		FB1B96A22ADF5D39003827B1 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarLog.entitlements; sourceTree = "<group>"; };
 		FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateComponents.swift; sourceTree = "<group>"; };
@@ -194,6 +201,8 @@
 		FF5071732AD6BC6900713A81 /* Fueling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fueling.swift; sourceTree = "<group>"; };
 		FF5071752AD6BC7000713A81 /* GasStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStation.swift; sourceTree = "<group>"; };
 		FF5071772AD6E0DF00713A81 /* MyCarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarCollectionViewCell.swift; sourceTree = "<group>"; };
+		FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		FF5D5F9D2AF15A9E000AFAFD /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		FF5D5F992AEFF276000AFAFD /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		FF6AF59B2ADDA55D0067960E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -217,12 +226,30 @@
 				FFA5DF942ADD145900B25A07 /* FirebaseStorage in Frameworks */,
 				FB748B462AD586EE00CC6A1F /* Alamofire in Frameworks */,
 				FFA5DF922ADD145900B25A07 /* FirebaseFirestoreSwift in Frameworks */,
+				C94DC0550E1194B30AE45F80 /* Pods_CarLog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07EC1107CE5792BD017E56BA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7667BEE61F719035220D9C64 /* Pods_CarLog.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6A16AD271443849B1BCBAC62 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9BA5765F838EDB353BDABB5B /* Pods-CarLog.debug.xcconfig */,
+				EAA11E4444771AE8A4F99ACA /* Pods-CarLog.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7E62C9B82AE4F36F00391BB1 /* SpoqaHanSansNeo_OTF_original */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,7 +265,6 @@
 		7E7EE0C72AF1E9C400AB4151 /* AddCommunityPage */ = {
 			isa = PBXGroup;
 			children = (
-				7E7EE0C52AF1E9C000AB4151 /* AddCommunityPageView.swift */,
 				7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */,
 			);
 			path = AddCommunityPage;
@@ -309,6 +335,8 @@
 			children = (
 				FB748B1E2AD53B5E00CC6A1F /* CarLog */,
 				FB748B1D2AD53B5E00CC6A1F /* Products */,
+				6A16AD271443849B1BCBAC62 /* Pods */,
+				07EC1107CE5792BD017E56BA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -379,6 +407,7 @@
 				3B369D102AE6619A0084BF35 /* GasStationList.swift */,
 				FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */,
 				3B8620BA2AE819C700ED8757 /* Coordinate.swift */,
+				FF5D5F9D2AF15A9E000AFAFD /* Address.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -437,7 +466,6 @@
 			children = (
 				FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */,
 				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
-				3B369D0E2AE661510084BF35 /* NetworkManager.swift */,
 			);
 			path = MapPage;
 			sourceTree = "<group>";
@@ -501,6 +529,7 @@
 			children = (
 				FF126E212ADAE67E00B2A109 /* FirebaseService.swift */,
 				FB1B96A22ADF5D39003827B1 /* LoginService.swift */,
+				FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */,
 				FF5D5F992AEFF276000AFAFD /* NotificationService.swift */,
 			);
 			path = Service;
@@ -531,9 +560,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB748B302AD53B5F00CC6A1F /* Build configuration list for PBXNativeTarget "CarLog" */;
 			buildPhases = (
+				810D9309FDB527E17639D50F /* [CP] Check Pods Manifest.lock */,
 				FB748B182AD53B5E00CC6A1F /* Sources */,
 				FB748B192AD53B5E00CC6A1F /* Frameworks */,
 				FB748B1A2AD53B5E00CC6A1F /* Resources */,
+				96AE47631B10FD02266D8B3B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -609,6 +640,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		810D9309FDB527E17639D50F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CarLog-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		96AE47631B10FD02266D8B3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CarLog/Pods-CarLog-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CarLog/Pods-CarLog-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CarLog/Pods-CarLog-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FB748B182AD53B5E00CC6A1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -633,6 +706,7 @@
 				FF5071742AD6BC6900713A81 /* Fueling.swift in Sources */,
 				FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
+				FF5D5F9C2AF15798000AFAFD /* NetworkService.swift in Sources */,
 				B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FFFFAF842AE1644800A7677E /* Date+.swift in Sources */,
@@ -666,7 +740,6 @@
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
-				3B369D0F2AE661510084BF35 /* NetworkManager.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */,
@@ -687,9 +760,9 @@
 				FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */,
 				B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
-				7E7EE0C62AF1E9C000AB4151 /* AddCommunityPageView.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
+				FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */,
 				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
 				FF2648762AEBA36A009CD1D7 /* UICollectionViewCell+.swift in Sources */,
 				3BF21A502AEF830D0063822A /* EditPageViewController.swift in Sources */,
@@ -831,6 +904,7 @@
 		};
 		FB748B312AD53B5F00CC6A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BA5765F838EDB353BDABB5B /* Pods-CarLog.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -867,6 +941,7 @@
 		};
 		FB748B322AD53B5F00CC6A1F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAA11E4444771AE8A4F99ACA /* Pods-CarLog.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
