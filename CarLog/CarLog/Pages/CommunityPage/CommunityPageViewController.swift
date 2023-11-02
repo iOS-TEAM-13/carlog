@@ -36,7 +36,7 @@ class CommunityPageViewController: UIViewController {
     private lazy var bannerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: view.frame.width, height: 80)  // 배너의 너비를 뷰의 너비로 설정
+        layout.itemSize = CGSize(width: 360, height: 80)  // 배너의 너비를 뷰의 너비로 설정
         layout.minimumLineSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isPagingEnabled = true
@@ -63,6 +63,20 @@ class CommunityPageViewController: UIViewController {
         view.addSubview(editFloatingButton)
         view.addSubview(bannerCollectionView)
         
+            bannerCollectionView.snp.makeConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide)
+                make.left.equalToSuperview().offset(16)
+                make.right.equalToSuperview().offset(-16)
+                make.height.equalTo(80) // 원하는 높이 설정
+            }
+        
+        communityColletionView.snp.makeConstraints { make in
+                // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(bannerCollectionView.snp.bottom).offset(12)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+                make.bottom.equalToSuperview()
+           }
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
@@ -98,6 +112,12 @@ class CommunityPageViewController: UIViewController {
     }
     @objc func floatingButtonTapped() {
         
+        items.append("New Item")
+        print("새 항목 추가")
+        communityColletionView.reloadData()
+        //📌네비게이션 화면 전환 기능
+//        let editPage = AddCommunityPageViewController()
+//                navigationController?.pushViewController(editPage, animated: true)
 //                items.append("New Item")
 //                print("새 항목 추가")
 //                communityColletionView.reloadData()
@@ -125,6 +145,31 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == bannerCollectionView {
+                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
+                   cell.configure(with: banners[indexPath.item])
+                   return cell
+               } else if collectionView == communityColletionView {
+                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
+                   return cell
+               }
+               return UICollectionViewCell()
+      }
+       
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           if collectionView == bannerCollectionView {
+                       return CGSize(width: collectionView.frame.width, height: 80)
+                   } else if collectionView == communityColletionView {
+                       return CGSize(width: 357, height: 321)
+                   }
+                   return CGSize.zero
+       }
+    //커뮤니티 컬렉션 뷰 셀 사이의 간격 설정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+           if collectionView == communityColletionView {
+               return 12 // 커뮤니티 컬렉션 뷰 셀 사이의 간격을 12로 설정
+           }
+           return 0 // 다른 컬렉션 뷰에 대해서는 0 또는 원하는 값으로 설정
+       }
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
             cell.configure(with: banners[indexPath.item])
             return cell
