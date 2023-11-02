@@ -72,4 +72,12 @@ extension String {
             return false // 유효하지 않은 문자열
         }
     }
+
+    static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateStyle = .long
+        f.timeStyle = .short
+        f.locale = Locale(identifier: "ko_KR")
+        return f
+    }()
 }
