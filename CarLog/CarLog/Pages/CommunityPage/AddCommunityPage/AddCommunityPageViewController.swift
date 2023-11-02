@@ -5,119 +5,183 @@
 //  Created by APPLE M1 Max on 2023/11/01.
 //
 
-import FirebaseAuth
+import PhotosUI
 import SnapKit
-import SwiftUI
 import UIKit
 
 class AddCommunityPageViewController: UIViewController {
-    let addCommunityPageView = AddCommunityPageView()
-
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .yellow
-        return imageView
+    private let mainTitleLabel: UILabel = {
+        let mainTitleLabel = UILabel()
+        mainTitleLabel.text = "제목"
+        mainTitleLabel.textColor = .black
+        mainTitleLabel.backgroundColor = .white
+        mainTitleLabel.layer.borderColor = UIColor.clear.cgColor
+        mainTitleLabel.layer.borderWidth = 0
+        mainTitleLabel.layer.cornerRadius = 15
+        mainTitleLabel.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        return mainTitleLabel
     }()
-
-    let chooseImageButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Choose Image", for: .normal)
-        button.backgroundColor = .blue
-        button.setTitleColor(.white, for: .normal)
-
-        return button
+    
+    private let subTitleLabel: UILabel = {
+        let subTitleLabel = UILabel()
+        subTitleLabel.text = "본문"
+        subTitleLabel.textColor = .black
+        subTitleLabel.backgroundColor = .white
+        subTitleLabel.layer.borderColor = UIColor.clear.cgColor
+        subTitleLabel.layer.borderWidth = 0
+        subTitleLabel.layer.cornerRadius = 15
+        //        subTitleLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        subTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        return subTitleLabel
     }()
-
-    let uploadButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Upload", for: .normal)
-        button.backgroundColor = .green
-        button.setTitleColor(.white, for: .normal)
-
-        return button
-    }()
-
+    
+    private let imagePickerView = UIImageView()
+    private let imagePickerButton = UIButton()
+    private let numberOfSelectedImageLabel = UILabel()
+    private let descriptionTextView = UITextView()
+    private let separatorView = UIView()
+    private let optionsTableView = UITableView()
+    //    private let activityIndicatorView = UIActivityIndicatorView()
+    
+    private var selectedImages = [UIImage]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        addTarget()
-
-        view.addSubview(addCommunityPageView)
-        view.addSubview(imageView)
-        view.addSubview(chooseImageButton)
-        view.addSubview(uploadButton)
-
-        imageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(100)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(200)
-        }
-
-        chooseImageButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(150)
-            make.height.equalTo(40)
-        }
-
-        uploadButton.snp.makeConstraints { make in
-            make.top.equalTo(chooseImageButton.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(150)
-            make.height.equalTo(40)
-        }
-    }
-
-    func addTarget() {
-        chooseImageButton.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
-         uploadButton.addTarget(self, action: #selector(uploadImage), for: .touchUpInside)
-    }
-
-    @objc func chooseImage() {
-        // 이미지를 선택하고 imageView에 표시하는 로직을 여기에 추가
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary // 사진첩을 열도록 설정
-        present(imagePicker, animated: true, completion: nil)
-    }
-
-    @objc func uploadImage() {
-        guard let user = Auth.auth().currentUser else { return }
-                guard let selectedImage = imageView.image else { return }
-                StorageService.storageService.uploadImage(image: selectedImage, pathRoot: user.uid) { url in }
-    }
-
-    // SwiftUI를 활용한 미리보기
-    struct AddCommunityPageViewController_Previews: PreviewProvider {
-        static var previews: some View {
-            AddCommunityPageVCReprsentable().edgesIgnoringSafeArea(.all)
-        }
-    }
-
-    struct AddCommunityPageVCReprsentable: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> UIViewController {
-            let addCommunityPageVC = AddCommunityPageViewController()
-            return UINavigationController(rootViewController: addCommunityPageVC)
-        }
-
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-        typealias UIViewControllerType = UIViewController
+        setupNavigationBar()
+        attribute()
+        setupUI()
     }
 }
 
-extension AddCommunityPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            imageView.image = selectedImage
-        }
-
-        dismiss(animated: true, completion: nil)
+extension AddCommunityPageViewController {
+    @objc func didTapLeftBarButton() {
+        dismiss(animated: true)
     }
 
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // 이미지 선택을 취소했을 때 실행할 작업을 구현
-        dismiss(animated: true, completion: nil)
+    @objc func didTapRightBarButton() {
+        print("didTapRightBarButton is Called!")
+        
+        //                activityIndicatorView.startAnimating()
+        
+        view.isUserInteractionEnabled = false
+        navigationItem.leftBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+    
+    @objc func didTapImagePickerButton() {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selection = .ordered
+        config.selectionLimit = 5
+        let imagePickerViewController = PHPickerViewController(configuration: config)
+        //    imagePickerViewController.delegate = self
+        //    present(imagePickerViewController, animated: true)
+    }
+}
+
+private extension AddCommunityPageViewController {
+    func attribute() {
+        view.backgroundColor = .systemRed
+        
+        imagePickerView.backgroundColor = .systemBlue
+        imagePickerView.layer.cornerRadius = 15
+        imagePickerButton.addTarget(
+            self,
+            action: #selector(didTapImagePickerButton),
+            for: .touchUpInside
+        )
+        numberOfSelectedImageLabel.text = "\(selectedImages.count)"
+        numberOfSelectedImageLabel.font = .systemFont(ofSize: 16.0, weight: .semibold)
+        numberOfSelectedImageLabel.textColor = .white
+        numberOfSelectedImageLabel.textAlignment = .center
+        numberOfSelectedImageLabel.backgroundColor = .systemBlue
+        numberOfSelectedImageLabel.clipsToBounds = true
+        numberOfSelectedImageLabel.layer.cornerRadius = 12.0
+    }
+    
+    func setupUI() {
+        let commonInset: CGFloat = 16.0
+        [
+            mainTitleLabel,
+            subTitleLabel,
+            imagePickerView,
+            imagePickerButton,
+            numberOfSelectedImageLabel,
+            descriptionTextView,
+            separatorView,
+            optionsTableView,
+        ].forEach { view.addSubview($0) }
+        
+        //         snap kit 제약 잡기
+        mainTitleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(commonInset)
+            make.top.equalTo(view.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        subTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
+            make.height.equalTo(100)
+        }
+        
+        imagePickerView.snp.makeConstraints { make in
+            make.top.equalTo(subTitleLabel.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().inset(commonInset)
+            make.size.equalTo(100)
+        }
+        
+        imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
+        imagePickerButton.widthAnchor.constraint(
+            equalTo: imagePickerView.widthAnchor
+        ).isActive = true
+        imagePickerButton.heightAnchor.constraint(
+            equalTo: imagePickerView.heightAnchor
+        ).isActive = true
+        imagePickerButton.centerXAnchor.constraint(
+            equalTo: imagePickerView.centerXAnchor
+        ).isActive = true
+        imagePickerButton.centerYAnchor.constraint(
+            equalTo: imagePickerView.centerYAnchor
+        ).isActive = true
+        
+        numberOfSelectedImageLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberOfSelectedImageLabel.widthAnchor.constraint(
+            equalToConstant: 24.0
+        ).isActive = true
+        numberOfSelectedImageLabel.heightAnchor.constraint(
+            equalToConstant: 24.0
+        ).isActive = true
+        numberOfSelectedImageLabel.topAnchor.constraint(
+            equalTo: imagePickerView.topAnchor,
+            constant: -8.0
+        ).isActive = true
+        numberOfSelectedImageLabel.trailingAnchor.constraint(
+            equalTo: imagePickerView.trailingAnchor,
+            constant: 8.0
+        ).isActive = true
+    }
+    
+    func setupNavigationBar() {
+        navigationItem.title = "새 게시물"
+        let leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "xmark"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapLeftBarButton)
+        )
+        let rightBarButtonItem = UIBarButtonItem(
+            title: "공유",
+            style: .plain,
+            target: self,
+            action: #selector(didTapRightBarButton)
+        )
+        leftBarButtonItem.tintColor = .label
+        rightBarButtonItem.tintColor = .systemBlue
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
 }
