@@ -77,7 +77,7 @@ class CommunityDetailPageViewController: UIViewController {
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         return label
     }()
-    
+    //textview 로 수정
     private let mainText: UILabel = {
         let label = UILabel()
         label.text = "카 \n로 \n그 \n언 \n더 \n독"
@@ -163,9 +163,8 @@ class CommunityDetailPageViewController: UIViewController {
         view.addSubview(commentButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.width.equalTo(361)
             make.topMargin.equalToSuperview().offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
+            make.leftMargin.rightMargin.equalToSuperview().offset(16)
         }
         
         userNameLabel.snp.makeConstraints { make in
