@@ -4,12 +4,16 @@
 //
 //  Created by APPLE M1 Max on 2023/11/01.
 //
-
-import PhotosUI
-import SnapKit
 import UIKit
 
+import FirebaseAuth
+import FirebaseStorage
+import PhotosUI
+import SnapKit
+
 class AddCommunityPageViewController: UIViewController {
+    let currentDate = Date()
+   
     private let mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "제목"
@@ -61,9 +65,20 @@ extension AddCommunityPageViewController {
 
     @objc func didTapRightBarButton() {
         print("didTapRightBarButton is Called!")
+        let timeStamp = String.dateFormatter.string(from: currentDate)
+        let image = UIImage(named: "b")
+        guard let user = Auth.auth().currentUser else { return }
+        // guard let selectedImage = imageView.image else { return }
+        StorageService.storageService.uploadImage(image: image ?? UIImage()) { [self] url in
+            if let url = url {
+                let post = Post(id: "1", title: mainTitleLabel.text, content: subTitleLabel.text, image: [url], userEmail: user.email, timeStamp: timeStamp)
+                FirestoreService.firestoreService.savePosts(post: post) { error in
+                    print("err: \(String(describing: error?.localizedDescription))")
+                }
+            }
+        }
         
         //                activityIndicatorView.startAnimating()
-        
         view.isUserInteractionEnabled = false
         navigationItem.leftBarButtonItem?.isEnabled = false
         navigationItem.rightBarButtonItem?.isEnabled = false
