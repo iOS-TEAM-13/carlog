@@ -63,3 +63,13 @@ struct OilPrice: Codable {
         case tradeDt = "TRADE_DT"
     }
 }
+
+struct CustomGasStation {
+    let id: String
+    let address: String
+    let carWashYn: String
+    let cvsYn: String
+    var gisXCoor: Float
+    var gisYCoor: Float
+    let oilPrice: [OilPrice]
+}
