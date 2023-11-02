@@ -275,7 +275,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             myLatitude = currentLocation.coordinate.latitude
             myLongitude = currentLocation.coordinate.longitude
             if let lat = myLatitude, let lon = myLongitude {
-                mapView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lon), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+                mapView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lon), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)), animated: true)
             }
         }
     }
@@ -285,6 +285,7 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let lat = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).x)
         let lon = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).y)
         self.fetchNearByList(x: lat, y: lon)
+        print("\(lat) + \(lon)")
     }
     
     func fetchNearByList(x: String, y: String) {
@@ -311,11 +312,13 @@ class MapPageViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     func changeAdress(detail: [String], completion: @escaping () -> Void) {
         NetworkService.service.changeAddress(address: detail) { data in
-            for i in 0...(data?.count ?? 0) - 1 {
-                self.stationDetailList[i].gisXCoor = Float(data?[i].addresses.first?.x ?? "") ?? 0.0
-                self.stationDetailList[i].gisYCoor = Float(data?[i].addresses.first?.y ?? "") ?? 0.0
+            if data?.count != 0 {
+                for i in 0...(data?.count ?? 0) - 1 {
+                    self.stationDetailList[i].gisXCoor = Float(data?[i].addresses.first?.x ?? "") ?? 0.0
+                    self.stationDetailList[i].gisYCoor = Float(data?[i].addresses.first?.y ?? "") ?? 0.0
+                }
+                completion()
             }
-            completion()
         }
     }
     
