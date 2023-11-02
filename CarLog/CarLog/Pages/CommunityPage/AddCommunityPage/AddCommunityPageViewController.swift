@@ -5,13 +5,13 @@
 //  Created by APPLE M1 Max on 2023/11/01.
 //
 
+import FirebaseAuth
 import SnapKit
 import SwiftUI
 import UIKit
 
 class AddCommunityPageViewController: UIViewController {
     let addCommunityPageView = AddCommunityPageView()
-
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -72,7 +72,7 @@ class AddCommunityPageViewController: UIViewController {
 
     func addTarget() {
         chooseImageButton.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
-        uploadButton.addTarget(self, action: #selector(uploadImage), for: .touchUpInside)
+         uploadButton.addTarget(self, action: #selector(uploadImage), for: .touchUpInside)
     }
 
     @objc func chooseImage() {
@@ -80,12 +80,13 @@ class AddCommunityPageViewController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary // 사진첩을 열도록 설정
-
         present(imagePicker, animated: true, completion: nil)
     }
 
     @objc func uploadImage() {
-        // 선택한 이미지를 업로드하는 로직을 여기에 추가
+        guard let user = Auth.auth().currentUser else { return }
+                guard let selectedImage = imageView.image else { return }
+                StorageService.storageService.uploadImage(image: selectedImage, pathRoot: user.uid) { url in }
     }
 
     // SwiftUI를 활용한 미리보기
@@ -107,11 +108,15 @@ class AddCommunityPageViewController: UIViewController {
 }
 
 extension AddCommunityPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             imageView.image = selectedImage
+//            uploadButton.addAction(UIAction(handler: { _ in
+//                guard let user = Auth.auth().currentUser else { return }
+//                StorageService.storageService.uploadImage(image: selectedImage, pathRoot: user.uid) { url in }
+//            }), for: .touchUpInside)
         }
-        
+
         dismiss(animated: true, completion: nil)
     }
 
