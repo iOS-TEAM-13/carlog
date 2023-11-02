@@ -111,10 +111,6 @@ extension AddCommunityPageViewController: UIImagePickerControllerDelegate, UINav
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             imageView.image = selectedImage
-//            uploadButton.addAction(UIAction(handler: { _ in
-//                guard let user = Auth.auth().currentUser else { return }
-//                StorageService.storageService.uploadImage(image: selectedImage, pathRoot: user.uid) { url in }
-//            }), for: .touchUpInside)
         }
 
         dismiss(animated: true, completion: nil)
