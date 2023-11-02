@@ -14,6 +14,7 @@
 		139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */; };
 		139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */; };
 		139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */; };
+		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
 		3B369D0F2AE661510084BF35 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D0E2AE661510084BF35 /* NetworkManager.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
@@ -118,6 +119,7 @@
 		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
 		139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPassWordViewController.swift; sourceTree = "<group>"; };
 		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
+		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		3B369D0E2AE661510084BF35 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 				FB1B96A22ADF5D39003827B1 /* LoginService.swift */,
 				FF5D5F9B2AF15798000AFAFD /* NetworkService.swift */,
 				FF5D5F992AEFF276000AFAFD /* NotificationService.swift */,
+				13EE4E372AF376B0000723B5 /* StorageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */,
+				13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */,
 				3BF32B312AF1E9B100007122 /* CommunityDetailPageViewController.swift in Sources */,
 				136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */,
 				FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */,
@@ -911,7 +915,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = V7K58MBUV9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "카로그";
@@ -948,7 +952,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = V7K58MBUV9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "카로그";

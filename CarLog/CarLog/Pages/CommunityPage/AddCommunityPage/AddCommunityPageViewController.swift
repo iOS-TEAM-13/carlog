@@ -5,13 +5,11 @@
 //  Created by APPLE M1 Max on 2023/11/01.
 //
 
-import SnapKit
 import PhotosUI
+import SnapKit
 import UIKit
 
-
 class AddCommunityPageViewController: UIViewController {
-    
     private let mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "제목"
@@ -38,9 +36,9 @@ class AddCommunityPageViewController: UIViewController {
         return subTitleLabel
     }()
     
-        private let imagePickerView = UIImageView()
-        private let imagePickerButton = UIButton()
-        private let numberOfSelectedImageLabel = UILabel()
+    private let imagePickerView = UIImageView()
+    private let imagePickerButton = UIButton()
+    private let numberOfSelectedImageLabel = UILabel()
     private let descriptionTextView = UITextView()
     private let separatorView = UIView()
     private let optionsTableView = UITableView()
@@ -48,25 +46,23 @@ class AddCommunityPageViewController: UIViewController {
     
     private var selectedImages = [UIImage]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         attribute()
         setupUI()
-        
     }
-    
 }
 
 extension AddCommunityPageViewController {
     @objc func didTapLeftBarButton() {
         dismiss(animated: true)
     }
+
     @objc func didTapRightBarButton() {
         print("didTapRightBarButton is Called!")
         
-//                activityIndicatorView.startAnimating()
+        //                activityIndicatorView.startAnimating()
         
         view.isUserInteractionEnabled = false
         navigationItem.leftBarButtonItem?.isEnabled = false
@@ -79,8 +75,8 @@ extension AddCommunityPageViewController {
         config.selection = .ordered
         config.selectionLimit = 5
         let imagePickerViewController = PHPickerViewController(configuration: config)
-    //    imagePickerViewController.delegate = self
-    //    present(imagePickerViewController, animated: true)
+        //    imagePickerViewController.delegate = self
+        //    present(imagePickerViewController, animated: true)
     }
 }
 
@@ -116,16 +112,14 @@ private extension AddCommunityPageViewController {
             separatorView,
             optionsTableView,
         ].forEach { view.addSubview($0) }
-    
-   
-//         snap kit 제약 잡기
+        
+        //         snap kit 제약 잡기
         mainTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(commonInset)
             make.top.equalTo(view.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
         }
-
         
         subTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin)
@@ -139,7 +133,7 @@ private extension AddCommunityPageViewController {
             make.leading.equalToSuperview().inset(commonInset)
             make.size.equalTo(100)
         }
-
+        
         imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
         imagePickerButton.widthAnchor.constraint(
             equalTo: imagePickerView.widthAnchor
@@ -153,7 +147,7 @@ private extension AddCommunityPageViewController {
         imagePickerButton.centerYAnchor.constraint(
             equalTo: imagePickerView.centerYAnchor
         ).isActive = true
-
+        
         numberOfSelectedImageLabel.translatesAutoresizingMaskIntoConstraints = false
         numberOfSelectedImageLabel.widthAnchor.constraint(
             equalToConstant: 24.0
@@ -169,8 +163,6 @@ private extension AddCommunityPageViewController {
             equalTo: imagePickerView.trailingAnchor,
             constant: 8.0
         ).isActive = true
-
-        
     }
     
     func setupNavigationBar() {
@@ -192,5 +184,4 @@ private extension AddCommunityPageViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
-    
 }
