@@ -2,6 +2,8 @@ import SnapKit
 import UIKit
 
 class CommunityPageViewController: UIViewController {
+    let communityCell = CommunityPageCollectionViewCell()
+    
     private var items: [Post] = [] // 커뮤니티 셀 배열
     
     private var banners: [String] = ["a", "b", "c"] // 배너 셀 배열
@@ -62,8 +64,7 @@ class CommunityPageViewController: UIViewController {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
         view.addSubview(bannerCollectionView)
-        
-        
+
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.equalToSuperview().offset(16)
@@ -104,12 +105,8 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
-        // FirestoreService를 통해 데이터를 가져오는 예제
         FirestoreService.firestoreService.loadPosts { posts in
             if let posts = posts {
-                // Firestore로부터 가져온 포스트를 배열에 저장
-                var loadedPosts: [Post] = []
-                    
                 for post in posts {
                     if let id = post.id,
                        let title = post.title,
@@ -126,14 +123,11 @@ class CommunityPageViewController: UIViewController {
                             userEmail: userEmail,
                             timeStamp: timeStamp
                         )
-                        print("post= \(post)")
-                        loadedPosts.append(loadedPost)
+                        self.items.append(loadedPost)
                     }
                 }
-                // Firestore로부터 데이터를 성공적으로 가져왔으므로 UI 업데이트를 메인 스레드에서 수행합니다.
                 DispatchQueue.main.async {
-                    self.items = loadedPosts // 가져온 데이터를 컨트롤러의 'items' 배열에 할당
-                    self.communityColletionView.reloadData() // 컬렉션 뷰를 새로고침합니다.
+                    self.communityColletionView.reloadData()
                 }
             } else {
                 print("데이터를 가져오는 중 오류 발생")
@@ -175,9 +169,28 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         if collectionView == bannerCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
             cell.configure(with: banners[indexPath.item])
+
             return cell
         } else if collectionView == communityColletionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
+            let post = items[indexPath.item]
+            
+            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
+                cell.userName.text = nickName
+                cell.titleLabel.text = post.title
+                cell.mainTextLabel.text = post.content
+                if let imageURL = post.image.first, let imageUrl = imageURL {
+                    // 이미지를 비동기적으로 가져오기
+                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                        if let data = data, let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                cell.collectionViewImage.image = image
+                            }
+                        }
+                    }.resume()
+                }
+            }
+            
             return cell
         }
         return UICollectionViewCell()

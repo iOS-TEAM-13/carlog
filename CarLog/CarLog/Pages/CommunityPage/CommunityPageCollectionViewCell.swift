@@ -21,7 +21,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let userName: UILabel = {
+    lazy var userName: UILabel = {
         let label = UILabel()
         label.text = "왕바우"
         label.textColor = .black
@@ -72,7 +72,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "제목"
         label.textColor = .black
@@ -80,7 +80,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let mainTextLabel: UILabel = {
+    lazy var mainTextLabel: UILabel = {
         let label = UILabel()
         label.text = "본문"
         label.textColor = .black
