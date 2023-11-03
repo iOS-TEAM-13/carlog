@@ -1,51 +1,50 @@
-//
-//  AddCommunityPageViewController.swift
-//  CarLog
-//
-//  Created by APPLE M1 Max on 2023/11/01.
-//
 
-import PhotosUI
-import SnapKit
+
 import UIKit
 
+import FirebaseAuth
+import FirebaseStorage
+import PhotosUI
+import SnapKit
+
 class AddCommunityPageViewController: UIViewController {
-    private let mainTitleLabel: UILabel = {
-        let mainTitleLabel = UILabel()
-        mainTitleLabel.text = "제목"
-        mainTitleLabel.textColor = .black
-        mainTitleLabel.backgroundColor = .white
-        mainTitleLabel.layer.borderColor = UIColor.clear.cgColor
-        mainTitleLabel.layer.borderWidth = 0
-        mainTitleLabel.layer.cornerRadius = 15
-        mainTitleLabel.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
-        return mainTitleLabel
-    }()
+    let currentDate = Date()
     
-    private let subTitleLabel: UILabel = {
-        let subTitleLabel = UILabel()
-        subTitleLabel.text = "본문"
-        subTitleLabel.textColor = .black
-        subTitleLabel.backgroundColor = .white
-        subTitleLabel.layer.borderColor = UIColor.clear.cgColor
-        subTitleLabel.layer.borderWidth = 0
-        subTitleLabel.layer.cornerRadius = 15
-        //        subTitleLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        subTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
-        return subTitleLabel
-    }()
-    
+    // MARK: -
     private let imagePickerView = UIImageView()
     private let imagePickerButton = UIButton()
     private let numberOfSelectedImageLabel = UILabel()
-    private let descriptionTextView = UITextView()
-    private let separatorView = UIView()
-    private let optionsTableView = UITableView()
-    //    private let activityIndicatorView = UIActivityIndicatorView()
-    
     private var selectedImages = [UIImage]()
     
+    private let mainTextField: UITextField = {
+        let mainTextField = UITextField()
+        mainTextField.placeholder = "제목"
+        mainTextField.textColor = .black
+        mainTextField.backgroundColor = .white
+        mainTextField.layer.borderColor = UIColor.clear.cgColor
+        mainTextField.layer.borderWidth = 0
+        mainTextField.layer.cornerRadius = 15
+        mainTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        mainTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTextField.frame.size.height))
+        mainTextField.leftViewMode = .always
+        mainTextField.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        return mainTextField
+    }()
+    
+    private lazy var subTextView: UITextView = {
+        let subTextView = UITextView()
+        subTextView.text = " 문구 입력..."
+        subTextView.textColor = .black
+        subTextView.backgroundColor = .white
+        subTextView.layer.borderColor = UIColor.clear.cgColor
+        subTextView.layer.borderWidth = 0
+        subTextView.layer.cornerRadius = 15
+        subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        subTextView.delegate = self
+        return subTextView
+    }()
+    
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -54,15 +53,71 @@ class AddCommunityPageViewController: UIViewController {
     }
 }
 
+extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        if !results.isEmpty {
+            selectedImages = []
+            results.forEach { result in
+                let itemProvider = result.itemProvider
+                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                        guard let self = self else { return }
+                        if let image = image as? UIImage {
+                            self.selectedImages.append(image)
+                            DispatchQueue.main.async {
+                                self.imagePickerView.image = image
+                                self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
+                            }
+                        }
+                        if error != nil {
+                            print("ERROR")
+                        }
+                    }
+                }
+            }
+        }
+        dismiss(animated: true)
+    }
+}
+
+// ⭐️ navigation barButtons
 extension AddCommunityPageViewController {
     @objc func didTapLeftBarButton() {
         dismiss(animated: true)
     }
-
+    
     @objc func didTapRightBarButton() {
-        print("didTapRightBarButton is Called!")
+        let timeStamp = String.dateFormatter.string(from: currentDate)
+        let image = UIImage(named: "c")
+        let image2 = UIImage(named: "a")
+        guard let user = Auth.auth().currentUser else { return }
+        // guard let selectedImage = imageView.image else { return }
         
-        //                activityIndicatorView.startAnimating()
+        let dispatchGroup = DispatchGroup()
+        var imageURLs: [URL] = []
+        
+        dispatchGroup.enter()
+        StorageService.storageService.uploadImage(image: image ?? UIImage()) { url in
+            if let url = url {
+                imageURLs.append(url)
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        StorageService.storageService.uploadImage(image: image2 ?? UIImage()) { url in
+            if let url = url {
+                imageURLs.append(url)
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [self] in
+            let post = Post(id: "2", title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
+            FirestoreService.firestoreService.savePosts(post: post) { error in
+                print("err: \(String(describing: error?.localizedDescription))")
+            }
+        }
         
         view.isUserInteractionEnabled = false
         navigationItem.leftBarButtonItem?.isEnabled = false
@@ -73,18 +128,35 @@ extension AddCommunityPageViewController {
         var config = PHPickerConfiguration()
         config.filter = .images
         config.selection = .ordered
-        config.selectionLimit = 5
+        config.selectionLimit = 3
+        // 사진 선택 리미티드
         let imagePickerViewController = PHPickerViewController(configuration: config)
-        //    imagePickerViewController.delegate = self
-        //    present(imagePickerViewController, animated: true)
+        imagePickerViewController.delegate = self
+        present(imagePickerViewController, animated: true)
+    }
+}
+
+// ⭐️ UITextViewDelegate
+extension AddCommunityPageViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ subTextView: UITextView) {
+        if subTextView.textColor == .secondaryLabel {
+            subTextView.textColor = .label
+            subTextView.text = ""
+        }
+    }
+    func textViewDidEndEditing(_ subTextView: UITextView) {
+        if subTextView.text == "" {
+            subTextView.textColor = .secondaryLabel
+            subTextView.text = "문구 입력..."
+        }
     }
 }
 
 private extension AddCommunityPageViewController {
     func attribute() {
-        view.backgroundColor = .systemRed
+        view.backgroundColor = .systemGray6
         
-        imagePickerView.backgroundColor = .systemBlue
+        imagePickerView.backgroundColor = .white
         imagePickerView.layer.cornerRadius = 15
         imagePickerButton.addTarget(
             self,
@@ -92,45 +164,41 @@ private extension AddCommunityPageViewController {
             for: .touchUpInside
         )
         numberOfSelectedImageLabel.text = "\(selectedImages.count)"
-        numberOfSelectedImageLabel.font = .systemFont(ofSize: 16.0, weight: .semibold)
+        numberOfSelectedImageLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         numberOfSelectedImageLabel.textColor = .white
         numberOfSelectedImageLabel.textAlignment = .center
-        numberOfSelectedImageLabel.backgroundColor = .systemBlue
+        numberOfSelectedImageLabel.backgroundColor = .mainNavyColor
         numberOfSelectedImageLabel.clipsToBounds = true
         numberOfSelectedImageLabel.layer.cornerRadius = 12.0
     }
     
+    // MARK: -
     func setupUI() {
-        let commonInset: CGFloat = 16.0
         [
-            mainTitleLabel,
-            subTitleLabel,
+            mainTextField,
+            subTextView,
             imagePickerView,
             imagePickerButton,
-            numberOfSelectedImageLabel,
-            descriptionTextView,
-            separatorView,
-            optionsTableView,
+            numberOfSelectedImageLabel
         ].forEach { view.addSubview($0) }
         
-        //         snap kit 제약 잡기
-        mainTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(commonInset)
-            make.top.equalTo(view.snp.bottom).offset(Constants.verticalMargin)
+        mainTextField.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        subTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainTitleLabel.snp.bottom).offset(Constants.verticalMargin)
+        subTextView.snp.makeConstraints { make in
+            make.top.equalTo(mainTextField.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(100)
+            make.height.equalTo(300)
         }
         
         imagePickerView.snp.makeConstraints { make in
-            make.top.equalTo(subTitleLabel.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalToSuperview().inset(commonInset)
+            make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
+            //            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
             make.size.equalTo(100)
         }
         
@@ -163,6 +231,7 @@ private extension AddCommunityPageViewController {
             equalTo: imagePickerView.trailingAnchor,
             constant: 8.0
         ).isActive = true
+        
     }
     
     func setupNavigationBar() {
@@ -180,7 +249,7 @@ private extension AddCommunityPageViewController {
             action: #selector(didTapRightBarButton)
         )
         leftBarButtonItem.tintColor = .label
-        rightBarButtonItem.tintColor = .systemBlue
+        rightBarButtonItem.tintColor = .black
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }

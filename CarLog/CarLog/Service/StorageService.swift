@@ -10,15 +10,15 @@ import FirebaseStorage
 
 class StorageService {
     static let storageService = StorageService()
-
-    func uploadImage(image: UIImage, pathRoot: String, completion: @escaping (URL?) -> Void) {
+    
+    func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.4) else { return }
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
-
+        
         let imageName = UUID().uuidString + String(Date().timeIntervalSince1970)
-
-        let firebaseReference = Storage.storage().reference().child("\(imageName)")
+        
+        let firebaseReference = Storage.storage().reference().child("community").child("\(imageName)")
         firebaseReference.putData(imageData, metadata: metaData) { _, error in
             if let error = error {
                 print(error.localizedDescription)
@@ -32,11 +32,11 @@ class StorageService {
             }
         }
     }
-
+    
     func downloadImage(urlString: String, completion: @escaping (UIImage?) -> Void) {
         let storageReference = Storage.storage().reference(forURL: urlString)
         let megaByte = Int64(1 * 1024 * 1024)
-
+        
         storageReference.getData(maxSize: megaByte) { data, _ in
             guard let imageData = data else {
                 completion(nil)
