@@ -58,7 +58,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "유효한 차 번호로 작성해주세요\nex)00가0000")
+                self.showAlert(message: "중복확인을 해주세요\nex)00가0000")
                 return
             }
             self.view.addSubview(self.carMakerView)
