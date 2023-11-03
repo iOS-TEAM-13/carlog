@@ -64,9 +64,11 @@ class MapPageViewController: UIViewController {
         mapView.map.delegate = self
         locationManager.delegate = self
         
+        getLocationUsagePermission()
+        
         setupMapView()
         addCustomPin()
-        getLocationUsagePermission()
+        addButtonActions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,9 +106,9 @@ class MapPageViewController: UIViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let currentLocation = locations.last {
-            fetchCoordinateCurrentLocation(currentLocation)
             myLatitude = currentLocation.coordinate.latitude
             myLongitude = currentLocation.coordinate.longitude
+            fetchCoordinateCurrentLocation(currentLocation)
             if let lat = myLatitude, let lon = myLongitude {
                 mapView.map.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lon), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)), animated: true)
             }
@@ -170,6 +172,13 @@ class MapPageViewController: UIViewController {
         mapView.map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
     }
     
+    private func addButtonActions() {
+        mapView.searchButton.addAction(UIAction(handler: { _ in
+            self.removeAnnotation()
+            self.fetchCoordinateCurrentLocation(CLLocation(latitude: self.myLatitude ?? 0.0, longitude: self.myLongitude ?? 0.0))
+        }), for: .touchUpInside)
+    }
+    
     // MARK: @Objc
     // 현재위치 버튼 입력 시 동작
     @objc func myLocationButtonTapped() {
@@ -218,6 +227,11 @@ extension MapPageViewController: MKMapViewDelegate {
             annotationView?.canShowCallout = false
         }
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        myLatitude = self.mapView.map.centerCoordinate.latitude
+        myLongitude = self.mapView.map.centerCoordinate.longitude
     }
     
     // 어노테이션 클릭 시 관련 코드

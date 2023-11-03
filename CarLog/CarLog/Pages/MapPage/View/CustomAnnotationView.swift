@@ -152,8 +152,6 @@ class CustomAnnotationView: MKAnnotationView {
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
-        gasolineImageView.image = nil
-        dieselImageView.image = nil
         gasolinePriceLabel.text = nil
         dieselPriceLabel.text = nil
     }

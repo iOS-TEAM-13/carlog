@@ -11,7 +11,7 @@ import MapKit
 import SnapKit
 
 class CustomMapView: UIView {
-    var searchButton: UIButton = {
+    let searchButton: UIButton = {
         var btn = UIButton()
         btn.setTitle("현 위치에서 검색", for: .normal)
         btn.backgroundColor = .mainNavyColor
