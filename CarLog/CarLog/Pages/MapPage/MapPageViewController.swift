@@ -5,18 +5,15 @@ import iNaviMaps
 import MapKit
 import SnapKit
 
-class MapPageViewController: UIViewController, CLLocationManagerDelegate {
-    let mapView = CustomMapView()
-    var stationList: [GasStationSummary] = []
-    var stationDetailList: [CustomGasStation] = []
-    var newAddress: [(String, String)]?
+class MapPageViewController: UIViewController {
     
-    var gasStationDetailView: GasStationDetailView?
+    // MARK: Properties
+    private let mapView = CustomMapView()
     
+    private let locationManager = CLLocationManager()
+    
+    private lazy var stationDetailList: [CustomGasStation] = []
     private lazy var locationList: [CustomAnnotation] = []
-    
-    let locationManager = CLLocationManager()
-    let test = [CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.748832, longitude: 127.081867))]
   
     var myLatitude: CLLocationDegrees?
     var myLongitude: CLLocationDegrees?
@@ -57,25 +54,17 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
         return view
     }()
     
+    // MARK: LifeCycle
     override func loadView() {
         view = mapView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = UIColor.white
         mapView.map.delegate = self
         locationManager.delegate = self
         
-        mapView.map.showsUserLocation = true
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideDetailView(_:)))
-//        mapView.addGestureRecognizer(tapGesture)
-//        tapGesture.delegate = self
-//        gasStationDetailView = GasStationDetailView()
-        
-//        setupMapView()
-        
+        setupMapView()
         addCustomPin()
         getLocationUsagePermission()
     }
@@ -85,28 +74,17 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
         getLoaction()
     }
     
+    // MARK: Method
     func setupMapView() {
-        view.addSubview(mapView)
         view.addSubview(myLocationButton)
         view.addSubview(zoomInButton)
         view.addSubview(zoomOutButton)
         view.addSubview(mapDetailView)
         
-        // 나침반 표시 여부
         mapView.map.showsCompass = true
-        // 축척 정보 표시 여부
         mapView.map.showsScale = true
-        // 위치 사용 시 사용자의 연재 위치 표시
         mapView.map.showsUserLocation = true
-        // 사용자 위치를 표시하고 사용자가 움직일 때마다 지도도 함께 움직여 사용자의 현재 위치를 중심으로 유지
-        // mapView.setUserTrackingMode(.follow, animated: true)
-        // 사용자의 방향에 따라 회전(나침반 기능과 함께 사용)
         mapView.map.setUserTrackingMode(.followWithHeading, animated: true)
-        
-        mapView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-        }
         
         myLocationButton.snp.makeConstraints { make in
             make.leftMargin.equalToSuperview().offset(10)
@@ -124,74 +102,6 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    
-    
-//    // 디테일 뷰 상단만 코너래디우스 주기
-//    func applyTopCornersRadius(to view: UIView, radius: CGFloat) {
-//        let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius))
-//
-//        let mask = CAShapeLayer()
-//        mask.path = path.cgPath
-//
-//        view.layer.mask = mask
-//    }
-    
-//    func updateAnnotationToCustomView(_ annotationView: MKAnnotationView, annotation: MKAnnotation) {
-//        annotationView.image = nil
-//        let view = UIView()
-//        view.backgroundColor = .white
-//        view.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-//        view.layer.cornerRadius = 8
-//        view.layer.shadowColor = UIColor.black.cgColor
-//        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        view.layer.shadowRadius = 3
-//        view.layer.shadowOpacity = 0.3
-//
-//        let label = UILabel(frame: view.bounds)
-//        label.text = "휘발유:2000원 \n경유: 1400원"
-//        label.font = UIFont(name: "Jua", size: 10)
-//        label.numberOfLines = 0
-//        label.textAlignment = .center
-//        view.addSubview(label)
-//
-//        annotationView.addSubview(view)
-//        annotationView.frame = view.frame
-//    }
-    
-    func getLocationUsagePermission() {
-        // location4
-        locationManager.requestWhenInUseAuthorization()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        // location5
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            print("GPS 권한 설정됨")
-            locationManager.startUpdatingLocation() // 중요!
-        case .restricted, .notDetermined:
-            print("GPS 권한 설정되지 않음")
-            getLocationUsagePermission()
-        case .denied:
-            print("GPS 권한 요청 거부됨")
-            getLocationUsagePermission()
-        default:
-            print("GPS: Default")
-        }
-    }
-    
-//    func hideDetailView() {
-//        UIView.animate(withDuration: 0.3) {
-//            self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 200)
-//        }
-//    }
-    
-    func setupLocationManager() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let currentLocation = locations.last {
             fetchCoordinateCurrentLocation(currentLocation)
@@ -206,7 +116,7 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
     func fetchCoordinateCurrentLocation(_ location: CLLocation) {
         let lat = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).x)
         let lon = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).y)
-        self.fetchNearByList(x: lat, y: lon)
+        fetchNearByList(x: lat, y: lon)
     }
     
     func fetchNearByList(x: String, y: String) {
@@ -222,9 +132,9 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
             if let data = data {
                 self?.stationDetailList = data
             }
-            self?.changeAdress(detail: data.map { $0.map{ $0.address } } as! [String]) {
-                self?.stationDetailList.forEach{ item in
-                    self?.locationList.append(CustomAnnotation(title: item.name,gasolinePrice: String(item.oilPrice.filter{ $0.prodcd == "B027" }.first?.price ?? 0), dieselPrice: String(item.oilPrice.filter{ $0.prodcd == "D047" }.first?.price ?? 0), coordinate: CLLocationCoordinate2D(latitude: Double(item.gisYCoor), longitude: Double(item.gisXCoor))))
+            self?.changeAdress(detail: data.map { $0.map { $0.address } } as! [String]) {
+                self?.stationDetailList.forEach { item in
+                    self?.locationList.append(CustomAnnotation(title: item.name, gasolinePrice: String(item.oilPrice.filter { $0.prodcd == "B027" }.first?.price ?? 0), dieselPrice: String(item.oilPrice.filter { $0.prodcd == "D047" }.first?.price ?? 0), coordinate: CLLocationCoordinate2D(latitude: Double(item.gisYCoor), longitude: Double(item.gisXCoor))))
                     self?.addCustomPin()
                 }
             }
@@ -234,7 +144,7 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
     func changeAdress(detail: [String], completion: @escaping () -> Void) {
         NetworkService.service.changeAddress(address: detail) { [weak self] data in
             if data?.count != 0 {
-                for i in 0...(data?.count ?? 0) - 1 {
+                for i in 0 ... (data?.count ?? 0) - 1 {
                     self?.stationDetailList[i].gisXCoor = Float(data?[i].addresses.first?.x ?? "") ?? 0.0
                     self?.stationDetailList[i].gisYCoor = Float(data?[i].addresses.first?.y ?? "") ?? 0.0
                 }
@@ -244,9 +154,8 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private func getLoaction() {
-//        removeAnnotation()
+        removeAnnotation()
         setupLocationManager()
-
     }
     
     private func removeAnnotation() {
@@ -261,14 +170,7 @@ class MapPageViewController: UIViewController, CLLocationManagerDelegate {
         mapView.map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
     }
     
-//    @objc func handleTapOutsideDetailView(_ gesture: UITapGestureRecognizer) {
-//        let location = gesture.location(in: view)
-//        if !mapDetailView.frame.contains(location) {
-//            // mapDetailView 바깥 영역을 탭했을 경우
-//            hideDetailView()
-//        }
-//    }
-    
+    // MARK: @Objc
     // 현재위치 버튼 입력 시 동작
     @objc func myLocationButtonTapped() {
         guard let currentLocation = locationManager.location else {
@@ -320,36 +222,34 @@ extension MapPageViewController: MKMapViewDelegate {
     
     // 어노테이션 클릭 시 관련 코드
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("어노테이션이 클릭되었습니다.")
-//        if let _ = view.annotation as? MKPointAnnotation {
-//            // 어노테이션을 클릭했을 때 detailView 나오게 함
-//            UIView.animate(withDuration: 0.1) {
-//                self.mapDetailView.frame = CGRect(x: 0, y: self.view.bounds.height - 250 - self.view.safeAreaInsets.bottom, width: self.view.bounds.width, height: 250) // 높이와 y 위치를 200으로 변경
-//                mapView.deselectAnnotation(view.annotation, animated: false)
-//            }
-//            applyTopCornersRadius(to: mapDetailView, radius: 15)
-//        }
+        
     }
-    
-//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        if mapView.region.span.latitudeDelta < 0.01 {
-//            for annotation in mapView.annotations {
-//                if let annotationView = mapView.view(for: annotation), !(annotation is MKUserLocation) {
-//                    updateAnnotationToCustomView(annotationView, annotation: annotation)
-//                }
-//            }
-//        } else {
-//            for annotation in mapView.annotations {
-//                if let annotationView = mapView.view(for: annotation), !(annotation is MKUserLocation) {
-//                    updateAnnotationToPin(annotationView)
-//                }
-//            }
-//        }
-//    }
 }
 
-extension MapPageViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return !(touch.view?.isDescendant(of: mapDetailView) ?? false)
+extension MapPageViewController: CLLocationManagerDelegate {
+    func setupLocationManager() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func getLocationUsagePermission() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            print("GPS 권한 설정됨")
+            locationManager.startUpdatingLocation() // 중요!
+        case .restricted, .notDetermined:
+            print("GPS 권한 설정되지 않음")
+            getLocationUsagePermission()
+        case .denied:
+            print("GPS 권한 요청 거부됨")
+            getLocationUsagePermission()
+        default:
+            print("GPS: Default")
+        }
     }
 }
