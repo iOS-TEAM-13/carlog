@@ -25,7 +25,6 @@ class StorageService {
             } else {
                 print("성공")
                 firebaseReference.downloadURL { url, _ in
-                    print(url)
                     completion(url)
                 }
             }
