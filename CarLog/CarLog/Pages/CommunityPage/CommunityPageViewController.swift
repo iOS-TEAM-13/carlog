@@ -8,7 +8,7 @@ class CommunityPageViewController: UIViewController {
     
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
-    private let editFloatingButton: UIButton = {
+    private lazy var editFloatingButton: UIButton = {
         let floatingButton = UIButton()
         let editImage = UIImage(named: "edit")
         floatingButton.setImage(editImage, for: .normal)
@@ -16,7 +16,7 @@ class CommunityPageViewController: UIViewController {
         floatingButton.layer.cornerRadius = 30
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
-        floatingButton.addTarget(CommunityPageViewController.self, action: #selector(floatingButtonTapped), for: .touchUpInside)
+        floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         return floatingButton
     }()
     
@@ -62,6 +62,7 @@ class CommunityPageViewController: UIViewController {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
         view.addSubview(bannerCollectionView)
+        
         
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -116,7 +117,7 @@ class CommunityPageViewController: UIViewController {
                        let userEmail = post.userEmail,
                        let timeStamp = post.timeStamp
                     {
-                        let imageURLs = post.image.compactMap{ $0 }
+                        let imageURLs = post.image.compactMap { $0 }
                         let loadedPost = Post(
                             id: id,
                             title: title,
@@ -151,12 +152,8 @@ class CommunityPageViewController: UIViewController {
     }
 
     @objc func floatingButtonTapped() {
-        //items.append("New Item")
-        //print("새 항목 추가")
-        //communityColletionView.reloadData()
-        // 📌네비게이션 화면 전환 기능
-//        let editPage = AddCommunityPageViewController()
-//        navigationController?.pushViewController(editPage, animated: true)
+        let editPage = AddCommunityPageViewController()
+        navigationController?.pushViewController(editPage, animated: true)
     }
 }
 
