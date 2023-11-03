@@ -11,7 +11,6 @@ class AddCommunityPageViewController: UIViewController {
     let currentDate = Date()
 
     // MARK: -
-
     private let imagePickerView = UIImageView()
     private let imagePickerButton = UIButton()
     private let numberOfSelectedImageLabel = UILabel()
@@ -93,22 +92,17 @@ extension AddCommunityPageViewController {
         let image = UIImage(named: "c")
         let image2 = UIImage(named: "a")
         guard let user = Auth.auth().currentUser else { return }
-        // guard let selectedImage = imageView.image else { return }
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
-        dispatchGroup.enter()
-        StorageService.storageService.uploadImage(image: image ?? UIImage()) { url in
-            if let url = url {
-                imageURLs.append(url)
+        
+        for i in selectedImages {
+            dispatchGroup.enter()
+            StorageService.storageService.uploadImage(image: i) { url in
+                if let url = url {
+                    imageURLs.append(url)
+                }
+                dispatchGroup.leave()
             }
-            dispatchGroup.leave()
-        }
-        dispatchGroup.enter()
-        StorageService.storageService.uploadImage(image: image2 ?? UIImage()) { url in
-            if let url = url {
-                imageURLs.append(url)
-            }
-            dispatchGroup.leave()
         }
         dispatchGroup.notify(queue: .main) { [self] in
             let post = Post(id: "2", title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
