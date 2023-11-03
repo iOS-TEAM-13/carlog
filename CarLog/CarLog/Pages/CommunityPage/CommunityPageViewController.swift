@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 
 class CommunityPageViewController: UIViewController {
-    private var items: [String] = [] // 커뮤니티 셀 배열
+    private var items: [Post] = [] // 커뮤니티 셀 배열
     
     private var banners: [String] = ["a", "b", "c"] // 배너 셀 배열
     
@@ -16,7 +16,7 @@ class CommunityPageViewController: UIViewController {
         floatingButton.layer.cornerRadius = 30
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
-        floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
+        floatingButton.addTarget(CommunityPageViewController.self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         return floatingButton
     }()
     
@@ -54,6 +54,7 @@ class CommunityPageViewController: UIViewController {
         communityColletionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
         
         setupUI()
+        loadPostFromFireStore()
         startBannerTimer()
     }
     
@@ -101,6 +102,44 @@ class CommunityPageViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextBanner), userInfo: nil, repeats: true)
     }
     
+    private func loadPostFromFireStore() {
+        // FirestoreService를 통해 데이터를 가져오는 예제
+        FirestoreService.firestoreService.loadPosts { posts in
+            if let posts = posts {
+                // Firestore로부터 가져온 포스트를 배열에 저장
+                var loadedPosts: [Post] = []
+                    
+                for post in posts {
+                    if let id = post.id,
+                       let title = post.title,
+                       let content = post.content,
+                       let userEmail = post.userEmail,
+                       let timeStamp = post.timeStamp
+                    {
+                        let imageURLs = post.image.compactMap{ $0 }
+                        let loadedPost = Post(
+                            id: id,
+                            title: title,
+                            content: content,
+                            image: imageURLs,
+                            userEmail: userEmail,
+                            timeStamp: timeStamp
+                        )
+                        print("post= \(post)")
+                        loadedPosts.append(loadedPost)
+                    }
+                }
+                // Firestore로부터 데이터를 성공적으로 가져왔으므로 UI 업데이트를 메인 스레드에서 수행합니다.
+                DispatchQueue.main.async {
+                    self.items = loadedPosts // 가져온 데이터를 컨트롤러의 'items' 배열에 할당
+                    self.communityColletionView.reloadData() // 컬렉션 뷰를 새로고침합니다.
+                }
+            } else {
+                print("데이터를 가져오는 중 오류 발생")
+            }
+        }
+    }
+    
     @objc private func scrollToNextBanner() {
         let currentOffset = bannerCollectionView.contentOffset.x
         let nextOffset = currentOffset + bannerCollectionView.frame.width
@@ -112,12 +151,12 @@ class CommunityPageViewController: UIViewController {
     }
 
     @objc func floatingButtonTapped() {
-//                items.append("New Item")
-//                print("새 항목 추가")
-//                communityColletionView.reloadData()
-//                📌네비게이션 화면 전환 기능
-        let editPage = AddCommunityPageViewController()
-        navigationController?.pushViewController(editPage, animated: true)
+        //items.append("New Item")
+        //print("새 항목 추가")
+        //communityColletionView.reloadData()
+        // 📌네비게이션 화면 전환 기능
+//        let editPage = AddCommunityPageViewController()
+//        navigationController?.pushViewController(editPage, animated: true)
     }
 }
 
@@ -147,7 +186,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         return UICollectionViewCell()
     }
        
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCollectionView {
             return CGSize(width: collectionView.frame.width, height: 80)
         } else if collectionView == communityColletionView {

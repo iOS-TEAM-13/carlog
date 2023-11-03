@@ -62,7 +62,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let collectionViewImage: UIImageView = {
+    lazy var collectionViewImage: UIImageView = {
         let imageView = UIImageView()
         if let image = UIImage(named: "sample2") {
             imageView.image = image
@@ -96,7 +96,6 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        setupUI()
     }
     
     private func  setupUI() {
