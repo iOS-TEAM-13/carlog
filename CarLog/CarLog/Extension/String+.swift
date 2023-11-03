@@ -72,7 +72,7 @@ extension String {
             return false // 유효하지 않은 문자열
         }
     }
-    
+
     static let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateStyle = .long

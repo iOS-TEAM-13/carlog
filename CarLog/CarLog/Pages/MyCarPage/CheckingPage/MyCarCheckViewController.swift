@@ -50,7 +50,7 @@ class MyCarCheckViewController: UIViewController {
         }
     }))
     
-    let animationView: LottieAnimationView = .init(name: "slideAnimation")
+    let animationView: LottieAnimationView = .init(name: "swipeAnimation")
     
     // MARK: LifeCycle
 
