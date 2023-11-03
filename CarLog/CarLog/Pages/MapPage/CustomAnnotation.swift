@@ -5,10 +5,9 @@
 //  Created by t2023-m0056 on 2023/11/02.
 //
 
-import Foundation
+import UIKit
 
 import MapKit
-import UIKit
 
 class CustomAnnotation: NSObject, MKAnnotation {
     var title: String?

@@ -81,6 +81,8 @@
 		FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */; };
 		FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E212ADAE67E00B2A109 /* FirebaseService.swift */; };
 		FF23E3412AF3EF9900626B63 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */; };
+		FF23E3432AF3F0DC00626B63 /* CustomMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */; };
+		FF23E3452AF3F72800626B63 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */; };
 		FF2648762AEBA36A009CD1D7 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2648752AEBA36A009CD1D7 /* UICollectionViewCell+.swift */; };
 		FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */; };
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
@@ -190,6 +192,8 @@
 		FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceView.swift; sourceTree = "<group>"; };
 		FF126E212ADAE67E00B2A109 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMapView.swift; sourceTree = "<group>"; };
+		FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		FF2648752AEBA36A009CD1D7 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailPageViewController.swift; sourceTree = "<group>"; };
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -464,8 +468,8 @@
 			isa = PBXGroup;
 			children = (
 				FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */,
-				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
 				FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */,
+				FF23E3462AF3F87A00626B63 /* View */,
 			);
 			path = MapPage;
 			sourceTree = "<group>";
@@ -534,6 +538,16 @@
 				13EE4E372AF376B0000723B5 /* StorageService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		FF23E3462AF3F87A00626B63 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */,
+				FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */,
+				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FFD5F74E2ADFBEBE00A06771 /* DetailPage */ = {
@@ -691,6 +705,7 @@
 				FF0287E92AD7C9A4006657C1 /* ComponentsView.swift in Sources */,
 				B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */,
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
+				FF23E3432AF3F0DC00626B63 /* CustomMapView.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
@@ -725,6 +740,7 @@
 				3BF32B332AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
+				FF23E3452AF3F72800626B63 /* CustomAnnotationView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */,
 				139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */,
