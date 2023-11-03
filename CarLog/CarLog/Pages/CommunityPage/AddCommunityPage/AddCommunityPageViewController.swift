@@ -89,8 +89,6 @@ extension AddCommunityPageViewController {
 
     @objc func didTapRightBarButton() {
         let timeStamp = String.dateFormatter.string(from: currentDate)
-        let image = UIImage(named: "c")
-        let image2 = UIImage(named: "a")
         guard let user = Auth.auth().currentUser else { return }
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
@@ -105,7 +103,7 @@ extension AddCommunityPageViewController {
             }
         }
         dispatchGroup.notify(queue: .main) { [self] in
-            let post = Post(id: "2", title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
+            let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
             FirestoreService.firestoreService.savePosts(post: post) { error in
                 print("err: \(String(describing: error?.localizedDescription))")
             }
