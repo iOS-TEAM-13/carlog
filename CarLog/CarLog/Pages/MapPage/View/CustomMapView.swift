@@ -11,11 +11,12 @@ import MapKit
 import SnapKit
 
 class CustomMapView: UIView {
-    var myLocationButton: UIButton = {
+    var searchButton: UIButton = {
         var btn = UIButton()
         btn.setTitle("현 위치에서 검색", for: .normal)
         btn.backgroundColor = .mainNavyColor
         btn.setTitleColor(.white, for: .normal)
+        btn.layer.cornerRadius = Constants.cornerRadius
         return btn
     }()
     
@@ -25,7 +26,7 @@ class CustomMapView: UIView {
         super.init(frame: frame)
         
         addSubview(map)
-        addSubview(myLocationButton)
+        addSubview(searchButton)
         
         configureUI()
         makeConstraintUI()
@@ -43,9 +44,11 @@ class CustomMapView: UIView {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        myLocationButton.snp.makeConstraints {
-            $0.leading.trailing.top.equalTo(self.safeAreaLayoutGuide).inset(Constants.verticalMargin * 2)
-            $0.height.equalTo(30)
+        searchButton.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).inset(Constants.verticalMargin * 2)
+            $0.centerX.equalTo(self)
+            $0.width.equalTo(200)
+            $0.height.equalTo(40)
         }
     }
 }
