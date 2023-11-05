@@ -10,14 +10,14 @@ import SnapKit
 
 class AddDrivingView: UIView, UITextFieldDelegate {
     
-    //MARK: - 주행 기록 페이지 제목
+//MARK: - 주행 기록 페이지 제목
     lazy var addDrivingPageLabel: UILabel = {
         let addDrivingPageLabel = UILabel()
         addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return addDrivingPageLabel
     }()
     
-    //MARK: - 주행 기록 페이지 전체 스택뷰
+//MARK: - 주행 기록 페이지 전체 스택뷰
     lazy var inputDrivingStackView: UIStackView = {
         let inputDrivingStackView = UIStackView(arrangedSubviews: [drivingPurposeStackView, totalDistanceStackView, arriveDistanceStackView, driveDistenceStackView])
         inputDrivingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
@@ -26,7 +26,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         return inputDrivingStackView
     }()
     
-    //MARK: - 운행 목적 영역 (추가)
+//MARK: - 운행 목적 영역 (추가)
     lazy var drivingPurposeStackView: UIStackView = {
         let drivingPurposeStackView = UIStackView(arrangedSubviews: [drivingPurposeLabel, drivingPurposeTextField])
         drivingPurposeStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -81,7 +81,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         drivingPurposeTextField.resignFirstResponder()
     }
     
-    //MARK: - 누적(출발) 주행거리 영역
+//MARK: - 누적(출발) 주행거리 영역
     lazy var totalDistanceStackView: UIStackView = {
         let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
         totalDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -156,7 +156,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
 //        return totalDistanceAddButton
 //    }()
     
-    //MARK: - 도착 주행거리 영역
+//MARK: - 도착 주행거리 영역
     lazy var arriveDistanceStackView: UIStackView = {
         let arriveDistanceStackView = UIStackView(arrangedSubviews: [arriveDistanceLabel, arriveDistanceTextField])
         arriveDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -223,7 +223,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
 //        return arriveDistanceAddButton
 //    }()
     
-    //MARK: - 주행거리 영역
+//MARK: - 주행거리 영역
     lazy var driveDistenceStackView: UIStackView = {
         let driveDistenceStackView = UIStackView(arrangedSubviews: [driveDistenceLabel, driveDistenceTextField])
         driveDistenceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -272,7 +272,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         driveDistenceTextField.resignFirstResponder()
     }
     
-    // MARK: - 취소, 저장 버튼 영역
+// MARK: - 취소, 저장 버튼 영역
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
