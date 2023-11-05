@@ -273,6 +273,7 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
+            cell.drivingPurposeLabel.text = drivingDummy[indexPath.row].drivingPurpose ?? ""
             cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0)km")
             cell.arriveTotalDistenceLabel.text = String("\(drivingDummy[indexPath.row].arriveDistance ?? 0)km")
             

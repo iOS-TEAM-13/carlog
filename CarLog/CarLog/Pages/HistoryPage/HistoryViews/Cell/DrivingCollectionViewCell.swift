@@ -11,10 +11,18 @@ import SnapKit
 
 class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var cellLabelStackView: UIStackView = {
-        let cellLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, cellBottomLabelStackView])
+        let cellLabelStackView = UIStackView(arrangedSubviews: [cellTopLabelStackView, cellBottomLabelStackView])
         cellLabelStackView.axis = .vertical
         cellLabelStackView.distribution = .equalSpacing
         return cellLabelStackView
+    }()
+    
+    lazy var cellTopLabelStackView: UIStackView = {
+        let cellTopLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, drivingPurposeLabel])
+        cellTopLabelStackView.axis = .horizontal
+        cellTopLabelStackView.distribution = .equalSpacing
+        cellTopLabelStackView.alignment = .top
+        return cellTopLabelStackView
     }()
     
     lazy var writeDateLabel: UILabel = {
@@ -22,6 +30,13 @@ class DrivingCollectionViewCell: UICollectionViewCell {
         writeDateLabel.textColor = .darkGray
         writeDateLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         return writeDateLabel
+    }()
+    
+    lazy var drivingPurposeLabel: UILabel = {
+        let drivingPurposeLabel = UILabel()
+        drivingPurposeLabel.textColor = .darkGray
+        drivingPurposeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        return drivingPurposeLabel
     }()
     
     lazy var cellBottomLabelStackView: UIStackView = {
