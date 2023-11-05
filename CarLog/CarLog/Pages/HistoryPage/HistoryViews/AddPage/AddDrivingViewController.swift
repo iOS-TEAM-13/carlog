@@ -15,7 +15,7 @@ extension Notification.Name {
     static let newDrivingRecordAdded = Notification.Name("newDrivingRecordAdded")
 }
 
-class AddDrivingViewController: UIViewController {
+class AddDrivingViewController: UIViewController, UITextFieldDelegate {
     
     lazy var addDrivingView: AddDrivingView = {
         let addDrivingView = AddDrivingView()
@@ -35,11 +35,21 @@ class AddDrivingViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        addDrivingView.drivingPurposeTextField.delegate = self
+        
         autoCalculate()
         buttonActions()
     }
+
+//MARK: - 운행 목적 텍스트 입력 수 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        let maxLength = 15
+        return updatedText.count <= maxLength
+    }
     
-    //MARK: - 주행거리 자동 계산
+//MARK: - 주행거리 자동 계산
     func autoCalculate() {
         func calculate() {
             let totalDistanceText = Int(addDrivingView.totalDistanceTextField.text ?? "") ?? 0

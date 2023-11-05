@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SnapKit
 
-class DriveDetailViewController: UIViewController {
+class DriveDetailViewController: UIViewController, UITextFieldDelegate {
     let db = Firestore.firestore()
     
     var drivingData: Driving?
@@ -34,11 +34,23 @@ class DriveDetailViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        drivingDetailView.drivingPurposeTextField.delegate = self
+        
         loadDrivingData()
         autoCalculate()
         buttonActions()
     }
     
+//MARK: - 운행 목적 텍스트 입력 수 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        let maxLength = 15
+        return updatedText.count <= maxLength
+    }
+        
+    
+//MARK: - 주행기록 디테일페이지 데이터 로드 / 근데 셀 데이터도 넘기는데?
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { _ in
             if let drivings = self.drivingData {
@@ -52,6 +64,7 @@ class DriveDetailViewController: UIViewController {
         }
     }
     
+//MARK: - 주행거리 자동 계산
     func autoCalculate() {
         func calculate() {
             let totalDistanceText = Int(drivingDetailView.totalDistanceTextField.text ?? "") ?? 0
@@ -60,10 +73,12 @@ class DriveDetailViewController: UIViewController {
             drivingDetailView.driveDistenceTextField.text = String(driveDistenceText)
         }
         
+        //누적(출발) 주행거리 텍스트필드의 값이 변경될 때 마다 도착에서 출발을 뺀다.
         drivingDetailView.totalDistanceTextField.addAction(UIAction(handler: { _ in
             calculate()
         }), for: .editingChanged)
         
+        //도착 주행거리 텍스트필드의 값이 변경될 때 마다 도착에서 출발을 뺀다.
         drivingDetailView.arriveDistanceTextField.addAction(UIAction(handler: { _ in
             calculate()
         }), for: .editingChanged)

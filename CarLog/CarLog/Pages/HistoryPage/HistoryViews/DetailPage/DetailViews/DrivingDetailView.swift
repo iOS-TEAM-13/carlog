@@ -13,7 +13,7 @@ class DrivingDetailView: UIView {
 //MARK: - 주행 기록 페이지 제목
     lazy var drivingDetailPageLabel: UILabel = {
         let drivingDetailPageLabel = UILabel()
-        drivingDetailPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
+        drivingDetailPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
         return drivingDetailPageLabel
     }()
     
@@ -36,7 +36,7 @@ class DrivingDetailView: UIView {
     
     lazy var drivingPurposeLabel: UILabel = {
         let drivingPurposeLabel = UILabel()
-        drivingPurposeLabel.customLabel(text: "운행 목적", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        drivingPurposeLabel.customLabel(text: "운행 목적 (15자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return drivingPurposeLabel
     }()
     
