@@ -39,6 +39,7 @@ class AddDrivingViewController: UIViewController {
         buttonActions()
     }
     
+    //MARK: - 주행거리 자동 계산
     func autoCalculate() {
         func calculate() {
             let totalDistanceText = Int(addDrivingView.totalDistanceTextField.text ?? "") ?? 0
@@ -47,10 +48,12 @@ class AddDrivingViewController: UIViewController {
             addDrivingView.driveDistenceTextField.text = String(driveDistenceText)
         }
         
+        //누적(출발) 주행거리 텍스트필드의 값이 변경될 때 마다 도착에서 출발을 뺀다.
         addDrivingView.totalDistanceTextField.addAction(UIAction(handler: { _ in
             calculate()
         }), for: .editingChanged)
         
+        //도착 주행거리 텍스트필드의 값이 변경될 때 마다 도착에서 출발을 뺀다.
         addDrivingView.arriveDistanceTextField.addAction(UIAction(handler: { _ in
             calculate()
         }), for: .editingChanged)
@@ -62,12 +65,13 @@ class AddDrivingViewController: UIViewController {
             
             let timeStamp = Date().toString()
             let id = UUID().uuidString
+            let drivingPurpose = addDrivingView.drivingPurposeTextField.text ?? ""
             let departDistance = Int(addDrivingView.totalDistanceTextField.text ?? "0") ?? 0
             let arriveDistance = Int(addDrivingView.arriveDistanceTextField.text ?? "0") ?? 0
             let driveDistance = Int(addDrivingView.driveDistenceTextField.text ?? "0") ?? 0
             let userEmail = Auth.auth().currentUser?.email
             
-            let newDriving = Driving(timeStamp: timeStamp, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
+            let newDriving = Driving(timeStamp: timeStamp, drivingPurpose: drivingPurpose, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
             
             FirestoreService.firestoreService.saveDriving(driving: newDriving) { error in
                 if let error = error {
