@@ -20,6 +20,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var cellTopLabelStackView: UIStackView = {
         let cellTopLabelStackView = UIStackView(arrangedSubviews: [writeDateLabel, drivingPurposeLabel])
         cellTopLabelStackView.axis = .horizontal
+        cellTopLabelStackView.spacing = 50
         cellTopLabelStackView.distribution = .equalSpacing
         cellTopLabelStackView.alignment = .top
         return cellTopLabelStackView
@@ -36,6 +37,7 @@ class DrivingCollectionViewCell: UICollectionViewCell {
         let drivingPurposeLabel = UILabel()
         drivingPurposeLabel.textColor = .darkGray
         drivingPurposeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        drivingPurposeLabel.numberOfLines = 1
         return drivingPurposeLabel
     }()
     
@@ -80,5 +82,11 @@ class DrivingCollectionViewCell: UICollectionViewCell {
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
+        
+        drivingPurposeLabel.snp.makeConstraints { make in
+            
+        }
     }
 }
+
+
