@@ -1,5 +1,4 @@
 import UIKit
-
 import SnapKit
 
 class HistoryPageViewController: UIViewController {
@@ -164,7 +163,7 @@ class HistoryPageViewController: UIViewController {
             let navigationController = UINavigationController(rootViewController: addFuelingViewController)
             navigationController.modalPresentationStyle = .fullScreen
             self.present(navigationController, animated: true)
-            self.segmentedControl.selectedSegmentIndex = 0
+            self.segmentedControl.selectedSegmentIndex = 1
             self.didChangeValue(segment: self.segmentedControl)
             self.isActive.toggle()
         }), for: .touchUpInside)

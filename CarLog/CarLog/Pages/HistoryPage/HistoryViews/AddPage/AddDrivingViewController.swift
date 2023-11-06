@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import FirebaseAuth
 import SnapKit
 
@@ -50,7 +49,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         buttonActions()
     }
     
-//MARK: - 주행기록 페이지 네비게이션바
+    //MARK: - 주행기록 페이지 네비게이션바
     func navigationUI() {
         navigationItem.title = "주행기록 추가"
         
@@ -73,7 +72,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-// MARK: - Keyboard 관련    
+    // MARK: - Keyboard 관련    
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -109,7 +108,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         addDrivingView.endEditing(true)
     }
 
-//MARK: - 운행 목적 텍스트 입력 수 제한
+    //MARK: - 운행 목적 텍스트 입력 수 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
@@ -117,7 +116,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         return updatedText.count <= maxLength
     }
     
-//MARK: - 주행거리 자동 계산
+    //MARK: - 주행거리 자동 계산
     func autoCalculate() {
         func calculate() {
             let totalDistanceText = Int(addDrivingView.totalDistanceTextField.text ?? "") ?? 0
@@ -137,7 +136,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         }), for: .editingChanged)
     }
     
-//MARK: - 저장, 취소 버튼 클릭 이벤트
+    //MARK: - 저장, 취소 버튼 클릭 이벤트
     func buttonActions() {
         addDrivingView.saveButton.addAction(UIAction(handler: { [self] _ in
             print("---> addDrivingView 저장 버튼 클릭 했어요")
