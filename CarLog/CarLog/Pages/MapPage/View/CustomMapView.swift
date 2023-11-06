@@ -45,7 +45,7 @@ class CustomMapView: UIView {
         }
         
         searchButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(Constants.verticalMargin * 2)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(Constants.verticalMargin * 2)
             $0.centerX.equalTo(self)
             $0.width.equalTo(200)
             $0.height.equalTo(40)

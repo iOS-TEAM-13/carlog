@@ -44,6 +44,7 @@ class GasStationDetailViewController: UIViewController {
         if let image = UIImage(named: "store") {
             imageView.image = image
         }
+        imageView.tintColor = .black
         return imageView
     }()
     
@@ -52,6 +53,7 @@ class GasStationDetailViewController: UIViewController {
         if let image = UIImage(named: "carwash") {
             imageView.image = image
         }
+        imageView.tintColor = .black
         return imageView
     }()
     
@@ -150,7 +152,6 @@ class GasStationDetailViewController: UIViewController {
         carWashImage.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).inset(-Constants.verticalMargin * 2)
             $0.leading.equalTo(storeImage.snp.trailing).inset(-Constants.horizontalMargin)
-//            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
             $0.width.height.equalTo(50)
         }
         
@@ -161,7 +162,6 @@ class GasStationDetailViewController: UIViewController {
         }
         
         greenOilPriceLabel.snp.makeConstraints {
-//            $0.top.equalTo(greenOilImage).inset(Constants.verticalMargin)
             $0.leading.equalTo(greenOilImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
             $0.centerY.equalTo(greenOilImage)
@@ -175,18 +175,16 @@ class GasStationDetailViewController: UIViewController {
         }
         
         yellowOilPriceLabel.snp.makeConstraints {
-//            $0.top.equalTo(yellowOilImage).inset(Constants.verticalMargin)
             $0.leading.equalTo(yellowOilImage.snp.trailing).inset(-Constants.horizontalMargin)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
             $0.centerY.equalTo(yellowOilImage)
         }
     }
     
     private func updateUI() {
         nameLabel.text = gasStation?.name
-//        storeImage.isHidden = gasStation?.cvsYn != "Y"
-//        carWashImage.isHidden = gasStation?.carWashYn != "Y"
+        storeImage.image = gasStation?.cvsYn !=  "Y" ? UIImage(systemName: "x.square") : UIImage(named: "store")
+        carWashImage.image = gasStation?.carWashYn !=  "Y" ? UIImage(systemName: "x.square") : UIImage(named: "carwash")
         let oilPrices = gasStation?.oilPrice ?? []
         if let latestOilPrice = oilPrices.max(by: { $0.tradeDt < $1.tradeDt }) {
             dateLabel.text = "기준: \(latestOilPrice.tradeDt)"
