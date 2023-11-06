@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CommunityDetailPageViewController: UIViewController {
+class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
     
     let imageName = ["image1", "image2", "image3"]
     //좋아요 버튼 설정
@@ -18,7 +18,31 @@ class CommunityDetailPageViewController: UIViewController {
             }
         }
     
-    private let titleLabel : UILabel = {
+    var dummyData: [(userName: String, comment: String)] = [("User1", "이것은 예시입니다."), ("User2", "이것도 예시입니다."), ("User3", "이것또한 예시입니다.")]
+    
+    lazy var commentTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .red
+        tableView.separatorStyle = .singleLine
+        tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentTableViewCell")
+        return tableView
+    }()
+    
+    lazy var communityDetailPageScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    lazy var communityDetailPageContentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var titleLabel : UILabel = {
         let label = UILabel()
         label.text = "달려라 달려라~"
         label.textColor = .black
@@ -28,15 +52,19 @@ class CommunityDetailPageViewController: UIViewController {
         return label
     }()
     
-    private let userNameLabel : UILabel = {
-        let label = UILabel()
-        label.text = "왕바우"
-        label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
-        return label
+    lazy var userNameLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("왕바우", for: .normal)  // "게시"라는 텍스트 설정
+        button.setTitleColor(.black, for: .normal)  // 텍스트 색상 설정
+        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)  // 폰트와 크기 설정
+        button.backgroundColor = .clear  // 버튼의 배경색 설정
+      //  button.layer.cornerRadius = 5  // 버튼의 모서리 둥글게 설정
+        // button.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
+        
+        return button
     }()
     
-    private let dateLabel : UILabel = {
+    lazy var dateLabel : UILabel = {
         let label = UILabel()
         label.text = "2023.11.02"
         label.textColor = .black
@@ -59,18 +87,16 @@ class CommunityDetailPageViewController: UIViewController {
         return collectionView
     }()
     
-    private let likeButton: UIButton = {
+    lazy var likeButton: UIButton = {
             let button = UIButton()
             button.setImage(UIImage(named: "spaner"), for: .normal)
             button.setImage(UIImage(named: "spaner.fill"), for: .selected)
-       // button.contentMode = .scaleAspectFill
-       // button.backgroundColor = .blue
             button.tintColor = .red
-            button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        button.addTarget(CommunityDetailPageViewController.self, action: #selector(likeButtonTapped), for: .touchUpInside)
             return button
         }()
     
-    private let likeCount: UILabel = {
+    lazy var likeCount: UILabel = {
         let label = UILabel()
         label.text = "264"
         label.textColor = .lightGray
@@ -78,39 +104,60 @@ class CommunityDetailPageViewController: UIViewController {
         return label
     }()
     //textview 로 수정
-    private let mainText: UILabel = {
+    lazy var mainText: UILabel = {
         let label = UILabel()
         label.text = "카 \n로 \n그 \n언 \n더 \n독"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold)
-        label.numberOfLines = 5
+        label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    private let commentButton: UIButton = {
+    
+    lazy var line: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    
+    
+    //댓글
+    lazy var containerView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .white
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
+    
+    lazy var commentTextView: UITextView = {
+        let textView = UITextView()
+        //textView.placeholder = "user (으)로 댓글 달기..."
+        textView.backgroundColor = .white
+        textView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        textView.layer.borderWidth = 1.0
+        textView.layer.cornerRadius = 8
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = true
+        return textView
+    }()
+    
+    lazy var button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .buttonSkyBlueColor
-        button.layer.cornerRadius = 21
-        button.layer.shadowRadius = 10
-        button.layer.shadowOpacity = 0.3
-        //버튼 내부 사진 추가
-        button.setImage(UIImage(named: "chaticon"), for: .normal)
-        //라벨 추가
-           button.setTitle("댓글 3개", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-           button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: 15, weight: .bold)
-           button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-           button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 16)
+        button.setTitle("게시", for: .normal)  // "게시"라는 텍스트 설정
+            button.setTitleColor(.mainNavyColor, for: .normal)  // 텍스트 색상 설정
+            button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)  // 폰트와 크기 설정
+            button.backgroundColor = .clear  // 버튼의 배경색 설정
+            button.layer.cornerRadius = 5  // 버튼의 모서리 둥글게 설정
         button.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         return button
     }()
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.backgroundCoustomColor
         
         //네비게이션 바 버튼 이미지 설정
         let dotsImage = UIImage(named: "dots")?.withRenderingMode(.alwaysOriginal)
@@ -121,6 +168,7 @@ class CommunityDetailPageViewController: UIViewController {
         photoCollectionView.isPagingEnabled = true
         
         setupUI()
+        commentTextViewPlaceholder()
      }
 //dots 버튼 눌렸을때 동작(드롭다운 메뉴)
     @objc func dotsButtonTapped() {
@@ -146,21 +194,40 @@ class CommunityDetailPageViewController: UIViewController {
         }
     
     @objc func commentButtonTapped() {
-        let commentVC = CommentViewController()
-        commentVC.modalPresentationStyle = .fullScreen  // 전체 화면으로 모달 표시
-            present(commentVC, animated: true, completion: nil)
-        
-    }
+        print("눌렸습니다!")
+        }
     
     private func setupUI() {
-        view.addSubview(titleLabel)
-        view.addSubview(userNameLabel)
-        view.addSubview(dateLabel)
-        view.addSubview(photoCollectionView)
-        view.addSubview(likeButton)
-        view.addSubview(likeCount)
-        view.addSubview(mainText)
-        view.addSubview(commentButton)
+        
+        view.addSubview(communityDetailPageScrollView)
+        view.addSubview(containerView)
+        communityDetailPageScrollView.addSubview(communityDetailPageContentView)
+        communityDetailPageContentView.addSubview(titleLabel)
+        communityDetailPageContentView.addSubview(userNameLabel)
+        communityDetailPageContentView.addSubview(dateLabel)
+        communityDetailPageContentView.addSubview(photoCollectionView)
+        communityDetailPageContentView.addSubview(likeButton)
+        communityDetailPageContentView.addSubview(likeCount)
+        communityDetailPageContentView.addSubview(mainText)
+        communityDetailPageContentView.addSubview(line)
+        communityDetailPageContentView.addSubview(commentTableView)
+        containerView.addSubview(commentTextView)
+        containerView.addSubview(button)
+        //view.addSubview(commentButton)
+        
+        commentTableView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+        }
+        
+        communityDetailPageScrollView.snp.makeConstraints { make in
+            make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
+        }
+        
+        communityDetailPageContentView.snp.makeConstraints { make in
+            make.edges.equalTo(communityDetailPageScrollView)
+            make.width.equalTo(communityDetailPageScrollView)
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(12)
@@ -201,13 +268,62 @@ class CommunityDetailPageViewController: UIViewController {
             make.leftMargin.equalToSuperview().offset(16)
         }
         
-        commentButton.snp.makeConstraints { make in
-            make.width.equalTo(117)
-            make.height.equalTo(42)
-            make.top.equalTo(mainText.snp.bottom).offset(12)
-          make.leftMargin.equalToSuperview().offset(138)
+        line.snp.makeConstraints { make in
+            make.top.equalTo(mainText.snp.bottom).offset(20)
+            make.leftMargin.equalToSuperview().offset(16)
+            make.rightMargin.equalToSuperview().offset(-16)
+            make.height.equalTo(1)
+        }
+        
+        commentTableView.snp.makeConstraints { make in
+            make.top.equalTo(line.snp.bottom).offset(20)
+            make.leftMargin.equalToSuperview().offset(16)
+            make.rightMargin.equalToSuperview().offset(-16)
+            make.bottomMargin.equalToSuperview().offset(-12)
+        }
+        //댓글 레이아웃
+        containerView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+         //   make.bottomMargin.equalToSuperview().offset(-12)
+            make.leftMargin.equalToSuperview().offset(16)
+            make.rightMargin.equalToSuperview().offset(-16)
+        }
+        
+        commentTextView.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(12)
+             make.leftMargin.equalToSuperview().offset(16)
+            make.bottomMargin.equalToSuperview().offset(-12)
+            // make.height.equalTo(50) // 원하는 높이 설정
+         }
+        
+        button.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(12)
+            make.left.equalTo(commentTextView.snp.right).offset(16)
+            make.rightMargin.equalToSuperview().offset(-16)
+            make.bottomMargin.equalToSuperview().offset(-12)
         }
     }
+    
+    func commentTextViewPlaceholder() {
+            commentTextView.delegate = self
+        commentTextView.text = "user (으)로 댓글달기..."
+        commentTextView.textColor = .lightGray
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+            if textView.textColor == UIColor.lightGray {
+                textView.text = nil
+                textView.textColor = UIColor.black
+            }
+        }
+
+        func textViewDidEndEditing(_ textView: UITextView) {
+            if textView.text.isEmpty {
+                textView.text = "user (으)로 댓글 달기..."
+                textView.textColor = UIColor.lightGray
+            }
+        }
+    
     //좋아요 버튼 눌렀을 떄 동작 구현
     @objc func likeButtonTapped() {
             isLiked.toggle()
@@ -231,5 +347,39 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
                 return cell
     }
     
+    
+}
+extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dummyData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
+                let (userName, comment) = dummyData[indexPath.row]
+                cell.configure(with: userName, comment: comment)
+                return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension // 또는 적절한 높이 값
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44 // 적당한 추정치를 제공합니다.
+    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        // 폰트 크기를 기반으로 한 예상 높이 (여기서는 예를 들기 위해 14로 설정)
+//        let estimatedFontHeight: CGFloat = 14.0
+//        let topMargin: CGFloat = 12.0
+//        let bottomMargin: CGFloat = 12.0
+//
+//        // 높이 계산
+//        let cellHeight = estimatedFontHeight + topMargin + bottomMargin
+//
+//        return cellHeight
+//    }
+
     
 }

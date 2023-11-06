@@ -14,6 +14,7 @@
 		139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */; };
 		139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */; };
 		139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */; };
+		13A8D8BE2AF909CF00496DCA /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */; };
 		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
@@ -23,7 +24,6 @@
 		3BF32B2F2AF0AE7200007122 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B2E2AF0AE7200007122 /* BannerCollectionViewCell.swift */; };
 		3BF32B312AF1E9B100007122 /* CommunityDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */; };
 		3BF32B332AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */; };
-		3BF32B352AF3B97B00007122 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B342AF3B97B00007122 /* CommentViewController.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */; };
 		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
@@ -118,6 +118,7 @@
 		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
 		139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPassWordViewController.swift; sourceTree = "<group>"; };
 		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
+		13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -127,7 +128,6 @@
 		3BF32B2E2AF0AE7200007122 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailPageViewController.swift; sourceTree = "<group>"; };
 		3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailCollectionViewCell.swift; sourceTree = "<group>"; };
-		3BF32B342AF3B97B00007122 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7667BEE61F719035220D9C64 /* Pods_CarLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		7E62C9B92AE4F38600391BB1 /* SpoqaHanSansNeo-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Medium.otf"; sourceTree = "<group>"; };
@@ -487,7 +487,7 @@
 				3BF32B2E2AF0AE7200007122 /* BannerCollectionViewCell.swift */,
 				3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */,
 				3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */,
-				3BF32B342AF3B97B00007122 /* CommentViewController.swift */,
+				13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */,
 			);
 			path = CommunityPage;
 			sourceTree = "<group>";
@@ -766,7 +766,6 @@
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */,
-				3BF32B352AF3B97B00007122 /* CommentViewController.swift in Sources */,
 				FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */,
 				3BF21A4E2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift in Sources */,
 				3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */,
@@ -792,6 +791,7 @@
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
 				3BF32B2F2AF0AE7200007122 /* BannerCollectionViewCell.swift in Sources */,
 				B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */,
+				13A8D8BE2AF909CF00496DCA /* CommentTableViewCell.swift in Sources */,
 				B85A0F452ADD1FE3009E0A00 /* DrivingCollectionViewCell.swift in Sources */,
 				FBBDA71F2AD7E7AB0031C17B /* TotalDistanceView.swift in Sources */,
 			);
@@ -815,6 +815,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -875,6 +876,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -934,7 +936,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V7K58MBUV9;
+				DEVELOPMENT_TEAM = 785X8Q9TA9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "카로그";
@@ -971,7 +973,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V7K58MBUV9;
+				DEVELOPMENT_TEAM = 785X8Q9TA9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "카로그";

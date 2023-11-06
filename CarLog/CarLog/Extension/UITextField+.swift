@@ -18,7 +18,7 @@ extension UITextField {
         self.textAlignment = alignment
         self.textColor = textColor
         self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.layer.borderWidth = 1
+        //self.layer.borderWidth = 1
         self.layer.cornerRadius = Constants.cornerRadius
         self.backgroundColor = .white
         self.leftView = paddingView
@@ -29,7 +29,6 @@ extension UITextField {
     
     func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) {
         self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
-        self.backgroundColor = .white
         let border = CALayer()
         let width = CGFloat(1)
         border.borderColor = UIColor.systemGray.cgColor
@@ -55,5 +54,20 @@ extension UITextField {
         self.backgroundColor = .white
         self.rightView = paddingView
         self.rightViewMode = .always
+    }
+    
+    //새롭게 커스텀한 히스토리페이지 텍스트필드
+    func historyNewCustomTextField(placeholder: NSAttributedString, font: UIFont, textColor: UIColor, alignment: NSTextAlignment, paddingView: UIView, keyboardType: UIKeyboardType) {
+        self.attributedPlaceholder = placeholder
+        self.font = font
+        self.sizeToFit()
+        self.textAlignment = alignment
+        self.textColor = textColor
+        self.heightAnchor.constraint(equalToConstant: font.lineHeight + Constants.horizontalMargin * 2).isActive = true
+        self.layer.cornerRadius = Constants.cornerRadius
+        self.backgroundColor = .backgroundCoustomColor
+        self.rightView = paddingView
+        self.rightViewMode = .always
+        self.keyboardType = keyboardType
     }
 }

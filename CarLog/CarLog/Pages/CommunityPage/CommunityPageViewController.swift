@@ -2,13 +2,13 @@ import SnapKit
 import UIKit
 
 class CommunityPageViewController: UIViewController {
-    private var items: [String] = [] // 커뮤니티 셀 배열
+    private var items: [Post] = [] // 커뮤니티 셀 배열
     
     private var banners: [String] = ["a", "b", "c"] // 배너 셀 배열
     
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
-    private let editFloatingButton: UIButton = {
+    private lazy var editFloatingButton: UIButton = {
         let floatingButton = UIButton()
         let editImage = UIImage(named: "edit")
         floatingButton.setImage(editImage, for: .normal)
@@ -48,12 +48,13 @@ class CommunityPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.backgroundCoustomColor
         
         communityColletionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
         communityColletionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
         
         setupUI()
+        loadPostFromFireStore()
         startBannerTimer()
     }
     
@@ -76,18 +77,6 @@ class CommunityPageViewController: UIViewController {
             make.right.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview()
         }
-        bannerCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(80) // 원하는 높이 설정
-        }
-        
-        communityColletionView.snp.makeConstraints { make in
-            // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.top.equalTo(bannerCollectionView.snp.bottom).offset(20)
-            make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
         
         editFloatingButton.snp.makeConstraints { make in
             make.width.height.equalTo(60)
@@ -101,6 +90,37 @@ class CommunityPageViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextBanner), userInfo: nil, repeats: true)
     }
     
+    private func loadPostFromFireStore() {
+            FirestoreService.firestoreService.loadPosts { posts in
+                if let posts = posts {
+                    for post in posts {
+                        if let id = post.id,
+                           let title = post.title,
+                           let content = post.content,
+                           let userEmail = post.userEmail,
+                           let timeStamp = post.timeStamp
+                        {
+                            let imageURLs = post.image.compactMap { $0 }
+                            let loadedPost = Post(
+                                id: id,
+                                title: title,
+                                content: content,
+                                image: imageURLs,
+                                userEmail: userEmail,
+                                timeStamp: timeStamp
+                            )
+                            self.items.append(loadedPost)
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.communityColletionView.reloadData()
+                    }
+                } else {
+                    print("데이터를 가져오는 중 오류 발생")
+                }
+            }
+        }
+    
     @objc private func scrollToNextBanner() {
         let currentOffset = bannerCollectionView.contentOffset.x
         let nextOffset = currentOffset + bannerCollectionView.frame.width
@@ -112,11 +132,7 @@ class CommunityPageViewController: UIViewController {
     }
 
     @objc func floatingButtonTapped() {
-//                items.append("New Item")
-//                print("새 항목 추가")
-//                communityColletionView.reloadData()
-//                📌네비게이션 화면 전환 기능
-        let editPage = AddCommunityPageViewController()
+           let editPage = AddCommunityPageViewController()
         navigationController?.pushViewController(editPage, animated: true)
     }
 }
@@ -136,16 +152,35 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == bannerCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
-            cell.configure(with: banners[indexPath.item])
-            return cell
-        } else if collectionView == communityColletionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
-            return cell
+            if collectionView == bannerCollectionView {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
+                cell.configure(with: banners[indexPath.item])
+
+                return cell
+            } else if collectionView == communityColletionView {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
+                let post = items[indexPath.item]
+                
+                FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
+                    cell.userName.text = nickName
+                    cell.titleLabel.text = post.title
+                    cell.mainTextLabel.text = post.content
+                    if let imageURL = post.image.first, let imageUrl = imageURL {
+                        // 이미지를 비동기적으로 가져오기
+                        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    cell.collectionViewImage.image = image
+                                }
+                            }
+                        }.resume()
+                    }
+                }
+                
+                return cell
+            }
+            return UICollectionViewCell()
         }
-        return UICollectionViewCell()
-    }
        
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCollectionView {
