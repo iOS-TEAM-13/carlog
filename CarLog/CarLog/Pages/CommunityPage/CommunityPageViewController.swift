@@ -25,7 +25,7 @@ class CommunityPageViewController: UIViewController {
         layout.itemSize = CGSize(width: 357, height: 321)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
