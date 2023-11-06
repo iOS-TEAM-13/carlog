@@ -30,7 +30,7 @@ class DrivingDetailView: UIView {
         return inputDrivingStackView
     }()
     
-    //MARK: - 운행 목적 영역 (추가)
+    //MARK: - 운행 목적 영역
     lazy var drivingPurposeStackView: UIStackView = {
         let drivingPurposeStackView = UIStackView(arrangedSubviews: [drivingPurposeLabel, drivingPurposeTextField])
         drivingPurposeStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -286,14 +286,14 @@ class DrivingDetailView: UIView {
     
     lazy var upDateButton: UIButton = {
         let upDateButton = UIButton()
-        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         upDateButton.layer.cornerRadius = Constants.cornerRadius
         return upDateButton
     }()
     
     lazy var removeButton: UIButton = {
         let removeButton = UIButton()
-        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         removeButton.layer.cornerRadius = Constants.cornerRadius
         return removeButton
     }()

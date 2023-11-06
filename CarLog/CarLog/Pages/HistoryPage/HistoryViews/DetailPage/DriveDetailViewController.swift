@@ -34,6 +34,10 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        //키보드 스크롤
+        registerForKeyboardNotifications()
+        
+        //detailDrivingView에 운행 목적 텍스트 필드 글자수 제한 설정 시
         drivingDetailView.drivingPurposeTextField.delegate = self
         
         navigationUI()
@@ -42,7 +46,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         buttonActions()
     }
     
-//MARK: - 주행기록 페이지 네비게이션바
+    //MARK: - 주행기록 페이지 네비게이션바
     func navigationUI() {
         navigationItem.title = "주행기록"
         
@@ -67,7 +71,43 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//MARK: - 운행 목적 텍스트 입력 수 제한
+    // MARK: - Keyboard 관련
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return
+        }
+        
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        drivingDetailView.scrollView.contentInset = contentInset
+        drivingDetailView.scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0)
+        drivingDetailView.scrollView.contentInset = contentInset
+        drivingDetailView.scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        drivingDetailView.endEditing(true)
+    }
+    
+    //MARK: - 운행 목적 텍스트 입력 수 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
@@ -75,7 +115,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         return updatedText.count <= maxLength
     }
     
-//MARK: - 주행기록 디테일페이지 데이터 로드 / 근데 셀 데이터도 넘기는데?
+    //MARK: - 주행기록 디테일페이지 데이터 로드
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { _ in
             if let drivings = self.drivingData {
@@ -89,7 +129,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//MARK: - 주행거리 자동 계산
+    //MARK: - 주행거리 자동 계산
     func autoCalculate() {
         func calculate() {
             let totalDistanceText = Int(drivingDetailView.totalDistanceTextField.text ?? "") ?? 0
@@ -109,6 +149,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         }), for: .editingChanged)
     }
     
+    //MARK: - 수정, 삭제 버튼 엑션
     func buttonActions() {
         drivingDetailView.upDateButton.addAction(UIAction(handler: { [self] _ in
             print("---> driveDetailView 수정 버튼 눌렀어요")
