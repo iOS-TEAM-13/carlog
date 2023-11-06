@@ -9,12 +9,16 @@ import UIKit
 import SnapKit
 
 class AddDrivingView: UIView, UITextFieldDelegate {
+//MARK: - 스크롤뷰 추가
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
     
-//MARK: - 주행 기록 페이지 제목
-    lazy var addDrivingPageLabel: UILabel = {
-        let addDrivingPageLabel = UILabel()
-        addDrivingPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        return addDrivingPageLabel
+    let contentView: UIView = {
+        let contentView = UIView()
+        return contentView
     }()
     
 //MARK: - 주행 기록 페이지 전체 스택뷰
@@ -49,7 +53,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
         ]
         
-        drivingPurposeTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 드라이브, 출퇴근", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
+        drivingPurposeTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 드라이브, 출퇴근", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .default)
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -304,20 +308,30 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         setupUI()
     }
     
+// MARK: - addDrivingView UI 설정
     private func setupUI() {
-        addSubview(addDrivingPageLabel)
-        addSubview(inputDrivingStackView)
-        addSubview(buttonStackView)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(inputDrivingStackView)
+        contentView.addSubview(buttonStackView)
         
-        addDrivingPageLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(20)
-            make.centerX.equalTo(safeAreaLayoutGuide)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.height.equalTo(scrollView)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
         
         inputDrivingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addDrivingPageLabel.snp.bottom).offset(Constants.horizontalMargin)
-            make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(contentView.snp.top).offset(Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         drivingPurposeStackView.snp.makeConstraints { make in

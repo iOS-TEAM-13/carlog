@@ -3,10 +3,12 @@ import UIKit
 import SnapKit
 
 class HistoryPageViewController: UIViewController {
-    var drivingDummy: [Driving] = []
     
+    //
+    var drivingDummy: [Driving] = []
     var fuelingDummy: [Fueling] = []
     
+    //
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
@@ -18,6 +20,11 @@ class HistoryPageViewController: UIViewController {
         return segmentedControl
     }()
     
+    @objc private func didChangeValue(segment: UISegmentedControl) {
+        shouldHideFirstView = segment.selectedSegmentIndex != 0
+    }
+    
+    //
     lazy var drivingCollectionView: DrivingView = {
         let drivingCollectionView = DrivingView()
         drivingCollectionView.drivingCollectionView.dataSource = self
@@ -27,6 +34,7 @@ class HistoryPageViewController: UIViewController {
         return drivingCollectionView
     }()
     
+    //
     lazy var fuelingCollectionView: FuelingView = {
         let fuelingCollectionView = FuelingView()
         fuelingCollectionView.fuelingCollectionView.dataSource = self
@@ -44,6 +52,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //
     lazy var floatingButtonStackView: FloatingButtonStackView = {
         let floatingButtonStackView = FloatingButtonStackView()
         floatingButtonStackView.navigationController = self.navigationController
@@ -72,11 +81,12 @@ class HistoryPageViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
     }
     
+    //
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // NotificationCenter newDriving 배열 맨 위에 저장하기
+    //newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
             loadDrivingData()
@@ -85,6 +95,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //newFueling 배열 맨 위에 저장하기
     @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
         if let newFueling = notification.object as? Fueling {
             loadFuelingData()
@@ -98,11 +109,8 @@ class HistoryPageViewController: UIViewController {
         loadDrivingData()
         loadFuelingData()
     }
-    
-    @objc private func didChangeValue(segment: UISegmentedControl) {
-        shouldHideFirstView = segment.selectedSegmentIndex != 0
-    }
-    
+
+// MARK: - HistoryPageView UI 설정
     func setupUI() {
         view.addSubview(segmentedControl)
         view.addSubview(drivingCollectionView)
@@ -136,6 +144,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+// MARK: - 히스토리페이지 플로팅퍼튼 클릭 이벤트
     func buttonActions() {
         floatingButtonStackView.floatingButton.addAction(UIAction(handler: { _ in
             self.isActive.toggle()
@@ -149,9 +158,29 @@ class HistoryPageViewController: UIViewController {
             self.isActive.toggle()
         }), for: .touchUpInside)
         
+        // 모달
+        //        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
+        //            self.navigationController?.present(AddDrivingViewController(), animated: true)
+        //            self.navigationController?.modalPresentationStyle = .fullScreen
+        //            self.segmentedControl.selectedSegmentIndex = 0
+        //            self.didChangeValue(segment: self.segmentedControl)
+        //            self.isActive.toggle()
+        //        }), for: .touchUpInside)
+        
+        // 옆으로
+        //        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
+        //            let addDrivingViewController = AddDrivingViewController()
+        //            self.navigationController?.pushViewController(addDrivingViewController, animated: true)
+        //            self.segmentedControl.selectedSegmentIndex = 0
+        //            self.didChangeValue(segment: self.segmentedControl)
+        //            self.isActive.toggle()
+        //        }), for: .touchUpInside)
+        
         floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
-            self.navigationController?.present(AddDrivingViewController(), animated: true)
-            self.navigationController?.modalPresentationStyle = .fullScreen
+            let addDrivingViewController = AddDrivingViewController()
+            let navigationController = UINavigationController(rootViewController: addDrivingViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
             self.segmentedControl.selectedSegmentIndex = 0
             self.didChangeValue(segment: self.segmentedControl)
             self.isActive.toggle()

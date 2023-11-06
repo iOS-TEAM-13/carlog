@@ -48,6 +48,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .foregroundColor: UIColor.black
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
@@ -65,7 +66,6 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
             navigationController.popViewController(animated: true)
         }
     }
-    
     
 //MARK: - 운행 목적 텍스트 입력 수 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
