@@ -8,19 +8,6 @@
 import UIKit
 
 class CommunityPageCollectionViewCell: UICollectionViewCell {
-    
-    private let userProfile: UIImageView = {
-        let imageView = UIImageView()
-        if let image = UIImage(named: "rocket") {
-            imageView.image = image
-        }
-        imageView.layer.cornerRadius = 16
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
     lazy var userName: UILabel = {
         let label = UILabel()
         label.text = "왕바우"
@@ -29,7 +16,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let spanerImage: UIImageView = {
+    lazy var spanerImage: UIImageView = {
         let imageView = UIImageView()
         if let image = UIImage(named: "spaner") {
             imageView.image = image
@@ -38,7 +25,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
        
     }()
     
-    private let commentImage: UIImageView = {
+    lazy var commentImage: UIImageView = {
         let imageView = UIImageView()
         if let image = UIImage(named: "comment") {
             imageView.image = image
@@ -46,7 +33,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let spanerCounts: UILabel = {
+    lazy var spanerCounts: UILabel = {
         let label = UILabel()
         label.text = "27"
         label.textColor = .black
@@ -54,7 +41,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let commentCounts: UILabel = {
+    lazy var commentCounts: UILabel = {
         let label = UILabel()
         label.text = "12"
         label.textColor = .black
@@ -88,80 +75,70 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var topStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userName, UIView(), iconStackView])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
+    private lazy var iconStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [spanerImage, spanerCounts, commentImage, commentCounts])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func  setupUI() {
-        contentView.addSubview(userProfile)
-        contentView.addSubview(userName)
-        contentView.addSubview(spanerImage)
-        contentView.addSubview(commentImage)
-        contentView.addSubview(spanerCounts)
-        contentView.addSubview(commentCounts)
+    private func setupUI() {
+        contentView.addSubview(topStackView)
         contentView.addSubview(collectionViewImage)
         contentView.addSubview(titleLabel)
         contentView.addSubview(mainTextLabel)
         contentView.backgroundColor = .buttonSkyBlueColor
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = Constants.cornerRadius
         contentView.layer.masksToBounds = true
-        
-        userProfile.snp.makeConstraints { make in
-            make.width.equalTo(32)
-            make.height.equalTo(32)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.topMargin.equalToSuperview().offset(14)
-        }
-        
-        userName.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(60)
-            make.topMargin.equalToSuperview().offset(23)
-        }
         
         spanerImage.snp.makeConstraints { make in
             make.width.height.equalTo(17)
-            make.leftMargin.equalToSuperview().offset(258)
-            make.topMargin.equalToSuperview().offset(19)
-        }
-        
-        spanerCounts.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(280)
-            make.topMargin.equalToSuperview().offset(21)
         }
         
         commentImage.snp.makeConstraints { make in
             make.width.height.equalTo(17)
-            make.leftMargin.equalToSuperview().offset(310)
-            make.topMargin.equalToSuperview().offset(19)
         }
         
-        commentCounts.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(332)
-            make.topMargin.equalToSuperview().offset(21)
+        topStackView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
-        
+
         collectionViewImage.snp.makeConstraints { make in
-            make.width.equalTo(329)
-            make.height.equalTo(168)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.topMargin.equalToSuperview().offset(57)
+            make.top.equalTo(topStackView.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+            make.height.equalTo(180)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(16)
-            make.topMargin.equalToSuperview().offset(236)
+            make.top.equalTo(collectionViewImage.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         mainTextLabel.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(16)
-            make.topMargin.equalToSuperview().offset(271)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
     }
-    
 }

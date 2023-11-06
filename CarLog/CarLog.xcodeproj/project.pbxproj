@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1301A9B52AE25EA8001962F4 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 1301A9B42AE25EA8001962F4 /* SwiftSMTP */; };
 		131528092AEF9113006121A4 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131528082AEF9113006121A4 /* UIWindow+.swift */; };
+		135B4C9B2AF8A0C0003152D5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135B4C9A2AF8A0C0003152D5 /* CommentTableViewCell.swift */; };
 		136128FA2AE42E1F00B99ACF /* CarMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128F92AE42E1F00B99ACF /* CarMakerView.swift */; };
 		136128FC2AE438FA00B99ACF /* JoinupPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */; };
 		139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */; };
@@ -112,6 +113,7 @@
 
 /* Begin PBXFileReference section */
 		131528082AEF9113006121A4 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
+		135B4C9A2AF8A0C0003152D5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		136128F92AE42E1F00B99ACF /* CarMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMakerView.swift; sourceTree = "<group>"; };
 		136128FB2AE438FA00B99ACF /* JoinupPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JoinupPageViewController+.swift"; sourceTree = "<group>"; };
 		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */,
 				3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */,
 				3BF32B342AF3B97B00007122 /* CommentViewController.swift */,
+				135B4C9A2AF8A0C0003152D5 /* CommentTableViewCell.swift */,
 			);
 			path = CommunityPage;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */,
 				3BA8B0F92AD955D9007C3F68 /* GasStationDetailView.swift in Sources */,
+				135B4C9B2AF8A0C0003152D5 /* CommentTableViewCell.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
 				FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */,
 				B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */,

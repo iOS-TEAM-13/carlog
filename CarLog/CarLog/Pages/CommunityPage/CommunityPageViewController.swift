@@ -16,6 +16,8 @@ class CommunityPageViewController: UIViewController {
         floatingButton.setImage(editImage, for: .normal)
         floatingButton.backgroundColor = .mainNavyColor
         floatingButton.layer.cornerRadius = 30
+        floatingButton.layer.shadowPath = UIBezierPath(roundedRect: floatingButton.bounds,
+                                                   cornerRadius: floatingButton.layer.cornerRadius).cgPath
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
         floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
@@ -24,7 +26,6 @@ class CommunityPageViewController: UIViewController {
     
     private lazy var communityColletionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 357, height: 321)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.backgroundColor = .white
@@ -59,7 +60,7 @@ class CommunityPageViewController: UIViewController {
         loadPostFromFireStore()
         startBannerTimer()
     }
-    
+  
     func setupUI() {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
@@ -67,35 +68,22 @@ class CommunityPageViewController: UIViewController {
 
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
-            make.height.equalTo(80) // 원하는 높이 설정
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.height.equalTo(100) // 원하는 높이 설정
         }
         
         communityColletionView.snp.makeConstraints { make in
-            // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.top.equalTo(bannerCollectionView.snp.bottom).offset(12)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview()
-        }
-        bannerCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(80) // 원하는 높이 설정
-        }
-        
-        communityColletionView.snp.makeConstraints { make in
-            // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.top.equalTo(bannerCollectionView.snp.bottom).offset(20)
-            make.left.right.equalToSuperview()
+            make.top.equalTo(bannerCollectionView.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalToSuperview()
         }
         
         editFloatingButton.snp.makeConstraints { make in
             make.width.height.equalTo(60)
-            make.rightMargin.equalToSuperview().offset(-17)
-            make.bottom.equalToSuperview().offset(-102)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.bottom.equalToSuperview().offset(-Constants.verticalMargin * 9)
         }
     }
 
@@ -176,7 +164,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             let post = items[indexPath.item]
             
             FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                cell.userName.text = nickName
+                //cell.userName.text = nickName
                 cell.titleLabel.text = post.title
                 cell.mainTextLabel.text = post.content
                 if let imageURL = post.image.first, let imageUrl = imageURL {
