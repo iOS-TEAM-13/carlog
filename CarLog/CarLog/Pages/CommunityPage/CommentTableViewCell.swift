@@ -9,7 +9,6 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
     
-    
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
