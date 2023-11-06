@@ -7,6 +7,7 @@ struct Constants {
     static let verticalMargin: CGFloat = 12.0
     static let cornerRadius: CGFloat = 5.0
 
+    static let fontJua8: CGFloat = 8
     static let fontJua10: CGFloat = 10
     static let fontJua14: CGFloat = 14
     static let fontJua16: CGFloat = 16

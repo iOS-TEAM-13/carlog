@@ -9,6 +9,14 @@ final class LoginView: UIView {
         return imageView
     }()
 
+    lazy var logoLabel: UILabel = {
+        let label = UILabel()
+        label.text = "CARLOG"
+        label.textColor = .mainNavyColor
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua40, weight: .black)
+        return label
+    }()
+
     lazy var emailTextField = loginTextField(placeholder: "이메일")
     lazy var passwordTextField = loginTextField(placeholder: "비밀번호")
 
@@ -17,26 +25,33 @@ final class LoginView: UIView {
     lazy var spaceView = UIView()
     lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
     lazy var signupStackView = loginStackView(list: [joinupButton, spaceView, findIdPassword], spacing: 0, alignment: .fill)
-                                                     
+
     lazy var leftDivider = divider()
 
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
 
-        addSubview(logo)
+        // addSubview(logo)
+        addSubview(logoLabel)
         addSubview(emailTextField)
         addSubview(passwordTextField)
         addSubview(loginButton)
         addSubview(signupStackView)
 
-        logo.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
-            make.leading.equalTo(safeArea.snp.leading).offset(85)
-            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+//        logo.snp.makeConstraints { make in
+//            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
+//            make.leading.equalTo(safeArea.snp.leading).offset(85)
+//            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
+//        }
+
+        logoLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin * 12)
+            make.centerX.equalToSuperview()
         }
 
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(logo.snp.bottom).offset(Constants.verticalMargin)
+            //make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin * 10)
+             make.top.equalTo(logoLabel.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
