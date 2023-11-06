@@ -42,7 +42,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         buttonActions()
     }
     
-    //MARK: - 주행기록 페이지 네비게이션바
+//MARK: - 주행기록 페이지 네비게이션바
     func navigationUI() {
         navigationItem.title = "주행기록"
         
@@ -55,9 +55,6 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
     
     lazy var backButton: UIBarButtonItem = {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goToHistoryPage))
-//        let backButton = UIBarButtonItem()
-//        backButton.image = UIImage(systemName: "chevron.backward")
-//        backButton.style = .plain
         backButton.tintColor = .mainNavyColor
         return backButton
     }()

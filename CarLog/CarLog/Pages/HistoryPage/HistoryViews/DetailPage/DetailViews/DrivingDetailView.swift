@@ -10,13 +10,6 @@ import SnapKit
 
 class DrivingDetailView: UIView {
     
-//MARK: - 주행 기록 페이지 제목
-    lazy var drivingDetailPageLabel: UILabel = {
-        let drivingDetailPageLabel = UILabel()
-        drivingDetailPageLabel.customLabel(text: "주행 기록", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        return drivingDetailPageLabel
-    }()
-    
 //MARK: - 주행 기록 페이지 전체 스택뷰
     lazy var inputDrivingStackView: UIStackView = {
         let inputDrivingStackView = UIStackView(arrangedSubviews: [drivingPurposeStackView, totalDistanceStackView, arriveDistanceStackView, driveDistenceStackView])
@@ -305,17 +298,11 @@ class DrivingDetailView: UIView {
         }
         
         private func setupUI() {
-            addSubview(drivingDetailPageLabel)
             addSubview(inputDrivingStackView)
             addSubview(buttonStackView)
             
-            drivingDetailPageLabel.snp.makeConstraints { make in
-                make.top.equalTo(safeAreaLayoutGuide).offset(20)
-                make.centerX.equalTo(safeAreaLayoutGuide)
-            }
-            
             inputDrivingStackView.snp.makeConstraints { make in
-                make.top.equalTo(drivingDetailPageLabel.snp.bottom).offset(Constants.horizontalMargin)
+                make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(Constants.horizontalMargin)
                 make.leading.equalTo(safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
                 make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
             }
