@@ -1,10 +1,3 @@
-//
-//  DetailBottomTableViewCell.swift
-//  CarLog
-//
-//  Created by 김은경 on 11/6/23.
-//
-
 import UIKit
 
 import SnapKit

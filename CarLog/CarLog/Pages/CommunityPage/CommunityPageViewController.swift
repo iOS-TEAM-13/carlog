@@ -2,8 +2,6 @@ import SnapKit
 import UIKit
 
 class CommunityPageViewController: UIViewController {
-    let communityCell = CommunityPageCollectionViewCell()
-    
     private var items: [Post] = [] // 커뮤니티 셀 배열
     
     private var banners: [String] = ["a", "b", "c"] // 배너 셀 배열
@@ -16,8 +14,6 @@ class CommunityPageViewController: UIViewController {
         floatingButton.setImage(editImage, for: .normal)
         floatingButton.backgroundColor = .mainNavyColor
         floatingButton.layer.cornerRadius = 30
-        floatingButton.layer.shadowPath = UIBezierPath(roundedRect: floatingButton.bounds,
-                                                   cornerRadius: floatingButton.layer.cornerRadius).cgPath
         floatingButton.layer.shadowRadius = 10
         floatingButton.layer.shadowOpacity = 0.3
         floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
@@ -26,6 +22,7 @@ class CommunityPageViewController: UIViewController {
     
     private lazy var communityColletionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 357, height: 321)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.backgroundColor = .white
@@ -51,7 +48,7 @@ class CommunityPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.backgroundCoustomColor
         
         communityColletionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
         communityColletionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
@@ -60,30 +57,31 @@ class CommunityPageViewController: UIViewController {
         loadPostFromFireStore()
         startBannerTimer()
     }
-  
+    
     func setupUI() {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
         view.addSubview(bannerCollectionView)
-
+        
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.height.equalTo(100) // 원하는 높이 설정
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.height.equalTo(80) // 원하는 높이 설정
         }
         
         communityColletionView.snp.makeConstraints { make in
-            make.top.equalTo(bannerCollectionView.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(bannerCollectionView.snp.bottom).offset(12)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview()
         }
         
         editFloatingButton.snp.makeConstraints { make in
             make.width.height.equalTo(60)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottom.equalToSuperview().offset(-Constants.verticalMargin * 9)
+            make.rightMargin.equalToSuperview().offset(-17)
+            make.bottom.equalToSuperview().offset(-102)
         }
     }
 
@@ -93,35 +91,35 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
-        FirestoreService.firestoreService.loadPosts { posts in
-            if let posts = posts {
-                for post in posts {
-                    if let id = post.id,
-                       let title = post.title,
-                       let content = post.content,
-                       let userEmail = post.userEmail,
-                       let timeStamp = post.timeStamp
-                    {
-                        let imageURLs = post.image.compactMap { $0 }
-                        let loadedPost = Post(
-                            id: id,
-                            title: title,
-                            content: content,
-                            image: imageURLs,
-                            userEmail: userEmail,
-                            timeStamp: timeStamp
-                        )
-                        self.items.append(loadedPost)
+            FirestoreService.firestoreService.loadPosts { posts in
+                if let posts = posts {
+                    for post in posts {
+                        if let id = post.id,
+                           let title = post.title,
+                           let content = post.content,
+                           let userEmail = post.userEmail,
+                           let timeStamp = post.timeStamp
+                        {
+                            let imageURLs = post.image.compactMap { $0 }
+                            let loadedPost = Post(
+                                id: id,
+                                title: title,
+                                content: content,
+                                image: imageURLs,
+                                userEmail: userEmail,
+                                timeStamp: timeStamp
+                            )
+                            self.items.append(loadedPost)
+                        }
                     }
+                    DispatchQueue.main.async {
+                        self.communityColletionView.reloadData()
+                    }
+                } else {
+                    print("데이터를 가져오는 중 오류 발생")
                 }
-                DispatchQueue.main.async {
-                    self.communityColletionView.reloadData()
-                }
-            } else {
-                print("데이터를 가져오는 중 오류 발생")
             }
         }
-    }
     
     @objc private func scrollToNextBanner() {
         let currentOffset = bannerCollectionView.contentOffset.x
@@ -134,7 +132,7 @@ class CommunityPageViewController: UIViewController {
     }
 
     @objc func floatingButtonTapped() {
-        let editPage = AddCommunityPageViewController()
+           let editPage = AddCommunityPageViewController()
         navigationController?.pushViewController(editPage, animated: true)
     }
 }
@@ -154,37 +152,37 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == bannerCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
-            cell.configure(with: banners[indexPath.item])
+            if collectionView == bannerCollectionView {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
+                cell.configure(with: banners[indexPath.item])
 
-            return cell
-        } else if collectionView == communityColletionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
-            let post = items[indexPath.item]
-            
-            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                //cell.userName.text = nickName
-                cell.titleLabel.text = post.title
-                cell.mainTextLabel.text = post.content
-                if let imageURL = post.image.first, let imageUrl = imageURL {
-                    // 이미지를 비동기적으로 가져오기
-                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                        if let data = data, let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                cell.collectionViewImage.image = image
+                return cell
+            } else if collectionView == communityColletionView {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
+                let post = items[indexPath.item]
+                
+                FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
+                    cell.userName.text = nickName
+                    cell.titleLabel.text = post.title
+                    cell.mainTextLabel.text = post.content
+                    if let imageURL = post.image.first, let imageUrl = imageURL {
+                        // 이미지를 비동기적으로 가져오기
+                        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    cell.collectionViewImage.image = image
+                                }
                             }
-                        }
-                    }.resume()
+                        }.resume()
+                    }
                 }
+                
+                return cell
             }
-            
-            return cell
+            return UICollectionViewCell()
         }
-        return UICollectionViewCell()
-    }
        
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCollectionView {
             return CGSize(width: collectionView.frame.width, height: 80)
         } else if collectionView == communityColletionView {

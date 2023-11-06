@@ -16,6 +16,7 @@ class DetailMiddleTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.layer.borderColor = UIColor.red.cgColor
         collectionView.layer.borderWidth = 2.0
+        collectionView.isPagingEnabled = true
         collectionView.register(CommunityDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DetailMiddleCollectionViewCell")
         return collectionView
     }()
