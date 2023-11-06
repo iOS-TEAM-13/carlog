@@ -7,18 +7,18 @@ extension String {
         let passwordValidation = NSPredicate(format: "SELF MATCHES %@", regularExpression)
         return passwordValidation.evaluate(with: self)
     }
-
+    
     // @와2글자 이상 확인 1@naver.com
     func isValidEmail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.(com|co\\.kr|net)"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: self)
     }
-
+    
     func width(of font: UIFont) -> CGFloat {
         return (self as NSString).size(withAttributes: [.font: font]).width
     }
-
+    
     func toDate() -> Date? { // "yyyy-MM-dd HH:mm:ss"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
@@ -29,7 +29,7 @@ extension String {
             return nil
         }
     }
-
+    
     func toSaveDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.MM.dd"
@@ -40,7 +40,7 @@ extension String {
             return nil
         }
     }
-
+    
     func intervalToDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -51,7 +51,7 @@ extension String {
             return nil
         }
     }
-
+    
     func isValidateCarNumber(_ carNumber: String) -> Bool {
         // 최소 7자리 길이 검사
         if carNumber.count < 7 {
@@ -60,16 +60,24 @@ extension String {
         }
         return true
     }
-
+    
     func isValidKoreanString(_ input: String) -> Bool {
         let koreanPattern = "^[가-힣]*$" // 정규표현식 패턴: 가부터 힣까지의 문자로만 이루어져야 함
         let regex = try! NSRegularExpression(pattern: koreanPattern)
         let range = NSRange(location: 0, length: input.utf16.count)
-
+        
         if regex.firstMatch(in: input, options: [], range: range) != nil {
             return true // 유효한 한글 문자열
         } else {
             return false // 유효하지 않은 문자열
         }
     }
+
+    static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateStyle = .long
+        f.timeStyle = .short
+        f.locale = Locale(identifier: "ko_KR")
+        return f
+    }()
 }

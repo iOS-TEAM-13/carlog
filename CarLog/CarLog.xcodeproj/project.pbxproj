@@ -14,6 +14,9 @@
 		139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */; };
 		139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */; };
 		139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */; };
+		13A8D8B82AF8EF9300496DCA /* DetailTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8B72AF8EF9300496DCA /* DetailTopTableViewCell.swift */; };
+		13A8D8BA2AF8EFD200496DCA /* DetailMiddleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8B92AF8EFD200496DCA /* DetailMiddleTableViewCell.swift */; };
+		13A8D8BC2AF8F02100496DCA /* DetailBottomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8BB2AF8F02100496DCA /* DetailBottomTableViewCell.swift */; };
 		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
@@ -82,6 +85,9 @@
 		FF126E1D2AD8D5B800B2A109 /* CheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */; };
 		FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */; };
 		FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF126E212ADAE67E00B2A109 /* FirebaseService.swift */; };
+		FF23E3412AF3EF9900626B63 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */; };
+		FF23E3432AF3F0DC00626B63 /* CustomMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */; };
+		FF23E3452AF3F72800626B63 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */; };
 		FF2648762AEBA36A009CD1D7 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2648752AEBA36A009CD1D7 /* UICollectionViewCell+.swift */; };
 		FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */; };
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
@@ -116,6 +122,9 @@
 		139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinupPageHelperController.swift; sourceTree = "<group>"; };
 		139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPassWordViewController.swift; sourceTree = "<group>"; };
 		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
+		13A8D8B72AF8EF9300496DCA /* DetailTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTopTableViewCell.swift; sourceTree = "<group>"; };
+		13A8D8B92AF8EFD200496DCA /* DetailMiddleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMiddleTableViewCell.swift; sourceTree = "<group>"; };
+		13A8D8BB2AF8F02100496DCA /* DetailBottomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBottomTableViewCell.swift; sourceTree = "<group>"; };
 		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -192,6 +201,9 @@
 		FF126E1C2AD8D5B800B2A109 /* CheckingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingView.swift; sourceTree = "<group>"; };
 		FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceView.swift; sourceTree = "<group>"; };
 		FF126E212ADAE67E00B2A109 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMapView.swift; sourceTree = "<group>"; };
+		FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		FF2648752AEBA36A009CD1D7 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailPageViewController.swift; sourceTree = "<group>"; };
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -466,7 +478,8 @@
 			isa = PBXGroup;
 			children = (
 				FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */,
-				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
+				FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */,
+				FF23E3462AF3F87A00626B63 /* View */,
 			);
 			path = MapPage;
 			sourceTree = "<group>";
@@ -484,6 +497,9 @@
 				3BF32B3B2AF8F22F00007122 /* DetailTopTableViewCell.swift */,
 				3BF32B3D2AF8F26000007122 /* DetailMiddleTableViewCell.swift */,
 				3BF32B3F2AF8F27B00007122 /* DetailBottomTableViewCell.swift */,
+				13A8D8B72AF8EF9300496DCA /* DetailTopTableViewCell.swift */,
+				13A8D8B92AF8EFD200496DCA /* DetailMiddleTableViewCell.swift */,
+				13A8D8BB2AF8F02100496DCA /* DetailBottomTableViewCell.swift */,
 			);
 			path = CommunityPage;
 			sourceTree = "<group>";
@@ -537,6 +553,16 @@
 				13EE4E372AF376B0000723B5 /* StorageService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		FF23E3462AF3F87A00626B63 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */,
+				FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */,
+				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FFD5F74E2ADFBEBE00A06771 /* DetailPage */ = {
@@ -694,6 +720,7 @@
 				FF0287E92AD7C9A4006657C1 /* ComponentsView.swift in Sources */,
 				B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */,
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
+				FF23E3432AF3F0DC00626B63 /* CustomMapView.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
@@ -731,6 +758,7 @@
 				3BF32B402AF8F27C00007122 /* DetailBottomTableViewCell.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
+				FF23E3452AF3F72800626B63 /* CustomAnnotationView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */,
 				139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */,
@@ -739,13 +767,16 @@
 				FBC7128E2AD6C89A006C2BB0 /* LoginPageViewController.swift in Sources */,
 				131528092AEF9113006121A4 /* UIWindow+.swift in Sources */,
 				FF6AF59C2ADDA55D0067960E /* PageViewController.swift in Sources */,
+				13A8D8BC2AF8F02100496DCA /* DetailBottomTableViewCell.swift in Sources */,
 				FB748B3C2AD5723500CC6A1F /* MapPageViewController.swift in Sources */,
 				FBE051862AD6671200F39E7F /* UIButton+.swift in Sources */,
+				FF23E3412AF3EF9900626B63 /* CustomAnnotation.swift in Sources */,
 				FFB0CC4E2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift in Sources */,
 				FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
+				13A8D8BA2AF8EFD200496DCA /* DetailMiddleTableViewCell.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
@@ -773,6 +804,7 @@
 				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
 				FF2648762AEBA36A009CD1D7 /* UICollectionViewCell+.swift in Sources */,
 				3BF21A502AEF830D0063822A /* EditPageViewController.swift in Sources */,
+				13A8D8B82AF8EF9300496DCA /* DetailTopTableViewCell.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
 				3BF32B2F2AF0AE7200007122 /* BannerCollectionViewCell.swift in Sources */,
 				B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */,
