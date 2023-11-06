@@ -3,30 +3,38 @@ import UIKit
 import SnapKit
 
 class HistoryPageViewController: UIViewController {
-    var drivingDummy: [Driving] = []
     
+    //
+    var drivingDummy: [Driving] = []
     var fuelingDummy: [Fueling] = []
     
+    //
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentTintColor = .mainNavyColor
         
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
     
+    @objc private func didChangeValue(segment: UISegmentedControl) {
+        shouldHideFirstView = segment.selectedSegmentIndex != 0
+    }
+    
+    //
     lazy var drivingCollectionView: DrivingView = {
         let drivingCollectionView = DrivingView()
         drivingCollectionView.drivingCollectionView.dataSource = self
         drivingCollectionView.drivingCollectionView.delegate = self
         drivingCollectionView.drivingCollectionView.register(DrivingCollectionViewCell.self, forCellWithReuseIdentifier: DrivingCollectionViewCell.identifier)
-        drivingCollectionView.drivingCollectionView.backgroundColor = .white
+        drivingCollectionView.drivingCollectionView.backgroundColor = .backgroundCoustomColor
         return drivingCollectionView
     }()
     
+    //
     lazy var fuelingCollectionView: FuelingView = {
         let fuelingCollectionView = FuelingView()
         fuelingCollectionView.fuelingCollectionView.dataSource = self
@@ -44,6 +52,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //
     lazy var floatingButtonStackView: FloatingButtonStackView = {
         let floatingButtonStackView = FloatingButtonStackView()
         floatingButtonStackView.navigationController = self.navigationController
@@ -54,7 +63,7 @@ class HistoryPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .backgroundCoustomColor
         
         setupUI()
         didChangeValue(segment: segmentedControl)
@@ -72,11 +81,12 @@ class HistoryPageViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
     }
     
+    //
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // NotificationCenter newDriving 배열 맨 위에 저장하기
+    //newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
             loadDrivingData()
@@ -85,6 +95,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //newFueling 배열 맨 위에 저장하기
     @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
         if let newFueling = notification.object as? Fueling {
             loadFuelingData()
@@ -98,11 +109,8 @@ class HistoryPageViewController: UIViewController {
         loadDrivingData()
         loadFuelingData()
     }
-    
-    @objc private func didChangeValue(segment: UISegmentedControl) {
-        shouldHideFirstView = segment.selectedSegmentIndex != 0
-    }
-    
+
+// MARK: - HistoryPageView UI 설정
     func setupUI() {
         view.addSubview(segmentedControl)
         view.addSubview(drivingCollectionView)
@@ -111,31 +119,32 @@ class HistoryPageViewController: UIViewController {
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin * 4)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 4)
             make.height.equalTo(60)
         }
         
         drivingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         fuelingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         floatingButtonStackView.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }
     }
     
+// MARK: - 히스토리페이지 플로팅퍼튼 클릭 이벤트
     func buttonActions() {
         floatingButtonStackView.floatingButton.addAction(UIAction(handler: { _ in
             self.isActive.toggle()
@@ -149,9 +158,29 @@ class HistoryPageViewController: UIViewController {
             self.isActive.toggle()
         }), for: .touchUpInside)
         
+        // 모달
+        //        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
+        //            self.navigationController?.present(AddDrivingViewController(), animated: true)
+        //            self.navigationController?.modalPresentationStyle = .fullScreen
+        //            self.segmentedControl.selectedSegmentIndex = 0
+        //            self.didChangeValue(segment: self.segmentedControl)
+        //            self.isActive.toggle()
+        //        }), for: .touchUpInside)
+        
+        // 옆으로
+        //        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
+        //            let addDrivingViewController = AddDrivingViewController()
+        //            self.navigationController?.pushViewController(addDrivingViewController, animated: true)
+        //            self.segmentedControl.selectedSegmentIndex = 0
+        //            self.didChangeValue(segment: self.segmentedControl)
+        //            self.isActive.toggle()
+        //        }), for: .touchUpInside)
+        
         floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
-            self.navigationController?.present(AddDrivingViewController(), animated: true)
-            self.navigationController?.modalPresentationStyle = .fullScreen
+            let addDrivingViewController = AddDrivingViewController()
+            let navigationController = UINavigationController(rootViewController: addDrivingViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
             self.segmentedControl.selectedSegmentIndex = 0
             self.didChangeValue(segment: self.segmentedControl)
             self.isActive.toggle()
@@ -269,12 +298,11 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == drivingCollectionView.drivingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.backgroundColor = .buttonSkyBlueColor
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.darkGray.cgColor
-            cell.layer.cornerRadius = Constants.cornerRadius * 4
+            cell.backgroundColor = .white
+            cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
+            cell.drivingPurposeLabel.text = drivingDummy[indexPath.row].drivingPurpose ?? ""
             cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0)km")
             cell.arriveTotalDistenceLabel.text = String("\(drivingDummy[indexPath.row].arriveDistance ?? 0)km")
             

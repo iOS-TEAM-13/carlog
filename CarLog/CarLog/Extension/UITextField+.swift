@@ -56,4 +56,19 @@ extension UITextField {
         self.rightView = paddingView
         self.rightViewMode = .always
     }
+    
+    //새롭게 커스텀한 히스토리페이지 텍스트필드
+    func historyNewCustomTextField(placeholder: NSAttributedString, font: UIFont, textColor: UIColor, alignment: NSTextAlignment, paddingView: UIView, keyboardType: UIKeyboardType) {
+        self.attributedPlaceholder = placeholder
+        self.font = font
+        self.sizeToFit()
+        self.textAlignment = alignment
+        self.textColor = textColor
+        self.heightAnchor.constraint(equalToConstant: font.lineHeight + Constants.horizontalMargin * 2).isActive = true
+        self.layer.cornerRadius = Constants.cornerRadius
+        self.backgroundColor = .backgroundCoustomColor
+        self.rightView = paddingView
+        self.rightViewMode = .always
+        self.keyboardType = keyboardType
+    }
 }
