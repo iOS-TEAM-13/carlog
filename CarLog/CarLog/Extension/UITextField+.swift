@@ -29,7 +29,6 @@ extension UITextField {
     
     func mypageCustomTextField(placeholder: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment) {
         self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
-        self.backgroundColor = .white
         let border = CALayer()
         let width = CGFloat(1)
         border.borderColor = UIColor.systemGray.cgColor
