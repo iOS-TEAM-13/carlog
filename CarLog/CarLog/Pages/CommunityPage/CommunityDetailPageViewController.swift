@@ -13,25 +13,6 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
     var selectedPost: Post?
     let currentDate = Date()
     var commentData: [String] = []
-    
-//    var currentUser: User?
-//    var currentPost: Post?
-//    struct Post {
-//        var userEmail: String
-//        // 다른 Post 데이터 멤버들...
-//    }
-//
-//    struct User {
-//        var email: String
-//        // 다른 User 데이터 멤버들...
-//    }
-//
-//    // 현재 사용자를 나타내는 예시입니다.
-//    let currentUser = User(email: "eskw0701@naver.com")
-//    // 예시 포스트 데이터입니다.
-//    let post = Post(userEmail: "eskw0701@naver.com")
-    
-    let imageName: [URL] = []
     // 좋아요 버튼 설정
     private var isLiked = false {
         didSet {
@@ -87,6 +68,13 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
+    }()
+    
+    lazy var subTitleStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, UIView(), dateLabel])
+        stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .center)
+        
+        return stackView
     }()
     
     private lazy var photoCollectionView: UICollectionView = {
@@ -264,8 +252,8 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         view.addSubview(containerView)
         communityDetailPageScrollView.addSubview(communityDetailPageContentView)
         communityDetailPageContentView.addSubview(titleLabel)
-        communityDetailPageContentView.addSubview(userNameLabel)
-        communityDetailPageContentView.addSubview(dateLabel)
+        //communityDetailPageContentView.addSubview(userNameLabel)
+        communityDetailPageContentView.addSubview(subTitleStackView)
         communityDetailPageContentView.addSubview(photoCollectionView)
         communityDetailPageContentView.addSubview(likeButton)
         communityDetailPageContentView.addSubview(likeCount)
@@ -291,28 +279,24 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         
         titleLabel.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(12)
-            make.leftMargin.rightMargin.equalToSuperview().offset(16)
+            make.leftMargin.rightMargin.equalToSuperview().offset(Constants.horizontalMargin)
         }
         
-        userNameLabel.snp.makeConstraints { make in
+        subTitleStackView.snp.makeConstraints { make in
             make.topMargin.equalTo(titleLabel.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
-        }
-        
-        dateLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(titleLabel.snp.bottom).offset(12)
-            make.rightMargin.equalToSuperview().offset(-16)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
         }
         
         photoCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(12)
+            make.top.equalTo(subTitleStackView.snp.bottom).offset(12)
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 361, height: 346))
         }
         
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(photoCollectionView.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
@@ -325,20 +309,20 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         mainText.snp.makeConstraints { make in
             make.width.equalTo(361)
             make.top.equalTo(likeButton.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
         }
         
         line.snp.makeConstraints { make in
             make.top.equalTo(mainText.snp.bottom).offset(20)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.rightMargin.equalToSuperview().offset(-16)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(1)
         }
 
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(line.snp.bottom).offset(20)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.rightMargin.equalToSuperview().offset(-16)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
             make.bottomMargin.equalToSuperview().offset(-12)
         }
         // 댓글 레이아웃
@@ -350,14 +334,14 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         
         commentTextView.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.bottomMargin.equalToSuperview().offset(-12)
         }
         
         button.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(12)
-            make.left.equalTo(commentTextView.snp.right).offset(16)
-            make.rightMargin.equalToSuperview().offset(-16)
+            make.left.equalTo(commentTextView.snp.right).offset(Constants.horizontalMargin)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
             make.bottomMargin.equalToSuperview().offset(-12)
         }
     }
@@ -433,11 +417,8 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityDetailCell", for: indexPath) as! CommunityDetailCollectionViewCell
-
-        // selectedPost가 nil이거나 imageURLs 배열이 비어 있는 경우
+        
         guard let selectedPost = selectedPost, indexPath.item < selectedPost.image.count else {
-            // 이 부분에서 처리하고자 하는 로직을 추가하세요.
-            // 예를 들어, 빈 이미지를 표시하거나 다른 대체 이미지를 사용할 수 있습니다.
             cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
             return cell
         }
