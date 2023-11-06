@@ -76,7 +76,7 @@ class NetworkService {
                     switch response.result {
                     case .success(let data):
                         if let data = data.result.oil.first {
-                            result.append(CustomGasStation(name: data.osNm, id: data.uniID, address: data.newAdr, carWashYn: data.carWashYn, cvsYn: data.cvsYn, gisXCoor: data.gisXCoor, gisYCoor: data.gisYCoor, oilPrice: data.oilPrice))
+                            result.append(CustomGasStation(name: data.osNm, id: data.uniID, tel: data.tel, address: data.newAdr, carWashYn: data.carWashYn, cvsYn: data.cvsYn, gisXCoor: data.gisXCoor, gisYCoor: data.gisYCoor, oilPrice: data.oilPrice))
                         }
                     case .failure(let error):
                         print(error)

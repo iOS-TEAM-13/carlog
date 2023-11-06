@@ -469,6 +469,7 @@
 			children = (
 				FB748B3B2AD5723500CC6A1F /* MapPageViewController.swift */,
 				FF23E3402AF3EF9900626B63 /* CustomAnnotation.swift */,
+				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
 				FF23E3462AF3F87A00626B63 /* View */,
 			);
 			path = MapPage;
@@ -545,7 +546,6 @@
 			children = (
 				FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */,
 				FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */,
-				3BA8B0F82AD955D9007C3F68 /* GasStationDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

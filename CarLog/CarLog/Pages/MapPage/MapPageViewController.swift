@@ -47,13 +47,6 @@ class MapPageViewController: UIViewController {
         return button
     }()
     
-    private lazy var mapDetailView: GasStationDetailView = {
-        let view = GasStationDetailView()
-        view.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.view.bounds.width, height: 250)
-        view.clipsToBounds = true
-        return view
-    }()
-    
     // MARK: LifeCycle
     override func loadView() {
         view = mapView
@@ -73,6 +66,8 @@ class MapPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.barTintColor = .white
         getLoaction()
     }
     
@@ -81,26 +76,25 @@ class MapPageViewController: UIViewController {
         view.addSubview(myLocationButton)
         view.addSubview(zoomInButton)
         view.addSubview(zoomOutButton)
-        view.addSubview(mapDetailView)
         
         mapView.map.showsCompass = true
         mapView.map.showsScale = true
         mapView.map.showsUserLocation = true
         mapView.map.setUserTrackingMode(.followWithHeading, animated: true)
         
-        myLocationButton.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(10)
-            make.bottomMargin.equalToSuperview().offset(-40)
+        myLocationButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
         }
         
-        zoomOutButton.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(10)
-            make.bottomMargin.equalToSuperview().offset(-94)
+        zoomOutButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.bottom.equalTo(myLocationButton.snp.top).inset(-10)
         }
         
-        zoomInButton.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(10)
-            make.bottomMargin.equalToSuperview().offset(-148)
+        zoomInButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.bottom.equalTo(zoomOutButton.snp.top).inset(-10)
         }
     }
     
@@ -156,7 +150,6 @@ class MapPageViewController: UIViewController {
     }
     
     private func getLoaction() {
-        removeAnnotation()
         setupLocationManager()
     }
     
@@ -236,7 +229,16 @@ extension MapPageViewController: MKMapViewDelegate {
     
     // 어노테이션 클릭 시 관련 코드
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
+        var data: CustomGasStation?
+        stationDetailList.forEach { station in
+            if station.name == mapView.selectedAnnotations.first?.title {
+                data = station
+            }
+        }
+        if let data = data {
+            let vc = GasStationDetailViewController(data: data)
+            present(vc, animated: true)
+        }
     }
 }
 
