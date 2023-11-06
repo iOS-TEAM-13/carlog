@@ -26,7 +26,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
     
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
-        view.trackTintColor = .white
+        view.trackTintColor = .buttonSkyBlueColor
         view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
@@ -67,9 +67,7 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(interval)
         
         contentView.layer.cornerRadius = Constants.cornerRadius * 4
-        contentView.backgroundColor = .buttonSkyBlueColor
-        contentView.layer.borderWidth = 2
-        contentView.layer.borderColor = UIColor.darkGray.cgColor
+        contentView.backgroundColor = .white
         
         contentView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)

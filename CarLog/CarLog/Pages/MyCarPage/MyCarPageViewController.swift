@@ -17,12 +17,18 @@ class MyCarPageViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
         view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
         view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
         return view
+    }()
+    
+    let backButton: UIBarButtonItem = {
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: nil, action: nil)
+        backButton.tintColor = .mainNavyColor
+        return backButton
     }()
     
     private var carParts = Constants.carParts
@@ -39,13 +45,18 @@ class MyCarPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
-        navigationController?.navigationBar.barTintColor = .white
+        view.backgroundColor = .backgroundCoustomColor
+        
+        navigationController?.navigationBar.backIndicatorImage = UIImage()
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
+        navigationItem.backBarButtonItem = backButton
+        
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         tabBarController?.tabBar.isHidden = false
         loadData()
         NotificationService.service.setAuthorization()
