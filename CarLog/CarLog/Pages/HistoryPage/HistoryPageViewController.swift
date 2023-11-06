@@ -81,27 +81,32 @@ class HistoryPageViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
     }
     
-    //
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     //newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
-            loadDrivingData()
-            drivingDummy.insert(newDriving, at: 0)
-            drivingCollectionView.drivingCollectionView.reloadData()
+            //중복이 아니면 로드하고 저장하고 리로드하기
+            if !drivingDummy.contains(where: { $0.id == newDriving.id }) {
+                loadDrivingData()
+                drivingDummy.insert(newDriving, at: 0)
+                drivingCollectionView.drivingCollectionView.reloadData()
+            }
+        }
+    }
+
+    @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
+        if let newFueling = notification.object as? Fueling {
+            //중복이 아니면 로드하고 저장하고 리로드하기
+            if !fuelingDummy.contains(where: { $0.id == newFueling.id }) {
+                loadFuelingData()
+                fuelingDummy.insert(newFueling, at: 0)
+                fuelingCollectionView.fuelingCollectionView.reloadData()
+            }
         }
     }
     
-    //newFueling 배열 맨 위에 저장하기
-    @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
-        if let newFueling = notification.object as? Fueling {
-            loadFuelingData()
-            fuelingDummy.insert(newFueling, at: 0)
-            fuelingCollectionView.fuelingCollectionView.reloadData()
-        }
+    //
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,7 +115,7 @@ class HistoryPageViewController: UIViewController {
         loadFuelingData()
     }
 
-// MARK: - HistoryPageView UI 설정
+    // MARK: - HistoryPageView UI 설정
     func setupUI() {
         view.addSubview(segmentedControl)
         view.addSubview(drivingCollectionView)
@@ -144,7 +149,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
-// MARK: - 히스토리페이지 플로팅퍼튼 클릭 이벤트
+    // MARK: - 히스토리페이지 플로팅퍼튼 클릭 이벤트
     func buttonActions() {
         floatingButtonStackView.floatingButton.addAction(UIAction(handler: { _ in
             self.isActive.toggle()
@@ -157,24 +162,6 @@ class HistoryPageViewController: UIViewController {
             self.didChangeValue(segment: self.segmentedControl)
             self.isActive.toggle()
         }), for: .touchUpInside)
-        
-        // 모달
-        //        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
-        //            self.navigationController?.present(AddDrivingViewController(), animated: true)
-        //            self.navigationController?.modalPresentationStyle = .fullScreen
-        //            self.segmentedControl.selectedSegmentIndex = 0
-        //            self.didChangeValue(segment: self.segmentedControl)
-        //            self.isActive.toggle()
-        //        }), for: .touchUpInside)
-        
-        // 옆으로
-        //        floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
-        //            let addDrivingViewController = AddDrivingViewController()
-        //            self.navigationController?.pushViewController(addDrivingViewController, animated: true)
-        //            self.segmentedControl.selectedSegmentIndex = 0
-        //            self.didChangeValue(segment: self.segmentedControl)
-        //            self.isActive.toggle()
-        //        }), for: .touchUpInside)
         
         floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
             let addDrivingViewController = AddDrivingViewController()
