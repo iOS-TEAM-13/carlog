@@ -9,6 +9,7 @@ class MapPageViewController: UIViewController {
     
     // MARK: Properties
     private let mapView = CustomMapView()
+    private let guideView = GuideView()
     
     private let locationManager = CLLocationManager()
     
@@ -73,6 +74,7 @@ class MapPageViewController: UIViewController {
     
     // MARK: Method
     func setupMapView() {
+        view.addSubview(guideView)
         view.addSubview(myLocationButton)
         view.addSubview(zoomInButton)
         view.addSubview(zoomOutButton)
@@ -81,6 +83,11 @@ class MapPageViewController: UIViewController {
         mapView.map.showsScale = true
         mapView.map.showsUserLocation = true
         mapView.map.setUserTrackingMode(.followWithHeading, animated: true)
+        
+        guideView.snp.makeConstraints {
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
+            $0.size.equalTo(100)
+        }
         
         myLocationButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(10)
