@@ -4,11 +4,11 @@ import SnapKit
 
 class HistoryPageViewController: UIViewController {
     
-    //
+    //주행, 주유 빈 배열
     var drivingDummy: [Driving] = []
     var fuelingDummy: [Fueling] = []
     
-    //
+    //히스토리 페이지 상단 주행, 주유 collectionView 나눠서 보여지게하는 segmented
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
@@ -24,7 +24,7 @@ class HistoryPageViewController: UIViewController {
         shouldHideFirstView = segment.selectedSegmentIndex != 0
     }
     
-    //
+    //주행 히스토리
     lazy var drivingCollectionView: DrivingView = {
         let drivingCollectionView = DrivingView()
         drivingCollectionView.drivingCollectionView.dataSource = self
@@ -34,16 +34,17 @@ class HistoryPageViewController: UIViewController {
         return drivingCollectionView
     }()
     
-    //
+    //주유 히스토리
     lazy var fuelingCollectionView: FuelingView = {
         let fuelingCollectionView = FuelingView()
         fuelingCollectionView.fuelingCollectionView.dataSource = self
         fuelingCollectionView.fuelingCollectionView.delegate = self
         fuelingCollectionView.fuelingCollectionView.register(FuelingCollectionViewCell.self, forCellWithReuseIdentifier: FuelingCollectionViewCell.identifier)
-        fuelingCollectionView.fuelingCollectionView.backgroundColor = .white
+        fuelingCollectionView.fuelingCollectionView.backgroundColor = .backgroundCoustomColor
         return fuelingCollectionView
     }()
     
+    //segmented 전환
     var shouldHideFirstView: Bool? {
         didSet {
             guard let shouldHideFirstView = self.shouldHideFirstView else { return }
@@ -52,13 +53,14 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
-    //
+    //두개의 addPage로 이동하기 위한 플로팅 버튼
     lazy var floatingButtonStackView: FloatingButtonStackView = {
         let floatingButtonStackView = FloatingButtonStackView()
         floatingButtonStackView.navigationController = self.navigationController
         return floatingButtonStackView
     }()
     
+    //로딩 인디케이터
     var ac: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -78,6 +80,7 @@ class HistoryPageViewController: UIViewController {
         // NotificationCenter addDriving 연결하기
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewDrivingRecordAdded(_:)), name: .newDrivingRecordAdded, object: nil)
         
+        // NotificationCenter addFueling 연결하기
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
     }
     
@@ -93,6 +96,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
 
+    //newFueling 배열 맨 위에 저장하기
     @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
         if let newFueling = notification.object as? Fueling {
             //중복이 아니면 로드하고 저장하고 리로드하기
@@ -104,7 +108,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
-    //
+    //Notification제거?
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -156,9 +160,11 @@ class HistoryPageViewController: UIViewController {
         }), for: .touchUpInside)
         
         floatingButtonStackView.fuelingButton.addAction(UIAction(handler: { _ in
-            self.navigationController?.present(AddFuelingViewController(), animated: true)
-            self.navigationController?.modalPresentationStyle = .fullScreen
-            self.segmentedControl.selectedSegmentIndex = 1
+            let addFuelingViewController = AddFuelingViewController()
+            let navigationController = UINavigationController(rootViewController: addFuelingViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
+            self.segmentedControl.selectedSegmentIndex = 0
             self.didChangeValue(segment: self.segmentedControl)
             self.isActive.toggle()
         }), for: .touchUpInside)
@@ -174,19 +180,23 @@ class HistoryPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
     
+    //
     private var animation: UIViewPropertyAnimator?
     
+    //
     private var isActive: Bool = false {
         didSet {
             showActionButtons()
         }
     }
     
+    //
     private func showActionButtons() {
         popButtons()
         rotateFloatingButton()
     }
     
+    //
     private func popButtons() {
         if isActive {
             floatingButtonStackView.fuelingButton.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
@@ -217,6 +227,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //
     private func rotateFloatingButton() {
         let animation = CABasicAnimation(keyPath: "transform.rotation.z")
         let fromValue = isActive ? 0 : CGFloat.pi / 4
@@ -229,6 +240,7 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
     }
     
+    //파베 주행 데이터 로드
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { result in
             if let drivings = result {
@@ -250,6 +262,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //파베 주유 데이터 로드
     func loadFuelingData() {
         FirestoreService.firestoreService.loadFueling { result in
             if let fuelings = result {
@@ -298,10 +311,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FuelingCollectionViewCell.identifier, for: indexPath) as? FuelingCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.backgroundColor = .buttonSkyBlueColor
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.darkGray.cgColor
-            cell.layer.cornerRadius = Constants.cornerRadius * 4
+            cell.backgroundColor = .white
+            cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp ?? ""
             cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price ?? 0)원")
