@@ -149,6 +149,48 @@ final class FirestoreService {
     
     // MARK: - Comment
 
+    func saveCommentToPost(field: String, value: String, comment: Comment, completion: @escaping (Error?) -> Void) {
+        db.collection("posts").whereField(field, isEqualTo: value).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(error)
+            } else {
+                if let querySnapshot = querySnapshot, querySnapshot.documents.count > 0 {
+                    // 쿼리 결과가 있다면 첫 번째 문서를 사용합니다.
+                    // 실제 애플리케이션에서는 이 방법이 여러 문서를 반환할 수 있으므로 추가 로직이 필요할 수 있습니다.
+                    let document = querySnapshot.documents.first
+                    let documentID = document?.documentID ?? ""
+                    
+                    // 이제 문서 ID를 가지고 댓글을 추가할 수 있습니다.
+                    let commentData = [
+                        "content": comment.content,
+                        "userName": comment.userName,
+                        "userEmail": comment.userEmail,
+                        "timeStamp": comment.timeStamp
+                    ]
+                    
+                    let commentsRef = self.db.collection("posts").document(documentID).collection("comments")
+                    commentsRef.addDocument(data: commentData as [String : Any]) { error in
+                        if let error = error {
+                            print("Error writing comment: \(error)")
+                            completion(error)
+                        } else {
+                            print("Document successfully written!")
+                            completion(nil)
+                        }
+                    }
+                } else {
+                    // 문서를 찾을 수 없습니다.
+                    print("No documents found")
+                    let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No documents found matching the criteria"])
+                    completion(error)
+                }
+            }
+        }
+    }
+
+
+    
     func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(comment)

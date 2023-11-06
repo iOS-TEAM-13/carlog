@@ -252,7 +252,6 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         view.addSubview(containerView)
         communityDetailPageScrollView.addSubview(communityDetailPageContentView)
         communityDetailPageContentView.addSubview(titleLabel)
-        //communityDetailPageContentView.addSubview(userNameLabel)
         communityDetailPageContentView.addSubview(subTitleStackView)
         communityDetailPageContentView.addSubview(photoCollectionView)
         communityDetailPageContentView.addSubview(likeButton)
@@ -388,20 +387,15 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
 
         FirestoreService.firestoreService.fetchNickName(userEmail: user.email ?? "") { nickName in
             let finalUserName = nickName
-            let newComment = Comment(id: UUID().uuidString, content: comment, userName: finalUserName, userEmail: user.email, timeStamp: timeStamp)
+            
+            
+            let newComment = Comment(id: self.selectedPost?.title, content: comment, userName: finalUserName, userEmail: user.email, timeStamp: timeStamp)
             FirestoreService.firestoreService.saveComment(comment: newComment) { error in
                 if let error = error {
-                    print("Error saving comment: \(error.localizedDescription)")
-                } else {
-                    print("Comment saved successfully")
-                }
-                
-                DispatchQueue.main.async { [weak self] in
-                    // self?.commentData.append(newComment)
-                    self?.commentTableView.reloadData()
-                    self?.updateCommentTableViewHeight()
+                    print("error = \(error.localizedDescription)")
                 }
             }
+            
         }
     }
 }
@@ -451,25 +445,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
         var comment = commentData[indexPath.row]
-//        FirestoreService.firestoreService.loadComments { comments in
-//            if let comments = comments {
-//                for comment in comments {
-//                    if let userName = comment.userName,
-//                       let content = comment.content,
-//                       let timeStamp = comment.timeStamp
-//                    {
-//                        // 여기에서 가져온 댓글 데이터를 사용하거나 처리할 수 있습니다.
-//                        print("UserName: \(userName)")
-//                        print("Content: \(content)")
-//                        print("TimeStamp: \(timeStamp)")
-//                        // 가져온 댓글 데이터를 어떻게 사용할지에 따라 로직을 추가하세요.
-//                    }
-//                }
-//            } else {
-//                // 댓글을 가져오지 못한 경우에 대한 처리를 여기에 추가할 수 있습니다.
-//                print("Failed to load comments.")
-//            }
-//        }
+
         cell.selectionStyle = .none
         return cell
     }
