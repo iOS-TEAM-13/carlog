@@ -10,27 +10,28 @@ import SnapKit
 import UIKit
 
 class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
+    var selectedPost: Post?
     let currentDate = Date()
-    var commentData: [Comment] = []
+    var commentData: [String] = []
     
 //    var currentUser: User?
 //    var currentPost: Post?
-    struct Post {
-        var userEmail: String
-        // 다른 Post 데이터 멤버들...
-    }
-
-    struct User {
-        var email: String
-        // 다른 User 데이터 멤버들...
-    }
-
-    // 현재 사용자를 나타내는 예시입니다.
-    let currentUser = User(email: "eskw0701@naver.com")
-    // 예시 포스트 데이터입니다.
-    let post = Post(userEmail: "eskw0701@naver.com")
+//    struct Post {
+//        var userEmail: String
+//        // 다른 Post 데이터 멤버들...
+//    }
+//
+//    struct User {
+//        var email: String
+//        // 다른 User 데이터 멤버들...
+//    }
+//
+//    // 현재 사용자를 나타내는 예시입니다.
+//    let currentUser = User(email: "eskw0701@naver.com")
+//    // 예시 포스트 데이터입니다.
+//    let post = Post(userEmail: "eskw0701@naver.com")
     
-    let imageName = ["image1", "image2", "image3"]
+    let imageName: [URL] = []
     // 좋아요 버튼 설정
     private var isLiked = false {
         didSet {
@@ -198,6 +199,7 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         photoCollectionView.isPagingEnabled = true
         
         setupUI()
+        loadPost()
         commentTextViewPlaceholder()
     }
     
@@ -206,6 +208,17 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         updateCommentTableViewHeight()
     }
 
+    private func loadPost() {
+        if let post = selectedPost {
+            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
+                self.userNameLabel.setTitle(nickName, for: .normal)
+                self.titleLabel.text = post.title
+                self.dateLabel.text = post.timeStamp
+                self.mainText.text = post.content
+            }
+        }
+    }
+    
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
@@ -213,27 +226,27 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
              
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
-        if post.userEmail == currentUser.email {
-            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-                print("신고 완료")
-            }
-            action1.setValue(UIColor.red, forKey: "titleTextColor")
-            actionSheet.addAction(action1)
-        } else {
-            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
-                print("차단 완료")
-            }
-            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                print("차단 완료")
-            }
-            action2.setValue(UIColor.red, forKey: "titleTextColor")
-            action3.setValue(UIColor.red, forKey: "titleTextColor")
-            actionSheet.addAction(action2)
-            actionSheet.addAction(action3)
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        actionSheet.addAction(cancelAction)
-        present(actionSheet, animated: true, completion: nil)
+//        if post.userEmail == user.email {
+//            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
+//                print("신고 완료")
+//            }
+//            action1.setValue(UIColor.red, forKey: "titleTextColor")
+//            actionSheet.addAction(action1)
+//        } else {
+//            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
+//                print("차단 완료")
+//            }
+//            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
+//                print("차단 완료")
+//            }
+//            action2.setValue(UIColor.red, forKey: "titleTextColor")
+//            action3.setValue(UIColor.red, forKey: "titleTextColor")
+//            actionSheet.addAction(action2)
+//            actionSheet.addAction(action3)
+//        }
+//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+//        actionSheet.addAction(cancelAction)
+//        present(actionSheet, animated: true, completion: nil)
     }
            
     @objc func commentButtonTapped() {
@@ -400,7 +413,7 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
                 }
                 
                 DispatchQueue.main.async { [weak self] in
-                    self?.commentData.append(newComment)
+                    // self?.commentData.append(newComment)
                     self?.commentTableView.reloadData()
                     self?.updateCommentTableViewHeight()
                 }
@@ -411,12 +424,40 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
 
 extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        guard let selectedPost = selectedPost else {
+            return 0
+        }
+            
+        return selectedPost.image.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityDetailCell", for: indexPath) as! CommunityDetailCollectionViewCell
-        cell.configure(with: imageName[indexPath.row])
+
+        // selectedPost가 nil이거나 imageURLs 배열이 비어 있는 경우
+        guard let selectedPost = selectedPost, indexPath.item < selectedPost.image.count else {
+            // 이 부분에서 처리하고자 하는 로직을 추가하세요.
+            // 예를 들어, 빈 이미지를 표시하거나 다른 대체 이미지를 사용할 수 있습니다.
+            cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
+            return cell
+        }
+        
+        let imageURL = selectedPost.image[indexPath.item]
+        if let url = imageURL {
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.imageView.image = image
+                    }
+                } else if let error = error {
+                    print("Error downloading image: \(error.localizedDescription)")
+                }
+            }.resume()
+        } else {
+            // URL이 nil인 경우에 대한 처리
+            cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
+        }
+
         return cell
     }
 }

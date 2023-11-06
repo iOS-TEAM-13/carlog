@@ -91,35 +91,35 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
-            FirestoreService.firestoreService.loadPosts { posts in
-                if let posts = posts {
-                    for post in posts {
-                        if let id = post.id,
-                           let title = post.title,
-                           let content = post.content,
-                           let userEmail = post.userEmail,
-                           let timeStamp = post.timeStamp
-                        {
-                            let imageURLs = post.image.compactMap { $0 }
-                            let loadedPost = Post(
-                                id: id,
-                                title: title,
-                                content: content,
-                                image: imageURLs,
-                                userEmail: userEmail,
-                                timeStamp: timeStamp
-                            )
-                            self.items.append(loadedPost)
-                        }
+        FirestoreService.firestoreService.loadPosts { posts in
+            if let posts = posts {
+                for post in posts {
+                    if let id = post.id,
+                       let title = post.title,
+                       let content = post.content,
+                       let userEmail = post.userEmail,
+                       let timeStamp = post.timeStamp
+                    {
+                        let imageURLs = post.image.compactMap { $0 }
+                        let loadedPost = Post(
+                            id: id,
+                            title: title,
+                            content: content,
+                            image: imageURLs,
+                            userEmail: userEmail,
+                            timeStamp: timeStamp
+                        )
+                        self.items.append(loadedPost)
                     }
-                    DispatchQueue.main.async {
-                        self.communityColletionView.reloadData()
-                    }
-                } else {
-                    print("데이터를 가져오는 중 오류 발생")
                 }
+                DispatchQueue.main.async {
+                    self.communityColletionView.reloadData()
+                }
+            } else {
+                print("데이터를 가져오는 중 오류 발생")
             }
         }
+    }
     
     @objc private func scrollToNextBanner() {
         let currentOffset = bannerCollectionView.contentOffset.x
@@ -132,7 +132,7 @@ class CommunityPageViewController: UIViewController {
     }
 
     @objc func floatingButtonTapped() {
-           let editPage = AddCommunityPageViewController()
+        let editPage = AddCommunityPageViewController()
         navigationController?.pushViewController(editPage, animated: true)
     }
 }
@@ -152,37 +152,37 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            if collectionView == bannerCollectionView {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
-                cell.configure(with: banners[indexPath.item])
+        if collectionView == bannerCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
+            cell.configure(with: banners[indexPath.item])
 
-                return cell
-            } else if collectionView == communityColletionView {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
-                let post = items[indexPath.item]
+            return cell
+        } else if collectionView == communityColletionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
+            let post = items[indexPath.item]
                 
-                FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                    cell.userName.text = nickName
-                    cell.titleLabel.text = post.title
-                    cell.mainTextLabel.text = post.content
-                    if let imageURL = post.image.first, let imageUrl = imageURL {
-                        // 이미지를 비동기적으로 가져오기
-                        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                            if let data = data, let image = UIImage(data: data) {
-                                DispatchQueue.main.async {
-                                    cell.collectionViewImage.image = image
-                                }
+            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
+                cell.userName.text = nickName
+                cell.titleLabel.text = post.title
+                cell.mainTextLabel.text = post.content
+                if let imageURL = post.image.first, let imageUrl = imageURL {
+                    // 이미지를 비동기적으로 가져오기
+                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                        if let data = data, let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                cell.collectionViewImage.image = image
                             }
-                        }.resume()
-                    }
+                        }
+                    }.resume()
                 }
-                
-                return cell
             }
-            return UICollectionViewCell()
+                
+            return cell
         }
+        return UICollectionViewCell()
+    }
        
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCollectionView {
             return CGSize(width: collectionView.frame.width, height: 80)
         } else if collectionView == communityColletionView {
@@ -202,9 +202,12 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     // 셀 클릭 시 화면 전환
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == communityColletionView {
-            let detailViewController = CommunityDetailPageViewController() // DetailPageViewController는 상세 페이지를 나타내는 뷰 컨트롤러입니다.
-            // 필요하다면 detailViewController에 데이터 전달
-            // 예: detailViewController.item = items[indexPath.item]
+            let detailViewController = CommunityDetailPageViewController()
+
+            // 선택한 포스트를 가져와서 detailViewController에 설정
+            let selectedPost = items[indexPath.item]
+            detailViewController.selectedPost = selectedPost
+
             navigationController?.pushViewController(detailViewController, animated: true)
         }
     }
