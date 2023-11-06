@@ -10,7 +10,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
 
         joinupView.joinInButton.isEnabled = false
         carNumberView.carNumberTextField.delegate = self
