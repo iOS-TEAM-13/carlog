@@ -36,10 +36,39 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         
         drivingDetailView.drivingPurposeTextField.delegate = self
         
+        navigationUI()
         loadDrivingData()
         autoCalculate()
         buttonActions()
     }
+    
+    //MARK: - 주행기록 페이지 네비게이션바
+    func navigationUI() {
+        navigationItem.title = "주행기록"
+        
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+        ]
+        
+        self.navigationItem.leftBarButtonItem = self.backButton
+    }
+    
+    lazy var backButton: UIBarButtonItem = {
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goToHistoryPage))
+//        let backButton = UIBarButtonItem()
+//        backButton.image = UIImage(systemName: "chevron.backward")
+//        backButton.style = .plain
+        backButton.tintColor = .mainNavyColor
+        return backButton
+    }()
+    
+    @objc func goToHistoryPage() {
+        print("디테일 페이지에서 히스토리 페이지로 뒤로간다")
+        if let navigationController = self.navigationController {
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
     
 //MARK: - 운행 목적 텍스트 입력 수 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -48,7 +77,6 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         let maxLength = 15
         return updatedText.count <= maxLength
     }
-        
     
 //MARK: - 주행기록 디테일페이지 데이터 로드 / 근데 셀 데이터도 넘기는데?
     func loadDrivingData() {
