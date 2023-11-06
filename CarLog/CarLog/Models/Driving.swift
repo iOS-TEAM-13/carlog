@@ -10,6 +10,7 @@ import Foundation
 struct Driving: Codable {
     var documentID: String?
     let timeStamp: String?
+    let drivingPurpose: String?
     let id: String?
     let departDistance: Int?
     let arriveDistance: Int?

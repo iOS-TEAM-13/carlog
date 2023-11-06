@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SnapKit
 
-class DriveDetailViewController: UIViewController {
+class DriveDetailViewController: UIViewController, UITextFieldDelegate {
     let db = Firestore.firestore()
     
     var drivingData: Driving?
@@ -24,7 +24,7 @@ class DriveDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .backgroundCoustomColor
         
         view.addSubview(drivingDetailView)
         drivingDetailView.snp.makeConstraints { make in
@@ -34,14 +34,52 @@ class DriveDetailViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        drivingDetailView.drivingPurposeTextField.delegate = self
+        
+        navigationUI()
         loadDrivingData()
         autoCalculate()
         buttonActions()
     }
     
+//MARK: - 주행기록 페이지 네비게이션바
+    func navigationUI() {
+        navigationItem.title = "주행기록"
+        
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .foregroundColor: UIColor.black
+        ]
+        
+        self.navigationItem.leftBarButtonItem = self.backButton
+    }
+    
+    lazy var backButton: UIBarButtonItem = {
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goToHistoryPage))
+        backButton.tintColor = .mainNavyColor
+        return backButton
+    }()
+    
+    @objc func goToHistoryPage() {
+        print("디테일 페이지에서 히스토리 페이지로 뒤로간다")
+        if let navigationController = self.navigationController {
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
+//MARK: - 운행 목적 텍스트 입력 수 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        let maxLength = 15
+        return updatedText.count <= maxLength
+    }
+    
+//MARK: - 주행기록 디테일페이지 데이터 로드 / 근데 셀 데이터도 넘기는데?
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { _ in
             if let drivings = self.drivingData {
+                self.drivingDetailView.drivingPurposeTextField.text = "\(drivings.drivingPurpose ?? "")"
                 self.drivingDetailView.totalDistanceTextField.text = "\(drivings.departDistance ?? 0)"
                 self.drivingDetailView.arriveDistanceTextField.text = "\(drivings.arriveDistance ?? 0)"
                 self.drivingDetailView.driveDistenceTextField.text = "\(drivings.driveDistance ?? 0)"
@@ -51,6 +89,7 @@ class DriveDetailViewController: UIViewController {
         }
     }
     
+//MARK: - 주행거리 자동 계산
     func autoCalculate() {
         func calculate() {
             let totalDistanceText = Int(drivingDetailView.totalDistanceTextField.text ?? "") ?? 0
@@ -59,10 +98,12 @@ class DriveDetailViewController: UIViewController {
             drivingDetailView.driveDistenceTextField.text = String(driveDistenceText)
         }
         
+        //누적(출발) 주행거리 텍스트필드의 값이 변경될 때 마다 도착에서 출발을 뺀다.
         drivingDetailView.totalDistanceTextField.addAction(UIAction(handler: { _ in
             calculate()
         }), for: .editingChanged)
         
+        //도착 주행거리 텍스트필드의 값이 변경될 때 마다 도착에서 출발을 뺀다.
         drivingDetailView.arriveDistanceTextField.addAction(UIAction(handler: { _ in
             calculate()
         }), for: .editingChanged)
@@ -74,15 +115,22 @@ class DriveDetailViewController: UIViewController {
             if let drivingID = drivingData?.documentID {
                 var updatedData: [String: Any] = [:]
                 
-                if let totalDistanceText = drivingDetailView.totalDistanceTextField.text, let totalDistance = Double(totalDistanceText) {
+                if let drivingPurposeText = drivingDetailView.drivingPurposeTextField.text {
+                    updatedData["drivingPurpose"] = drivingPurposeText
+                }
+                
+                if let totalDistanceText = drivingDetailView.totalDistanceTextField.text, let totalDistance = 
+                    Int(totalDistanceText) {
                     updatedData["departDistance"] = totalDistance
                 }
                 
-                if let arriveDistanceText = drivingDetailView.arriveDistanceTextField.text, let arriveDistance = Double(arriveDistanceText) {
+                if let arriveDistanceText = drivingDetailView.arriveDistanceTextField.text, let arriveDistance =
+                    Int(arriveDistanceText) {
                     updatedData["arriveDistance"] = arriveDistance
                 }
                 
-                if let driveDistanceText = drivingDetailView.driveDistenceTextField.text, let driveDistance = Double(driveDistanceText) {
+                if let driveDistanceText = drivingDetailView.driveDistenceTextField.text, let driveDistance = 
+                    Int(driveDistanceText) {
                     updatedData["driveDistance"] = driveDistance
                 }
                 

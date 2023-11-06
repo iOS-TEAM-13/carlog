@@ -11,7 +11,7 @@ struct Post: Codable {
     let id: String?
     let title: String?
     let content: String?
-    let image: [String?]
+    let image: [URL?]
     let userEmail: String?
     let timeStamp: String?
 }

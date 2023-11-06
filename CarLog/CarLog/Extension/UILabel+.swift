@@ -8,4 +8,12 @@ extension UILabel {
         self.textAlignment = alignment
         self.textColor = textColor
     }
+    
+    //재사용 단위 라벨 추가
+    static func kmUnitLabel() -> UILabel {
+        let kmLabel = UILabel()
+        kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .left)
+        return kmLabel
+    }
+    
 }

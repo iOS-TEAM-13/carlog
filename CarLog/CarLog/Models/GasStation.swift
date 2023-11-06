@@ -65,7 +65,9 @@ struct OilPrice: Codable {
 }
 
 struct CustomGasStation {
+    let name: String
     let id: String
+    let tel: String
     let address: String
     let carWashYn: String
     let cvsYn: String
