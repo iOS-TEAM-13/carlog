@@ -85,7 +85,7 @@ class MapPageViewController: UIViewController {
         mapView.map.setUserTrackingMode(.followWithHeading, animated: true)
         
         guideView.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
+            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
             $0.size.equalTo(100)
         }
         
