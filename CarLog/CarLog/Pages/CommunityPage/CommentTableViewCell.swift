@@ -8,7 +8,6 @@
 import UIKit
 
 class CommentTableViewCell: UITableViewCell {
-    
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
@@ -19,6 +18,7 @@ class CommentTableViewCell: UITableViewCell {
     private let commentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        label.numberOfLines = 0
         label.textColor = .black
         return label
     }()
@@ -26,6 +26,13 @@ class CommentTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        preservesSuperviewLayoutMargins = false
+        layoutMargins = UIEdgeInsets.zero
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +56,6 @@ class CommentTableViewCell: UITableViewCell {
             make.bottomMargin.equalToSuperview().offset(-12)
             make.left.equalTo(userNameLabel.snp.right).offset(16)
             make.rightMargin.equalToSuperview().offset(-16)
-            
         }
     }
     
@@ -57,11 +63,4 @@ class CommentTableViewCell: UITableViewCell {
         userNameLabel.text = userName
         commentLabel.text = comment
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-
 }

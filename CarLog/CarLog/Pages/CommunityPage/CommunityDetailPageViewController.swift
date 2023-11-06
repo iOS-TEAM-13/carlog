@@ -5,12 +5,30 @@
 //  Created by t2023-m0075 on 11/1/23.
 //
 
+import FirebaseAuth
 import SnapKit
 import UIKit
 
 class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
-    var currentUser: User?
-    var currentPost: Post?
+    let currentDate = Date()
+    var commentData: [Comment] = []
+    
+//    var currentUser: User?
+//    var currentPost: Post?
+    struct Post {
+        var userEmail: String
+        // 다른 Post 데이터 멤버들...
+    }
+
+    struct User {
+        var email: String
+        // 다른 User 데이터 멤버들...
+    }
+
+    // 현재 사용자를 나타내는 예시입니다.
+    let currentUser = User(email: "eskw0701@naver.com")
+    // 예시 포스트 데이터입니다.
+    let post = Post(userEmail: "eskw0701@naver.com")
     
     let imageName = ["image1", "image2", "image3"]
     // 좋아요 버튼 설정
@@ -19,8 +37,6 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
             updateLikeButton()
         }
     }
-    
-    var dummyData: [(userName: String, comment: String)] = [("User1", "이것은 예시입니다."), ("User2", "이것도 예시입니다."), ("User3", "이것또한 예시입니다."), ("User3", "이것또한 예시입니다.")]
     
     lazy var commentTableView: UITableView = {
         let tableView = UITableView()
@@ -148,11 +164,9 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
     
     lazy var commentTextView: UITextView = {
         let textView = UITextView()
-        // textView.placeholder = "user (으)로 댓글 달기..."
         textView.backgroundColor = .white
         textView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
-        textView.layer.borderWidth = 1.0
-        textView.layer.cornerRadius = 8
+        textView.layer.cornerRadius = Constants.cornerRadius
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isUserInteractionEnabled = true
         textView.isEditable = true
@@ -185,8 +199,6 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         
         setupUI()
         commentTextViewPlaceholder()
-        addComment(userName: "아 스댕", comment: "왜안돼")
-        addComment(userName: "아 스댕2", comment: "왜안돼")
     }
     
     override func viewDidLayoutSubviews() {
@@ -197,11 +209,11 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
-        guard let user = currentUser, let post = currentPost else { return }
+        // guard let user = currentUser, let post = currentPost else { return }
              
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
-        if post.userEmail == user.email {
+        if post.userEmail == currentUser.email {
             let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 print("신고 완료")
             }
@@ -226,6 +238,12 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
            
     @objc func commentButtonTapped() {
         print("눌렸습니다!")
+        if let commentText = commentTextView.text, !commentText.isEmpty {
+            addComment(comment: commentText)
+            commentTableView.reloadData()
+            updateCommentTableViewHeight() // 댓글이 추가된 후에 높이를 업데이트합니다.
+            commentTextView.text = ""
+        }
     }
     
     private func setupUI() {
@@ -331,9 +349,9 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func commentTextViewPlaceholder() {
+    private func commentTextViewPlaceholder() {
         commentTextView.delegate = self
-        commentTextView.text = "user (으)로 댓글달기..."
+        commentTextView.text = "댓글쓰기"
         commentTextView.textColor = .lightGray
     }
     
@@ -346,7 +364,7 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "user (으)로 댓글 달기..."
+            textView.text = ""
             textView.textColor = UIColor.lightGray
         }
     }
@@ -367,10 +385,27 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func addComment(userName: String, comment: String) {
-        dummyData.append((userName: userName, comment: comment))
-        commentTableView.reloadData()
-        updateCommentTableViewHeight()
+    func addComment(comment: String) {
+        let timeStamp = String.dateFormatter.string(from: currentDate)
+        guard let user = Auth.auth().currentUser else { return }
+
+        FirestoreService.firestoreService.fetchNickName(userEmail: user.email ?? "") { nickName in
+            let finalUserName = nickName
+            let newComment = Comment(id: UUID().uuidString, content: comment, userName: finalUserName, userEmail: user.email, timeStamp: timeStamp)
+            FirestoreService.firestoreService.saveComment(comment: newComment) { error in
+                if let error = error {
+                    print("Error saving comment: \(error.localizedDescription)")
+                } else {
+                    print("Comment saved successfully")
+                }
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.commentData.append(newComment)
+                    self?.commentTableView.reloadData()
+                    self?.updateCommentTableViewHeight()
+                }
+            }
+        }
     }
 }
 
@@ -388,13 +423,31 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
 
 extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyData.count
+        return commentData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
-        let (userName, comment) = dummyData[indexPath.row]
-        cell.configure(with: userName, comment: comment)
+        var comment = commentData[indexPath.row]
+//        FirestoreService.firestoreService.loadComments { comments in
+//            if let comments = comments {
+//                for comment in comments {
+//                    if let userName = comment.userName,
+//                       let content = comment.content,
+//                       let timeStamp = comment.timeStamp
+//                    {
+//                        // 여기에서 가져온 댓글 데이터를 사용하거나 처리할 수 있습니다.
+//                        print("UserName: \(userName)")
+//                        print("Content: \(content)")
+//                        print("TimeStamp: \(timeStamp)")
+//                        // 가져온 댓글 데이터를 어떻게 사용할지에 따라 로직을 추가하세요.
+//                    }
+//                }
+//            } else {
+//                // 댓글을 가져오지 못한 경우에 대한 처리를 여기에 추가할 수 있습니다.
+//                print("Failed to load comments.")
+//            }
+//        }
         cell.selectionStyle = .none
         return cell
     }

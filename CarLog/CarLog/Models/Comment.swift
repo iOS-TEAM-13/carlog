@@ -9,7 +9,7 @@ import Foundation
 
 struct Comment: Codable {
     let id: String?
-    let content: String?
+    var content: String?
     let userName: String?
     let userEmail: String?
     let timeStamp: String?
