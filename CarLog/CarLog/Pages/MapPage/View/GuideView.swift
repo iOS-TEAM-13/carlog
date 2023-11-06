@@ -7,7 +7,14 @@
 
 import UIKit
 
-class GuideView: UIStackView {
+class GuideView: UIView {
+    private lazy var totalStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [gasolineStackView, dieselStackView, carWashStackView, storeStackView])
+        view.customStackView(spacing: 5, axis: .vertical, alignment: .leading)
+        view.distribution = .fillEqually
+        return view
+    }()
+    
     private lazy var gasolineStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [gasolineImage,gasolineLabel])
         view.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
@@ -94,20 +101,15 @@ class GuideView: UIStackView {
     }
     
     private func setupUI() {
-        self.addArrangedSubview(gasolineStackView)
-        self.addArrangedSubview(dieselStackView)
-        self.addArrangedSubview(carWashStackView)
-        self.addArrangedSubview(storeStackView)
-        
-        self.axis = .vertical
-        self.distribution = .equalSpacing
+        self.addSubview(totalStackView)
         
         self.backgroundColor = .white
         self.layer.cornerRadius = Constants.cornerRadius
         self.alpha = 0.9
         
-        self.snp.makeConstraints {
-            $0.size.equalTo(80)
+        totalStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(Constants.verticalMargin)
+            $0.size.equalTo(90)
         }
         
         gasolineImage.snp.makeConstraints {

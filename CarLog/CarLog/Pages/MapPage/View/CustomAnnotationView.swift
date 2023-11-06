@@ -23,7 +23,7 @@ class CustomAnnotationView: MKAnnotationView {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold)
         label.textColor = .black
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byClipping
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         label.clipsToBounds = true
@@ -67,8 +67,6 @@ class CustomAnnotationView: MKAnnotationView {
         return label
     }()
     
-    private lazy var indicator = UIActivityIndicatorView()
-    
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
@@ -81,7 +79,6 @@ class CustomAnnotationView: MKAnnotationView {
     }
     
     private func configureUI() {
-        addSubview(indicator)
         addSubview(backgroundView)
         backgroundView.addSubview(titleLabel)
         backgroundView.addSubview(gasolineImageView)
@@ -90,13 +87,13 @@ class CustomAnnotationView: MKAnnotationView {
         backgroundView.addSubview(dieselPriceLabel)
 
         backgroundView.snp.makeConstraints {
-            $0.width.equalTo(100)
+            $0.width.equalTo(60)
             $0.height.equalTo(50)
         }
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(backgroundView).inset(2)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalTo(backgroundView).inset(2)
             $0.height.equalTo(10)
         }
 
@@ -125,30 +122,6 @@ class CustomAnnotationView: MKAnnotationView {
         }
     }
     
-//    private func configureUI() {
-//        addSubview(indicator)
-//        addSubview(backgroundView)
-//        backgroundView.addSubview(titleLabel)
-//        backgroundView.addSubview(gasolineImageView)
-//        backgroundView.addSubview(dieselImageView)
-//        backgroundView.addSubview(gasolinePriceLabel)
-//        backgroundView.addSubview(dieselPriceLabel)
-//
-//        backgroundView.snp.makeConstraints {
-//            $0.width.equalTo(60)
-//            $0.height.equalTo(30)
-//        }
-//
-//        gasolinePriceLabel.snp.makeConstraints {
-//            $0.top.leading.trailing.equalTo(backgroundView.safeAreaLayoutGuide)
-//        }
-//
-//        dieselPriceLabel.snp.makeConstraints {
-//            $0.top.equalTo(gasolinePriceLabel.snp.bottom)
-//            $0.leading.trailing.bottom.equalTo(backgroundView.safeAreaLayoutGuide)
-//        }
-//    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
@@ -163,8 +136,8 @@ class CustomAnnotationView: MKAnnotationView {
 
         if let title = annotation.title, let gasoline = annotation.gasolinePrice, let diesel = annotation.dieselPrice {
             titleLabel.text = " \(title) "
-            gasolinePriceLabel.text = " 휘 \(gasoline) "
-            dieselPriceLabel.text = " 경 \(diesel) "
+            gasolinePriceLabel.text = " \(gasoline) "
+            dieselPriceLabel.text = " \(diesel) "
         }
         setNeedsLayout()
     }
