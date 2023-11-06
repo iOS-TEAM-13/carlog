@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import SnapKit
 
 class DrivingCollectionViewCell: UICollectionViewCell {
@@ -82,11 +81,5 @@ class DrivingCollectionViewCell: UICollectionViewCell {
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
-        
-        drivingPurposeLabel.snp.makeConstraints { make in
-            
-        }
     }
 }
-
-

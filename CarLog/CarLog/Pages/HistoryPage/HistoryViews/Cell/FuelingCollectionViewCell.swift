@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import SnapKit
 
 class FuelingCollectionViewCell: UICollectionViewCell {
@@ -34,8 +33,8 @@ class FuelingCollectionViewCell: UICollectionViewCell {
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.textColor = .black
-        priceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        priceLabel.textColor = .darkGray
+        priceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         return priceLabel
     }()
     
@@ -57,7 +56,7 @@ class FuelingCollectionViewCell: UICollectionViewCell {
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
         countLabel.textColor = .black
-        countLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        countLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         return countLabel
     }()
     
