@@ -18,7 +18,7 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
-        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
 //        self.navigationController?.isNavigationBarHidden = true
         
     // MARK: - Setup

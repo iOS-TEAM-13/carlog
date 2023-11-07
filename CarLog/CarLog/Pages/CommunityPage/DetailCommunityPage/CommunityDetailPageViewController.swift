@@ -370,6 +370,7 @@ extension CommunityDetailPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         tabBarController?.tabBar.isHidden = true
         
         // 네비게이션 바 버튼 이미지 설정

@@ -49,7 +49,7 @@ class CommunityPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
-        
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         communityColletionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
         communityColletionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
         
