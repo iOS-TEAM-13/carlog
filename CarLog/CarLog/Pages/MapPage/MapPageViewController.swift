@@ -123,7 +123,7 @@ class MapPageViewController: UIViewController {
     }
     
     func fetchNearByList(x: String, y: String) {
-        NetworkService.service.fetchNearbyGasStation(x: x, y: y, sort: "1", prodcd: "B027") { [weak self] data in
+        NetworkService.service.fetchNearbyGasStation(x: x, y: y, sort: "2", prodcd: "B027") { [weak self] data in
             if let data = data {
                 self?.fetchDetailGasStation(id: data)
             }
@@ -134,22 +134,21 @@ class MapPageViewController: UIViewController {
         NetworkService.service.fetchDetailGasStation(idList: id) { [weak self] data in
             if let data = data {
                 self?.stationDetailList = data
-            }
-            self?.changeAdress(detail: data.map { $0.map { $0.address } } as! [String]) {
-                self?.stationDetailList.forEach { item in
-                    self?.locationList.append(CustomAnnotation(title: item.name, gasolinePrice: String(item.oilPrice.filter { $0.prodcd == "B027" }.first?.price ?? 0), dieselPrice: String(item.oilPrice.filter { $0.prodcd == "D047" }.first?.price ?? 0), coordinate: CLLocationCoordinate2D(latitude: Double(item.gisYCoor), longitude: Double(item.gisXCoor))))
-                    self?.addCustomPin()
+                self?.changeAdress(gasStation: data) {
+                    self?.stationDetailList.forEach { item in
+                        self?.locationList.append(CustomAnnotation(title: item.name, gasolinePrice: String(item.oilPrice.filter { $0.prodcd == "B027" }.first?.price ?? 0), dieselPrice: String(item.oilPrice.filter { $0.prodcd == "D047" }.first?.price ?? 0), coordinate: CLLocationCoordinate2D(latitude: Double(item.gisYCoor), longitude: Double(item.gisXCoor))))
+                        self?.addCustomPin()
+                    }
                 }
             }
         }
     }
     
-    func changeAdress(detail: [String], completion: @escaping () -> Void) {
-        NetworkService.service.changeAddress(address: detail) { [weak self] data in
+    func changeAdress(gasStation: [CustomGasStation], completion: @escaping () -> Void) {
+        NetworkService.service.changeAddress(gasStation: gasStation) { [weak self] data in
             if data?.count != 0 {
-                for i in 0 ... (data?.count ?? 0) - 1 {
-                    self?.stationDetailList[i].gisXCoor = Float(data?[i].addresses.first?.x ?? "") ?? 0.0
-                    self?.stationDetailList[i].gisYCoor = Float(data?[i].addresses.first?.y ?? "") ?? 0.0
+                if let data = data {
+                    self?.stationDetailList = data
                 }
                 completion()
             }
