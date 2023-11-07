@@ -52,8 +52,17 @@ final class JoinupView: UIView {
         let label = UILabel()
         label.customLabel(text: "귀하는 카로그의 서비스 이용에 필요한 최소한의 개인정보 수집·이용에 동의하지 않을 수 있으나 동의를 거부할 경우 회원제 서비스 이용이 불가합니다.", textColor: .darkGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
         label.numberOfLines = 3
+        label.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
+        label.addGestureRecognizer(tap)
         return label
     }()
+    
+    @objc func tapFunction(sender: UITapGestureRecognizer) {
+        if let url = URL(string: "https://carlog.notion.site/3b018e85e94443da9a8d533525d3cf64?pvs=4") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
     
     lazy var personalInfoStatusStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [checkboxButton, personalInfoStatusLabel])

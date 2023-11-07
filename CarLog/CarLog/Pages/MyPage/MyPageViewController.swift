@@ -19,9 +19,9 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
-//        self.navigationController?.isNavigationBarHidden = true
+        //        self.navigationController?.isNavigationBarHidden = true
         
-    // MARK: - Setup
+        // MARK: - Setup
         
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
@@ -29,7 +29,10 @@ class MyPageViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         addTargetButton()
+        checkCarNumberButtonAction()
+        CheckNickNameButtonAction()
         registerForKeyboardNotifications()
+        
     }
     
     deinit {
@@ -46,6 +49,7 @@ class MyPageViewController: UIViewController {
     
     func addTargetButton() {
         myPageView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         myPageView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
         myPageView.phoneCallButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
@@ -59,6 +63,24 @@ class MyPageViewController: UIViewController {
         editButtonChanged(editMode: isEditMode)
     }
     
+    @objc private func cancelButtonTapped() {
+        // 취소 버튼,현재 입력된 내용을 초기값으로 설정
+        myPageView.carNumberTextField.text = carDummy.first?.number
+        myPageView.carNameTextField.text = carDummy.first?.name
+        myPageView.carMakerTextField.text = carDummy.first?.maker
+        myPageView.carOilTypeTextField.text = carDummy.first?.oilType
+        myPageView.carNickNameTextField.text = carDummy.first?.nickName
+        if let totalDistance = carDummy.first?.totalDistance {
+            myPageView.carTotalDistanceTextField.text = String(totalDistance)
+        } else {
+            myPageView.carTotalDistanceTextField.text = "0.0"
+        }
+        
+        toggleTextFieldsEditing(enable: !isEditMode)
+        editButtonChanged(editMode: !isEditMode)
+    }
+
+    
     private func toggleTextFieldsEditing(enable: Bool) {
         [myPageView.carNumberTextField, myPageView.carNameTextField, myPageView.carMakerTextField, myPageView.carOilTypeTextField, myPageView.carNickNameTextField, myPageView.carTotalDistanceTextField].forEach {
             $0.isUserInteractionEnabled = enable
@@ -70,15 +92,35 @@ class MyPageViewController: UIViewController {
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
             let image = UIImage(systemName: "checkmark.circle", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
-            myPageView.editButton.setImage(image, for: .normal)
-            myPageView.myWritingButton.isHidden = true
+            myPageView.cancelButton.isHidden = false
+            //            myPageView.myWritingButton.isHidden = true
+            myPageView.checkCarNumberButton.isHidden = false
+            myPageView.checkCarNickNameButton.isHidden = false
             myPageView.myPageDesignStackView.isHidden = true
             myPageView.phoneCallButton.isHidden = true
         } else {
+            guard let checkCarNumber = self.myPageView.carNumberTextField.text,
+                  let checkCarNickName = self.myPageView.carNickNameTextField.text
+            else {
+                return
+            }
+            // 조건을 만족하지 않을 때 경고 표시
+            if checkCarNumber.isEmpty {
+                self.showAlert(message: "00가0000 형식으로 써주세요")
+                return
+            } else if checkCarNickName.isEmpty {
+                self.showAlert(message: "닉네임을 꼭 작성해 주세요")
+                return
+            }
+            
+            
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
             let image = UIImage(systemName: "highlighter", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
-            myPageView.myWritingButton.isHidden = false
+            myPageView.cancelButton.isHidden = true
+            //            myPageView.myWritingButton.isHidden = false
+            myPageView.checkCarNumberButton.isHidden = true
+            myPageView.checkCarNickNameButton.isHidden = true
             myPageView.myPageDesignStackView.isHidden = false
             myPageView.phoneCallButton.isHidden = false
             // ⭐ 택스트필드 6개 입력한 값들을 저장해서 파이어베이스에 넣어주기!
@@ -156,6 +198,81 @@ class MyPageViewController: UIViewController {
         }
     }
     
+    func checkCarNumberButtonAction() {
+        myPageView.checkCarNumberButton.addAction(UIAction(handler: { _ in
+            guard let carNumberToCheck = self.myPageView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
+                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.carNumberTextField.text = ""
+                return self.showAlert(message: "00가0000 형식으로 써주세요")
+            }
+            
+            guard carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
+                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.carNumberTextField.text = ""
+                return self.showAlert(message: "00가0000 형식으로 써주세요")
+            }
+            
+            guard carNumberToCheck.count >= 7 else {
+                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.carNumberTextField.text = ""
+                return self.showAlert(message: "7자리 이상 입력하세요")
+            }
+            
+            let fifthCharacterIndex = carNumberToCheck.index(carNumberToCheck.endIndex, offsetBy: -5)
+            let fifthCharacter = carNumberToCheck[fifthCharacterIndex]
+
+            if String(fifthCharacter).range(of: "[가-힣]+", options: .regularExpression) == nil {
+                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.carNumberTextField.text = ""
+                return self.showAlert(message: "가운데 한글이 빠졌습니다")
+            }
+            
+            FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
+                if let error = error {
+                    print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                    return
+                }
+                
+                if isCarAvailable {
+                    self.myPageView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
+                    self.myPageView.checkCarNumberButton.setTitle("가능", for: .normal)
+                } else {
+                    self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                    self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 존재하는 차번호입니다")
+                    self.myPageView.carNumberTextField.text = ""
+                }
+            })
+        }), for: .touchUpInside)
+    }
+    
+    func CheckNickNameButtonAction() {
+        myPageView.checkCarNickNameButton.addAction(UIAction(handler: { _ in
+            guard let nickNameToCheck = self.myPageView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
+            
+            FirestoreService.firestoreService.checkDuplicate(car: nickNameToCheck, data: "nickName", completion: { isCarAvailable, error in
+                if let error = error {
+                    print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                    return
+                }
+                
+                if isCarAvailable {
+                    self.myPageView.checkCarNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
+                    self.myPageView.checkCarNickNameButton.setTitle("가능", for: .normal)
+                } else {
+                    self.myPageView.checkCarNickNameButton.setTitleColor(.red, for: .normal)
+                    self.myPageView.checkCarNickNameButton.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 존재하는 닉네임입니다")
+                    self.myPageView.carNickNameTextField.text = ""
+                }
+            })
+        }), for: .touchUpInside)
+    }
+    
     @objc private func dialPhoneNumber() {
         if let phoneCallURL = URL(string: "tel://000-000-0000") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
@@ -216,4 +333,11 @@ class MyPageViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         myPageView.endEditing(true)
     }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+
 }
