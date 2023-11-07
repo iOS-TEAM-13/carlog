@@ -8,12 +8,11 @@
 import UIKit
 
 class CommunityPageCollectionViewCell: UICollectionViewCell {
-    
     lazy var userName: UILabel = {
         let label = UILabel()
         label.text = "왕바우"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
     }()
     
@@ -76,77 +75,70 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var topStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userName, UIView(), iconStackView])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
+    private lazy var iconStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [spanerImage, spanerCounts, commentImage, commentCounts])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        setupUI()
     }
     
-    private func  setupUI() {
-        contentView.addSubview(userName)
-        contentView.addSubview(spanerImage)
-        contentView.addSubview(commentImage)
-        contentView.addSubview(spanerCounts)
-        contentView.addSubview(commentCounts)
+    private func setupUI() {
+        contentView.addSubview(topStackView)
         contentView.addSubview(collectionViewImage)
         contentView.addSubview(titleLabel)
         contentView.addSubview(mainTextLabel)
         contentView.backgroundColor = .buttonSkyBlueColor
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = Constants.cornerRadius
         contentView.layer.masksToBounds = true
-        
-        userName.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(60)
-            make.topMargin.equalToSuperview().offset(23)
-        }
         
         spanerImage.snp.makeConstraints { make in
             make.width.height.equalTo(17)
-            make.leftMargin.equalToSuperview().offset(258)
-            make.topMargin.equalToSuperview().offset(19)
-        }
-        
-        spanerCounts.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(280)
-            make.topMargin.equalToSuperview().offset(21)
         }
         
         commentImage.snp.makeConstraints { make in
             make.width.height.equalTo(17)
-            make.leftMargin.equalToSuperview().offset(310)
-            make.topMargin.equalToSuperview().offset(19)
         }
         
-        commentCounts.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(332)
-            make.topMargin.equalToSuperview().offset(21)
+        topStackView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
-        
+
         collectionViewImage.snp.makeConstraints { make in
-            make.top.equalTo(userName.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.rightMargin.equalToSuperview().offset(-16)
+            make.top.equalTo(topStackView.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+            make.height.equalTo(180)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(collectionViewImage.snp.bottom).offset(12)
-           // make.bottomMargin.equalToSuperview().offset(-12)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.rightMargin.equalToSuperview().offset(-16)
-           // make.topMargin.equalToSuperview().offset(236)
+            make.top.equalTo(collectionViewImage.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         mainTextLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(16)
-            make.rightMargin.equalToSuperview().offset(-16)
-            make.topMargin.equalToSuperview().offset(271)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
     }
-    
 }
