@@ -32,24 +32,26 @@ class NetworkService {
     func changeAddress(gasStation: [CustomGasStation], completion: @escaping ([CustomGasStation]?) -> Void) {
         var result = [CustomGasStation]()
         let dispatchGroup = DispatchGroup()
-        for i in 0...gasStation.count - 1 {
-            dispatchGroup.enter()
-            let baseURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?"
-            let query = "query=\(gasStation[i].address.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
-            let urlString = baseURL + query
-            
-            let headers: HTTPHeaders = [
-                "X-NCP-APIGW-API-KEY-ID": "i7ms4hgjyy",
-                "X-NCP-APIGW-API-KEY": "JhLmWJgPjiBV2PZ9qCHfbMtetMbuCZ74zxTFFIej"
-            ]
-            AF.request(urlString, headers: headers).responseDecodable(of: Address.self) { response in
-                switch response.result {
-                case .success(let data):
-                    result.append(CustomGasStation(name: gasStation[i].name, id: gasStation[i].id, tel: gasStation[i].tel, address: gasStation[i].address, carWashYn: gasStation[i].carWashYn, cvsYn: gasStation[i].cvsYn, gisXCoor: Float(data.addresses.first?.x ?? "") ?? 0.0, gisYCoor: Float(data.addresses.first?.y ?? "") ?? 0.0, oilPrice: gasStation[i].oilPrice))
-                case .failure(let error):
-                    print(error)
+        if gasStation.count != 0 {
+            for i in 0...gasStation.count - 1 {
+                dispatchGroup.enter()
+                let baseURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?"
+                let query = "query=\(gasStation[i].address.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
+                let urlString = baseURL + query
+                
+                let headers: HTTPHeaders = [
+                    "X-NCP-APIGW-API-KEY-ID": "i7ms4hgjyy",
+                    "X-NCP-APIGW-API-KEY": "JhLmWJgPjiBV2PZ9qCHfbMtetMbuCZ74zxTFFIej"
+                ]
+                AF.request(urlString, headers: headers).responseDecodable(of: Address.self) { response in
+                    switch response.result {
+                    case .success(let data):
+                        result.append(CustomGasStation(name: gasStation[i].name, id: gasStation[i].id, tel: gasStation[i].tel, address: gasStation[i].address, carWashYn: gasStation[i].carWashYn, cvsYn: gasStation[i].cvsYn, gisXCoor: Float(data.addresses.first?.x ?? "") ?? 0.0, gisYCoor: Float(data.addresses.first?.y ?? "") ?? 0.0, oilPrice: gasStation[i].oilPrice))
+                    case .failure(let error):
+                        print(error)
+                    }
+                    dispatchGroup.leave()
                 }
-                dispatchGroup.leave()
             }
         }
         

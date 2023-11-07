@@ -80,4 +80,15 @@ extension String {
         f.locale = Locale(identifier: "ko_KR")
         return f
     }()
+    
+    func addedComma() -> String {
+        let reversedStr = String(self.reversed())
+        let grouped = stride(from: 0, to: reversedStr.count, by: 3).map { index -> String in
+            let start = reversedStr.index(reversedStr.startIndex, offsetBy: index)
+            let end = reversedStr.index(start, offsetBy: 3, limitedBy: reversedStr.endIndex) ?? reversedStr.endIndex
+            return String(reversedStr[start..<end])
+        }
+        let result = grouped.joined(separator: ",").reversed()
+        return String(result)
+    }
 }
