@@ -8,7 +8,7 @@
 import Foundation
 
 struct Comment: Codable {
-    let id: String? //Post의 ID를 저장하기 위한 속성
+    let id: String?
     var content: String?
     let userName: String?
     let userEmail: String?

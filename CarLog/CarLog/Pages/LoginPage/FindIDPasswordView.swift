@@ -9,6 +9,16 @@ import SnapKit
 import UIKit
 
 class FindIDPasswordView: UIView {
+    
+    lazy var passwordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "비밀번호 재설정"
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold)
+        label.textAlignment = .center
+        label.textColor = .mainNavyColor
+        return label
+    }()
+    
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["아이디 찾기", "비밀번호 재설정"])
         segmentedControl.selectedSegmentIndex = 0
