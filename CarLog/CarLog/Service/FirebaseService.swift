@@ -194,32 +194,6 @@ final class FirestoreService {
             }
         }
     }
-    
-    func removeComment(postID: String, commentID: String, completion: @escaping (Error?) -> Void) {
-        db.collection("posts").document(postID).collection("comments").document(commentID).delete { error in
-            if let error = error {
-                print("데이터를 삭제하지 못했습니다.: \(error)")
-                completion(error)
-            } else {
-                print("데이터를 성공적으로 삭제했습니다.")
-                completion(nil)
-            }
-        }
-    }
-    
-    func removeCommentInSubcollection(postID: String, commentID: String) {
-        let db = Firestore.firestore()
-        let subcollectionRef = db.collection("posts").document(postID).collection("comments")
-        
-        // 서브컬렉션에서 해당 댓글(document)를 삭제합니다.
-        subcollectionRef.document(commentID).delete { error in
-            if let error = error {
-                print("서브컬렉션의 댓글 삭제 실패: \(error.localizedDescription)")
-            } else {
-                print("서브컬렉션의 댓글 삭제 성공")
-            }
-        }
-    }
 
     // MARK: - Car
 
