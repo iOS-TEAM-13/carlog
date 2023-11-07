@@ -132,66 +132,42 @@ final class FirestoreService {
     }
     
     func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
-            Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("Error getting documents: \(error)")
-                    completion(nil)
-                } else {
-                    if let document = querySnapshot?.documents.first {
-                        let nickName = document.data()["nickName"] as? String
-                        completion(nickName)
-                    } else {
-                        completion(nil)
-                    }
-                }
-            }
-        }
-    
-    // MARK: - Comment
-
-    func saveCommentToPost(field: String, value: String, comment: Comment, completion: @escaping (Error?) -> Void) {
-        db.collection("posts").whereField(field, isEqualTo: value).getDocuments { (querySnapshot, error) in
+        Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
             if let error = error {
                 print("Error getting documents: \(error)")
-                completion(error)
+                completion(nil)
             } else {
-                if let querySnapshot = querySnapshot, querySnapshot.documents.count > 0 {
-                    // 쿼리 결과가 있다면 첫 번째 문서를 사용합니다.
-                    // 실제 애플리케이션에서는 이 방법이 여러 문서를 반환할 수 있으므로 추가 로직이 필요할 수 있습니다.
-                    let document = querySnapshot.documents.first
-                    let documentID = document?.documentID ?? ""
-                    
-                    // 이제 문서 ID를 가지고 댓글을 추가할 수 있습니다.
-                    let commentData = [
-                        "content": comment.content,
-                        "userName": comment.userName,
-                        "userEmail": comment.userEmail,
-                        "timeStamp": comment.timeStamp
-                    ]
-                    
-                    let commentsRef = self.db.collection("posts").document(documentID).collection("comments")
-                    commentsRef.addDocument(data: commentData as [String : Any]) { error in
-                        if let error = error {
-                            print("Error writing comment: \(error)")
-                            completion(error)
-                        } else {
-                            print("Document successfully written!")
-                            completion(nil)
-                        }
-                    }
+                if let document = querySnapshot?.documents.first {
+                    let nickName = document.data()["nickName"] as? String
+                    completion(nickName)
                 } else {
-                    // 문서를 찾을 수 없습니다.
-                    print("No documents found")
-                    let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No documents found matching the criteria"])
-                    completion(error)
+                    completion(nil)
                 }
             }
         }
     }
-
-
     
-    func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
+    // MARK: - Comment
+
+    func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
+        guard let content = comment.content,
+              let userName = comment.userName,
+              let userEmail = comment.userEmail,
+              let timeStamp = comment.timeStamp
+        else { return }
+
+        let commentsRef = db.collection("posts").document(postID).collection("comments")
+        commentsRef.addDocument(data: [
+            "content": content,
+            "userName": userName,
+            "userEmail": userEmail,
+            "timeStamp": timeStamp
+        ]) { error in
+            completion(error)
+        }
+    }
+
+    func saveComment1(comment: Comment, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(comment)
             db.collection("comments").addDocument(data: data) { error in
@@ -201,6 +177,31 @@ final class FirestoreService {
             completion(error)
         }
     }
+    
+    func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
+        let commentsRef = db.collection("posts").document(postID).collection("comments")
+        
+        // 원하는 쿼리 조건을 추가합니다. 예를 들어, timeStamp를 기준으로 정렬하거나 필터링할 수 있습니다.
+        commentsRef.order(by: "timeStamp", descending: true).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                var comments: [Comment] = []
+                for document in querySnapshot!.documents {
+                    if let data = document.data() as? [String: Any],
+                       let content = data["content"] as? String,
+                       let userName = data["userName"] as? String,
+                       let userEmail = data["userEmail"] as? String,
+                       let timeStamp = data["timeStamp"] as? String {
+                        let comment = Comment(id: UUID().uuidString, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
+                        comments.append(comment)
+                    }
+                }
+                completion(comments, nil)
+            }
+        }
+    }
+
     
     func loadComments(completion: @escaping ([Comment]?) -> Void) {
         db.collection("comments").getDocuments { querySnapshot, error in

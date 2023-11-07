@@ -8,14 +8,14 @@
 import UIKit
 
 class CommentTableViewCell: UITableViewCell {
-    private let userNameLabel: UILabel = {
+    lazy var userNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let commentLabel: UILabel = {
+    lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         label.numberOfLines = 0

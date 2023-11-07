@@ -9,10 +9,10 @@ import FirebaseAuth
 import SnapKit
 import UIKit
 
-class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
+class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     let currentDate = Date()
-    var commentData: [String] = []
+    var commentData: [Comment] = []
     // 좋아요 버튼 설정
     private var isLiked = false {
         didSet {
@@ -77,7 +77,7 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         return stackView
     }()
     
-    private lazy var photoCollectionView: UICollectionView = {
+    lazy var photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 361, height: 346)
@@ -173,80 +173,6 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         return button
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor.backgroundCoustomColor
-        tabBarController?.tabBar.isHidden = true
-        
-        // 네비게이션 바 버튼 이미지 설정
-        let dotsImage = UIImage(named: "dots")?.withRenderingMode(.alwaysOriginal)
-        let dotsButton = UIBarButtonItem(image: dotsImage, style: .plain, target: self, action: #selector(dotsButtonTapped))
-        navigationItem.rightBarButtonItem = dotsButton
-        
-        // 컬렉션뷰 셀을 한장씩 넘기게 설정
-        photoCollectionView.isPagingEnabled = true
-        
-        setupUI()
-        loadPost()
-        commentTextViewPlaceholder()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateCommentTableViewHeight()
-    }
-
-    private func loadPost() {
-        if let post = selectedPost {
-            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                self.userNameLabel.setTitle(nickName, for: .normal)
-                self.titleLabel.text = post.title
-                self.dateLabel.text = post.timeStamp
-                self.mainText.text = post.content
-            }
-        }
-    }
-    
-    // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
-
-    @objc func dotsButtonTapped() {
-        // guard let user = currentUser, let post = currentPost else { return }
-             
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        // 현재 사용자가 포스트의 작성자가 일치하는지 확인
-//        if post.userEmail == user.email {
-//            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-//                print("신고 완료")
-//            }
-//            action1.setValue(UIColor.red, forKey: "titleTextColor")
-//            actionSheet.addAction(action1)
-//        } else {
-//            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
-//                print("차단 완료")
-//            }
-//            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
-//                print("차단 완료")
-//            }
-//            action2.setValue(UIColor.red, forKey: "titleTextColor")
-//            action3.setValue(UIColor.red, forKey: "titleTextColor")
-//            actionSheet.addAction(action2)
-//            actionSheet.addAction(action3)
-//        }
-//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-//        actionSheet.addAction(cancelAction)
-//        present(actionSheet, animated: true, completion: nil)
-    }
-           
-    @objc func commentButtonTapped() {
-        print("눌렸습니다!")
-        if let commentText = commentTextView.text, !commentText.isEmpty {
-            addComment(comment: commentText)
-            commentTableView.reloadData()
-            updateCommentTableViewHeight() // 댓글이 추가된 후에 높이를 업데이트합니다.
-            commentTextView.text = ""
-        }
-    }
-    
     private func setupUI() {
         view.addSubview(communityDetailPageScrollView)
         view.addSubview(containerView)
@@ -345,24 +271,34 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    private func commentTextViewPlaceholder() {
-        commentTextView.delegate = self
-        commentTextView.text = "댓글쓰기"
-        commentTextView.textColor = .lightGray
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-    }
+    // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = ""
-            textView.textColor = UIColor.lightGray
-        }
+    @objc func dotsButtonTapped() {
+        // guard let user = currentUser, let post = currentPost else { return }
+             
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        // 현재 사용자가 포스트의 작성자가 일치하는지 확인
+//        if post.userEmail == user.email {
+//            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
+//                print("신고 완료")
+//            }
+//            action1.setValue(UIColor.red, forKey: "titleTextColor")
+//            actionSheet.addAction(action1)
+//        } else {
+//            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
+//                print("차단 완료")
+//            }
+//            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
+//                print("차단 완료")
+//            }
+//            action2.setValue(UIColor.red, forKey: "titleTextColor")
+//            action3.setValue(UIColor.red, forKey: "titleTextColor")
+//            actionSheet.addAction(action2)
+//            actionSheet.addAction(action3)
+//        }
+//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+//        actionSheet.addAction(cancelAction)
+//        present(actionSheet, animated: true, completion: nil)
     }
     
     // 좋아요 버튼 눌렀을 떄 동작 구현
@@ -373,6 +309,24 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
     private func updateLikeButton() {
         likeButton.isSelected = isLiked
     }
+           
+    // MARK: - 댓글 기능
+    
+    @objc func commentButtonTapped() {
+        print("눌렸습니다!")
+        if let commentText = commentTextView.text, !commentText.isEmpty {
+            addComment(comment: commentText)
+            commentTableView.reloadData()
+            updateCommentTableViewHeight() // 댓글이 추가된 후에 높이를 업데이트합니다.
+            commentTextView.text = ""
+        }
+    }
+    
+    private func commentTextViewPlaceholder() {
+        commentTextView.delegate = self
+        commentTextView.text = "댓글쓰기"
+        commentTextView.textColor = .lightGray
+    }
     
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
@@ -382,79 +336,80 @@ class CommunityDetailPageViewController: UIViewController, UITextViewDelegate {
     }
     
     func addComment(comment: String) {
-        let timeStamp = String.dateFormatter.string(from: currentDate)
-        guard let user = Auth.auth().currentUser else { return }
+        let timeStamp = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .short)
+        guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
-        FirestoreService.firestoreService.fetchNickName(userEmail: user.email ?? "") { nickName in
-            let finalUserName = nickName
+        FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
+            guard let self = self, let postID = self.selectedPost?.id else { return }
             
+            let userNickName = nickName
+            let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
             
-            let newComment = Comment(id: self.selectedPost?.title, content: comment, userName: finalUserName, userEmail: user.email, timeStamp: timeStamp)
-            FirestoreService.firestoreService.saveComment(comment: newComment) { error in
+            FirestoreService.firestoreService.saveComment(postID: postID, comment: newComment) { error in
                 if let error = error {
-                    print("error = \(error.localizedDescription)")
+                    print("Error saving comment: \(error.localizedDescription)")
+                } else {
+                    print("Comment saved successfully")
+
+                    DispatchQueue.main.async {
+                        self.commentTableView.reloadData()
+                        self.updateCommentTableViewHeight()
+                    }
                 }
             }
-            
         }
     }
 }
 
-extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let selectedPost = selectedPost else {
-            return 0
-        }
-            
-        return selectedPost.image.count
+extension CommunityDetailPageViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor.backgroundCoustomColor
+        tabBarController?.tabBar.isHidden = true
+        
+        // 네비게이션 바 버튼 이미지 설정
+        let dotsImage = UIImage(named: "dots")?.withRenderingMode(.alwaysOriginal)
+        let dotsButton = UIBarButtonItem(image: dotsImage, style: .plain, target: self, action: #selector(dotsButtonTapped))
+        navigationItem.rightBarButtonItem = dotsButton
+        
+        // 컬렉션뷰 셀을 한장씩 넘기게 설정
+        photoCollectionView.isPagingEnabled = true
+        
+        setupUI()
+        loadPost()
+        loadComments()
+        commentTextViewPlaceholder()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityDetailCell", for: indexPath) as! CommunityDetailCollectionViewCell
-        
-        guard let selectedPost = selectedPost, indexPath.item < selectedPost.image.count else {
-            cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
-            return cell
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateCommentTableViewHeight()
+    }
+
+    private func loadPost() {
+        if let post = selectedPost {
+            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
+                self.userNameLabel.setTitle(nickName, for: .normal)
+                self.titleLabel.text = post.title
+                self.dateLabel.text = post.timeStamp
+                self.mainText.text = post.content
+            }
         }
-        
-        let imageURL = selectedPost.image[indexPath.item]
-        if let url = imageURL {
-            URLSession.shared.dataTask(with: url) { data, _, error in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        cell.imageView.image = image
+    }
+    
+    private func loadComments() {
+        if let post = selectedPost {
+            FirestoreService.firestoreService.getComments(forPostID: post.id!) { comments, error in
+                if let error = error {
+                    print("Error loading comments: \(error.localizedDescription)")
+                } else if let comments = comments {
+                    print("Loaded comments: \(comments)")
+                    for comment in comments {
+                        self.commentData.append(comment)
+                        self.commentTableView.reloadData()
                     }
-                } else if let error = error {
-                    print("Error downloading image: \(error.localizedDescription)")
                 }
-            }.resume()
-        } else {
-            // URL이 nil인 경우에 대한 처리
-            cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
+            }
         }
-
-        return cell
-    }
-}
-
-extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return commentData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
-        var comment = commentData[indexPath.row]
-
-        cell.selectionStyle = .none
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension // 또는 적절한 높이 값
-    }
-
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44 // 적당한 추정치를 제공합니다.
     }
 }
