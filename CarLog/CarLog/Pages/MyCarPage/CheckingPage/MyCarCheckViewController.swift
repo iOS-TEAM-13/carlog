@@ -27,7 +27,7 @@ class MyCarCheckViewController: UIViewController {
     
     var checkCountLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "0/10", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
+        label.customLabel(text: "0/10", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
        return label
     }()
     
@@ -42,12 +42,15 @@ class MyCarCheckViewController: UIViewController {
     
     private lazy var addButton = UIBarButtonItem(title: "완료", primaryAction: UIAction(handler: { [weak self] _ in
         Constants.carParts.userEmail = Auth.auth().currentUser?.email
+        Constants.carParts.parts.forEach { part in
+            NotificationService.service.pushNotification(part: part)
+        }
         FirestoreService.firestoreService.saveCarPart(carPart: Constants.carParts) { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
     }))
     
-    let animationView: LottieAnimationView = .init(name: "slideAnimation")
+    let animationView: LottieAnimationView = .init(name: "swipeAnimation")
     
     // MARK: LifeCycle
 
@@ -57,6 +60,7 @@ class MyCarCheckViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = true
         navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.tintColor = .mainNavyColor
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         setupUI()
@@ -91,7 +95,7 @@ class MyCarCheckViewController: UIViewController {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        animationView.loopMode = .playOnce
+        animationView.loopMode = .repeat(2)
         animationView.play { _ in
             self.animationView.isHidden = true
             self.animationView.removeFromSuperview()

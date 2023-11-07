@@ -1,41 +1,49 @@
 import UIKit
-
 import SnapKit
 
 class HistoryPageViewController: UIViewController {
-    var drivingDummy: [Driving] = []
     
+    //주행, 주유 빈 배열
+    var drivingDummy: [Driving] = []
     var fuelingDummy: [Fueling] = []
     
+    //히스토리 페이지 상단 주행, 주유 collectionView 나눠서 보여지게하는 segmented
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentTintColor = .mainNavyColor
         
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
     
+    @objc private func didChangeValue(segment: UISegmentedControl) {
+        shouldHideFirstView = segment.selectedSegmentIndex != 0
+    }
+    
+    //주행 히스토리
     lazy var drivingCollectionView: DrivingView = {
         let drivingCollectionView = DrivingView()
         drivingCollectionView.drivingCollectionView.dataSource = self
         drivingCollectionView.drivingCollectionView.delegate = self
         drivingCollectionView.drivingCollectionView.register(DrivingCollectionViewCell.self, forCellWithReuseIdentifier: DrivingCollectionViewCell.identifier)
-        drivingCollectionView.drivingCollectionView.backgroundColor = .white
+        drivingCollectionView.drivingCollectionView.backgroundColor = .backgroundCoustomColor
         return drivingCollectionView
     }()
     
+    //주유 히스토리
     lazy var fuelingCollectionView: FuelingView = {
         let fuelingCollectionView = FuelingView()
         fuelingCollectionView.fuelingCollectionView.dataSource = self
         fuelingCollectionView.fuelingCollectionView.delegate = self
         fuelingCollectionView.fuelingCollectionView.register(FuelingCollectionViewCell.self, forCellWithReuseIdentifier: FuelingCollectionViewCell.identifier)
-        fuelingCollectionView.fuelingCollectionView.backgroundColor = .white
+        fuelingCollectionView.fuelingCollectionView.backgroundColor = .backgroundCoustomColor
         return fuelingCollectionView
     }()
     
+    //segmented 전환
     var shouldHideFirstView: Bool? {
         didSet {
             guard let shouldHideFirstView = self.shouldHideFirstView else { return }
@@ -44,17 +52,19 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //두개의 addPage로 이동하기 위한 플로팅 버튼
     lazy var floatingButtonStackView: FloatingButtonStackView = {
         let floatingButtonStackView = FloatingButtonStackView()
         floatingButtonStackView.navigationController = self.navigationController
         return floatingButtonStackView
     }()
     
+    //로딩 인디케이터
     var ac: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .backgroundCoustomColor
         
         setupUI()
         didChangeValue(segment: segmentedControl)
@@ -69,28 +79,37 @@ class HistoryPageViewController: UIViewController {
         // NotificationCenter addDriving 연결하기
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewDrivingRecordAdded(_:)), name: .newDrivingRecordAdded, object: nil)
         
+        // NotificationCenter addFueling 연결하기
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewFuelingRecordAdded(_:)), name: .newFuelingRecordAdded, object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    // NotificationCenter newDriving 배열 맨 위에 저장하기
+    //newDriving 배열 맨 위에 저장하기
     @objc func handleNewDrivingRecordAdded(_ notification: Notification) {
         if let newDriving = notification.object as? Driving {
-            loadDrivingData()
-            drivingDummy.insert(newDriving, at: 0)
-            drivingCollectionView.drivingCollectionView.reloadData()
+            //중복이 아니면 로드하고 저장하고 리로드하기
+            if !drivingDummy.contains(where: { $0.id == newDriving.id }) {
+                loadDrivingData()
+                drivingDummy.insert(newDriving, at: 0)
+                drivingCollectionView.drivingCollectionView.reloadData()
+            }
+        }
+    }
+
+    //newFueling 배열 맨 위에 저장하기
+    @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
+        if let newFueling = notification.object as? Fueling {
+            //중복이 아니면 로드하고 저장하고 리로드하기
+            if !fuelingDummy.contains(where: { $0.id == newFueling.id }) {
+                loadFuelingData()
+                fuelingDummy.insert(newFueling, at: 0)
+                fuelingCollectionView.fuelingCollectionView.reloadData()
+            }
         }
     }
     
-    @objc func handleNewFuelingRecordAdded(_ notification: Notification) {
-        if let newFueling = notification.object as? Fueling {
-            loadFuelingData()
-            fuelingDummy.insert(newFueling, at: 0)
-            fuelingCollectionView.fuelingCollectionView.reloadData()
-        }
+    //Notification제거?
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,11 +117,8 @@ class HistoryPageViewController: UIViewController {
         loadDrivingData()
         loadFuelingData()
     }
-    
-    @objc private func didChangeValue(segment: UISegmentedControl) {
-        shouldHideFirstView = segment.selectedSegmentIndex != 0
-    }
-    
+
+    // MARK: - HistoryPageView UI 설정
     func setupUI() {
         view.addSubview(segmentedControl)
         view.addSubview(drivingCollectionView)
@@ -111,60 +127,75 @@ class HistoryPageViewController: UIViewController {
         
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin * 4)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 4)
             make.height.equalTo(60)
         }
         
         drivingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         fuelingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(segmentedControl.snp.bottom).offset(40)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
         
         floatingButtonStackView.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }
     }
     
+    // MARK: - 히스토리페이지 플로팅퍼튼 클릭 이벤트
     func buttonActions() {
         floatingButtonStackView.floatingButton.addAction(UIAction(handler: { _ in
             self.isActive.toggle()
         }), for: .touchUpInside)
         
         floatingButtonStackView.fuelingButton.addAction(UIAction(handler: { _ in
-            self.navigationController?.present(AddFuelingViewController(), animated: true)
-            self.navigationController?.modalPresentationStyle = .fullScreen
+            let addFuelingViewController = AddFuelingViewController()
+            let navigationController = UINavigationController(rootViewController: addFuelingViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
+            self.segmentedControl.selectedSegmentIndex = 1
+            self.didChangeValue(segment: self.segmentedControl)
+            self.isActive.toggle()
         }), for: .touchUpInside)
         
         floatingButtonStackView.drivingButton.addAction(UIAction(handler: { _ in
-            self.navigationController?.present(AddDrivingViewController(), animated: true)
-            self.navigationController?.modalPresentationStyle = .fullScreen
+            let addDrivingViewController = AddDrivingViewController()
+            let navigationController = UINavigationController(rootViewController: addDrivingViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
+            self.segmentedControl.selectedSegmentIndex = 0
+            self.didChangeValue(segment: self.segmentedControl)
+            self.isActive.toggle()
         }), for: .touchUpInside)
     }
     
+    //
     private var animation: UIViewPropertyAnimator?
     
+    //
     private var isActive: Bool = false {
         didSet {
             showActionButtons()
         }
     }
     
+    //
     private func showActionButtons() {
         popButtons()
         rotateFloatingButton()
     }
     
+    //
     private func popButtons() {
         if isActive {
             floatingButtonStackView.fuelingButton.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
@@ -195,6 +226,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //
     private func rotateFloatingButton() {
         let animation = CABasicAnimation(keyPath: "transform.rotation.z")
         let fromValue = isActive ? 0 : CGFloat.pi / 4
@@ -207,6 +239,7 @@ class HistoryPageViewController: UIViewController {
         floatingButtonStackView.floatingButton.layer.add(animation, forKey: nil)
     }
     
+    //파베 주행 데이터 로드
     func loadDrivingData() {
         FirestoreService.firestoreService.loadDriving { result in
             if let drivings = result {
@@ -228,6 +261,7 @@ class HistoryPageViewController: UIViewController {
         }
     }
     
+    //파베 주유 데이터 로드
     func loadFuelingData() {
         FirestoreService.firestoreService.loadFueling { result in
             if let fuelings = result {
@@ -263,39 +297,26 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == drivingCollectionView.drivingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DrivingCollectionViewCell.identifier, for: indexPath) as? DrivingCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.backgroundColor = .buttonSkyBlueColor
-            cell.layer.borderWidth = 2
-            cell.layer.cornerRadius = Constants.cornerRadius * 4
-            
-            cell.layer.borderColor = UIColor.systemGray5.cgColor
-            cell.layer.shadowColor = UIColor.gray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-            cell.layer.shadowRadius = 3
-            cell.layer.shadowOpacity = 0.3
+            cell.backgroundColor = .white
+            cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
-            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0)km")
-            cell.arriveTotalDistenceLabel.text = String("\(drivingDummy[indexPath.row].arriveDistance ?? 0)km")
+            cell.drivingPurposeLabel.text = drivingDummy[indexPath.row].drivingPurpose ?? ""
+            cell.driveDistenceLabel.text = "\((drivingDummy[indexPath.row].driveDistance ?? 0).stringToInt())km"
+            cell.arriveTotalDistenceLabel.text = "\((drivingDummy[indexPath.row].arriveDistance ?? 0).stringToInt())km"
             
             return cell
             
         } else if collectionView == fuelingCollectionView.fuelingCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FuelingCollectionViewCell.identifier, for: indexPath) as? FuelingCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.backgroundColor = .buttonSkyBlueColor
-            cell.layer.borderWidth = 2
-            cell.layer.cornerRadius = Constants.cornerRadius * 4
-            
-            cell.layer.borderColor = UIColor.systemGray5.cgColor
-            cell.layer.shadowColor = UIColor.gray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-            cell.layer.shadowRadius = 3
-            cell.layer.shadowOpacity = 0.3
+            cell.backgroundColor = .white
+            cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp ?? ""
-            cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price ?? 0)원")
-            cell.totalPriceLabel.text = String("\(fuelingDummy[indexPath.row].totalPrice ?? 0)원")
-            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count ?? 0.0)L")
+            cell.priceLabel.text = "\((fuelingDummy[indexPath.row].price ?? 0).stringToInt())km"
+            cell.totalPriceLabel.text = "\((fuelingDummy[indexPath.row].totalPrice ?? 0).stringToInt())km"
+            cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count ?? "")L")
             
             return cell
         }

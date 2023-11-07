@@ -73,6 +73,30 @@ final class FirestoreService {
         }
     }
     
+    func checkDuplicate(car: String, data: String, completion: @escaping (Bool, Error?) -> Void) {
+        let usersRef = db.collection("cars")
+        
+        // Firestore에서 모든 사용자 cars 정보 가져오기
+        usersRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Firestore에서 사용자 목록을 가져오는데 실패했습니다: \(error.localizedDescription)")
+                return
+            }
+            
+            var isCarAvailable = true
+            
+            for document in querySnapshot?.documents ?? [] {
+                if let existingCar = document.data()["\(data)"] as? String {
+                    if existingCar == car {
+                        isCarAvailable = false
+                        break
+                    }
+                }
+            }
+            completion(isCarAvailable, nil)
+        }
+    }
+    
     // MARK: - Post
 
     func savePosts(post: Post, completion: @escaping (Error?) -> Void) {
@@ -87,60 +111,90 @@ final class FirestoreService {
     }
     
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
-        db.collection("posts").getDocuments { querySnapshot, error in
+        db.collection("posts")
+            .order(by: "timeStamp", descending: true) // "timeStamp" 필드를 내림차순으로 정렬
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("데이터를 가져오지 못했습니다: \(error)")
+                    completion(nil)
+                } else {
+                    var posts: [Post] = []
+                    for document in querySnapshot?.documents ?? [] {
+                        do {
+                            let post = try Firestore.Decoder().decode(Post.self, from: document.data())
+                            posts.append(post)
+                        } catch {
+                            completion(nil)
+                            return
+                        }
+                    }
+                    completion(posts)
+                }
+            }
+    }
+
+    func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
+        Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
             if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
+                print("Error getting documents: \(error)")
                 completion(nil)
             } else {
-                var posts: [Post] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let post = try Firestore.Decoder().decode(Post.self, from: document.data())
-                        posts.append(post)
-                    } catch {
-                        completion(nil)
-                        return
-                    }
+                if let document = querySnapshot?.documents.first {
+                    let nickName = document.data()["nickName"] as? String
+                    completion(nickName)
+                } else {
+                    completion(nil)
                 }
-                completion(posts)
             }
         }
     }
     
     // MARK: - Comment
 
-    func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
-        do {
-            let data = try Firestore.Encoder().encode(comment)
-            db.collection("comments").addDocument(data: data) { error in
-                completion(error)
-            }
-        } catch {
+    func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
+        guard let id = comment.id,
+              let content = comment.content,
+              let userName = comment.userName,
+              let userEmail = comment.userEmail,
+              let timeStamp = comment.timeStamp
+        else { return }
+
+        let commentsRef = db.collection("posts").document(postID).collection("comments")
+        commentsRef.addDocument(data: [
+            "id": id,
+            "content": content,
+            "userName": userName,
+            "userEmail": userEmail,
+            "timeStamp": timeStamp
+        ]) { error in
             completion(error)
         }
     }
     
-    func loadComments(completion: @escaping ([Comment]?) -> Void) {
-        db.collection("comments").getDocuments { querySnapshot, error in
+    func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
+        let commentsRef = db.collection("posts").document(postID).collection("comments")
+        
+        commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
             if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
-                completion(nil)
+                completion(nil, error)
             } else {
                 var comments: [Comment] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    if let content = data["content"] as? String,
+                       let userName = data["userName"] as? String,
+                       let userEmail = data["userEmail"] as? String,
+                       let timeStamp = data["timeStamp"] as? String
+                    {
+                        let comment = Comment(id: UUID().uuidString, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
                         comments.append(comment)
-                    } catch {
-                        completion(nil)
-                        return
                     }
                 }
-                completion(comments)
+                completion(comments, nil)
             }
         }
     }
-    
+
     // MARK: - Car
 
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {

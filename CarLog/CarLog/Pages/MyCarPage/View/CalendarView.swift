@@ -86,7 +86,7 @@ class CalendarView: UIView {
     
     private func customButton(text: String) -> UIButton {
         let button = UIButton()
-        button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .black, backgroundColor: .buttonSkyBlueColor)
+        button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .semibold), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = false

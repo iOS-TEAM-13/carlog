@@ -6,7 +6,30 @@ final class NickNameView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량 별명(닉네임)을\n입력해주세요")
-    lazy var carNickNameTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차 별명 입력")
+
+    lazy var carNickNameTextField: UITextField = {
+        let textField = UITextField()
+        textField.loginCustomTextField(
+            placeholder: "차 별명 입력",
+            textColor: .black,
+            font: .spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+            alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height))
+            )
+        textField.rightView = checkNickNameButton
+        textField.rightViewMode = .always
+        return textField
+    }()
+    
+    lazy var checkNickNameButton: UIButton = {
+        var configuration = UIButton.Configuration.tinted()
+        configuration.baseBackgroundColor = .white
+        configuration.imagePadding = 10
+        
+        let button = UIButton(configuration: configuration)
+        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
+        return button
+    }()
+
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
    
     private func setupUI() {

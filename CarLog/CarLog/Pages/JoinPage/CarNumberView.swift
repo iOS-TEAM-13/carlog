@@ -6,7 +6,29 @@ final class CarNumberView: UIView {
     let duplicateComponents = DuplicateComponents()
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "차량번호를\n입력해주세요")
-    lazy var carNumberTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "차량번호 ex)56머3344")
+    lazy var carNumberTextField: UITextField = {
+        let textField = UITextField()
+        textField.loginCustomTextField(
+            placeholder: "ex)56머3344",
+            textColor: .black,
+            font: .spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+            alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height))
+            )
+        textField.rightView = checkCarNumberButton
+        textField.rightViewMode = .always
+        return textField
+    }()
+    
+    lazy var checkCarNumberButton: UIButton = {
+        var configuration = UIButton.Configuration.tinted()
+        configuration.baseBackgroundColor = .white
+        configuration.imagePadding = 10
+        
+        let button = UIButton(configuration: configuration)
+        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
+        return button
+    }()
+
     lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
     
     private func setupUI() {

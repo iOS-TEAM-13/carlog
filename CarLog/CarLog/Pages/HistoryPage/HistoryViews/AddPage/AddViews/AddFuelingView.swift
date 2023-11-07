@@ -6,51 +6,56 @@
 //
 
 import UIKit
-
 import SnapKit
 
 class AddFuelingView: UIView {
-    lazy var addFuelingPageLabel: UILabel = {
-        let addFuelingPageLabel = UILabel()
-        addFuelingPageLabel.customLabel(text: "주유 내역", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .medium), alignment: .center)
-        return addFuelingPageLabel
+    //MARK: - 스크롤뷰 추가
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
     }()
     
+    let contentView: UIView = {
+        let contentView = UIView()
+        return contentView
+    }()
+    
+    //MARK: - 주유 기록 페이지 전체 스택뷰
     lazy var inputFuelingStackView: UIStackView = {
         let inputFuelingStackView = UIStackView(arrangedSubviews: [totalDistanceStackView, priceStackView, countStackView, totalPriceStackView])
-        inputFuelingStackView.customStackView(spacing: 25, axis: .vertical, alignment: .fill)
+        inputFuelingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
+        inputFuelingStackView.backgroundColor = .white
+        inputFuelingStackView.layer.cornerRadius = Constants.cornerRadius
         return inputFuelingStackView
     }()
     
+    //MARK: - 누적 주행거리 영역
     lazy var totalDistanceStackView: UIStackView = {
         let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
-        totalDistanceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        totalDistanceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
         totalDistanceStackView.distribution = .fill
         return totalDistanceStackView
     }()
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적\n주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        totalDistanceLabel.numberOfLines = 2
+        totalDistanceLabel.customLabel(text: "누적 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return totalDistanceLabel
     }()
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
-        totalDistanceTextField.historyCustomTextField(placeholder: "ex) 10000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 45, height: totalDistanceTextField.frame.size.height)))
         
-        // placeholder color 적용
-        let placeholderColor = UIColor.systemGray
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
         ]
-        let attributedPlaceholder = NSAttributedString(string: "ex) 10000", attributes: attributes)
-        totalDistanceTextField.attributedPlaceholder = attributedPlaceholder
         
-        totalDistanceTextField.layer.borderWidth = 1.5
-        totalDistanceTextField.layer.cornerRadius = Constants.cornerRadius
-        totalDistanceTextField.keyboardType = .decimalPad
+        totalDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: AddDrivingView().drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+        totalDistanceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -83,34 +88,32 @@ class AddFuelingView: UIView {
         totalDistanceTextField.resignFirstResponder()
     }
     
+    //MARK: - 단가 영역
     lazy var priceStackView: UIStackView = {
         let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField])
-        priceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        priceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
         priceStackView.distribution = .fill
         return priceStackView
     }()
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
+        priceLabel.customLabel(text: "단가", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return priceLabel
     }()
     
     lazy var priceTextField: UITextField = {
         let priceTextField = UITextField()
-        priceTextField.historyCustomTextField(placeholder: "ex) 1765", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 35, height: priceTextField.frame.size.height)))
         
-        // placeholder color 적용
-        let placeholderColor = UIColor.systemGray
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
         ]
-        let attributedPlaceholder = NSAttributedString(string: "ex) 1765", attributes: attributes)
-        priceTextField.attributedPlaceholder = attributedPlaceholder
         
-        priceTextField.layer.borderWidth = 1.5
-        priceTextField.layer.cornerRadius = Constants.cornerRadius
-        priceTextField.keyboardType = .decimalPad
+        priceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 1777", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+        priceTextField.rightView?.addSubview(UILabel.wonUnitLabel())
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -143,34 +146,32 @@ class AddFuelingView: UIView {
         priceTextField.resignFirstResponder()
     }
     
+    //MARK: - 수량 영역
     lazy var countStackView: UIStackView = {
         let countStackView = UIStackView(arrangedSubviews: [countLabel, countTextField])
-        countStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        countStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
         countStackView.distribution = .fill
         return countStackView
     }()
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
+        countLabel.customLabel(text: "수량", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return countLabel
     }()
     
     lazy var countTextField: UITextField = {
         let countTextField = UITextField()
-        countTextField.historyCustomTextField(placeholder: "ex) 55.123 / 55", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 30, height: countTextField.frame.size.height)))
         
-        // placeholder color 적용
-        let placeholderColor = UIColor.systemGray
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
         ]
-        let attributedPlaceholder = NSAttributedString(string: "ex) 55.123 / 55", attributes: attributes)
-        countTextField.attributedPlaceholder = attributedPlaceholder
         
-        countTextField.layer.borderWidth = 1.5
-        countTextField.layer.cornerRadius = Constants.cornerRadius
-        countTextField.keyboardType = .decimalPad
+        countTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 55.123 / 55", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+        countTextField.rightView?.addSubview(UILabel.literUnitLabel())
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -184,7 +185,6 @@ class AddFuelingView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeCountTextField))
         
         nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
-        
         nextTextField.isUserInteractionEnabled = true
         countTextField.inputAccessoryView = nextTextField
         
@@ -195,34 +195,32 @@ class AddFuelingView: UIView {
         countTextField.resignFirstResponder()
     }
     
+    //MARK: - 총액 영역
     lazy var totalPriceStackView: UIStackView = {
         let totalPriceStackView = UIStackView(arrangedSubviews: [totalPriceLabel, totalPriceTextField])
-        totalPriceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+        totalPriceStackView.customStackView(spacing: Constants.horizontalMargin, axis: .vertical, alignment: .fill)
         totalPriceStackView.distribution = .fill
         return totalPriceStackView
     }()
     
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
+        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return totalPriceLabel
     }()
     
     lazy var totalPriceTextField: UITextField = {
         let totalPriceTextField = UITextField()
-        totalPriceTextField.historyCustomTextField(placeholder: "ex) 100000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 35, height: totalPriceTextField.frame.size.height)))
         
-        // placeholder color 적용
-        let placeholderColor = UIColor.systemGray
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: placeholderColor, // 텍스트 색상 설정
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
         ]
-        let attributedPlaceholder = NSAttributedString(string: "ex) 100000", attributes: attributes)
-        totalPriceTextField.attributedPlaceholder = attributedPlaceholder
         
-        totalPriceTextField.layer.borderWidth = 1.5
-        totalPriceTextField.layer.cornerRadius = Constants.cornerRadius
-        totalPriceTextField.keyboardType = .decimalPad
+        totalPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 100000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+        totalPriceTextField.rightView?.addSubview(UILabel.wonUnitLabel())
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -236,7 +234,6 @@ class AddFuelingView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeTotalPriceTextField))
         
         nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
-        
         nextTextField.isUserInteractionEnabled = true
         totalPriceTextField.inputAccessoryView = nextTextField
         
@@ -247,34 +244,7 @@ class AddFuelingView: UIView {
         totalPriceTextField.resignFirstResponder()
     }
     
-    // MARK: - 단위 Label
-
-    lazy var kmLabel: UILabel = {
-        let kmLabel = UILabel()
-        kmLabel.customLabel(text: "km", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        return kmLabel
-    }()
-    
-    lazy var wonLabel: UILabel = {
-        let wonLabel = UILabel()
-        wonLabel.customLabel(text: "원", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        return wonLabel
-    }()
-    
-    lazy var lLabel: UILabel = {
-        let lLabel = UILabel()
-        lLabel.customLabel(text: "L", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        return lLabel
-    }()
-    
-    lazy var wonLabel2: UILabel = {
-        let wonLabel2 = UILabel()
-        wonLabel2.customLabel(text: "원", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), alignment: .center)
-        return wonLabel2
-    }()
-    
-    // MARK: - 버튼
-
+    // MARK: - 취소, 저장 버튼 영역
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
@@ -284,14 +254,14 @@ class AddFuelingView: UIView {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()
@@ -306,68 +276,65 @@ class AddFuelingView: UIView {
         setupUI()
     }
     
+    // MARK: - addFuelingView UI 설정
     private func setupUI() {
-        addSubview(addFuelingPageLabel)
-        addSubview(inputFuelingStackView)
-        addSubview(buttonStackView)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(inputFuelingStackView)
+        contentView.addSubview(buttonStackView)
         
-        totalDistanceStackView.addSubview(kmLabel)
-        priceStackView.addSubview(wonLabel)
-        countStackView.addSubview(lLabel)
-        totalPriceStackView.addSubview(wonLabel2)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
         
-        addFuelingPageLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(20)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.height.equalTo(scrollView)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
         }
         
         inputFuelingStackView.snp.makeConstraints { make in
-            make.top.equalTo(addFuelingPageLabel.snp.bottom).offset(30)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
+            make.top.equalTo(contentView.snp.top).offset(Constants.horizontalMargin)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
-        totalDistanceLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
+        totalDistanceStackView.snp.makeConstraints { make in
+            make.top.equalTo(inputFuelingStackView.snp.top).offset(Constants.horizontalMargin * 2)
+            make.leading.equalTo(inputFuelingStackView.snp.leading).offset(Constants.horizontalMargin * 2)
+            make.trailing.equalTo(inputFuelingStackView.snp.trailing).offset(-Constants.horizontalMargin * 2)
         }
         
-        priceLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
+        priceStackView.snp.makeConstraints { make in
+            make.top.equalTo(totalDistanceStackView.snp.bottom).offset(Constants.horizontalMargin * 2)
+            make.leading.equalTo(inputFuelingStackView.snp.leading).offset(Constants.horizontalMargin * 2)
+            make.trailing.equalTo(inputFuelingStackView.snp.trailing).offset(-Constants.horizontalMargin * 2)
         }
         
-        countLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
+        countStackView.snp.makeConstraints { make in
+            make.top.equalTo(priceStackView.snp.bottom).offset(Constants.horizontalMargin * 2)
+            make.leading.equalTo(inputFuelingStackView.snp.leading).offset(Constants.horizontalMargin * 2)
+            make.trailing.equalTo(inputFuelingStackView.snp.trailing).offset(-Constants.horizontalMargin * 2)
         }
         
-        totalPriceLabel.snp.makeConstraints { make in
-            make.width.equalTo(100)
+        totalPriceStackView.snp.makeConstraints { make in
+            make.top.equalTo(countStackView.snp.bottom).offset(Constants.horizontalMargin * 2)
+            make.leading.equalTo(inputFuelingStackView.snp.leading).offset(Constants.horizontalMargin * 2)
+            make.trailing.equalTo(inputFuelingStackView.snp.trailing).offset(-Constants.horizontalMargin * 2)
+            make.bottom.equalTo(inputFuelingStackView.snp.bottom).offset(-Constants.horizontalMargin * 2)
         }
         
-        kmLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(totalDistanceStackView).offset(-Constants.horizontalMargin)
-            make.centerY.equalTo(totalDistanceStackView)
-        }
-        
-        wonLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(priceStackView).offset(-Constants.horizontalMargin)
-            make.centerY.equalTo(priceStackView)
-        }
-        
-        lLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(countStackView).offset(-Constants.horizontalMargin)
-            make.centerY.equalTo(countStackView)
-        }
-        
-        wonLabel2.snp.makeConstraints { make in
-            make.trailing.equalTo(totalPriceStackView).offset(-Constants.horizontalMargin)
-            make.centerY.equalTo(totalPriceStackView)
+        totalPriceTextField.snp.makeConstraints { make in
+            make.bottom.equalTo(inputFuelingStackView.snp.bottom).offset(-Constants.horizontalMargin * 2)
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-40)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
+            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin)
             make.height.equalTo(50)
         }
     }
