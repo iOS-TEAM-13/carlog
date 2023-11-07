@@ -336,7 +336,7 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     func addComment(comment: String) {
-        let timeStamp = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .short)
+        let timeStamp = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .long)
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
@@ -350,7 +350,9 @@ class CommunityDetailPageViewController: UIViewController {
                     print("Error saving comment: \(error.localizedDescription)")
                 } else {
                     print("Comment saved successfully")
-
+                    self.commentData.append(newComment)
+                    self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
+                    
                     DispatchQueue.main.async {
                         self.commentTableView.reloadData()
                         self.updateCommentTableViewHeight()
