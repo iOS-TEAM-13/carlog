@@ -192,6 +192,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         view.isUserInteractionEnabled = false
         navigationItem.leftBarButtonItem?.isEnabled = false
         navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func didTapImagePickerButton() {

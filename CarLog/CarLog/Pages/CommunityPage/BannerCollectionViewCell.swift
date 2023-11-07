@@ -26,6 +26,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
         }
         
         private func setupUI() {
+            contentView.backgroundColor = .backgroundCoustomColor
             contentView.addSubview(bannerImageView)
             bannerImageView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()

@@ -22,10 +22,12 @@ class CommunityPageViewController: UIViewController {
     
     private lazy var communityColletionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 357, height: 321)
+        //layout.itemSize = CGSize(width: UIScreen.bounds.width, height: 321)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.backgroundColor = .backgroundCoustomColor
+        view.layer.cornerRadius = Constants.cornerRadius
+        //view.layer.borderWidth = 1.0
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
@@ -58,6 +60,10 @@ class CommunityPageViewController: UIViewController {
         startBannerTimer()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
+    
     func setupUI() {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
@@ -65,22 +71,22 @@ class CommunityPageViewController: UIViewController {
         
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalToSuperview().offset(Constants.horizontalMargin)
+            make.right.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(80) // 원하는 높이 설정
         }
         
         communityColletionView.snp.makeConstraints { make in
             // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.top.equalTo(bannerCollectionView.snp.bottom).offset(12)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.top.equalTo(bannerCollectionView.snp.bottom).offset(Constants.verticalMargin)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
         
         editFloatingButton.snp.makeConstraints { make in
             make.width.height.equalTo(60)
-            make.rightMargin.equalToSuperview().offset(-17)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
             make.bottom.equalToSuperview().offset(-102)
         }
     }
@@ -186,7 +192,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         if collectionView == bannerCollectionView {
             return CGSize(width: collectionView.frame.width, height: 80)
         } else if collectionView == communityColletionView {
-            return CGSize(width: 357, height: 321)
+            return CGSize(width: collectionView.bounds.width - Constants.horizontalMargin * 4, height: 321)
         }
         return CGSize.zero
     }
