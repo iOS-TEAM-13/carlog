@@ -302,8 +302,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             
             cell.writeDateLabel.text = drivingDummy[indexPath.row].timeStamp ?? ""
             cell.drivingPurposeLabel.text = drivingDummy[indexPath.row].drivingPurpose ?? ""
-            cell.driveDistenceLabel.text = String("\(drivingDummy[indexPath.row].driveDistance ?? 0)km")
-            cell.arriveTotalDistenceLabel.text = String("\(drivingDummy[indexPath.row].arriveDistance ?? 0)km")
+            cell.driveDistenceLabel.text = "\((drivingDummy[indexPath.row].driveDistance ?? 0).stringToInt())km"
+            cell.arriveTotalDistenceLabel.text = "\((drivingDummy[indexPath.row].arriveDistance ?? 0).stringToInt())km"
             
             return cell
             
@@ -314,8 +314,8 @@ extension HistoryPageViewController: UICollectionViewDelegate, UICollectionViewD
             cell.layer.cornerRadius = Constants.cornerRadius * 2
             
             cell.writeDateLabel.text = fuelingDummy[indexPath.row].timeStamp ?? ""
-            cell.priceLabel.text = String("\(fuelingDummy[indexPath.row].price ?? 0)원")
-            cell.totalPriceLabel.text = String("\(fuelingDummy[indexPath.row].totalPrice ?? 0)원")
+            cell.priceLabel.text = "\((fuelingDummy[indexPath.row].price ?? 0).stringToInt())km"
+            cell.totalPriceLabel.text = "\((fuelingDummy[indexPath.row].totalPrice ?? 0).stringToInt())km"
             cell.countLabel.text = String("\(fuelingDummy[indexPath.row].count ?? "")L")
             
             return cell
