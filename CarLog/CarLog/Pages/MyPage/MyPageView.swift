@@ -301,7 +301,7 @@ final class MyPageView: UIView {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
-    
+
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField, checkCarNumberButton, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, checkCarNickNameButton, carTotalDistanceLabel, carTotalDistanceTextField])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
