@@ -274,8 +274,7 @@ class CommunityDetailPageViewController: UIViewController {
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
-        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
-             
+        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }  
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
          //현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
@@ -287,7 +286,7 @@ class CommunityDetailPageViewController: UIViewController {
             actionSheet.addAction(action1)
         } else {
             let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
-                //신고 기능 로직
+                // 신고 기능 로직
                 print("신고 완료")
             }
             let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
@@ -370,6 +369,7 @@ extension CommunityDetailPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         tabBarController?.tabBar.isHidden = true
         
         // 네비게이션 바 버튼 이미지 설정

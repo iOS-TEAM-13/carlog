@@ -22,7 +22,6 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
             imageView.image = image
         }
         return imageView
-       
     }()
     
     lazy var commentImage: UIImageView = {

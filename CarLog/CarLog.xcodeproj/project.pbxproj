@@ -15,6 +15,7 @@
 		139FB53C2AF0E8A6007B605A /* FindIDPassWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */; };
 		139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */; };
 		13A8D8BE2AF909CF00496DCA /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */; };
+		13EB45FE2AF9C7AB00A1A040 /* CommunityDetailPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EB45FD2AF9C7AB00A1A040 /* CommunityDetailPageViewController+.swift */; };
 		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
@@ -120,6 +121,7 @@
 		139FB53B2AF0E8A6007B605A /* FindIDPassWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPassWordViewController.swift; sourceTree = "<group>"; };
 		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
 		13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		13EB45FD2AF9C7AB00A1A040 /* CommunityDetailPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityDetailPageViewController+.swift"; sourceTree = "<group>"; };
 		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -248,6 +250,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		13EB45FC2AF9C75500A1A040 /* DetailCommunityPage */ = {
+			isa = PBXGroup;
+			children = (
+				3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */,
+				13EB45FD2AF9C7AB00A1A040 /* CommunityDetailPageViewController+.swift */,
 		3BF32B422AF9FC5C00007122 /* DetailCommunityPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,6 +500,7 @@
 		FBC712912AD6C8D1006C2BB0 /* CommunityPage */ = {
 			isa = PBXGroup;
 			children = (
+				13EB45FC2AF9C75500A1A040 /* DetailCommunityPage */,
 				3BF32B422AF9FC5C00007122 /* DetailCommunityPage */,
 				FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */,
 				7E7EE0C72AF1E9C400AB4151 /* AddCommunityPage */,
@@ -774,6 +782,7 @@
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
+				13EB45FE2AF9C7AB00A1A040 /* CommunityDetailPageViewController+.swift in Sources */,
 				3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
