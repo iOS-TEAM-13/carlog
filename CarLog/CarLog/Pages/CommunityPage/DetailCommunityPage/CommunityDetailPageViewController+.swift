@@ -90,6 +90,40 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44 // 적당한 추정치를 제공합니다.
+        return 44
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // '삭제' 액션
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, completionHandler in
+            // '삭제'를 눌렀을 때 실행할 코드
+            if let post = self.selectedPost {
+                let commentToDelete = self.commentData[indexPath.row]
+                FirestoreService.firestoreService.removeComment(postID: post.id ?? "", commentID: commentToDelete.id ?? "") { error in
+                    if let error = error {
+                        print("error: \(error.localizedDescription)")
+                    } else {
+                        print("댓글 삭제 성공")
+                        // 여기서 서브컬렉션의 댓글 삭제를 수행하도록 코드를 추가합니다.
+                        FirestoreService.firestoreService.removeCommentInSubcollection(postID: post.id ?? "", commentID: commentToDelete.id ?? "")
+                        self.commentData.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+                }
+            }
+            completionHandler(true)
+        }
+        deleteAction.image = UIImage(named: "trash") // 시스템 아이콘 사용
+        deleteAction.backgroundColor = .backgroundCoustomColor
+        // '신고' 액션
+        let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+            // '신고'를 눌렀을 때 실행할 코드
+            completionHandler(true)
+        }
+        reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
+        reportAction.backgroundColor = .backgroundCoustomColor
+        // 스와이프 액션을 구성합니다.
+        let configuration = UISwipeActionsConfiguration(actions: [reportAction, deleteAction])
+        return configuration
     }
 }

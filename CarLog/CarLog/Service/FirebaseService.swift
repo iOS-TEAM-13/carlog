@@ -150,7 +150,8 @@ final class FirestoreService {
     // MARK: - Comment
 
     func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
-        guard let content = comment.content,
+        guard let id = comment.id,
+                let content = comment.content,
               let userName = comment.userName,
               let userEmail = comment.userEmail,
               let timeStamp = comment.timeStamp
@@ -158,22 +159,12 @@ final class FirestoreService {
 
         let commentsRef = db.collection("posts").document(postID).collection("comments")
         commentsRef.addDocument(data: [
+            "id": id,
             "content": content,
             "userName": userName,
             "userEmail": userEmail,
             "timeStamp": timeStamp
         ]) { error in
-            completion(error)
-        }
-    }
-
-    func saveComment1(comment: Comment, completion: @escaping (Error?) -> Void) {
-        do {
-            let data = try Firestore.Encoder().encode(comment)
-            db.collection("comments").addDocument(data: data) { error in
-                completion(error)
-            }
-        } catch {
             completion(error)
         }
     }
@@ -201,29 +192,34 @@ final class FirestoreService {
             }
         }
     }
-
     
-    func loadComments(completion: @escaping ([Comment]?) -> Void) {
-        db.collection("comments").getDocuments { querySnapshot, error in
+    func removeComment(postID: String, commentID: String, completion: @escaping (Error?) -> Void) {
+        db.collection("posts").document(postID).collection("comments").document(commentID).delete() { error in
             if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
-                completion(nil)
+                print("데이터를 삭제하지 못했습니다.: \(error)")
+                completion(error)
             } else {
-                var comments: [Comment] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
-                        comments.append(comment)
-                    } catch {
-                        completion(nil)
-                        return
-                    }
-                }
-                completion(comments)
+                print("데이터를 성공적으로 삭제했습니다.")
+                completion(nil)
             }
         }
     }
     
+    func removeCommentInSubcollection(postID: String, commentID: String) {
+        let db = Firestore.firestore()
+        let subcollectionRef = db.collection("posts").document(postID).collection("comments")
+        
+        // 서브컬렉션에서 해당 댓글(document)를 삭제합니다.
+        subcollectionRef.document(commentID).delete { error in
+            if let error = error {
+                print("서브컬렉션의 댓글 삭제 실패: \(error.localizedDescription)")
+            } else {
+                print("서브컬렉션의 댓글 삭제 성공")
+            }
+        }
+    }
+
+
     // MARK: - Car
 
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
