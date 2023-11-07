@@ -50,7 +50,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     lazy var collectionViewImage: UIImageView = {
         let imageView = UIImageView()
-        if let image = UIImage(named: "sample2") {
+        if let image = UIImage(systemName: "photo.fill") {
             imageView.image = image
         }
         imageView.contentMode = .scaleAspectFill
@@ -103,8 +103,8 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(collectionViewImage)
         contentView.addSubview(titleLabel)
         contentView.addSubview(mainTextLabel)
-        contentView.backgroundColor = .buttonSkyBlueColor
-        contentView.layer.cornerRadius = Constants.cornerRadius
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = Constants.cornerRadius * 2
         contentView.layer.masksToBounds = true
         
         spanerImage.snp.makeConstraints { make in

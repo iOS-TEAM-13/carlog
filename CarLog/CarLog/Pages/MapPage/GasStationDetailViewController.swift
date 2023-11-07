@@ -197,13 +197,13 @@ class GasStationDetailViewController: UIViewController {
         telLabel.text = gasStation?.tel
             
         if let yellowOilPrice = oilPrices.first(where: { $0.prodcd == "B027" }) {
-            yellowOilPriceLabel.text = "휘발유: \(yellowOilPrice.price)원"
+            yellowOilPriceLabel.text = "휘발유: \(String(yellowOilPrice.price).addedComma())원"
         } else {
             yellowOilPriceLabel.text = "휘발유 정보 없음"
         }
         
         if let greenOilPrice = oilPrices.first(where: { $0.prodcd == "D047" }) {
-            greenOilPriceLabel.text = "경유: \(greenOilPrice.price)원"
+            greenOilPriceLabel.text = "경유: \(String(greenOilPrice.price).addedComma())원"
         } else {
             greenOilPriceLabel.text = "경유 정보 없음"
         }
