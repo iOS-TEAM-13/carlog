@@ -13,7 +13,7 @@ class FindIDPassWordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
         setupUI()
         addTarget()
         
@@ -21,48 +21,49 @@ class FindIDPassWordViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubview(findView.segmentedControl)
-        view.addSubview(findView.findIDView)
-        view.addSubview(findView.reSettingPasswordView)
-        findView.reSettingPasswordView.addSubview(findView.emailTextField)
-        findView.reSettingPasswordView.addSubview(findView.buttonStackView)
+        //view.addSubview(findView.segmentedControl)
+        view.addSubview(findView.passwordLabel)
+        //view.addSubview(findView.findIDView)
+        //view.addSubview(findView.reSettingPasswordView)
+        view.addSubview(findView.emailTextField)
+        view.addSubview(findView.buttonStackView)
         
-        findView.segmentedControl.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+        findView.passwordLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.height.equalTo(60)
+            //make.height.equalTo(60)
         }
         
-        findView.findIDView.snp.makeConstraints { make in
-            make.top.equalTo(findView.segmentedControl.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide)
-            make.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
-        }
+//        findView.findIDView.snp.makeConstraints { make in
+//            make.top.equalTo(findView.passwordLabel.snp.bottom).offset(20)
+//            make.leading.equalTo(view.safeAreaLayoutGuide)
+//            make.trailing.equalTo(view.safeAreaLayoutGuide)
+//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
+//        }
         
-        findView.reSettingPasswordView.snp.makeConstraints { make in
-            make.top.equalTo(findView.segmentedControl.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide)
-            make.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
-        }
+//        findView.reSettingPasswordView.snp.makeConstraints { make in
+//            make.top.equalTo(findView.segmentedControl.snp.bottom).offset(20)
+//            make.leading.equalTo(view.safeAreaLayoutGuide)
+//            make.trailing.equalTo(view.safeAreaLayoutGuide)
+//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
+//        }
         
         findView.emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(findView.reSettingPasswordView.snp.top).offset(Constants.verticalMargin)
-            make.leading.equalTo(findView.reSettingPasswordView.snp.leading).offset(Constants.verticalMargin)
-            make.trailing.equalTo(findView.reSettingPasswordView.snp.trailing).offset(-Constants.verticalMargin)
+            make.top.equalTo(findView.passwordLabel.snp.bottom).offset(Constants.verticalMargin * 2)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.verticalMargin)
         }
         
         findView.buttonStackView.snp.makeConstraints { make in
-            make.bottom.equalTo(findView.reSettingPasswordView.snp.bottom).offset(-Constants.verticalMargin)
-            make.leading.equalTo(findView.reSettingPasswordView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(findView.reSettingPasswordView.snp.trailing).offset(-Constants.horizontalMargin)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.verticalMargin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
         }
     }
     
     private func addTarget() {
-        findView.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        //findView.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         findView.sendButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
         
         findView.popButton.addAction(UIAction(handler: { _ in

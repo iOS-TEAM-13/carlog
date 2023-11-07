@@ -15,7 +15,7 @@ class MyCarDetailPageViewController: UIViewController {
 
     private let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .buttonSkyBlueColor
+        view.backgroundColor = .white
         view.layer.cornerRadius = 20
         return view
     }()
@@ -28,7 +28,7 @@ class MyCarDetailPageViewController: UIViewController {
     
     private lazy var selectedprogressView: UIProgressView = {
         let view = UIProgressView()
-        view.trackTintColor = .white
+        view.trackTintColor = .buttonSkyBlueColor
         view.progressTintColor = .mainNavyColor
         view.progress = 0.1
         return view
@@ -43,7 +43,6 @@ class MyCarDetailPageViewController: UIViewController {
     private let selectedImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.forward")
-        view.tintColor = .mainNavyColor
         return view
     }()
     
@@ -76,7 +75,7 @@ class MyCarDetailPageViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         view.isScrollEnabled = true
         view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
         view.clipsToBounds = true
         view.register(MyCarDetialViewCell.self, forCellWithReuseIdentifier: MyCarDetialViewCell.identifier)
         return view
@@ -92,10 +91,10 @@ class MyCarDetailPageViewController: UIViewController {
     var saveData = Constants.carParts
     
     // MARK: LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
         
         loadCarParts()
         setupUI()
@@ -280,11 +279,11 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
         return true
     }
     
-    func collectionView(_ collectionView: UICollectionView, trailingSwipeActionsConfigurationForItemAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
-            completionHandler(true)
-        }
-        deleteAction.backgroundColor = .red
-        return UISwipeActionsConfiguration(actions: [deleteAction])
-    }
+//    func collectionView(_ collectionView: UICollectionView, trailingSwipeActionsConfigurationForItemAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+//            completionHandler(true)
+//        }
+//        deleteAction.backgroundColor = .red
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
 }

@@ -25,6 +25,7 @@ class FuelingDetailViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
         view.addSubview(fuelingDetailView)
         fuelingDetailView.snp.makeConstraints { make in

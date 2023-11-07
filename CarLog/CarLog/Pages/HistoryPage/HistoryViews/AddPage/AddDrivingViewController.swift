@@ -25,6 +25,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = .backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
         view.addSubview(addDrivingView)
         addDrivingView.snp.makeConstraints { make in
