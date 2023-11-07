@@ -64,7 +64,7 @@ class MyPageViewController: UIViewController {
     }
     
     @objc private func cancelButtonTapped() {
-        // 현재 입력된 내용을 초기값으로 설정
+        // 취소 버튼,현재 입력된 내용을 초기값으로 설정
         myPageView.carNumberTextField.text = carDummy.first?.number
         myPageView.carNameTextField.text = carDummy.first?.name
         myPageView.carMakerTextField.text = carDummy.first?.maker

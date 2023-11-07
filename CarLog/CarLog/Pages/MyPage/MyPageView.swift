@@ -286,13 +286,22 @@ final class MyPageView: UIView {
     
     lazy var personalRegulations: UILabel = {
         let personalRegulations = UILabel()
-        personalRegulations.text = "개인처리방침"
+        personalRegulations.text = "개인정보처리방침"
         personalRegulations.textColor = .lightGray
         personalRegulations.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
         personalRegulations.textAlignment = .center
+        personalRegulations.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
+        personalRegulations.addGestureRecognizer(tap)
         return personalRegulations
     }()
     
+    @objc func tapFunction(sender: UITapGestureRecognizer) {
+        if let url = URL(string: "https://carlog.notion.site/3b018e85e94443da9a8d533525d3cf64?pvs=4") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField, checkCarNumberButton, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, checkCarNickNameButton, carTotalDistanceLabel, carTotalDistanceTextField])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
