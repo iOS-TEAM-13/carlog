@@ -25,6 +25,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = .backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
         view.addSubview(drivingDetailView)
         drivingDetailView.snp.makeConstraints { make in

@@ -46,6 +46,7 @@ class MyCarPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()

@@ -24,6 +24,7 @@ class AddFuelingViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .backgroundCoustomColor
+        navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
         view.addSubview(addFuelingView)
         addFuelingView.snp.makeConstraints { make in
