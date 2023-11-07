@@ -19,6 +19,8 @@ class MapPageViewController: UIViewController {
     var myLatitude: CLLocationDegrees?
     var myLongitude: CLLocationDegrees?
     
+    var data: CustomGasStation?
+    
     private var detailView: UIView!
     
     private lazy var myLocationButton = {
@@ -242,8 +244,14 @@ extension MapPageViewController: MKMapViewDelegate {
             }
         }
         if let data = data {
+//            let vc = GasStationDetailViewController(presentedViewController: MapPageViewController, presenting: , size: 0.4, data: data)
+//            present(vc, animated: true)
+            self.data = data
+            
             let vc = GasStationDetailViewController(data: data)
-            present(vc, animated: true)
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: true, completion: nil)
         }
     }
 }
@@ -273,5 +281,11 @@ extension MapPageViewController: CLLocationManagerDelegate {
         default:
             print("GPS: Default")
         }
+    }
+}
+
+extension MapPageViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.4)
     }
 }
