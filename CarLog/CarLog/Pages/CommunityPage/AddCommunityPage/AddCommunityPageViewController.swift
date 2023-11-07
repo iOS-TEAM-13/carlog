@@ -10,29 +10,22 @@ import SnapKit
 class AddCommunityPageViewController: UIViewController {
     let currentDate = Date()
     
-    //    private let scrollView: UIScrollView = {
-    //        let scrollView = UIScrollView()
-    //        scrollView.backgroundColor = .backgroundCoustomColor
-    //        return scrollView
-    //    }()
-    //
-    //    private let contenView: UIView = {
-    //       let contenView = UIView()
-    //        contenView.backgroundColor = .buttonSkyBlueColor
-    //        return contenView
-    //    }()
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .backgroundCoustomColor
+        return scrollView
+    }()
+    
+    private let contenView: UIView = {
+        let contenView = UIView()
+        contenView.backgroundColor = .buttonSkyBlueColor
+        return contenView
+    }()
     
     // MARK: -
     private let imagePickerView = UIImageView()
-    
-    lazy var imagePickerStackView: UIStackView = {
-        let imagePickerStackView = UIStackView()
-        imagePickerStackView.axis = .horizontal
-        imagePickerStackView.spacing = 10
-        imagePickerStackView.distribution = .fillEqually
-        return imagePickerStackView
-    }()
-    
+    private let secondImageView = UIImageView()
+    private let thirdImageView = UIImageView()
     private let imagePickerButton = UIButton()
     private let numberOfSelectedImageLabel = UILabel()
     private var selectedImages = [UIImage]()
@@ -44,7 +37,7 @@ class AddCommunityPageViewController: UIViewController {
         mainTextField.backgroundColor = .white
         mainTextField.layer.borderColor = UIColor.clear.cgColor
         mainTextField.layer.borderWidth = 0
-        mainTextField.layer.cornerRadius = 15
+        mainTextField.layer.cornerRadius = 13
         mainTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         mainTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTextField.frame.size.height))
         mainTextField.leftViewMode = .always
@@ -52,21 +45,29 @@ class AddCommunityPageViewController: UIViewController {
         return mainTextField
     }()
     
-    let subTextViewPlaceHolder = "택스트를 입력하세요"
+    private let subTextViewPlaceHolder = "택스트를 입력하세요"
     lazy var subTextView: UITextView = {
         let subTextView = UITextView()
         subTextView.textColor = .black
         subTextView.backgroundColor = .white
         subTextView.layer.borderColor = UIColor.clear.cgColor
         subTextView.layer.borderWidth = 0
-        subTextView.layer.cornerRadius = 13
+        subTextView.layer.cornerRadius = 12
         subTextView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
         subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         subTextView.delegate = self
         return subTextView
     }()
     
-    // MARK: -
+    lazy var imagePickerStackView: UIStackView = {
+        let imagePickerStackView = UIStackView()
+        imagePickerStackView.axis = .horizontal
+        imagePickerStackView.spacing = 10
+        imagePickerStackView.distribution = .fillEqually
+        return imagePickerStackView
+    }()
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -78,8 +79,11 @@ class AddCommunityPageViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    // MARK: -
+    // MARK: - Setup
     func setupUI() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contenView)
+        
         [
             mainTextField,
             subTextView,
@@ -89,16 +93,26 @@ class AddCommunityPageViewController: UIViewController {
             numberOfSelectedImageLabel
         ].forEach { view.addSubview($0) }
         
+        // MARK: - Snap kit 제약 잡기
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view)
+        }
+        
+        contenView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(scrollView)
+            make.left.right.equalTo(view)
+        }
+        
         mainTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
+            make.top.equalTo(contenView).offset(Constants.horizontalMargin)
+            make.leading.equalTo(contenView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contenView.snp.trailing).offset(-Constants.horizontalMargin)
         }
         
         subTextView.snp.makeConstraints { make in
             make.top.equalTo(mainTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-Constants.horizontalMargin)
+            make.leading.equalTo(contenView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contenView.snp.trailing).offset(-Constants.horizontalMargin)
             make.height.equalTo(400)
         }
         
@@ -110,8 +124,10 @@ class AddCommunityPageViewController: UIViewController {
         }
         
         imagePickerStackView.snp.makeConstraints { make in
-            make.top.equalTo(subTextView.snp.bottom)
-            make.leading.equalToSuperview()
+            make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin * 7.3)
+            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin * 5)
+            make.height.equalTo(90)
         }
         
         imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -147,9 +163,8 @@ class AddCommunityPageViewController: UIViewController {
     }
     
 }
-
-// ⭐️ navigation barButtons
-extension AddCommunityPageViewController {
+// MARK: - Actions
+extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarButtons
     @objc func didTapLeftBarButton() {
         tabBarController?.tabBar.isHidden = false
         navigationController?.popViewController(animated: true)
@@ -244,26 +259,20 @@ extension AddCommunityPageViewController {
 private extension AddCommunityPageViewController {
     func attribute() {
         view.backgroundColor = .backgroundCoustomColor
+    
+        imagePickerView.addSubview(imagePickerButton)   // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
+        imagePickerButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)  // 플러스 버튼의 속성을 설정
+        imagePickerButton.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
         
-        imagePickerView.addSubview(imagePickerStackView)
-        
-        for _ in 0..<3 {
-            
-            // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
-            imagePickerView.addSubview(imagePickerButton)
-            imagePickerButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)  // 플러스 버튼의 속성을 설정
-            imagePickerButton.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
-            
-            imagePickerView.backgroundColor = .white
-            imagePickerView.clipsToBounds = true // 사진 cornerRadius 적용되게
-            imagePickerView.layer.cornerRadius = 13
-            imagePickerButton.addTarget(
-                self,
-                action: #selector(didTapImagePickerButton),
-                for: .touchUpInside
-            )
-            imagePickerStackView.addArrangedSubview(imagePickerButton)
-        }
+        imagePickerView.backgroundColor = .white
+        imagePickerView.clipsToBounds = true   // 사진 cornerRadius 적용되게
+        imagePickerView.layer.cornerRadius = 12
+        imagePickerButton.addTarget(
+            self,
+            action: #selector(didTapImagePickerButton),
+            for: .touchUpInside
+        )
+        imagePickerStackView.addArrangedSubview(imagePickerButton)
         
         numberOfSelectedImageLabel.text = "\(selectedImages.count)"
         numberOfSelectedImageLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
@@ -274,18 +283,18 @@ private extension AddCommunityPageViewController {
         numberOfSelectedImageLabel.layer.cornerRadius = 12.0
     }
     
-    func setupNavigationBar() {
-        // 폰트와 컬러 설정
+    func setupNavigationBar() { // NavigationBar 폰트와 컬러 설정
+        
         let titleTextAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
             .foregroundColor: UIColor.mainNavyColor
         ]
-        // UINavigationBar의 titleTextAttributes를 설정
-        if let navigationBar = navigationController?.navigationBar {
+        
+        if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
             navigationBar.titleTextAttributes = titleTextAttributes
         }
-        // UINavigationItem의 title 설정
-        navigationItem.title = "새 게시물"
+        
+        navigationItem.title = "새 게시물" // UINavigationItem의 title 설정
         
         let leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
@@ -331,11 +340,31 @@ extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
                         guard let self = self else { return }
                         if let image = image as? UIImage {
                             self.selectedImages.append(image)
-                            DispatchQueue.main.async {
-                                self.imagePickerView.image = image
-                                self.imagePickerView.layer.cornerRadius = Constants.cornerRadius
-                                self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
+                        }
+                        DispatchQueue.main.async { // 사진 1-3장 순서대로 나열(0,1,3 순서대로)
+                            self.imagePickerView.image = self.selectedImages[0]
+                            self.imagePickerView.clipsToBounds = true
+                            self.imagePickerView.layer.cornerRadius = 7
+                            self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
+                            switch self.selectedImages.count {
+                            case 2:
+                                self.imagePickerStackView.addArrangedSubview(self.secondImageView)
+                                self.secondImageView.image = self.selectedImages[1]
+                                self.secondImageView.clipsToBounds = true
+                                self.secondImageView.layer.cornerRadius = 7
+                            case 3:
+                                self.imagePickerStackView.addArrangedSubview(self.secondImageView)
+                                self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
+                                self.secondImageView.image = self.selectedImages[1]
+                                self.secondImageView.clipsToBounds = true
+                                self.secondImageView.layer.cornerRadius = 7
+                                self.thirdImageView.image = self.selectedImages[2]
+                                self.thirdImageView.clipsToBounds = true
+                                self.thirdImageView.layer.cornerRadius = 7
+                            default:
+                                break
                             }
+                            
                         }
                         if error != nil {
                             print("ERROR")
@@ -348,8 +377,7 @@ extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
     }
 }
 
-// ⭐️ UITextViewDelegate
-extension AddCommunityPageViewController: UITextViewDelegate {
+extension AddCommunityPageViewController: UITextViewDelegate { // ⭐️ UITextViewDelegate
     func textViewDidBeginEditing(_ subTextView: UITextView) {
         if subTextView.text == subTextViewPlaceHolder {
             subTextView.text = nil
@@ -363,4 +391,3 @@ extension AddCommunityPageViewController: UITextViewDelegate {
         }
     }
 }
-
