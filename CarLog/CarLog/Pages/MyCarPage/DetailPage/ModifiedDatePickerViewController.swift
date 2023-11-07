@@ -55,7 +55,8 @@ class ModifiedDatePickerViewController: UIViewController {
         
         completeButton.snp.makeConstraints {
             $0.top.equalTo(datePicker.snp.bottom).inset(Constants.verticalMargin)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
+            $0.centerX.equalTo(view)
+            $0.width.equalTo(200)
         }
         if traitCollection.userInterfaceStyle == .dark {
             view.backgroundColor = .mainNavyColor

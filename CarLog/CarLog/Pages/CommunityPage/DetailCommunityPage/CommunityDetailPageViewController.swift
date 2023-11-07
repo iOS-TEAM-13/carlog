@@ -274,13 +274,12 @@ class CommunityDetailPageViewController: UIViewController {
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
-        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
-           
+        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }  
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        // 현재 사용자가 포스트의 작성자가 일치하는지 확인
+         //현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
             let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-                // 삭제 기능 로직
+                //삭제 기능 로직
                 print("삭제 완료")
             }
             action1.setValue(UIColor.red, forKey: "titleTextColor")
@@ -291,7 +290,7 @@ class CommunityDetailPageViewController: UIViewController {
                 print("신고 완료")
             }
             let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                // 차단 기능 로직
+                //차단 기능 로직
                 print("차단 완료")
             }
             action2.setValue(UIColor.red, forKey: "titleTextColor")

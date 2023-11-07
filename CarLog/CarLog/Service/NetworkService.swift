@@ -15,7 +15,7 @@ class NetworkService {
     // 반경 주유소
     func fetchNearbyGasStation(x: String, y: String, sort: String, prodcd: String, completion: @escaping ([String]?) -> Void) {
         // GET 요청을 보낸다
-        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231027298&"
+        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231011278&"
         let query = "x=\(x)&y=\(y)&radius=1000&sort=\(sort)&prodcd=\(prodcd)&out=json"
         let urlString = url + query
         
@@ -29,15 +29,13 @@ class NetworkService {
         }
     }
     
-    // 주소 -> 좌표 변환
-    func changeAddress(address: [String], completion: @escaping ([Address]?) -> Void) {
-        var result = [Address]()
+    func changeAddress(gasStation: [CustomGasStation], completion: @escaping ([CustomGasStation]?) -> Void) {
+        var result = [CustomGasStation]()
         let dispatchGroup = DispatchGroup()
-
-        address.forEach { address in
+        for i in 0...gasStation.count - 1 {
             dispatchGroup.enter()
             let baseURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?"
-            let query = "query=\(address.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
+            let query = "query=\(gasStation[i].address.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
             let urlString = baseURL + query
             
             let headers: HTTPHeaders = [
@@ -47,7 +45,7 @@ class NetworkService {
             AF.request(urlString, headers: headers).responseDecodable(of: Address.self) { response in
                 switch response.result {
                 case .success(let data):
-                    result.append(data)
+                    result.append(CustomGasStation(name: gasStation[i].name, id: gasStation[i].id, tel: gasStation[i].tel, address: gasStation[i].address, carWashYn: gasStation[i].carWashYn, cvsYn: gasStation[i].cvsYn, gisXCoor: Float(data.addresses.first?.x ?? "") ?? 0.0, gisYCoor: Float(data.addresses.first?.y ?? "") ?? 0.0, oilPrice: gasStation[i].oilPrice))
                 case .failure(let error):
                     print(error)
                 }
@@ -68,7 +66,7 @@ class NetworkService {
             idList.forEach { id in
                 dispatchGroup.enter()
 
-                let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231027298&"
+                let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231011278&"
                 let query = "id=\(id)&out=json"
                 let urlString = baseURL + query
 

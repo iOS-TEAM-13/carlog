@@ -51,7 +51,7 @@ class MyCarDetialViewCell: UICollectionViewCell {
         contentView.addSubview(replacedDateLabel)
         
         contentView.layer.cornerRadius = 20
-        contentView.backgroundColor = .buttonSkyBlueColor
+        contentView.backgroundColor = .white
         
         replacedDateLabel.snp.makeConstraints {
             $0.top.leading.equalTo(contentView).inset(Constants.verticalMargin)

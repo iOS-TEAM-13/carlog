@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class AddDrivingView: UIView, UITextFieldDelegate {
-//MARK: - 스크롤뷰 추가
+    //MARK: - 스크롤뷰 추가
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -21,7 +21,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         return contentView
     }()
     
-//MARK: - 주행 기록 페이지 전체 스택뷰
+    //MARK: - 주행 기록 페이지 전체 스택뷰
     lazy var inputDrivingStackView: UIStackView = {
         let inputDrivingStackView = UIStackView(arrangedSubviews: [drivingPurposeStackView, totalDistanceStackView, arriveDistanceStackView, driveDistenceStackView])
         inputDrivingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
@@ -30,7 +30,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         return inputDrivingStackView
     }()
     
-//MARK: - 운행 목적 영역 (추가)
+    //MARK: - 운행 목적 영역
     lazy var drivingPurposeStackView: UIStackView = {
         let drivingPurposeStackView = UIStackView(arrangedSubviews: [drivingPurposeLabel, drivingPurposeTextField])
         drivingPurposeStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -85,7 +85,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         drivingPurposeTextField.resignFirstResponder()
     }
     
-//MARK: - 누적(출발) 주행거리 영역
+    //MARK: - 누적(출발) 주행거리 영역
     lazy var totalDistanceStackView: UIStackView = {
         let totalDistanceStackView = UIStackView(arrangedSubviews: [totalDistanceLabel, totalDistanceTextField])
         totalDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -100,11 +100,11 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     }()
     
     //totalDistanceTextField, totalDistanceAddButton 스택뷰
-//    lazy var totalTextFieldAddButtonStackView: UIStackView = {
-//        let totalTextFieldaddButtonStackView = UIStackView(arrangedSubviews: [totalDistanceTextField, totalDistanceAddButton])
-//        totalTextFieldaddButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-//        return totalTextFieldaddButtonStackView
-//    }()
+    //    lazy var totalTextFieldAddButtonStackView: UIStackView = {
+    //        let totalTextFieldaddButtonStackView = UIStackView(arrangedSubviews: [totalDistanceTextField, totalDistanceAddButton])
+    //        totalTextFieldaddButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+    //        return totalTextFieldaddButtonStackView
+    //    }()
     
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
@@ -116,7 +116,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         ]
         
         totalDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
-
+        
         totalDistanceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
         let nextTextField = UIToolbar()
@@ -150,17 +150,17 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     }
     
     //totalDistanceAddButton
-//    lazy var totalDistanceAddButton: UIButton = {
-//        let totalDistanceAddButton = UIButton()
-//        var config = UIButton.Configuration.filled()
-//        config.cornerStyle = .medium
-//        config.baseBackgroundColor = .mainNavyColor
-//        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
-//        totalDistanceAddButton.configuration = config
-//        return totalDistanceAddButton
-//    }()
+    //    lazy var totalDistanceAddButton: UIButton = {
+    //        let totalDistanceAddButton = UIButton()
+    //        var config = UIButton.Configuration.filled()
+    //        config.cornerStyle = .medium
+    //        config.baseBackgroundColor = .mainNavyColor
+    //        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
+    //        totalDistanceAddButton.configuration = config
+    //        return totalDistanceAddButton
+    //    }()
     
-//MARK: - 도착 주행거리 영역
+    //MARK: - 도착 주행거리 영역
     lazy var arriveDistanceStackView: UIStackView = {
         let arriveDistanceStackView = UIStackView(arrangedSubviews: [arriveDistanceLabel, arriveDistanceTextField])
         arriveDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -175,11 +175,11 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     }()
     
     //arriveDistanceTextField, arriveDistanceAddButton 스택뷰
-//    lazy var arriveTextFieldAddButtonStackView: UIStackView = {
-//        let arriveTextFieldAddButtonStackView = UIStackView(arrangedSubviews: [arriveDistanceTextField, arriveDistanceAddButton])
-//        arriveTextFieldAddButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-//        return arriveTextFieldAddButtonStackView
-//    }()
+    //    lazy var arriveTextFieldAddButtonStackView: UIStackView = {
+    //        let arriveTextFieldAddButtonStackView = UIStackView(arrangedSubviews: [arriveDistanceTextField, arriveDistanceAddButton])
+    //        arriveTextFieldAddButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
+    //        return arriveTextFieldAddButtonStackView
+    //    }()
     
     lazy var arriveDistanceTextField: UITextField = {
         let arriveDistanceTextField = UITextField()
@@ -191,7 +191,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         ]
         
         arriveDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
-
+        
         arriveDistanceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
         let nextTextField = UIToolbar()
@@ -217,17 +217,17 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     }
     
     //arriveDistanceAddButton
-//    lazy var arriveDistanceAddButton: UIButton = {
-//        let arriveDistanceAddButton = UIButton()
-//        var config = UIButton.Configuration.filled()
-//        config.cornerStyle = .medium
-//        config.baseBackgroundColor = .mainNavyColor
-//        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
-//        arriveDistanceAddButton.configuration = config
-//        return arriveDistanceAddButton
-//    }()
+    //    lazy var arriveDistanceAddButton: UIButton = {
+    //        let arriveDistanceAddButton = UIButton()
+    //        var config = UIButton.Configuration.filled()
+    //        config.cornerStyle = .medium
+    //        config.baseBackgroundColor = .mainNavyColor
+    //        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
+    //        arriveDistanceAddButton.configuration = config
+    //        return arriveDistanceAddButton
+    //    }()
     
-//MARK: - 주행거리 영역
+    //MARK: - 주행거리 영역
     lazy var driveDistenceStackView: UIStackView = {
         let driveDistenceStackView = UIStackView(arrangedSubviews: [driveDistenceLabel, driveDistenceTextField])
         driveDistenceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -251,7 +251,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         ]
         
         driveDistenceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
-
+        
         driveDistenceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
         let nextTextField = UIToolbar()
@@ -276,7 +276,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         driveDistenceTextField.resignFirstResponder()
     }
     
-// MARK: - 취소, 저장 버튼 영역
+    // MARK: - 취소, 저장 버튼 영역
     lazy var buttonStackView: UIStackView = {
         let buttonStackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
         buttonStackView.customStackView(spacing: 60, axis: .horizontal, alignment: .fill)
@@ -286,14 +286,14 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     
     lazy var saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        saveButton.customButton(text: "저장", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         saveButton.layer.cornerRadius = Constants.cornerRadius
         return saveButton
     }()
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        cancelButton.customButton(text: "취소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         cancelButton.layer.cornerRadius = Constants.cornerRadius
         return cancelButton
     }()
@@ -308,7 +308,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         setupUI()
     }
     
-// MARK: - addDrivingView UI 설정
+    // MARK: - addDrivingView UI 설정
     private func setupUI() {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -351,7 +351,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
             make.leading.equalTo(inputDrivingStackView.snp.leading).offset(Constants.horizontalMargin * 2)
             make.trailing.equalTo(inputDrivingStackView.snp.trailing).offset(-Constants.horizontalMargin * 2)
         }
-
+        
         driveDistenceStackView.snp.makeConstraints { make in
             make.top.equalTo(arriveDistanceStackView.snp.bottom).offset(Constants.horizontalMargin * 2)
             make.leading.equalTo(inputDrivingStackView.snp.leading).offset(Constants.horizontalMargin * 2)
@@ -364,9 +364,9 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-40)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
+            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin)
             make.height.equalTo(50)
         }
     }

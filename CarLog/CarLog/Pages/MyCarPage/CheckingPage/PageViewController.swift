@@ -88,7 +88,7 @@ class PageViewController: UIViewController {
             let temp = [view.firstAnswerButton, view.secondAnswerButton, view.thirdAnswerButton, view.fourthAnswerButton, view.fifthAnswerButton]
             temp.forEach { item in
                 item.backgroundColor = .buttonSkyBlueColor
-                item.setTitleColor(.black, for: .normal)
+                item.setTitleColor(.mainNavyColor, for: .normal)
             }
             switch sender.tag {
             case 1:
@@ -161,7 +161,7 @@ class PageViewController: UIViewController {
         if let view = insuranceView {
             [view.calendarView.january, view.calendarView.february, view.calendarView.march, view.calendarView.april, view.calendarView.may, view.calendarView.june, view.calendarView.july, view.calendarView.august, view.calendarView.september, view.calendarView.october, view.calendarView.november, view.calendarView.december].forEach { item in
                 item.backgroundColor = .buttonSkyBlueColor
-                item.setTitleColor(.black, for: .normal)
+                item.setTitleColor(.mainNavyColor, for: .normal)
             }
             if let text = sender.titleLabel?.text {
                 for i in 0...Constants.carParts.parts.count - 1 {
