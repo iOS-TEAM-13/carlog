@@ -7,6 +7,8 @@
 
 import UIKit
 
+import FirebaseAuth
+
 extension CommunityDetailPageViewController {}
 
 extension CommunityDetailPageViewController: UITextViewDelegate {
@@ -77,7 +79,6 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         let comment = commentData[indexPath.row]
 
         print("comment: \(comment)")
-
         cell.userNameLabel.text = comment.userName
         cell.commentLabel.text = comment.content
 
@@ -95,23 +96,34 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // '삭제' 액션
-        let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, completionHandler in
-            // '삭제'를 눌렀을 때 실행할 코드
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             if let post = self.selectedPost {
-                let commentToDelete = self.commentData[indexPath.row]
-                FirestoreService.firestoreService.removeComment(postID: post.id ?? "", commentID: commentToDelete.id ?? "") { error in
+                let userIDToMatch = Auth.auth().currentUser?.email
+                let commentsRef = FirestoreService.firestoreService.db.collection("posts").document(post.id ?? "").collection("comments")
+
+                commentsRef.whereField("userEmail", isEqualTo: userIDToMatch ?? "").getDocuments { querySnapshot, error in
                     if let error = error {
-                        print("error: \(error.localizedDescription)")
+                        print("Error getting documents: \(error.localizedDescription)")
+                    } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
+                        for document in querySnapshot.documents {
+                            let commentID = document.documentID
+                            print("Deleting comment with id: \(commentID)")
+                            document.reference.delete { error in
+                                if let error = error {
+                                    print("Error: \(error.localizedDescription)")
+                                } else {
+                                    print("댓글이 성공적으로 삭제됨")
+                                    self.commentData.remove(at: indexPath.row)
+                                    tableView.deleteRows(at: [indexPath], with: .fade)
+                                }
+                            }
+                            break
+                        }
                     } else {
-                        print("댓글 삭제 성공")
-                        // 여기서 서브컬렉션의 댓글 삭제를 수행하도록 코드를 추가합니다.
-                        FirestoreService.firestoreService.removeCommentInSubcollection(postID: post.id ?? "", commentID: commentToDelete.id ?? "")
-                        self.commentData.remove(at: indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        print("문서가 없음")
                     }
                 }
             }
-            completionHandler(true)
         }
         deleteAction.image = UIImage(named: "trash") // 시스템 아이콘 사용
         deleteAction.backgroundColor = .backgroundCoustomColor
