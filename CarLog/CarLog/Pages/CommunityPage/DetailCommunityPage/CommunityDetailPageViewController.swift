@@ -274,31 +274,34 @@ class CommunityDetailPageViewController: UIViewController {
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
-        // guard let user = currentUser, let post = currentPost else { return }
-             
+        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
+           
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
-//        if post.userEmail == user.email {
-//            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-//                print("신고 완료")
-//            }
-//            action1.setValue(UIColor.red, forKey: "titleTextColor")
-//            actionSheet.addAction(action1)
-//        } else {
-//            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
-//                print("차단 완료")
-//            }
-//            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
-//                print("차단 완료")
-//            }
-//            action2.setValue(UIColor.red, forKey: "titleTextColor")
-//            action3.setValue(UIColor.red, forKey: "titleTextColor")
-//            actionSheet.addAction(action2)
-//            actionSheet.addAction(action3)
-//        }
-//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-//        actionSheet.addAction(cancelAction)
-//        present(actionSheet, animated: true, completion: nil)
+        if post.userEmail == user.email {
+            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
+                // 삭제 기능 로직
+                print("삭제 완료")
+            }
+            action1.setValue(UIColor.red, forKey: "titleTextColor")
+            actionSheet.addAction(action1)
+        } else {
+            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
+                // 신고 기능 로직
+                print("신고 완료")
+            }
+            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
+                // 차단 기능 로직
+                print("차단 완료")
+            }
+            action2.setValue(UIColor.red, forKey: "titleTextColor")
+            action3.setValue(UIColor.red, forKey: "titleTextColor")
+            actionSheet.addAction(action2)
+            actionSheet.addAction(action3)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        present(actionSheet, animated: true, completion: nil)
     }
     
     // 좋아요 버튼 눌렀을 떄 동작 구현
@@ -378,6 +381,7 @@ extension CommunityDetailPageViewController {
         photoCollectionView.isPagingEnabled = true
         
         setupUI()
+        setupNavigationBarButton()
         loadPost()
         loadComments()
         commentTextViewPlaceholder()
@@ -386,6 +390,18 @@ extension CommunityDetailPageViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateCommentTableViewHeight()
+    }
+    
+    private func setupNavigationBarButton() {
+        navigationController?.navigationBar.tintColor = .mainNavyColor
+        if let backImage = UIImage(systemName: "chevron.left") {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(didTapLeftBarButton))
+        }
+    }
+       
+    @objc func didTapLeftBarButton() {
+        tabBarController?.tabBar.isHidden = false
+        navigationController?.popViewController(animated: true)
     }
 
     private func loadPost() {
