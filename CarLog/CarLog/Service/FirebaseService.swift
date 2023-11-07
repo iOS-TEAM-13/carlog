@@ -111,26 +111,28 @@ final class FirestoreService {
     }
     
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
-        db.collection("posts").getDocuments { querySnapshot, error in
-            if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
-                completion(nil)
-            } else {
-                var posts: [Post] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let post = try Firestore.Decoder().decode(Post.self, from: document.data())
-                        posts.append(post)
-                    } catch {
-                        completion(nil)
-                        return
+        db.collection("posts")
+            .order(by: "timeStamp", descending: true) // "timeStamp" 필드를 내림차순으로 정렬
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("데이터를 가져오지 못했습니다: \(error)")
+                    completion(nil)
+                } else {
+                    var posts: [Post] = []
+                    for document in querySnapshot?.documents ?? [] {
+                        do {
+                            let post = try Firestore.Decoder().decode(Post.self, from: document.data())
+                            posts.append(post)
+                        } catch {
+                            completion(nil)
+                            return
+                        }
                     }
+                    completion(posts)
                 }
-                completion(posts)
             }
-        }
     }
-    
+
     func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
         Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
             if let error = error {
@@ -151,7 +153,7 @@ final class FirestoreService {
 
     func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
         guard let id = comment.id,
-                let content = comment.content,
+              let content = comment.content,
               let userName = comment.userName,
               let userEmail = comment.userEmail,
               let timeStamp = comment.timeStamp
@@ -172,18 +174,18 @@ final class FirestoreService {
     func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
         let commentsRef = db.collection("posts").document(postID).collection("comments")
         
-        // 원하는 쿼리 조건을 추가합니다. 예를 들어, timeStamp를 기준으로 정렬하거나 필터링할 수 있습니다.
-        commentsRef.order(by: "timeStamp", descending: true).getDocuments { (querySnapshot, error) in
+        commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
             if let error = error {
                 completion(nil, error)
             } else {
                 var comments: [Comment] = []
                 for document in querySnapshot!.documents {
-                    if let data = document.data() as? [String: Any],
-                       let content = data["content"] as? String,
+                    let data = document.data()
+                    if let content = data["content"] as? String,
                        let userName = data["userName"] as? String,
                        let userEmail = data["userEmail"] as? String,
-                       let timeStamp = data["timeStamp"] as? String {
+                       let timeStamp = data["timeStamp"] as? String
+                    {
                         let comment = Comment(id: UUID().uuidString, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
                         comments.append(comment)
                     }
@@ -194,7 +196,7 @@ final class FirestoreService {
     }
     
     func removeComment(postID: String, commentID: String, completion: @escaping (Error?) -> Void) {
-        db.collection("posts").document(postID).collection("comments").document(commentID).delete() { error in
+        db.collection("posts").document(postID).collection("comments").document(commentID).delete { error in
             if let error = error {
                 print("데이터를 삭제하지 못했습니다.: \(error)")
                 completion(error)
@@ -218,7 +220,6 @@ final class FirestoreService {
             }
         }
     }
-
 
     // MARK: - Car
 

@@ -22,12 +22,10 @@ class CommunityPageViewController: UIViewController {
     
     private lazy var communityColletionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        //layout.itemSize = CGSize(width: UIScreen.bounds.width, height: 321)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.backgroundColor = .backgroundCoustomColor
         view.layer.cornerRadius = Constants.cornerRadius
-        //view.layer.borderWidth = 1.0
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
@@ -55,15 +53,14 @@ class CommunityPageViewController: UIViewController {
         communityColletionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
         communityColletionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
         
+        communityColletionView.dataSource = self
+        communityColletionView.delegate = self
+        
         setupUI()
         loadPostFromFireStore()
         startBannerTimer()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
+
     func setupUI() {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
@@ -99,28 +96,8 @@ class CommunityPageViewController: UIViewController {
     private func loadPostFromFireStore() {
         FirestoreService.firestoreService.loadPosts { posts in
             if let posts = posts {
-                for post in posts {
-                    if let id = post.id,
-                       let title = post.title,
-                       let content = post.content,
-                       let userEmail = post.userEmail,
-                       let timeStamp = post.timeStamp
-                    {
-                        let imageURLs = post.image.compactMap { $0 }
-                        let loadedPost = Post(
-                            id: id,
-                            title: title,
-                            content: content,
-                            image: imageURLs,
-                            userEmail: userEmail,
-                            timeStamp: timeStamp
-                        )
-                        self.items.append(loadedPost)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.communityColletionView.reloadData()
-                }
+                self.items = posts
+                self.communityColletionView.reloadData()
             } else {
                 print("데이터를 가져오는 중 오류 발생")
             }
