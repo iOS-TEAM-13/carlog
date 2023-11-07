@@ -39,32 +39,21 @@ final class MyPageView: UIView {
         return editButton
     }()
     
-    // MARK: -
-    //    텍스트 폰트에 따른 언더라인 수정
-    lazy var myWritingButton: UIButton = {
-        let myWritingButton = UIButton()
-        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
-        return myWritingButton
+    lazy var cancelButton: UIButton = {
+        let cancelButton = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
+        let image = UIImage(systemName: "xmark.circle", withConfiguration: imageConfig)
+        cancelButton.setImage(image, for: .normal)
+        cancelButton.tintColor = .black
+        cancelButton.isHidden = true
+        return cancelButton
     }()
     
-//    lazy var myWritingButton: UIButton = {
-//        let myWritingButton = UIButton()
-//        myWritingButton.UILabel.titleLabel = "내가 작성한 글"
-//        myWritingButton.subtitleLabel = "12개"
-//        myWritingButton.backgroundColor = .buttonSkyBlueColor
-//        return myWritingButton
-//    }()
-    
+    // MARK: -
+    //    텍스트 폰트에 따른 언더라인 수정
     //    lazy var myWritingButton: UIButton = {
     //        let myWritingButton = UIButton()
-    //        var attributedTitle = AttributedString("타이틀")
-    //              attributedTitle.font = .systemFont(ofSize: 25, weight: .bold)
-    //              attributedTitle.foregroundColor = UIColor.black
-    //              let paragraphTitle = NSMutableParagraphStyle()
-    //              paragraphTitle.lineSpacing = 0.3 * (attributedTitle.font?.lineHeight ?? 1)
-    //              paragraphTitle.lineBreakStrategy = .hangulWordPriority\
-    //              attributedTitle.paragraphStyle = paragraphTitle
-    //        myWritingButton.attributedTitle = attributedTitle
+    //        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
     //        return myWritingButton
     //    }()
     
@@ -75,7 +64,6 @@ final class MyPageView: UIView {
         carNumberLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         return carNumberLabel
     }()
-    
     
     lazy var carNumberTextField: UITextField = {
         let carNumbertextField = UITextField()
@@ -91,6 +79,17 @@ final class MyPageView: UIView {
         toolbar.isUserInteractionEnabled = true
         carNumbertextField.inputAccessoryView = toolbar
         return carNumbertextField
+    }()
+    
+    lazy var checkCarNumberButton: UIButton = {
+        var configuration = UIButton.Configuration.tinted()
+        configuration.baseBackgroundColor = .white
+        configuration.imagePadding = 10
+        
+        let checkCarNumberButton = UIButton(configuration: configuration)
+        checkCarNumberButton.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+        checkCarNumberButton.isHidden = true
+        return checkCarNumberButton
     }()
     
     lazy var carNameLabel: UILabel = {
@@ -189,6 +188,17 @@ final class MyPageView: UIView {
         return carNickNametextField
     }()
     
+    lazy var checkCarNickNameButton: UIButton = {
+        var configuration = UIButton.Configuration.tinted()
+        configuration.baseBackgroundColor = .white
+        configuration.imagePadding = 10
+        
+        let checkCarNickNameButton = UIButton(configuration: configuration)
+        checkCarNickNameButton.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+        checkCarNickNameButton.isHidden = true
+        return checkCarNickNameButton
+    }()
+    
     lazy var carTotalDistanceLabel: UILabel = {
         let carTotalDistanceLabel = UILabel()
         carTotalDistanceLabel.text = "최종 주행거리"
@@ -274,8 +284,17 @@ final class MyPageView: UIView {
         return verLabel
     }()
     
+    lazy var personalRegulations: UILabel = {
+        let personalRegulations = UILabel()
+        personalRegulations.text = "개인처리방침"
+        personalRegulations.textColor = .lightGray
+        personalRegulations.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        personalRegulations.textAlignment = .center
+        return personalRegulations
+    }()
+    
     lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [myWritingButton, carNumberLabel, carNumberTextField, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, carTotalDistanceLabel, carTotalDistanceTextField])
+        let stackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField, checkCarNumberButton, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, checkCarNickNameButton, carTotalDistanceLabel, carTotalDistanceTextField])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
@@ -292,14 +311,16 @@ final class MyPageView: UIView {
     // MARK: -
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
-
+        
         contentView.addSubview(mainTitleLabel)
         contentView.addSubview(editButton)
+        contentView.addSubview(cancelButton)
         contentView.addSubview(carNumberLabel)
         contentView.addSubview(stackView)
         contentView.addSubview(myPageDesignStackView)
         contentView.addSubview(phoneCallButton)
         contentView.addSubview(verLabel)
+        contentView.addSubview(personalRegulations)
         scrollView.addSubview(contentView)
         addSubview(scrollView)
         
@@ -315,7 +336,6 @@ final class MyPageView: UIView {
         }
         
         scrollView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
             make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().offset(10)
             make.leading.equalToSuperview()
@@ -339,9 +359,40 @@ final class MyPageView: UIView {
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
-        myWritingButton.snp.makeConstraints { make in
-            make.width.equalTo(80)
-            make.height.equalTo(60)
+        cancelButton.snp.makeConstraints { make in
+            make.top.equalTo(contentView)
+            make.trailing.equalTo(editButton.snp.trailing).offset(-Constants.horizontalMargin * 3)
+        }
+        
+        //        myWritingButton.snp.makeConstraints { make in
+        //            make.width.equalTo(80)
+        //            make.height.equalTo(60)
+        //        }
+        
+        carNumberTextField.snp.makeConstraints { make in
+            make.top.equalTo(carNumberLabel.snp.bottom).offset(Constants.horizontalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.width.equalTo(contentView).multipliedBy(0.75)
+        }
+
+        checkCarNumberButton.snp.makeConstraints { make in
+            make.top.equalTo(carNumberTextField)
+            make.leading.equalTo(carNumberTextField.snp.trailing).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
+            make.width.equalTo(contentView).multipliedBy(0.25)
+        }
+
+        carNickNameTextField.snp.makeConstraints { make in
+            make.top.equalTo(carNickNameLabel.snp.bottom).offset(Constants.horizontalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.width.equalTo(contentView).multipliedBy(0.75)
+        }
+        
+        checkCarNickNameButton.snp.makeConstraints { make in
+            make.top.equalTo(carNickNameTextField)
+            make.leading.equalTo(carNickNameTextField.snp.trailing).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
+            make.width.equalTo(contentView).multipliedBy(0.25)
         }
         
         stackView.snp.makeConstraints { make in
@@ -351,19 +402,25 @@ final class MyPageView: UIView {
         }
         
         myPageDesignStackView.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 4.5)
+            make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 5)
             make.leading.equalTo(contentView.snp.leading).offset(UIScreen.main.bounds.width * 0.3)
             make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
         }
         
         phoneCallButton.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 2)
+            make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 3.5)
             make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(CGSize(width: 55, height: 55))
         }
         
         verLabel.snp.makeConstraints { make in
-            make.top.equalTo(myPageDesignStackView.snp.bottom).offset(5)
+            make.top.equalTo(myPageDesignStackView.snp.bottom).offset(7)
+            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+        }
+        
+        personalRegulations.snp.makeConstraints { make in
+            make.top.equalTo(verLabel.snp.bottom).offset(5)
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
