@@ -25,7 +25,7 @@ class CommunityPageViewController: UIViewController {
         layout.itemSize = CGSize(width: 357, height: 321)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundCoustomColor
         view.clipsToBounds = true
         view.dataSource = self
         view.delegate = self
@@ -201,11 +201,14 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
 
     // 셀 클릭 시 화면 전환
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == communityColletionView {
-            let detailViewController = CommunityDetailPageViewController() // DetailPageViewController는 상세 페이지를 나타내는 뷰 컨트롤러입니다.
-            // 필요하다면 detailViewController에 데이터 전달
-            // 예: detailViewController.item = items[indexPath.item]
-            navigationController?.pushViewController(detailViewController, animated: true)
-        }
-    }
+           if collectionView == communityColletionView {
+               let detailViewController = CommunityDetailPageViewController()
+
+               // 선택한 포스트를 가져와서 detailViewController에 설정
+               let selectedPost = items[indexPath.item]
+               detailViewController.selectedPost = selectedPost
+
+               navigationController?.pushViewController(detailViewController, animated: true)
+           }
+       }
 }

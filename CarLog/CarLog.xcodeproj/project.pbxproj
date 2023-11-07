@@ -24,6 +24,7 @@
 		3BF32B2F2AF0AE7200007122 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B2E2AF0AE7200007122 /* BannerCollectionViewCell.swift */; };
 		3BF32B312AF1E9B100007122 /* CommunityDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */; };
 		3BF32B332AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */; };
+		3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B432AF9FCCE00007122 /* CommunityDetailPageViewController+.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */; };
 		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
@@ -128,6 +129,7 @@
 		3BF32B2E2AF0AE7200007122 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailPageViewController.swift; sourceTree = "<group>"; };
 		3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailCollectionViewCell.swift; sourceTree = "<group>"; };
+		3BF32B432AF9FCCE00007122 /* CommunityDetailPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityDetailPageViewController+.swift"; sourceTree = "<group>"; };
 		7667BEE61F719035220D9C64 /* Pods_CarLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E08D8852AD948B500998E27 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		7E62C9B92AE4F38600391BB1 /* SpoqaHanSansNeo-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Medium.otf"; sourceTree = "<group>"; };
@@ -244,6 +246,17 @@
 				7667BEE61F719035220D9C64 /* Pods_CarLog.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3BF32B422AF9FC5C00007122 /* DetailCommunityPage */ = {
+			isa = PBXGroup;
+			children = (
+				3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */,
+				3BF32B432AF9FCCE00007122 /* CommunityDetailPageViewController+.swift */,
+				3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */,
+				13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */,
+			);
+			path = DetailCommunityPage;
 			sourceTree = "<group>";
 		};
 		6A16AD271443849B1BCBAC62 /* Pods */ = {
@@ -480,14 +493,12 @@
 		FBC712912AD6C8D1006C2BB0 /* CommunityPage */ = {
 			isa = PBXGroup;
 			children = (
+				3BF32B422AF9FC5C00007122 /* DetailCommunityPage */,
 				FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */,
 				7E7EE0C72AF1E9C400AB4151 /* AddCommunityPage */,
 				3BF21A4D2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift */,
 				3BF21A4F2AEF830D0063822A /* EditPageViewController.swift */,
 				3BF32B2E2AF0AE7200007122 /* BannerCollectionViewCell.swift */,
-				3BF32B302AF1E9B100007122 /* CommunityDetailPageViewController.swift */,
-				3BF32B322AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift */,
-				13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */,
 			);
 			path = CommunityPage;
 			sourceTree = "<group>";
@@ -763,6 +774,7 @@
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
+				3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */,

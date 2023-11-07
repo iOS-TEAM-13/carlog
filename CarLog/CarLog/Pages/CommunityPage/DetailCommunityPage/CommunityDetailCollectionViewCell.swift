@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 
 class CommunityDetailCollectionViewCell: UICollectionViewCell {
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -35,10 +35,5 @@ class CommunityDetailCollectionViewCell: UICollectionViewCell {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-       
-    func configure(with imageName: String) {
-        imageView.image = UIImage(named: imageName)
-        pageControl.numberOfPages = imageName.count
     }
 }

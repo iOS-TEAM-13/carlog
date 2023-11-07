@@ -132,55 +132,94 @@ final class FirestoreService {
     }
     
     func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
-            Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("Error getting documents: \(error)")
-                    completion(nil)
+        Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(nil)
+            } else {
+                if let document = querySnapshot?.documents.first {
+                    let nickName = document.data()["nickName"] as? String
+                    completion(nickName)
                 } else {
-                    if let document = querySnapshot?.documents.first {
-                        let nickName = document.data()["nickName"] as? String
-                        completion(nickName)
-                    } else {
-                        completion(nil)
-                    }
+                    completion(nil)
                 }
             }
         }
+    }
     
     // MARK: - Comment
 
-    func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
-        do {
-            let data = try Firestore.Encoder().encode(comment)
-            db.collection("comments").addDocument(data: data) { error in
-                completion(error)
-            }
-        } catch {
+    func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
+        guard let id = comment.id,
+                let content = comment.content,
+              let userName = comment.userName,
+              let userEmail = comment.userEmail,
+              let timeStamp = comment.timeStamp
+        else { return }
+
+        let commentsRef = db.collection("posts").document(postID).collection("comments")
+        commentsRef.addDocument(data: [
+            "id": id,
+            "content": content,
+            "userName": userName,
+            "userEmail": userEmail,
+            "timeStamp": timeStamp
+        ]) { error in
             completion(error)
         }
     }
     
-    func loadComments(completion: @escaping ([Comment]?) -> Void) {
-        db.collection("comments").getDocuments { querySnapshot, error in
+    func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
+        let commentsRef = db.collection("posts").document(postID).collection("comments")
+        
+        // 원하는 쿼리 조건을 추가합니다. 예를 들어, timeStamp를 기준으로 정렬하거나 필터링할 수 있습니다.
+        commentsRef.order(by: "timeStamp", descending: true).getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
-                completion(nil)
+                completion(nil, error)
             } else {
                 var comments: [Comment] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
+                for document in querySnapshot!.documents {
+                    if let data = document.data() as? [String: Any],
+                       let content = data["content"] as? String,
+                       let userName = data["userName"] as? String,
+                       let userEmail = data["userEmail"] as? String,
+                       let timeStamp = data["timeStamp"] as? String {
+                        let comment = Comment(id: UUID().uuidString, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
                         comments.append(comment)
-                    } catch {
-                        completion(nil)
-                        return
                     }
                 }
-                completion(comments)
+                completion(comments, nil)
             }
         }
     }
     
+    func removeComment(postID: String, commentID: String, completion: @escaping (Error?) -> Void) {
+        db.collection("posts").document(postID).collection("comments").document(commentID).delete() { error in
+            if let error = error {
+                print("데이터를 삭제하지 못했습니다.: \(error)")
+                completion(error)
+            } else {
+                print("데이터를 성공적으로 삭제했습니다.")
+                completion(nil)
+            }
+        }
+    }
+    
+    func removeCommentInSubcollection(postID: String, commentID: String) {
+        let db = Firestore.firestore()
+        let subcollectionRef = db.collection("posts").document(postID).collection("comments")
+        
+        // 서브컬렉션에서 해당 댓글(document)를 삭제합니다.
+        subcollectionRef.document(commentID).delete { error in
+            if let error = error {
+                print("서브컬렉션의 댓글 삭제 실패: \(error.localizedDescription)")
+            } else {
+                print("서브컬렉션의 댓글 삭제 성공")
+            }
+        }
+    }
+
+
     // MARK: - Car
 
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
