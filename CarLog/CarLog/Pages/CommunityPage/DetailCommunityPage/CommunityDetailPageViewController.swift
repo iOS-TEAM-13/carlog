@@ -248,7 +248,7 @@ class CommunityDetailPageViewController: UIViewController {
             make.top.equalTo(line.snp.bottom).offset(20)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-12)
+            make.bottomMargin.equalToSuperview()
         }
         // 댓글 레이아웃
         containerView.snp.makeConstraints { make in
@@ -333,7 +333,7 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height)
+            make.height.equalTo(contentSize.height * 1.5 + 50)
         }
     }
     

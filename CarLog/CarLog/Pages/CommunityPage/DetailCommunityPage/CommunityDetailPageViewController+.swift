@@ -79,7 +79,6 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         let comment = commentData[indexPath.row]
 
         print("comment: \(comment)")
-
         cell.userNameLabel.text = comment.userName
         cell.commentLabel.text = comment.content
 
