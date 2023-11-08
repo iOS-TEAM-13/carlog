@@ -21,11 +21,48 @@ class AddCommunityPageViewController: UIViewController {
     }()
     
     // MARK: -
-    private let imagePickerView = UIImageView()
-    private let secondImageView = UIImageView()
-    private let thirdImageView = UIImageView()
-    private let imagePickerButton = UIButton()
-    private let numberOfSelectedImageLabel = UILabel()
+
+    private let imagePickerView: UIImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .white
+        view.clipsToBounds = true // 사진 cornerRadius 적용되게
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private let secondImageView: UIImageView = {
+        let view = UIImageView()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private let thirdImageView: UIImageView = {
+        let view = UIImageView()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private let imagePickerButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal) // 플러스 버튼의 속성을 설정
+        btn.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
+        return btn
+    }()
+    
+    lazy var numberOfSelectedImageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(selectedImages.count)"
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .mainNavyColor
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 12.0
+        return label
+    }()
+    
     private var selectedImages = [UIImage]()
     
     private let mainTextField: UITextField = {
@@ -60,12 +97,13 @@ class AddCommunityPageViewController: UIViewController {
     lazy var imagePickerStackView: UIStackView = {
         let imagePickerStackView = UIStackView()
         imagePickerStackView.axis = .horizontal
-        imagePickerStackView.spacing = 10
-        imagePickerStackView.distribution = .fillEqually
+        imagePickerStackView.spacing = 16
+        imagePickerStackView.distribution = .fill
         return imagePickerStackView
     }()
     
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -78,6 +116,7 @@ class AddCommunityPageViewController: UIViewController {
     }
     
     // MARK: - Setup
+
     func setupUI() {
         view.addSubview(scrollView)
         scrollView.addSubview(contenView)
@@ -92,6 +131,7 @@ class AddCommunityPageViewController: UIViewController {
         ].forEach { view.addSubview($0) }
         
         // MARK: - Snap kit 제약 잡기
+
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
@@ -117,51 +157,36 @@ class AddCommunityPageViewController: UIViewController {
         imagePickerView.snp.makeConstraints { make in
             make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalToSuperview().offset(Constants.horizontalMargin)
-            //            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
             make.size.equalTo(90)
         }
         
         imagePickerStackView.snp.makeConstraints { make in
             make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalToSuperview().offset(Constants.horizontalMargin * 7.3)
-            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin * 5)
+            make.leading.equalTo(imagePickerView.snp.trailing).inset(-Constants.horizontalMargin)
             make.height.equalTo(90)
         }
         
-        imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
-        imagePickerButton.widthAnchor.constraint(
-            equalTo: imagePickerView.widthAnchor
-        ).isActive = true
-        imagePickerButton.heightAnchor.constraint(
-            equalTo: imagePickerView.heightAnchor
-        ).isActive = true
-        imagePickerButton.centerXAnchor.constraint(
-            equalTo: imagePickerView.centerXAnchor
-        ).isActive = true
-        imagePickerButton.centerYAnchor.constraint(
-            equalTo: imagePickerView.centerYAnchor
-        ).isActive = true
+        secondImageView.snp.makeConstraints {
+            $0.width.height.equalTo(90)
+        }
         
-        numberOfSelectedImageLabel.translatesAutoresizingMaskIntoConstraints = false
-        numberOfSelectedImageLabel.widthAnchor.constraint(
-            equalToConstant: 24.0
-        ).isActive = true
-        numberOfSelectedImageLabel.heightAnchor.constraint(
-            equalToConstant: 24.0
-        ).isActive = true
-        numberOfSelectedImageLabel.topAnchor.constraint(
-            equalTo: imagePickerView.topAnchor,
-            constant: -8.0
-        ).isActive = true
-        numberOfSelectedImageLabel.trailingAnchor.constraint(
-            equalTo: imagePickerView.trailingAnchor,
-            constant: 8.0
-        ).isActive = true
+        thirdImageView.snp.makeConstraints {
+            $0.width.height.equalTo(90)
+        }
         
+        imagePickerButton.snp.makeConstraints {
+            $0.center.size.equalTo(imagePickerView)
+        }
+        
+        numberOfSelectedImageLabel.snp.makeConstraints {
+            $0.size.equalTo(24)
+            $0.top.trailing.equalTo(imagePickerView).inset(-Constants.horizontalMargin * 0.5)
+        }
     }
-    
 }
+
 // MARK: - Actions
+
 extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarButtons
     @objc func didTapLeftBarButton() {
         tabBarController?.tabBar.isHidden = false
@@ -183,17 +208,22 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
                 dispatchGroup.leave()
             }
         }
-        dispatchGroup.notify(queue: .main) { [self] in
-            let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
-            FirestoreService.firestoreService.savePosts(post: post) { error in
-                print("err: \(String(describing: error?.localizedDescription))")
+        
+        if self.mainTextField.text != "" && subTextView.text != "" {
+            dispatchGroup.notify(queue: .main) { [self] in
+                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
+                FirestoreService.firestoreService.savePosts(post: post) { error in
+                    print("err: \(String(describing: error?.localizedDescription))")
+                }
             }
+            view.isUserInteractionEnabled = false
+            navigationItem.leftBarButtonItem?.isEnabled = false
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            tabBarController?.tabBar.isHidden = false
+            navigationController?.popViewController(animated: true)
+        } else {
+            showAlert(message: "제목이나 내용이 아직 입력되지 않았습니다!")
         }
-        view.isUserInteractionEnabled = false
-        navigationItem.leftBarButtonItem?.isEnabled = false
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.popViewController(animated: true)
     }
     
     @objc func didTapImagePickerButton() {
@@ -216,20 +246,20 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     //        })
     //    }
     
-        func checkAlbumPermission(){ // 앨범 권한 허용 거부 요청
-            PHPhotoLibrary.requestAuthorization( { status in
-                switch status{
-                case .authorized:
-                    print("Album: 권한 허용")
-                case .denied:
-                    print("Album: 권한 거부")
-                case .restricted, .notDetermined:
-                    print("Album: 선택하지 않음")
-                default:
-                    break
-                }
-            })
+    func checkAlbumPermission() { // 앨범 권한 허용 거부 요청
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                print("Album: 권한 허용")
+            case .denied:
+                print("Album: 권한 거부")
+            case .restricted, .notDetermined:
+                print("Album: 선택하지 않음")
+            default:
+                break
+            }
         }
+    }
     
     //    func showAlertAuth(
     //        _ type: String
@@ -253,38 +283,24 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     //            self.present(alertViewCell, animated: true, completion: nil)
     //        }
     //    }
-    
 }
 
 private extension AddCommunityPageViewController {
     func attribute() {
         view.backgroundColor = .backgroundCoustomColor
     
-        imagePickerView.addSubview(imagePickerButton)   // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
-        imagePickerButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)  // 플러스 버튼의 속성을 설정
-        imagePickerButton.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
+        imagePickerView.addSubview(imagePickerButton) // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
+        imagePickerStackView.addArrangedSubview(imagePickerButton)
         
-        imagePickerView.backgroundColor = .white
-        imagePickerView.clipsToBounds = true   // 사진 cornerRadius 적용되게
-        imagePickerView.layer.cornerRadius = 5
         imagePickerButton.addTarget(
             self,
             action: #selector(didTapImagePickerButton),
             for: .touchUpInside
         )
-        imagePickerStackView.addArrangedSubview(imagePickerButton)
         
-        numberOfSelectedImageLabel.text = "\(selectedImages.count)"
-        numberOfSelectedImageLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
-        numberOfSelectedImageLabel.textColor = .white
-        numberOfSelectedImageLabel.textAlignment = .center
-        numberOfSelectedImageLabel.backgroundColor = .mainNavyColor
-        numberOfSelectedImageLabel.clipsToBounds = true
-        numberOfSelectedImageLabel.layer.cornerRadius = 12.0
     }
     
     func setupNavigationBar() { // NavigationBar 폰트와 컬러 설정
-        
         let titleTextAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
             .foregroundColor: UIColor.mainNavyColor
@@ -340,31 +356,26 @@ extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
                         guard let self = self else { return }
                         if let image = image as? UIImage {
                             self.selectedImages.append(image)
-                        }
-                        DispatchQueue.main.async { // 사진 1-3장 순서대로 나열(0,1,3 순서대로)
-                            self.imagePickerView.image = self.selectedImages[0]
-                            self.imagePickerView.clipsToBounds = true
-                            self.imagePickerView.layer.cornerRadius = 5
-                            self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
-                            switch self.selectedImages.count {
-                            case 2:
-                                self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                                self.secondImageView.image = self.selectedImages[1]
-                                self.secondImageView.clipsToBounds = true
-                                self.secondImageView.layer.cornerRadius = 5
-                            case 3:
-                                self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                                self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
-                                self.secondImageView.image = self.selectedImages[1]
-                                self.secondImageView.clipsToBounds = true
-                                self.secondImageView.layer.cornerRadius = 5
-                                self.thirdImageView.image = self.selectedImages[2]
-                                self.thirdImageView.clipsToBounds = true
-                                self.thirdImageView.layer.cornerRadius = 5
-                            default:
-                                break
+                            DispatchQueue.main.async { // 사진 1-3장 순서대로 나열(0,1,3 순서대로)
+                                self.imagePickerView.image = self.selectedImages[0]
+                                self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
+                                self.imagePickerStackView.removeArrangedSubview(self.secondImageView)
+                                self.imagePickerStackView.removeArrangedSubview(self.thirdImageView)
+                                self.secondImageView.removeFromSuperview()
+                                self.thirdImageView.removeFromSuperview()
+                                switch self.selectedImages.count {
+                                case 2:
+                                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
+                                    self.secondImageView.image = self.selectedImages[1]
+                                case 3:
+                                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
+                                    self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
+                                    self.secondImageView.image = self.selectedImages[1]
+                                    self.thirdImageView.image = self.selectedImages[2]
+                                default:
+                                    break
+                                }
                             }
-                            
                         }
                         if error != nil {
                             print("ERROR")
@@ -384,6 +395,7 @@ extension AddCommunityPageViewController: UITextViewDelegate { // ⭐️ UITextV
             subTextView.textColor = .black
         }
     }
+
     func textViewDidEndEditing(_ subTextView: UITextView) {
         if subTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             subTextView.text = subTextViewPlaceHolder
