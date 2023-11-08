@@ -7,12 +7,13 @@ class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     let currentDate = Date()
     var commentData: [Comment] = []
-    // 좋아요 버튼 설정
-    private var isLiked = false {
-        didSet {
-            updateLikeButton()
-        }
-    }
+//    // 좋아요 버튼 설정
+//    private var isLiked = false {
+//        didSet {
+//            updateLikeButton()
+//        }
+//    }
+    lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
     
     lazy var commentTableView: UITableView = {
         let tableView = UITableView()
@@ -85,16 +86,16 @@ class CommunityDetailPageViewController: UIViewController {
         return collectionView
     }()
     
-    lazy var likeButton: UIButton = {
+    lazy var emergencyButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "spaner"), for: .normal)
-        button.setImage(UIImage(named: "spaner.fill"), for: .selected)
-        button.tintColor = .red
-        button.addTarget(CommunityDetailPageViewController.self, action: #selector(likeButtonTapped), for: .touchUpInside)
+//        button.setImage(UIImage(named: "spaner"), for: .normal)
+//        button.setImage(UIImage(named: "spaner.fill"), for: .selected)
+//        button.tintColor = .red
+        button.addTarget(self, action: #selector(emergencyButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    lazy var likeCount: UILabel = {
+    lazy var emergencyCount: UILabel = {
         let label = UILabel()
         label.text = "264"
         label.textColor = .lightGray
@@ -103,7 +104,7 @@ class CommunityDetailPageViewController: UIViewController {
     }()
     
     lazy var likeStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [likeButton, likeCount])
+        let stackView = UIStackView(arrangedSubviews: [emergencyButton, emergencyCount])
         stackView.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
         return stackView
     }()
@@ -207,7 +208,7 @@ class CommunityDetailPageViewController: UIViewController {
             make.bottom.equalTo(containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
         }
         
-        likeButton.snp.makeConstraints { make in
+        emergencyButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
@@ -334,12 +335,21 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     // 좋아요 버튼 눌렀을 떄 동작 구현
-    @objc func likeButtonTapped() {
-        isLiked.toggle()
+    @objc func emergencyButtonTapped() {
+        isEmergency = !(isEmergency ?? false)
+        selectedPost?.emergency?.updateValue(isEmergency ?? false, forKey: Auth.auth().currentUser?.email ?? "")
+        setEmergencyButton()
     }
-
-    private func updateLikeButton() {
-        likeButton.isSelected = isLiked
+    
+    private func setEmergencyButton() {
+        if let post = selectedPost {
+            FirestoreService.firestoreService.updatePosts(postID: post.id ?? "", emergency: post.emergency ?? [:])
+        }
+        if (isEmergency ?? false) {
+            emergencyButton.setImage(UIImage(named: "spaner.fill"), for: .normal)
+        } else {
+            emergencyButton.setImage(UIImage(named: "spaner"), for: .normal)
+        }
     }
            
     // MARK: - 댓글 기능
@@ -429,6 +439,7 @@ extension CommunityDetailPageViewController {
         commentTextViewPlaceholder()
         registerKeyboardNotifications()
         setupHideKeyboardOnTap()
+        setEmergencyButton()
     }
     
     override func viewDidLayoutSubviews() {
