@@ -82,12 +82,8 @@ final class MyPageView: UIView {
     }()
     
     lazy var checkCarNumberButton: UIButton = {
-        var configuration = UIButton.Configuration.tinted()
-        configuration.baseBackgroundColor = .white
-        configuration.imagePadding = 10
-        
-        let checkCarNumberButton = UIButton(configuration: configuration)
-        checkCarNumberButton.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+        let checkCarNumberButton = UIButton()
+        checkCarNumberButton.myPageCustomButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
         checkCarNumberButton.isHidden = true
         return checkCarNumberButton
     }()
@@ -189,12 +185,8 @@ final class MyPageView: UIView {
     }()
     
     lazy var checkCarNickNameButton: UIButton = {
-        var configuration = UIButton.Configuration.tinted()
-        configuration.baseBackgroundColor = .white
-        configuration.imagePadding = 10
-        
-        let checkCarNickNameButton = UIButton(configuration: configuration)
-        checkCarNickNameButton.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+        let checkCarNickNameButton = UIButton()
+        checkCarNickNameButton.myPageCustomButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
         checkCarNickNameButton.isHidden = true
         return checkCarNickNameButton
     }()
@@ -303,7 +295,7 @@ final class MyPageView: UIView {
     }
 
     lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField, checkCarNumberButton, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, checkCarNickNameButton, carTotalDistanceLabel, carTotalDistanceTextField])
+        let stackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, carTotalDistanceLabel, carTotalDistanceTextField])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
         return stackView
     }()
@@ -325,6 +317,8 @@ final class MyPageView: UIView {
         contentView.addSubview(editButton)
         contentView.addSubview(cancelButton)
         contentView.addSubview(carNumberLabel)
+        carNumberTextField.addSubview(checkCarNumberButton)
+        carNickNameTextField.addSubview(checkCarNickNameButton)
         contentView.addSubview(stackView)
         contentView.addSubview(myPageDesignStackView)
         contentView.addSubview(phoneCallButton)
@@ -381,27 +375,23 @@ final class MyPageView: UIView {
         carNumberTextField.snp.makeConstraints { make in
             make.top.equalTo(carNumberLabel.snp.bottom).offset(Constants.horizontalMargin)
             make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
-            make.width.equalTo(contentView).multipliedBy(0.75)
         }
 
         checkCarNumberButton.snp.makeConstraints { make in
-            make.top.equalTo(carNumberTextField)
-            make.leading.equalTo(carNumberTextField.snp.trailing).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
-            make.width.equalTo(contentView).multipliedBy(0.25)
+            make.top.trailing.bottom.equalToSuperview().inset(5)
+            make.width.equalTo(55)
+            make.height.equalTo(25)
         }
-
+        
         carNickNameTextField.snp.makeConstraints { make in
             make.top.equalTo(carNickNameLabel.snp.bottom).offset(Constants.horizontalMargin)
             make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
-            make.width.equalTo(contentView).multipliedBy(0.75)
         }
         
         checkCarNickNameButton.snp.makeConstraints { make in
-            make.top.equalTo(carNickNameTextField)
-            make.leading.equalTo(carNickNameTextField.snp.trailing).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
-            make.width.equalTo(contentView).multipliedBy(0.25)
+            make.top.trailing.bottom.equalToSuperview().inset(5)
+            make.width.equalTo(55)
+            make.height.equalTo(25)
         }
         
         stackView.snp.makeConstraints { make in
@@ -419,7 +409,7 @@ final class MyPageView: UIView {
         phoneCallButton.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 3.5)
             make.trailing.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 55, height: 55))
+            make.size.equalTo(CGSize(width: 53, height: 53))
         }
         
         verLabel.snp.makeConstraints { make in

@@ -30,7 +30,7 @@ class MyPageViewController: UIViewController {
         }
         addTargetButton()
         checkCarNumberButtonAction()
-        CheckNickNameButtonAction()
+        checkNickNameButtonAction()
         registerForKeyboardNotifications()
         
     }
@@ -50,6 +50,8 @@ class MyPageViewController: UIViewController {
     func addTargetButton() {
         myPageView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        myPageView.carNumberTextField.addTarget(self, action: #selector(resetCheckCarNumberButton), for: .editingDidEnd)
+        myPageView.carNickNameTextField.addTarget(self, action: #selector(resetCheckNickNameButton), for: .editingDidEnd)
         myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         myPageView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
         myPageView.phoneCallButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
@@ -130,6 +132,16 @@ class MyPageViewController: UIViewController {
             FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Auth.auth().currentUser?.email)) { _ in
             }
         }
+    }
+    
+    @objc private func resetCheckCarNumberButton() {
+        self.myPageView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
+        self.myPageView.checkCarNumberButton.setTitle("중복확인", for: .normal)
+    }
+
+    @objc private func resetCheckNickNameButton() {
+        self.myPageView.checkCarNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
+        self.myPageView.checkCarNickNameButton.setTitle("중복확인", for: .normal)
     }
     
     private func configureUI() {
@@ -250,7 +262,7 @@ class MyPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
     
-    func CheckNickNameButtonAction() {
+    func checkNickNameButtonAction() {
         myPageView.checkCarNickNameButton.addAction(UIAction(handler: { _ in
             guard let nickNameToCheck = self.myPageView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
             
@@ -272,7 +284,7 @@ class MyPageViewController: UIViewController {
             })
         }), for: .touchUpInside)
     }
-    
+        
     @objc private func dialPhoneNumber() {
         if let phoneCallURL = URL(string: "tel://000-000-0000") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
