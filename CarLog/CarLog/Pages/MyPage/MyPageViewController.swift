@@ -32,7 +32,6 @@ class MyPageViewController: UIViewController {
         checkCarNumberButtonAction()
         checkNickNameButtonAction()
         registerForKeyboardNotifications()
-        
     }
     
     deinit {
@@ -45,6 +44,12 @@ class MyPageViewController: UIViewController {
         DispatchQueue.main.async {
             self.loadCarData() // ⭐ 내 차 정보 가져오기
         }
+        
+        if isEditMode {
+            toggleTextFieldsEditing(enable: false)
+            editButtonChanged(editMode: false)
+        }
+        
     }
     
     func addTargetButton() {
@@ -78,7 +83,7 @@ class MyPageViewController: UIViewController {
         toggleTextFieldsEditing(enable: !isEditMode)
         editButtonChanged(editMode: !isEditMode)
     }
-
+    
     
     private func toggleTextFieldsEditing(enable: Bool) {
         [myPageView.carNumberTextField, myPageView.carNameTextField, myPageView.carMakerTextField, myPageView.carOilTypeTextField, myPageView.carNickNameTextField, myPageView.carTotalDistanceTextField].forEach {
@@ -205,32 +210,35 @@ class MyPageViewController: UIViewController {
         myPageView.checkCarNumberButton.addAction(UIAction(handler: { _ in
             guard let carNumberToCheck = self.myPageView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
                 self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
-                self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
                 return self.showAlert(message: "00가0000 형식으로 써주세요")
             }
             
             guard carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
-                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
                 return self.showAlert(message: "00가0000 형식으로 써주세요")
             }
             
             guard carNumberToCheck.count >= 7 else {
-                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
                 return self.showAlert(message: "7자리 이상 입력하세요")
             }
             
             let fifthCharacterIndex = carNumberToCheck.index(carNumberToCheck.endIndex, offsetBy: -5)
             let fifthCharacter = carNumberToCheck[fifthCharacterIndex]
-
+            
             if String(fifthCharacter).range(of: "[가-힣]+", options: .regularExpression) == nil {
-                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
                 return self.showAlert(message: "가운데 한글이 빠졌습니다")
             }
@@ -242,8 +250,9 @@ class MyPageViewController: UIViewController {
                 }
                 
                 if isCarAvailable {
-                    self.myPageView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
+                    self.myPageView.checkCarNumberButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
                     self.myPageView.checkCarNumberButton.setTitle("가능", for: .normal)
+                    self.myPageView.checkCarNumberButton.backgroundColor = .mainNavyColor
                 } else {
                     self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
                     self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
@@ -256,11 +265,11 @@ class MyPageViewController: UIViewController {
     }
     
     func checkNickNameButtonAction() {
-//        myPageView.carNickNameTextField.addAction(UIAction(handler: { _ in
-//            self.myPageView.checkCarNickNameButton.setTitleColor(.white, for: .normal)
-//            self.myPageView.checkCarNickNameButton.setTitle("중복확인", for: .normal)
-//            self.myPageView.checkCarNickNameButton.backgroundColor = .mainNavyColor
-//        }), for: .editingChanged)
+        myPageView.carNickNameTextField.addAction(UIAction(handler: { _ in
+            self.myPageView.checkCarNickNameButton.setTitleColor(.white, for: .normal)
+            self.myPageView.checkCarNickNameButton.setTitle("중복확인", for: .normal)
+            self.myPageView.checkCarNickNameButton.backgroundColor = .mainNavyColor
+        }), for: .editingChanged)
         myPageView.checkCarNickNameButton.addAction(UIAction(handler: { _ in
             guard let nickNameToCheck = self.myPageView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
             
@@ -271,18 +280,20 @@ class MyPageViewController: UIViewController {
                 }
                 
                 if isCarAvailable {
-                    self.myPageView.checkCarNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
+                    self.myPageView.checkCarNickNameButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
                     self.myPageView.checkCarNickNameButton.setTitle("가능", for: .normal)
+                    self.myPageView.checkCarNickNameButton.backgroundColor = .mainNavyColor
                 } else {
-                    self.myPageView.checkCarNickNameButton.setTitleColor(.red, for: .normal)
+                    self.myPageView.checkCarNickNameButton.setTitleColor(.white, for: .normal)
                     self.myPageView.checkCarNickNameButton.setTitle("불가능", for: .normal)
+                    self.myPageView.checkCarNickNameButton.backgroundColor = .buttonRedColor
                     self.showAlert(message: "이미 존재하는 닉네임입니다")
                     self.myPageView.carNickNameTextField.text = ""
                 }
             })
         }), for: .touchUpInside)
     }
-        
+    
     @objc private func dialPhoneNumber() {
         if let phoneCallURL = URL(string: "tel://000-000-0000") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
@@ -349,5 +360,5 @@ class MyPageViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-
+    
 }
