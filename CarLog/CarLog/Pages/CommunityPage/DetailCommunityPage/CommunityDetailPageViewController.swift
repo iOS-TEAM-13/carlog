@@ -5,7 +5,6 @@ import SnapKit
 
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
-    let currentDate = Date()
     var commentData: [Comment] = []
     //var id = 1
     // 좋아요 버튼 설정
@@ -374,7 +373,7 @@ class CommunityDetailPageViewController: UIViewController {
     func addComment(comment: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        let timeStamp = dateFormatter.string(from: currentDate)
+        let timeStamp = dateFormatter.string(from:  Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
