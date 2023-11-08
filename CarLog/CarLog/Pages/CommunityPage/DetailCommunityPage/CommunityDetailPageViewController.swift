@@ -1,13 +1,7 @@
-//
-//  CommunityDetailPageViewController.swift
-//  CarLog
-//
-//  Created by t2023-m0075 on 11/1/23.
-//
+import UIKit
 
 import FirebaseAuth
 import SnapKit
-import UIKit
 
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
@@ -64,7 +58,6 @@ class CommunityDetailPageViewController: UIViewController {
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2023.11.02"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
@@ -190,15 +183,18 @@ class CommunityDetailPageViewController: UIViewController {
         view.addSubview(containerView)
         communityDetailPageScrollView.addSubview(communityDetailPageContentView)
         communityDetailPageScrollView.addSubview(allStackView)
-//        communityDetailPageContentView.addSubview(titleLabel)
-//        communityDetailPageContentView.addSubview(subTitleStackView)
-       // communityDetailPageContentView.addSubview(photoCollectionView)
-       // communityDetailPageContentView.addSubview(likeStackView)
-//        communityDetailPageContentView.addSubview(mainText)
         communityDetailPageContentView.addSubview(line)
         communityDetailPageContentView.addSubview(commentTableView)
         containerView.addSubview(commentTextView)
         containerView.addSubview(button)
+        
+        if selectedPost?.image.count == 0 {
+            photoCollectionView.isHidden = true
+        } else {
+            photoCollectionView.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 360, height: 345))
+            }
+        }
         
         commentTableView.snp.makeConstraints { make in
             make.height.equalTo(100)
@@ -206,8 +202,8 @@ class CommunityDetailPageViewController: UIViewController {
         
         communityDetailPageScrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leftMargin.equalTo(view.safeAreaLayoutGuide).offset(-6)
-            make.rightMargin.equalTo(view.safeAreaLayoutGuide).offset(6)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalTo(containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
         }
         
@@ -218,10 +214,6 @@ class CommunityDetailPageViewController: UIViewController {
         communityDetailPageContentView.snp.makeConstraints { make in
             make.edges.equalTo(communityDetailPageScrollView)
             make.width.equalTo(communityDetailPageScrollView)
-        }
-        
-        photoCollectionView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 360, height: 345))
         }
         
         allStackView.snp.makeConstraints { make in
@@ -331,7 +323,7 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     func addComment(comment: String) {
-        let timeStamp = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .long)
+        let timeStamp = DateFormatter.localizedString(from: currentDate, dateStyle: .short, timeStyle: .short)
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
