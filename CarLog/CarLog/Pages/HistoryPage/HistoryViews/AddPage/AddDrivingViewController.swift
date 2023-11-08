@@ -55,8 +55,8 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "주행기록 추가"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
-            .foregroundColor: UIColor.black
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .foregroundColor: UIColor.mainNavyColor
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
