@@ -14,7 +14,6 @@ class CommunityPageViewController: UIViewController {
         floatingButton.setImage(editImage, for: .normal)
         floatingButton.backgroundColor = .mainNavyColor
         floatingButton.layer.cornerRadius = 25
-        floatingButton.alpha = 1.0
         floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         return floatingButton
     }()
@@ -79,11 +78,13 @@ class CommunityPageViewController: UIViewController {
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
+        //커뮤니티 마지막 셀 safearea 마진
+        communityColletionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.horizontalMargin, right: 0)
         
         editFloatingButton.snp.makeConstraints { make in
-            make.width.height.equalTo(60)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottom.equalToSuperview().offset(-102)
+            make.width.height.equalTo(50)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin - 12)
+            make.bottom.equalToSuperview().offset(-102 - 12)
         }
     }
 
@@ -147,15 +148,21 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
                 cell.userName.text = nickName
                 cell.titleLabel.text = post.title
                 cell.mainTextLabel.text = post.content
+                // 포스트에 이미지 URL이 있는지 확인
                 if let imageURL = post.image.first, let imageUrl = imageURL {
                     // 이미지를 비동기적으로 가져오기
                     URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                        if let data = data, let image = UIImage(data: data) {
+                        if let data = data {
                             DispatchQueue.main.async {
-                                cell.collectionViewImage.image = image
+                                cell.collectionViewImage.image = UIImage(data: data)
                             }
                         }
                     }.resume()
+                } else {
+                    // 이미지 URL이 없으면 기본 이미지 설정
+                    DispatchQueue.main.async {
+                        cell.collectionViewImage.image = UIImage(named: "defaultImage")
+                    }
                 }
             }
                 
