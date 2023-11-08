@@ -209,7 +209,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             }
         }
         
-        if self.mainTextField.text != "" && subTextView.text != "" {
+        if self.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
                 let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
                 FirestoreService.firestoreService.savePosts(post: post) { error in
@@ -222,7 +222,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             tabBarController?.tabBar.isHidden = false
             navigationController?.popViewController(animated: true)
         } else {
-            showAlert(message: "제목이나 내용이 아직 입력되지 않았습니다!")
+            showAlert(message: "제목은 필수입니다!")
         }
     }
     
