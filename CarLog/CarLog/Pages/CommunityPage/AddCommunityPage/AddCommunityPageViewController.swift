@@ -208,6 +208,22 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
                 dispatchGroup.leave()
             }
         }
+        
+        if self.mainTextField.text != "" && subTextView.text != "" {
+            dispatchGroup.notify(queue: .main) { [self] in
+                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
+                FirestoreService.firestoreService.savePosts(post: post) { error in
+                    print("err: \(String(describing: error?.localizedDescription))")
+                }
+            }
+            view.isUserInteractionEnabled = false
+            navigationItem.leftBarButtonItem?.isEnabled = false
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            tabBarController?.tabBar.isHidden = false
+            navigationController?.popViewController(animated: true)
+        } else {
+            showAlert(message: "제목이나 내용이 아직 입력되지 않았습니다!")
+        }
     }
     
     @objc func didTapImagePickerButton() {
