@@ -87,7 +87,7 @@ class CustomAnnotationView: MKAnnotationView {
         backgroundView.addSubview(dieselPriceLabel)
 
         backgroundView.snp.makeConstraints {
-            $0.width.equalTo(60)
+            $0.width.equalTo(70)
             $0.height.equalTo(50)
         }
 
@@ -136,15 +136,15 @@ class CustomAnnotationView: MKAnnotationView {
 
         if let title = annotation.title, let gasoline = annotation.gasolinePrice, let diesel = annotation.dieselPrice {
             titleLabel.text = " \(title) "
-            gasolinePriceLabel.text = " \(gasoline) "
-            dieselPriceLabel.text = " \(diesel) "
+            gasolinePriceLabel.text = " \(String(gasoline).addedComma())"
+            dieselPriceLabel.text = " \(String(diesel).addedComma())"
         }
         setNeedsLayout()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        bounds.size = CGSize(width: 100, height: 50)
+        bounds.size = CGSize(width: 70, height: 50)
         centerOffset = CGPoint(x: 0, y: 50)
     }
 }

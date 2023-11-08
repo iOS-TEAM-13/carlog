@@ -35,7 +35,7 @@ class AddCommunityPageViewController: UIViewController {
         mainTextField.backgroundColor = .white
         mainTextField.layer.borderColor = UIColor.clear.cgColor
         mainTextField.layer.borderWidth = 0
-        mainTextField.layer.cornerRadius = 13
+        mainTextField.layer.cornerRadius = 5
         mainTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         mainTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTextField.frame.size.height))
         mainTextField.leftViewMode = .always
@@ -50,7 +50,7 @@ class AddCommunityPageViewController: UIViewController {
         subTextView.backgroundColor = .white
         subTextView.layer.borderColor = UIColor.clear.cgColor
         subTextView.layer.borderWidth = 0
-        subTextView.layer.cornerRadius = 12
+        subTextView.layer.cornerRadius = 3
         subTextView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
         subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
         subTextView.delegate = self
@@ -192,13 +192,15 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         view.isUserInteractionEnabled = false
         navigationItem.leftBarButtonItem?.isEnabled = false
         navigationItem.rightBarButtonItem?.isEnabled = false
+        tabBarController?.tabBar.isHidden = false
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func didTapImagePickerButton() {
         var config = PHPickerConfiguration()
         config.filter = .images
         config.selection = .ordered
-        config.selectionLimit = 3 // 사진 선택 리미티드
+        config.selectionLimit = 3 // 사진 선택 리미티드 3장 까지만
         let imagePickerViewController = PHPickerViewController(configuration: config)
         imagePickerViewController.delegate = self
         present(imagePickerViewController, animated: true)
@@ -213,22 +215,22 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     //            }
     //        })
     //    }
-    //
-    //    func checkAlbumPermission(){ // 앨범 권한 허용 거부 요청
-    //        PHPhotoLibrary.requestAuthorization( { status in
-    //            switch status{
-    //            case .authorized:
-    //                print("Album: 권한 허용")
-    //            case .denied:
-    //                print("Album: 권한 거부")
-    //            case .restricted, .notDetermined:
-    //                print("Album: 선택하지 않음")
-    //            default:
-    //                break
-    //            }
-    //        })
-    //    }
-    //
+    
+        func checkAlbumPermission(){ // 앨범 권한 허용 거부 요청
+            PHPhotoLibrary.requestAuthorization( { status in
+                switch status{
+                case .authorized:
+                    print("Album: 권한 허용")
+                case .denied:
+                    print("Album: 권한 거부")
+                case .restricted, .notDetermined:
+                    print("Album: 선택하지 않음")
+                default:
+                    break
+                }
+            })
+        }
+    
     //    func showAlertAuth(
     //        _ type: String
     //    ) {
@@ -264,7 +266,7 @@ private extension AddCommunityPageViewController {
         
         imagePickerView.backgroundColor = .white
         imagePickerView.clipsToBounds = true   // 사진 cornerRadius 적용되게
-        imagePickerView.layer.cornerRadius = 12
+        imagePickerView.layer.cornerRadius = 5
         imagePickerButton.addTarget(
             self,
             action: #selector(didTapImagePickerButton),
@@ -342,23 +344,23 @@ extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
                         DispatchQueue.main.async { // 사진 1-3장 순서대로 나열(0,1,3 순서대로)
                             self.imagePickerView.image = self.selectedImages[0]
                             self.imagePickerView.clipsToBounds = true
-                            self.imagePickerView.layer.cornerRadius = 7
+                            self.imagePickerView.layer.cornerRadius = 5
                             self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
                             switch self.selectedImages.count {
                             case 2:
                                 self.imagePickerStackView.addArrangedSubview(self.secondImageView)
                                 self.secondImageView.image = self.selectedImages[1]
                                 self.secondImageView.clipsToBounds = true
-                                self.secondImageView.layer.cornerRadius = 7
+                                self.secondImageView.layer.cornerRadius = 5
                             case 3:
                                 self.imagePickerStackView.addArrangedSubview(self.secondImageView)
                                 self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
                                 self.secondImageView.image = self.selectedImages[1]
                                 self.secondImageView.clipsToBounds = true
-                                self.secondImageView.layer.cornerRadius = 7
+                                self.secondImageView.layer.cornerRadius = 5
                                 self.thirdImageView.image = self.selectedImages[2]
                                 self.thirdImageView.clipsToBounds = true
-                                self.thirdImageView.layer.cornerRadius = 7
+                                self.thirdImageView.layer.cornerRadius = 5
                             default:
                                 break
                             }
