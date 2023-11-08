@@ -107,6 +107,8 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                                 document.reference.delete()
                                 self.commentData.remove(at: indexPath.row)
                                 tableView.deleteRows(at: [indexPath], with: .fade)
+                                let deletedCellHeight = tableView.rectForRow(at: indexPath).height
+                                self.updateDeleteCommentTableViewHeight(cellHeight: deletedCellHeight)
                                 break
                             }
 

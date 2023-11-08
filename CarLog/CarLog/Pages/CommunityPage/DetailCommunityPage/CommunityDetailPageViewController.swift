@@ -6,7 +6,7 @@ import SnapKit
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     var commentData: [Comment] = []
-    //var id = 1
+    // var id = 1
     // 좋아요 버튼 설정
     private var isLiked = false {
         didSet {
@@ -233,7 +233,7 @@ class CommunityDetailPageViewController: UIViewController {
             make.top.equalTo(line.snp.bottom).offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview()
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
         // 댓글 레이아웃
         containerView.snp.makeConstraints { make in
@@ -366,20 +366,29 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height * 1.8)
+            make.height.equalTo(contentSize.height * 1.7)
+        }
+    }
+    
+    func updateDeleteCommentTableViewHeight(cellHeight: CGFloat) {
+        let currentHeight = commentTableView.bounds.size.height
+        let newHeight = currentHeight - cellHeight
+        let minHeight: CGFloat = 0
+        let finalHeight = max(minHeight, newHeight)
+        commentTableView.snp.updateConstraints { make in
+            make.height.equalTo(finalHeight)
         }
     }
     
     func addComment(comment: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        let timeStamp = dateFormatter.string(from:  Date())
+        let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
             guard let self = self, let postID = self.selectedPost?.id else { return }
            
-            
             let userNickName = nickName
             let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
             
