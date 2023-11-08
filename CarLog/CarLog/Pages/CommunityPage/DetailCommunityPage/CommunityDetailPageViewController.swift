@@ -14,6 +14,7 @@ class CommunityDetailPageViewController: UIViewController {
 //        }
 //    }
     lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
+    lazy var emergencyCount = selectedPost?.emergency?.count
     
     lazy var commentTableView: UITableView = {
         let tableView = UITableView()
@@ -88,23 +89,21 @@ class CommunityDetailPageViewController: UIViewController {
     
     lazy var emergencyButton: UIButton = {
         let button = UIButton()
-//        button.setImage(UIImage(named: "spaner"), for: .normal)
-//        button.setImage(UIImage(named: "spaner.fill"), for: .selected)
-//        button.tintColor = .red
         button.addTarget(self, action: #selector(emergencyButtonTapped), for: .touchUpInside)
+        button.setImage(UIImage(named: isEmergency ?? false ? "spaner.fill" : "spaner"), for: .normal)
         return button
     }()
     
-    lazy var emergencyCount: UILabel = {
+    lazy var emergencyCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "264"
+        label.text = String(emergencyCount ?? -1)
         label.textColor = .lightGray
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         return label
     }()
     
     lazy var likeStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emergencyButton, emergencyCount])
+        let stackView = UIStackView(arrangedSubviews: [emergencyButton, emergencyCountLabel])
         stackView.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
         return stackView
     }()
@@ -347,8 +346,16 @@ class CommunityDetailPageViewController: UIViewController {
         }
         if (isEmergency ?? false) {
             emergencyButton.setImage(UIImage(named: "spaner.fill"), for: .normal)
+            emergencyCount = (emergencyCount ?? 0) + 1
+            if let count = emergencyCount {
+                emergencyCountLabel.text = String(count)
+            }
         } else {
             emergencyButton.setImage(UIImage(named: "spaner"), for: .normal)
+            emergencyCount = (emergencyCount ?? 0) - 1
+            if let count = emergencyCount {
+                emergencyCountLabel.text = String(count)
+            }
         }
     }
            
@@ -439,7 +446,6 @@ extension CommunityDetailPageViewController {
         commentTextViewPlaceholder()
         registerKeyboardNotifications()
         setupHideKeyboardOnTap()
-        setEmergencyButton()
     }
     
     override func viewDidLayoutSubviews() {
