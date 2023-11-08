@@ -66,8 +66,10 @@ final class MyPageView: UIView {
     }()
     
     lazy var carNumberTextField: UITextField = {
-        let carNumbertextField = UITextField()
-        carNumbertextField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let carNumberTextField = UITextField()
+        carNumberTextField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carNumberTextField.rightView = checkCarNumberButton
+        carNumberTextField.rightViewMode = .always
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -77,8 +79,8 @@ final class MyPageView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
-        carNumbertextField.inputAccessoryView = toolbar
-        return carNumbertextField
+        carNumberTextField.inputAccessoryView = toolbar
+        return carNumberTextField
     }()
     
     lazy var checkCarNumberButton: UIButton = {
@@ -97,8 +99,8 @@ final class MyPageView: UIView {
     }()
     
     lazy var carNameTextField: UITextField = {
-        let carNametextField = UITextField()
-        carNametextField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let carNameTextField = UITextField()
+        carNameTextField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -108,8 +110,8 @@ final class MyPageView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
-        carNametextField.inputAccessoryView = toolbar
-        return carNametextField
+        carNameTextField.inputAccessoryView = toolbar
+        return carNameTextField
     }()
     
     lazy var carMakerLabel: UILabel = {
@@ -121,8 +123,8 @@ final class MyPageView: UIView {
     }()
     
     lazy var carMakerTextField: UITextField = {
-        let carMakertextField = UITextField()
-        carMakertextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let carMakerTextField = UITextField()
+        carMakerTextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -132,8 +134,8 @@ final class MyPageView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
-        carMakertextField.inputAccessoryView = toolbar
-        return carMakertextField
+        carMakerTextField.inputAccessoryView = toolbar
+        return carMakerTextField
     }()
     
     lazy var carOilTypeLabel: UILabel = {
@@ -145,8 +147,8 @@ final class MyPageView: UIView {
     }()
     
     lazy var carOilTypeTextField: UITextField = {
-        let carOilTypetextField = UITextField()
-        carOilTypetextField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let carOilTypeTextField = UITextField()
+        carOilTypeTextField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -156,8 +158,8 @@ final class MyPageView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
-        carOilTypetextField.inputAccessoryView = toolbar
-        return carOilTypetextField
+        carOilTypeTextField.inputAccessoryView = toolbar
+        return carOilTypeTextField
     }()
     
     lazy var carNickNameLabel: UILabel = {
@@ -169,8 +171,10 @@ final class MyPageView: UIView {
     }()
     
     lazy var carNickNameTextField: UITextField = {
-        let carNickNametextField = UITextField()
-        carNickNametextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let carNickNameTextField = UITextField()
+        carNickNameTextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carNickNameTextField.rightView = checkCarNickNameButton
+        carNickNameTextField.rightViewMode = .always
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -180,8 +184,8 @@ final class MyPageView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
-        carNickNametextField.inputAccessoryView = toolbar
-        return carNickNametextField
+        carNickNameTextField.inputAccessoryView = toolbar
+        return carNickNameTextField
     }()
     
     lazy var checkCarNickNameButton: UIButton = {
@@ -200,8 +204,8 @@ final class MyPageView: UIView {
     }()
     
     lazy var carTotalDistanceTextField: UITextField = {
-        let carTotalDistancetextField = UITextField()
-        carTotalDistancetextField.mypageCustomTextField(placeholder: "최종 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        let carTotalDistanceTextField = UITextField()
+        carTotalDistanceTextField.mypageCustomTextField(placeholder: "최종 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -211,8 +215,8 @@ final class MyPageView: UIView {
         let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(closeKeyboard))
         toolbar.setItems([flexibleSpace, closeButton], animated: false)
         toolbar.isUserInteractionEnabled = true
-        carTotalDistancetextField.inputAccessoryView = toolbar
-        return carTotalDistancetextField
+        carTotalDistanceTextField.inputAccessoryView = toolbar
+        return carTotalDistanceTextField
     }()
     
     lazy var logoutButton: UIButton = {
@@ -236,15 +240,15 @@ final class MyPageView: UIView {
     }()
     
     lazy var quitUserButton: UIButton = {
-        let quitUserbutton = UIButton()
+        let quitUserButton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
             .foregroundColor: UIColor.lightGray,
         ]
         let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
-        quitUserbutton.setAttributedTitle(attributedTitle, for: .normal)
-        quitUserbutton.backgroundColor = .clear
-        return quitUserbutton
+        quitUserButton.setAttributedTitle(attributedTitle, for: .normal)
+        quitUserButton.backgroundColor = .clear
+        return quitUserButton
     }()
     
     lazy var myPageDesignStackView = {
@@ -293,7 +297,7 @@ final class MyPageView: UIView {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
-
+    
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField, carNameLabel, carNameTextField, carMakerLabel, carMakerTextField, carOilTypeLabel, carOilTypeTextField, carNickNameLabel, carNickNameTextField, carTotalDistanceLabel, carTotalDistanceTextField])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
@@ -317,8 +321,6 @@ final class MyPageView: UIView {
         contentView.addSubview(editButton)
         contentView.addSubview(cancelButton)
         contentView.addSubview(carNumberLabel)
-        carNumberTextField.addSubview(checkCarNumberButton)
-        carNickNameTextField.addSubview(checkCarNickNameButton)
         contentView.addSubview(stackView)
         contentView.addSubview(myPageDesignStackView)
         contentView.addSubview(phoneCallButton)
@@ -376,11 +378,10 @@ final class MyPageView: UIView {
             make.top.equalTo(carNumberLabel.snp.bottom).offset(Constants.horizontalMargin)
             make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
         }
-
+        
         checkCarNumberButton.snp.makeConstraints { make in
-            make.top.trailing.bottom.equalToSuperview().inset(5)
             make.width.equalTo(55)
-            make.height.equalTo(25)
+            make.height.equalTo(30)
         }
         
         carNickNameTextField.snp.makeConstraints { make in
@@ -389,9 +390,8 @@ final class MyPageView: UIView {
         }
         
         checkCarNickNameButton.snp.makeConstraints { make in
-            make.top.trailing.bottom.equalToSuperview().inset(5)
             make.width.equalTo(55)
-            make.height.equalTo(25)
+            make.height.equalTo(30)
         }
         
         stackView.snp.makeConstraints { make in

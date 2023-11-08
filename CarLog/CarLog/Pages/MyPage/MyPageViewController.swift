@@ -50,8 +50,6 @@ class MyPageViewController: UIViewController {
     func addTargetButton() {
         myPageView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        myPageView.carNumberTextField.addTarget(self, action: #selector(resetCheckCarNumberButton), for: .editingDidEnd)
-        myPageView.carNickNameTextField.addTarget(self, action: #selector(resetCheckNickNameButton), for: .editingDidEnd)
         myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         myPageView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
         myPageView.phoneCallButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
@@ -77,7 +75,6 @@ class MyPageViewController: UIViewController {
         } else {
             myPageView.carTotalDistanceTextField.text = "0.0"
         }
-        
         toggleTextFieldsEditing(enable: !isEditMode)
         editButtonChanged(editMode: !isEditMode)
     }
@@ -132,16 +129,6 @@ class MyPageViewController: UIViewController {
             FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Auth.auth().currentUser?.email)) { _ in
             }
         }
-    }
-    
-    @objc private func resetCheckCarNumberButton() {
-        self.myPageView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
-        self.myPageView.checkCarNumberButton.setTitle("중복확인", for: .normal)
-    }
-
-    @objc private func resetCheckNickNameButton() {
-        self.myPageView.checkCarNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
-        self.myPageView.checkCarNickNameButton.setTitle("중복확인", for: .normal)
     }
     
     private func configureUI() {
@@ -211,9 +198,14 @@ class MyPageViewController: UIViewController {
     }
     
     func checkCarNumberButtonAction() {
+        myPageView.carNumberTextField.addAction(UIAction(handler: { _ in
+            self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
+            self.myPageView.checkCarNumberButton.setTitle("중복확인", for: .normal)
+        }), for: .editingChanged)
         myPageView.checkCarNumberButton.addAction(UIAction(handler: { _ in
             guard let carNumberToCheck = self.myPageView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
-                self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
+                self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
                 self.myPageView.carNumberTextField.text = ""
                 return self.showAlert(message: "00가0000 형식으로 써주세요")
@@ -253,8 +245,9 @@ class MyPageViewController: UIViewController {
                     self.myPageView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
                     self.myPageView.checkCarNumberButton.setTitle("가능", for: .normal)
                 } else {
-                    self.myPageView.checkCarNumberButton.setTitleColor(.red, for: .normal)
+                    self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
                     self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                    self.myPageView.checkCarNumberButton.backgroundColor = .red
                     self.showAlert(message: "이미 존재하는 차번호입니다")
                     self.myPageView.carNumberTextField.text = ""
                 }
@@ -263,6 +256,11 @@ class MyPageViewController: UIViewController {
     }
     
     func checkNickNameButtonAction() {
+//        myPageView.carNickNameTextField.addAction(UIAction(handler: { _ in
+//            self.myPageView.checkCarNickNameButton.setTitleColor(.white, for: .normal)
+//            self.myPageView.checkCarNickNameButton.setTitle("중복확인", for: .normal)
+//            self.myPageView.checkCarNickNameButton.backgroundColor = .mainNavyColor
+//        }), for: .editingChanged)
         myPageView.checkCarNickNameButton.addAction(UIAction(handler: { _ in
             guard let nickNameToCheck = self.myPageView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
             
