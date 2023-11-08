@@ -1,13 +1,7 @@
-//
-//  CommunityDetailPageViewController.swift
-//  CarLog
-//
-//  Created by t2023-m0075 on 11/1/23.
-//
+import UIKit
 
 import FirebaseAuth
 import SnapKit
-import UIKit
 
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
@@ -57,14 +51,13 @@ class CommunityDetailPageViewController: UIViewController {
         let button = UIButton()
         button.setTitle("왕바우", for: .normal) // "게시"라는 텍스트 설정
         button.setTitleColor(.black, for: .normal) // 텍스트 색상 설정
-        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium) // 폰트와 크기 설정
+        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium) // 폰트와 크기 설정
         button.backgroundColor = .clear // 버튼의 배경색 설정
         return button
     }()
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2023.11.02"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
@@ -73,14 +66,14 @@ class CommunityDetailPageViewController: UIViewController {
     lazy var subTitleStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [userNameLabel, UIView(), dateLabel])
         stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .center)
-        
+        stackView.distribution = .fill
         return stackView
     }()
     
     lazy var photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 361, height: 346)
+        layout.itemSize = CGSize(width: 360, height: 345)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -108,6 +101,12 @@ class CommunityDetailPageViewController: UIViewController {
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         return label
     }()
+    
+    lazy var likeStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [likeButton, likeCount])
+        stackView.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
+        return stackView
+    }()
 
     // textview 로 수정
     lazy var mainText: UILabel = {
@@ -133,6 +132,12 @@ class CommunityDetailPageViewController: UIViewController {
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    lazy var allStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleStackView, photoCollectionView, likeStackView, mainText, line])
+        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .leading)
+        return stackView
     }()
     
     lazy var commentLabel: UILabel = {
@@ -177,24 +182,33 @@ class CommunityDetailPageViewController: UIViewController {
         view.addSubview(communityDetailPageScrollView)
         view.addSubview(containerView)
         communityDetailPageScrollView.addSubview(communityDetailPageContentView)
-        communityDetailPageContentView.addSubview(titleLabel)
-        communityDetailPageContentView.addSubview(subTitleStackView)
-        communityDetailPageContentView.addSubview(photoCollectionView)
-        communityDetailPageContentView.addSubview(likeButton)
-        communityDetailPageContentView.addSubview(likeCount)
-        communityDetailPageContentView.addSubview(mainText)
+        communityDetailPageScrollView.addSubview(allStackView)
         communityDetailPageContentView.addSubview(line)
         communityDetailPageContentView.addSubview(commentTableView)
         containerView.addSubview(commentTextView)
         containerView.addSubview(button)
+        
+        if selectedPost?.image.count == 0 {
+            photoCollectionView.isHidden = true
+        } else {
+            photoCollectionView.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 360, height: 345))
+            }
+        }
         
         commentTableView.snp.makeConstraints { make in
             make.height.equalTo(100)
         }
         
         communityDetailPageScrollView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalTo(containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
+        }
+        
+        likeButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
         communityDetailPageContentView.snp.makeConstraints { make in
@@ -202,50 +216,21 @@ class CommunityDetailPageViewController: UIViewController {
             make.width.equalTo(communityDetailPageScrollView)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(12)
-            make.leftMargin.rightMargin.equalToSuperview().offset(Constants.horizontalMargin)
-        }
-        
-        subTitleStackView.snp.makeConstraints { make in
-            make.topMargin.equalTo(titleLabel.snp.bottom).offset(12)
+        allStackView.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
         }
-        
-        photoCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(subTitleStackView.snp.bottom).offset(12)
-            make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 361, height: 346))
-        }
-        
-        likeButton.snp.makeConstraints { make in
-            make.top.equalTo(photoCollectionView.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.size.equalTo(CGSize(width: 24, height: 24))
-        }
-        
-        likeCount.snp.makeConstraints { make in
-            make.height.equalTo(24)
-            make.top.equalTo(photoCollectionView.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(56)
-        }
-        
-        mainText.snp.makeConstraints { make in
-            make.width.equalTo(361)
-            make.top.equalTo(likeButton.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-        }
-        
+
         line.snp.makeConstraints { make in
-            make.top.equalTo(mainText.snp.bottom).offset(20)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.top.equalTo(allStackView.snp.bottom).offset(20)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin * 2)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin * 2)
             make.height.equalTo(1)
         }
 
         commentTableView.snp.makeConstraints { make in
-            make.top.equalTo(line.snp.bottom).offset(20)
+            make.top.equalTo(line.snp.bottom).offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
             make.bottomMargin.equalToSuperview()
@@ -253,33 +238,33 @@ class CommunityDetailPageViewController: UIViewController {
         // 댓글 레이아웃
         containerView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leftMargin.equalToSuperview()
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview()
         }
         
         commentTextView.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(12)
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-12)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
         
         button.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(12)
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
             make.left.equalTo(commentTextView.snp.right).offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-12)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
     }
     
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
-        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }  
+        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-         //현재 사용자가 포스트의 작성자가 일치하는지 확인
+        // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
             let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-                //삭제 기능 로직
+                // 삭제 기능 로직
                 print("삭제 완료")
             }
             action1.setValue(UIColor.red, forKey: "titleTextColor")
@@ -290,7 +275,7 @@ class CommunityDetailPageViewController: UIViewController {
                 print("신고 완료")
             }
             let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                //차단 기능 로직
+                // 차단 기능 로직
                 print("차단 완료")
             }
             action2.setValue(UIColor.red, forKey: "titleTextColor")
@@ -338,7 +323,7 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     func addComment(comment: String) {
-        let timeStamp = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .long)
+        let timeStamp = DateFormatter.localizedString(from: currentDate, dateStyle: .short, timeStyle: .short)
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in

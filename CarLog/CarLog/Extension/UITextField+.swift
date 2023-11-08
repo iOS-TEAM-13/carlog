@@ -18,7 +18,6 @@ extension UITextField {
         self.textAlignment = alignment
         self.textColor = textColor
         self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        //self.layer.borderWidth = 1
         self.layer.cornerRadius = Constants.cornerRadius
         self.backgroundColor = .white
         self.leftView = paddingView
