@@ -255,7 +255,8 @@ class CommunityDetailPageViewController: UIViewController {
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
     }
-    //키보드 따라 컨테이너뷰 동적 이동
+
+    // 키보드 따라 컨테이너뷰 동적 이동
     func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -271,7 +272,8 @@ class CommunityDetailPageViewController: UIViewController {
 
     func adjustContainerViewForKeyboard(notification: NSNotification, show: Bool) {
         guard let userInfo = notification.userInfo,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        else {
             return
         }
 
@@ -289,6 +291,7 @@ class CommunityDetailPageViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -302,11 +305,11 @@ class CommunityDetailPageViewController: UIViewController {
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
             let action1 = UIAlertAction(title: "수정하기", style: .default) { _ in
-                //수정 기능 로직
+                // 수정 기능 로직
                 print("수정 완료")
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-                //삭제 기능 로직
+                // 삭제 기능 로직
                 print("삭제 완료")
             }
             action1.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
@@ -319,7 +322,7 @@ class CommunityDetailPageViewController: UIViewController {
                 print("신고 완료")
             }
             let action4 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                //차단 기능 로직
+                // 차단 기능 로직
                 print("차단 완료")
             }
 //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
@@ -363,12 +366,14 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height * 1.5 + 20)
+            make.height.equalTo(contentSize.height * 1.8)
         }
     }
     
     func addComment(comment: String) {
-        let timeStamp = DateFormatter.localizedString(from: currentDate, dateStyle: .short, timeStyle: .short)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let timeStamp = dateFormatter.string(from: currentDate)
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
@@ -404,7 +409,6 @@ class CommunityDetailPageViewController: UIViewController {
     private func hideKeyboard(_ sender: Any) {
         view.endEditing(true)
     }
-    
 }
 
 extension CommunityDetailPageViewController {
@@ -477,7 +481,6 @@ extension CommunityDetailPageViewController {
 }
 
 extension CommunityDetailPageViewController {
-    
     func setupHideKeyboardOnTap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -487,6 +490,4 @@ extension CommunityDetailPageViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-
 }
