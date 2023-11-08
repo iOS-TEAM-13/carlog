@@ -7,6 +7,7 @@ class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     let currentDate = Date()
     var commentData: [Comment] = []
+    //var id = 1
     // 좋아요 버튼 설정
     private var isLiked = false {
         didSet {
@@ -378,6 +379,7 @@ class CommunityDetailPageViewController: UIViewController {
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
             guard let self = self, let postID = self.selectedPost?.id else { return }
+           
             
             let userNickName = nickName
             let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
@@ -389,7 +391,8 @@ class CommunityDetailPageViewController: UIViewController {
                     print("Comment saved successfully")
                     self.commentData.append(newComment)
                     self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
-                    
+                    print(self.commentData.count)
+                    print(self.commentData.description)
                     DispatchQueue.main.async {
                         self.commentTableView.reloadData()
                         self.updateCommentTableViewHeight()

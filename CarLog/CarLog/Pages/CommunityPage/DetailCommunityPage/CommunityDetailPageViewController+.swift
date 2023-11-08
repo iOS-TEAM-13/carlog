@@ -65,7 +65,8 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
 
 extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("commentDatacount: \(commentData.count)")
+        print("count: \(commentData.count)")
+        print("commentData : \(commentData)")
         return commentData.count
     }
 
@@ -102,14 +103,20 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                         for document in querySnapshot.documents {
                             let commentID = document.documentID
                             print("댓글의 UUID: \(commentID)")
+                            print("데이터라고.. \(document.data().values)")
 
                             document.reference.delete { error in
                                 if let error = error {
                                     print("Error: \(error.localizedDescription)")
                                 } else {
                                     print("댓글이 성공적으로 삭제됨")
-                                    self.commentData.remove(at: indexPath.row)
-                                    tableView.deleteRows(at: [indexPath], with: .fade)
+
+                                    if let data = document.data()["id"] as? String {
+                                        if let index = self.commentData.firstIndex(where: { $0.id == data }) {
+                                            self.commentData.remove(at: index)
+                                            tableView.deleteRows(at: [indexPath], with: .fade)
+                                        }
+                                    }
                                 }
                             }
                             break
