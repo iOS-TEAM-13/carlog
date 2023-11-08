@@ -409,7 +409,7 @@ final class MyPageView: UIView {
         phoneCallButton.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 3.5)
             make.trailing.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 53, height: 53))
+            make.size.equalTo(CGSize(width: 50, height: 50))
         }
         
         verLabel.snp.makeConstraints { make in
