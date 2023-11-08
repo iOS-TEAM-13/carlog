@@ -15,6 +15,21 @@ class CommentTableViewCell: UITableViewCell {
         return label
     }()
     
+    lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "2022.08.28"
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .light)
+        label.textColor = .black
+        return label
+    }()
+    
+    lazy var commentStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, dateLabel])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
     lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium)
@@ -42,18 +57,18 @@ class CommentTableViewCell: UITableViewCell {
     
     private func setupUI() {
         backgroundColor = .clear
-        contentView.addSubview(userNameLabel)
+        contentView.addSubview(commentStackView)
         contentView.addSubview(commentLabel)
         
-        userNameLabel.snp.makeConstraints { make in
+        commentStackView.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.leftMargin.equalToSuperview().offset(Constants.verticalMargin - 4)
         }
         
         commentLabel.snp.makeConstraints { make in
             make.topMargin.equalTo(userNameLabel.snp.bottom).offset(Constants.verticalMargin)
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin + 1)
         }
     }
     

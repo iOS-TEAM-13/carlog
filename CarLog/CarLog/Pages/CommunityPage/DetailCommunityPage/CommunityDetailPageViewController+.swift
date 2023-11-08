@@ -40,26 +40,21 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityDetailCell", for: indexPath) as! CommunityDetailCollectionViewCell
-
-        guard let selectedPost = selectedPost, indexPath.item < selectedPost.image.count else {
-            cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
-            return cell
-        }
-
+        guard let selectedPost = selectedPost, indexPath.item < selectedPost.image.count else { return cell }
         let imageURL = selectedPost.image[indexPath.item]
         if let url = imageURL {
             URLSession.shared.dataTask(with: url) { data, _, error in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    if let data = data, let image = UIImage(data: data) {
                         cell.imageView.image = image
+                        self.photoCollectionView.snp.makeConstraints { make in
+                            make.size.equalTo(CGSize(width: 360, height: 345))
+                        }
+                    } else if let error = error {
+                        print("Error downloading image: \(error.localizedDescription)")
                     }
-                } else if let error = error {
-                    print("Error downloading image: \(error.localizedDescription)")
                 }
             }.resume()
-        } else {
-            // URL이 nil인 경우에 대한 처리
-            cell.imageView.image = UIImage(named: "placeholderImage") // 대체 이미지 설정 예시
         }
 
         return cell
@@ -78,10 +73,9 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
         let comment = commentData[indexPath.row]
 
-        print("comment: \(comment)")
         cell.userNameLabel.text = comment.userName
+        cell.dateLabel.text = comment.timeStamp
         cell.commentLabel.text = comment.content
-
         cell.selectionStyle = .none
         return cell
     }
