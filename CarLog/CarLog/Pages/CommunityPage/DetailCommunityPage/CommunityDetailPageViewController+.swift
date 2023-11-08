@@ -91,6 +91,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // '삭제' 액션
+
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             if let post = self.selectedPost {
                 let userIDToMatch = Auth.auth().currentUser?.email
@@ -100,26 +101,31 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                     if let error = error {
                         print("댓글 삭제 에러: \(error.localizedDescription)")
                     } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
+                        print("쿼리 스냅샷: \(querySnapshot.documents.description)")
                         for document in querySnapshot.documents {
-                            let commentID = document.documentID
-                            print("댓글의 UUID: \(commentID)")
-                            print("데이터라고.. \(document.data().values)")
-
-                            document.reference.delete { error in
-                                if let error = error {
-                                    print("Error: \(error.localizedDescription)")
-                                } else {
-                                    print("댓글이 성공적으로 삭제됨")
-
-                                    if let data = document.data()["id"] as? String {
-                                        if let index = self.commentData.firstIndex(where: { $0.id == data }) {
-                                            self.commentData.remove(at: index)
-                                            tableView.deleteRows(at: [indexPath], with: .fade)
-                                        }
-                                    }
-                                }
+                            if document.data()["id"] as? String == self.commentData[indexPath.row].id {
+                                document.reference.delete()
+                                self.commentData.remove(at: indexPath.row)
+                                tableView.deleteRows(at: [indexPath], with: .fade)
+                                break
                             }
-                            break
+
+//                            let commentID = document.documentID
+//                            print("댓글의 UUID: \(commentID)")
+//                            print("데이터라고.. \(document.data().values)")
+//
+//                            document.reference.delete { error in
+//                                if let error = error {
+//                                    print("Error: \(error.localizedDescription)")
+//                                } else {
+//                                    print("댓글이 성공적으로 삭제됨: \(document.data().values)")
+//                                    if let data = document.data()["content"] as? String {
+//                                        if let index = self.commentData.firstIndex(where: { $0.content == data }) {
+//
+//                                        }
+//                                    }
+//                                }
+//                            }
                         }
                     } else {
                         print("문서가 없음")
