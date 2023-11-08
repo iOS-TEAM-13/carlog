@@ -13,9 +13,8 @@ class CommunityPageViewController: UIViewController {
         let editImage = UIImage(named: "edit")
         floatingButton.setImage(editImage, for: .normal)
         floatingButton.backgroundColor = .mainNavyColor
-        floatingButton.layer.cornerRadius = 30
-        floatingButton.layer.shadowRadius = 10
-        floatingButton.layer.shadowOpacity = 0.3
+        floatingButton.layer.cornerRadius = 25
+        floatingButton.alpha = 1.0
         floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         return floatingButton
     }()
@@ -79,7 +78,7 @@ class CommunityPageViewController: UIViewController {
         }
         
         editFloatingButton.snp.makeConstraints { make in
-            make.width.height.equalTo(60)
+            make.width.height.equalTo(50)
             make.rightMargin.equalToSuperview().offset(-17)
             make.bottom.equalToSuperview().offset(-102)
         }

@@ -270,6 +270,44 @@ class CommunityDetailPageViewController: UIViewController {
             make.bottomMargin.equalToSuperview().offset(-12)
         }
     }
+    //키보드 따라 컨테이너뷰 동적 이동
+    func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        adjustContainerViewForKeyboard(notification: notification, show: true)
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        adjustContainerViewForKeyboard(notification: notification, show: false)
+    }
+
+    func adjustContainerViewForKeyboard(notification: NSNotification, show: Bool) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        let keyboardHeight = show ? keyboardFrame.height : 0
+        let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.3
+
+        // 기존 레이아웃을 유지하되, 키보드 올라올때는 이 레이아웃 사용
+        containerView.snp.remakeConstraints { make in
+            make.bottom.equalToSuperview().offset(-keyboardHeight)
+            make.leftMargin.equalToSuperview()
+            make.rightMargin.equalToSuperview()
+        }
+
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
@@ -278,25 +316,32 @@ class CommunityDetailPageViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
          //현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
-            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
+            let action1 = UIAlertAction(title: "수정하기", style: .default) { _ in
+                //수정 기능 로직
+                print("수정 완료")
+            }
+            let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 //삭제 기능 로직
                 print("삭제 완료")
             }
-            action1.setValue(UIColor.red, forKey: "titleTextColor")
+            action1.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
+            action2.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
             actionSheet.addAction(action1)
+            actionSheet.addAction(action2)
         } else {
-            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
+            let action3 = UIAlertAction(title: "신고하기", style: .default) { _ in
                 // 신고 기능 로직
                 print("신고 완료")
             }
-            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
+            let action4 = UIAlertAction(title: "차단하기", style: .default) { _ in
                 //차단 기능 로직
                 print("차단 완료")
             }
-            action2.setValue(UIColor.red, forKey: "titleTextColor")
+//            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
             action3.setValue(UIColor.red, forKey: "titleTextColor")
-            actionSheet.addAction(action2)
+            action4.setValue(UIColor.red, forKey: "titleTextColor")
             actionSheet.addAction(action3)
+            actionSheet.addAction(action4)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         actionSheet.addAction(cancelAction)
@@ -363,6 +408,18 @@ class CommunityDetailPageViewController: UIViewController {
             }
         }
     }
+    
+    // 키보드
+    private func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(_:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc
+    private func hideKeyboard(_ sender: Any) {
+        view.endEditing(true)
+    }
+    
 }
 
 extension CommunityDetailPageViewController {
@@ -385,6 +442,8 @@ extension CommunityDetailPageViewController {
         loadPost()
         loadComments()
         commentTextViewPlaceholder()
+        registerKeyboardNotifications()
+        setupHideKeyboardOnTap()
     }
     
     override func viewDidLayoutSubviews() {
@@ -430,4 +489,19 @@ extension CommunityDetailPageViewController {
             }
         }
     }
+}
+
+extension CommunityDetailPageViewController {
+    
+    func setupHideKeyboardOnTap() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+
 }
