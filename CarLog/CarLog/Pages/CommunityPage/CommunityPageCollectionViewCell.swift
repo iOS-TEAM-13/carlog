@@ -53,6 +53,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         if let image = UIImage(systemName: "photo.fill") {
             imageView.image = image
         }
+        imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
