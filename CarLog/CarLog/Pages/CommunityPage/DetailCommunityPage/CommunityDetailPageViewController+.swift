@@ -97,11 +97,12 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
                 commentsRef.whereField("userEmail", isEqualTo: userIDToMatch ?? "").getDocuments { querySnapshot, error in
                     if let error = error {
-                        print("Error getting documents: \(error.localizedDescription)")
+                        print("댓글 삭제 에러: \(error.localizedDescription)")
                     } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
                         for document in querySnapshot.documents {
                             let commentID = document.documentID
-                            print("Deleting comment with id: \(commentID)")
+                            print("댓글의 UUID: \(commentID)")
+
                             document.reference.delete { error in
                                 if let error = error {
                                     print("Error: \(error.localizedDescription)")
@@ -119,17 +120,27 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                 }
             }
         }
+
         deleteAction.image = UIImage(named: "trash") // 시스템 아이콘 사용
         deleteAction.backgroundColor = .backgroundCoustomColor
-        // '신고' 액션
         let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-            // '신고'를 눌렀을 때 실행할 코드
             completionHandler(true)
         }
         reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         reportAction.backgroundColor = .backgroundCoustomColor
         // 스와이프 액션을 구성합니다.
-        let configuration = UISwipeActionsConfiguration(actions: [reportAction, deleteAction])
+
+        let configuration: UISwipeActionsConfiguration
+
+        if let currentUserEmail = Auth.auth().currentUser?.email,
+           let commentUserEmail = commentData[indexPath.row].userEmail,
+           currentUserEmail == commentUserEmail
+        {
+            configuration = UISwipeActionsConfiguration(actions: [reportAction, deleteAction])
+        } else {
+            configuration = UISwipeActionsConfiguration(actions: [reportAction])
+        }
+
         return configuration
     }
 }
