@@ -93,6 +93,10 @@ class JoinupPageViewController: JoinupPageHelperController {
         }), for: .touchUpInside)
 
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
+            guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
+                self.showAlert(message: "중복확인을 해주세요")
+                return
+            }
             self.view.addSubview(self.totalDistanceView)
             self.nickNameView.isHidden = true
             self.totalDistanceView.snp.makeConstraints { make in
