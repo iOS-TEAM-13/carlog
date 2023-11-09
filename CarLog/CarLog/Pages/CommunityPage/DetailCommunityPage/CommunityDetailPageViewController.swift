@@ -318,8 +318,8 @@ class CommunityDetailPageViewController: UIViewController {
                 }
                 print("삭제 완료")
             }
-            action1.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
-            action2.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
+            action1.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+            action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action1)
             actionSheet.addAction(action2)
         } else {
