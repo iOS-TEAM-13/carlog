@@ -361,7 +361,7 @@ class CommunityDetailPageViewController: UIViewController {
         if let post = selectedPost {
             FirestoreService.firestoreService.updatePosts(postID: post.id ?? "", emergency: post.emergency ?? [:])
         }
-        if (isEmergency ?? false) {
+        if isEmergency ?? false {
             emergencyButton.setImage(UIImage(named: "spaner.fill"), for: .normal)
             emergencyCount = (emergencyCount ?? 0) + 1
         } else {
@@ -391,7 +391,7 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height * 1.7)
+            make.height.equalTo(contentSize.height)
         }
     }
     
@@ -415,17 +415,14 @@ class CommunityDetailPageViewController: UIViewController {
             guard let self = self, let postID = self.selectedPost?.id else { return }
             
             let userNickName = nickName
-            let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
-            
-            FirestoreService.firestoreService.saveComment(postID: postID, comment: newComment) { error in
+            let newComment = Comment(id: UUID().uuidString, postId: postID, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
+            FirestoreService.firestoreService.saveComment(comment: newComment) { error in
                 if let error = error {
                     print("Error saving comment: \(error.localizedDescription)")
                 } else {
-                    print("Comment saved successfully")
+                    print("save success")
                     self.commentData.append(newComment)
                     self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
-                    print(self.commentData.count)
-                    print(self.commentData.description)
                     DispatchQueue.main.async {
                         self.commentTableView.reloadData()
                         self.updateCommentTableViewHeight()
@@ -501,11 +498,9 @@ extension CommunityDetailPageViewController {
     
     private func loadComments() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.getComments(forPostID: post.id!) { comments, error in
-                if let error = error {
-                    print("Error loading comments: \(error.localizedDescription)")
-                } else if let comments = comments {
-                    print("Loaded comments: \(comments)")
+            FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
+                if let comments = comments {
+                    print("comments = \(comments)")
                     for comment in comments {
                         self.commentData.append(comment)
                         self.commentTableView.reloadData()
