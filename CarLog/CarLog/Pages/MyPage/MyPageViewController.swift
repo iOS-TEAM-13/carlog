@@ -358,7 +358,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     // MARK: - Keyboard 관련
-    
+
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
