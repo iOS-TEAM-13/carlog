@@ -94,7 +94,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             if let post = self.selectedPost {
-                let userIDToMatch = Auth.auth().currentUser?.email
+                let userIDToMatch = Constants.currentUser.userEmail
                 let commentsRef = FirestoreService.firestoreService.db.collection("posts").document(post.id ?? "").collection("comments")
 
                 commentsRef.whereField("userEmail", isEqualTo: userIDToMatch ?? "").getDocuments { querySnapshot, error in
@@ -130,7 +130,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
         let configuration: UISwipeActionsConfiguration
 
-        if let currentUserEmail = Auth.auth().currentUser?.email,
+        if let currentUserEmail = Constants.currentUser.userEmail,
            let commentUserEmail = commentData[indexPath.row].userEmail,
            currentUserEmail == commentUserEmail
         {

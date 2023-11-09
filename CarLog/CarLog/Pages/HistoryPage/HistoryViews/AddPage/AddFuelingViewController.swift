@@ -162,7 +162,7 @@ class AddFuelingViewController: UIViewController {
             let price = Int(addFuelingView.priceTextField.text ?? "0") ?? 0
             let count = String(addFuelingView.countTextField.text ?? "")
             let totalPrice = Int(addFuelingView.totalPriceTextField.text ?? "0") ?? 0
-            let userEmail = Auth.auth().currentUser?.email
+            let userEmail = Constants.currentUser.userEmail
             
             let newFueling = Fueling(timeStamp: timeStamp, id: id, totalDistance: totalDistance, price: price, count: count, totalPrice: totalPrice, userEmail: userEmail)
             

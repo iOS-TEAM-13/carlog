@@ -23,6 +23,9 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         //        self.navigationController?.isNavigationBarHidden = true
         
         // MARK: - Setup
+        
+        print("@@@ dummy \(carDummy)")
+        print("@@@ Cons \(Constants.currentUser)")
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -165,7 +168,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     @objc func logoutButtonTapped() {
-        if Auth.auth().currentUser != nil {
+        if Constants.currentUser != nil {
             LoginService.loginService.logout {
                 let loginViewController = LoginPageViewController()
                 self.dismiss(animated: true) {
@@ -182,10 +185,10 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     @objc func quitUserButtonTapped() {
-        if Auth.auth().currentUser != nil {
+        if Constants.currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
-                LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { _ in
+                LoginService.loginService.quitUser(email: Constants.currentUser.userEmail ?? "") { _ in
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {
                         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

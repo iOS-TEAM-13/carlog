@@ -162,7 +162,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
             let departDistance = Int(addDrivingView.totalDistanceTextField.text ?? "0") ?? 0
             let arriveDistance = Int(addDrivingView.arriveDistanceTextField.text ?? "0") ?? 0
             let driveDistance = Int(addDrivingView.driveDistenceTextField.text ?? "0") ?? 0
-            let userEmail = Auth.auth().currentUser?.email
+            let userEmail = Constants.currentUser.userEmail
             
             let newDriving = Driving(timeStamp: timeStamp, drivingPurpose: drivingPurpose, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
             

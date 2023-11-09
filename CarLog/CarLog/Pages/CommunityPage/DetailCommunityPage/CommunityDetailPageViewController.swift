@@ -7,7 +7,7 @@ class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     var commentData: [Comment] = []
 
-    lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
+    lazy var isEmergency = selectedPost?.emergency?[Constants.currentUser.userEmail ?? ""]
     lazy var emergencyCount = selectedPost?.emergency?.filter{ $0.value == true }.count {
         didSet {
             if let count = emergencyCount {
@@ -300,10 +300,10 @@ class CommunityDetailPageViewController: UIViewController {
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
 
     @objc func dotsButtonTapped() {
-        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
+        guard let post = selectedPost else { return }
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
-        if post.userEmail == user.email {
+        if post.userEmail == Constants.currentUser.userEmail {
             //네이게션 edit
             let action1 = UIAlertAction(title: "수정하기", style: .default) { _ in
                 // 수정 기능 로직
@@ -346,7 +346,7 @@ class CommunityDetailPageViewController: UIViewController {
     // 좋아요 버튼 눌렀을 떄 동작 구현
     @objc func emergencyButtonTapped() {
         isEmergency = !(isEmergency ?? false)
-        selectedPost?.emergency?.updateValue(isEmergency ?? false, forKey: Auth.auth().currentUser?.email ?? "")
+        selectedPost?.emergency?.updateValue(isEmergency ?? false, forKey: Constants.currentUser.userEmail ?? "")
         setEmergencyButton()
     }
     
@@ -402,13 +402,12 @@ class CommunityDetailPageViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let timeStamp = dateFormatter.string(from: Date())
-        guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
-        FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
+        FirestoreService.firestoreService.fetchNickName(userEmail: Constants.currentUser.userEmail ?? "") { [weak self] nickName in
             guard let self = self, let postID = self.selectedPost?.id else { return }
            
             let userNickName = nickName
-            let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
+            let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: Constants.currentUser.userEmail ?? "", timeStamp: timeStamp)
             
             FirestoreService.firestoreService.saveComment(postID: postID, comment: newComment) { error in
                 if let error = error {
