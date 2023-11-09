@@ -301,6 +301,7 @@ class CommunityDetailPageViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
+            //네이게션 edit
             let action1 = UIAlertAction(title: "수정하기", style: .default) { _ in
                 //수정 기능 로직
                 print("수정 완료")
@@ -309,8 +310,8 @@ class CommunityDetailPageViewController: UIViewController {
                 //삭제 기능 로직
                 print("삭제 완료")
             }
-            action1.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
-            action2.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
+            action1.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+            action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action1)
             actionSheet.addAction(action2)
         } else {
@@ -323,8 +324,8 @@ class CommunityDetailPageViewController: UIViewController {
                 print("차단 완료")
             }
 //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
-            action3.setValue(UIColor.red, forKey: "titleTextColor")
-            action4.setValue(UIColor.red, forKey: "titleTextColor")
+            action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
+            action4.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action3)
             actionSheet.addAction(action4)
         }
