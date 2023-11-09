@@ -191,7 +191,6 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     
     @objc func didTapRightBarButton() {
         let timeStamp = String.dateFormatter.string(from: currentDate)
-        guard let user = Auth.auth().currentUser else { return }
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
         
@@ -205,20 +204,22 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             }
         }
         
-        if self.mainTextField.text != "" {
-            dispatchGroup.notify(queue: .main) { [self] in
-                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp, emergency: [:])
-                FirestoreService.firestoreService.savePosts(post: post) { error in
-                    print("err: \(String(describing: error?.localizedDescription))")
+        FirestoreService.firestoreService.loadCar { car in
+            if self.mainTextField.text != "" {
+                dispatchGroup.notify(queue: .main) { [self] in
+                    let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: car?.first?.userEmail, userName: car?.first?.nickName, timeStamp: timeStamp, emergency: [:])
+                    FirestoreService.firestoreService.savePosts(post: post) { error in
+                        print("err: \(String(describing: error?.localizedDescription))")
+                    }
                 }
+                self.view.isUserInteractionEnabled = false
+                self.navigationItem.leftBarButtonItem?.isEnabled = false
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                self.tabBarController?.tabBar.isHidden = false
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.showAlert(message: "제목은 필수입니다!")
             }
-            view.isUserInteractionEnabled = false
-            navigationItem.leftBarButtonItem?.isEnabled = false
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            tabBarController?.tabBar.isHidden = false
-            navigationController?.popViewController(animated: true)
-        } else {
-            showAlert(message: "제목은 필수입니다!")
         }
     }
     
