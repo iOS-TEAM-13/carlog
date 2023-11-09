@@ -14,5 +14,5 @@ struct Post: Codable {
     let image: [URL?]
     let userEmail: String?
     let timeStamp: String?
-    var blocked: Bool = false
+    //var blocked: Bool = false
 }

@@ -312,7 +312,7 @@ class CommunityDetailPageViewController: UIViewController {
                 // 삭제 기능 로직
                 
                 FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
-                    if let err = err {
+                    if err != nil {
                         print("에러")
                     }
                 }
