@@ -6,7 +6,7 @@ import SnapKit
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     var commentData: [Comment] = []
-
+    
     lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
     lazy var emergencyCount = selectedPost?.emergency?.count {
         didSet {
@@ -107,7 +107,7 @@ class CommunityDetailPageViewController: UIViewController {
         stackView.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
         return stackView
     }()
-
+    
     // textview 로 수정
     lazy var mainText: UILabel = {
         let label = UILabel()
@@ -177,7 +177,7 @@ class CommunityDetailPageViewController: UIViewController {
         button.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         return button
     }()
-
+    
     private func setupUI() {
         view.addSubview(communityDetailPageScrollView)
         view.addSubview(containerView)
@@ -221,14 +221,14 @@ class CommunityDetailPageViewController: UIViewController {
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
         }
-
+        
         line.snp.makeConstraints { make in
             make.top.equalTo(allStackView.snp.bottom).offset(20)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin * 2)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin * 2)
             make.height.equalTo(1)
         }
-
+        
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(line.snp.bottom).offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
@@ -255,7 +255,7 @@ class CommunityDetailPageViewController: UIViewController {
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
     }
-
+    
     // 키보드 따라 컨테이너뷰 동적 이동
     func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -265,49 +265,56 @@ class CommunityDetailPageViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         adjustContainerViewForKeyboard(notification: notification, show: true)
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         adjustContainerViewForKeyboard(notification: notification, show: false)
     }
-
+    
     func adjustContainerViewForKeyboard(notification: NSNotification, show: Bool) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
         else {
             return
         }
-
+        
         let keyboardHeight = show ? keyboardFrame.height : 0
         let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.3
-
+        
         // 기존 레이아웃을 유지하되, 키보드 올라올때는 이 레이아웃 사용
         containerView.snp.remakeConstraints { make in
             make.bottom.equalToSuperview().offset(-keyboardHeight)
             make.leftMargin.equalToSuperview()
             make.rightMargin.equalToSuperview()
         }
-
+        
         UIView.animate(withDuration: animationDuration) {
             self.view.layoutIfNeeded()
         }
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
-
+    
     @objc func dotsButtonTapped() {
         guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
-            // 네이게션 edit
-            let action1 = UIAlertAction(title: "수정하기", style: .default) { _ in
+            //네이게션 edit
+            let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                let editPageViewController = EditPageViewController()
+                
+                // 선택한 포스트를 가져와서 EditPageViewController에 설정
+                let editPost = selectedPost
+                editPageViewController.postToEdit = editPost
+                self.navigateToEditPage(post: post)
                 // 수정 기능 로직
-                print("수정 완료")
+                //                print("수정 완료")
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
@@ -319,9 +326,9 @@ class CommunityDetailPageViewController: UIViewController {
                 }
                 print("삭제 완료")
             }
-            action1.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+            editAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
             action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
-            actionSheet.addAction(action1)
+            actionSheet.addAction(editAction)
             actionSheet.addAction(action2)
         } else {
             let action3 = UIAlertAction(title: "신고하기", style: .default) { _ in
@@ -332,7 +339,7 @@ class CommunityDetailPageViewController: UIViewController {
                 // 차단 기능 로직
                 print("차단 완료")
             }
-//            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
+            //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
             action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
             action4.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action3)
@@ -362,7 +369,7 @@ class CommunityDetailPageViewController: UIViewController {
             emergencyCount = (emergencyCount ?? 0) - 1
         }
     }
-           
+    
     // MARK: - 댓글 기능
     
     @objc func commentButtonTapped() {
@@ -403,10 +410,10 @@ class CommunityDetailPageViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
-
+        
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
             guard let self = self, let postID = self.selectedPost?.id else { return }
-           
+            
             let userNickName = nickName
             let newComment = Comment(id: UUID().uuidString, postId: postID, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
             FirestoreService.firestoreService.saveComment(comment: newComment) { error in
@@ -430,7 +437,7 @@ class CommunityDetailPageViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc
     private func hideKeyboard(_ sender: Any) {
         view.endEditing(true)
@@ -472,12 +479,12 @@ extension CommunityDetailPageViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(didTapLeftBarButton))
         }
     }
-       
+    
     @objc func didTapLeftBarButton() {
         tabBarController?.tabBar.isHidden = false
         navigationController?.popViewController(animated: true)
     }
-
+    
     private func loadPost() {
         if let post = selectedPost {
             FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
@@ -502,6 +509,13 @@ extension CommunityDetailPageViewController {
             }
         }
     }
+    
+    private func navigateToEditPage(post: Post) {
+        let editPageViewController = EditPageViewController()
+        editPageViewController.postToEdit = post // EditPageViewController에 수정할 포스트 정보 전달
+        self.navigationController?.pushViewController(editPageViewController, animated: true)
+    }
+
 }
 
 extension CommunityDetailPageViewController {
