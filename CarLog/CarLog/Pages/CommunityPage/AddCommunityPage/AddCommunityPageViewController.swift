@@ -204,10 +204,9 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             }
         }
         
-        FirestoreService.firestoreService.loadCar { car in
             if self.mainTextField.text != "" {
                 dispatchGroup.notify(queue: .main) { [self] in
-                    let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: car?.first?.userEmail, userName: car?.first?.nickName, timeStamp: timeStamp, emergency: [:])
+                    let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
                     FirestoreService.firestoreService.savePosts(post: post) { error in
                         print("err: \(String(describing: error?.localizedDescription))")
                     }
@@ -220,7 +219,6 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             } else {
                 self.showAlert(message: "제목은 필수입니다!")
             }
-        }
     }
     
     @objc func didTapImagePickerButton() {

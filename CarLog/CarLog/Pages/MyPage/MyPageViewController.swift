@@ -10,7 +10,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     let myPageView = MyPageView()
     
-    var carDummy: [Car] = []
+    lazy var carDummy = Constants.currentUser
     
     var isEditMode = false
     
@@ -23,7 +23,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         //        self.navigationController?.isNavigationBarHidden = true
         
         // MARK: - Setup
-        
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -42,9 +41,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        DispatchQueue.main.async {
-            self.loadCarData() // ⭐ 내 차 정보 가져오기
-        }
+        carDummy = Constants.currentUser
+        self.configureUI() // ⭐ 내 차 정보 가져오기
         
         if isEditMode {
             toggleTextFieldsEditing(enable: false)
@@ -72,12 +70,12 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     @objc private func cancelButtonTapped() {
         // 취소 버튼,현재 입력된 내용을 초기값으로 설정
-        myPageView.carNumberTextField.text = carDummy.first?.number
-        myPageView.carNameTextField.text = carDummy.first?.name
-        myPageView.carMakerTextField.text = carDummy.first?.maker
-        myPageView.carOilTypeTextField.text = carDummy.first?.oilType
-        myPageView.carNickNameTextField.text = carDummy.first?.nickName
-        if let totalDistance = carDummy.first?.totalDistance {
+        myPageView.carNumberTextField.text = carDummy.number
+        myPageView.carNameTextField.text = carDummy.name
+        myPageView.carMakerTextField.text = carDummy.maker
+        myPageView.carOilTypeTextField.text = carDummy.oilType
+        myPageView.carNickNameTextField.text = carDummy.nickName
+        if let totalDistance = carDummy.totalDistance {
             myPageView.carTotalDistanceTextField.text = String(totalDistance)
         } else {
             myPageView.carTotalDistanceTextField.text = "0.0"
@@ -106,6 +104,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             myPageView.myPageDesignStackView.isHidden = true
             myPageView.inquiryButton.isHidden = true
         } else {
+            tabBarController?.tabBar.isHidden = false
             guard let checkCarNumber = self.myPageView.carNumberTextField.text,
                   let checkCarNickName = self.myPageView.carNickNameTextField.text
             else {
@@ -134,27 +133,28 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             guard let distanceText = myPageView.carTotalDistanceTextField.text else {
                 return
             } // ⭐⭐⭐(Optional unwrapping) distanceText Text (String?)형태라서 nil 일수도 있어서... guard let으로 Optional unwrapping
-            FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Auth.auth().currentUser?.email)) { _ in
+            let changedCar = Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Constants.currentUser.userEmail)
+            FirestoreService.firestoreService.saveCar(car: changedCar) { _ in
             }
+            Constants.currentUser = changedCar
         }
     }
     
     private func configureUI() {
-        if let userCar = carDummy.first { // 배열에서 첫 번째 요소 가져오기
-            if let userEmail = userCar.userEmail {
+        // 배열에서 첫 번째 요소 가져오기
+            if let userEmail = carDummy.userEmail {
                 if let atIndex = userEmail.firstIndex(of: "@") {
                     let emailPrefix = String(userEmail[..<atIndex])
                     myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
                 } else {
                     myPageView.mainTitleLabel.text = "\(userEmail) 님"
                 }
-            }
-            myPageView.carNumberTextField.text = userCar.number
-            myPageView.carMakerTextField.text = userCar.maker
-            myPageView.carNameTextField.text = userCar.name // name 으로 통일!
-            myPageView.carOilTypeTextField.text = userCar.oilType
-            myPageView.carNickNameTextField.text = userCar.nickName
-            if let totalDistance = userCar.totalDistance {
+            myPageView.carNumberTextField.text = carDummy.number
+            myPageView.carMakerTextField.text = carDummy.maker
+            myPageView.carNameTextField.text = carDummy.name // name 으로 통일!
+            myPageView.carOilTypeTextField.text = carDummy.oilType
+            myPageView.carNickNameTextField.text = carDummy.nickName
+            if let totalDistance = carDummy.totalDistance {
                 myPageView.carTotalDistanceTextField.text = String(totalDistance)
             } else {
                 myPageView.carTotalDistanceTextField.text = "0.0" // 만약 totalDistance가 nil인 경우 기본값 설정
@@ -344,17 +344,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func loadCarData() {
-        FirestoreService.firestoreService.loadCar { result in
-            if let car = result {
-                self.carDummy = car
-                self.configureUI()
-            } else {
-                print("데이터 로드 중 오류 발생")
-            }
-        }
     }
     
     // MARK: - Keyboard 관련

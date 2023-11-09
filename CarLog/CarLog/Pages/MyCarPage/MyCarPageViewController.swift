@@ -94,6 +94,13 @@ class MyCarPageViewController: UIViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+        FirestoreService.firestoreService.loadCar { result in
+            if let car = result {
+                Constants.currentUser = car.first ?? Car(number: "", maker: "", name: "", oilType: "", nickName: "", totalDistance: 0, userEmail: "")
+            } else {
+                print("데이터 로드 중 오류 발생")
+            }
+        }
     }
 }
 
