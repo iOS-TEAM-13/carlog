@@ -5,8 +5,8 @@ import SnapKit
 
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
-    let currentDate = Date()
     var commentData: [Comment] = []
+    // var id = 1
     // 좋아요 버튼 설정
     private var isLiked = false {
         didSet {
@@ -233,7 +233,7 @@ class CommunityDetailPageViewController: UIViewController {
             make.top.equalTo(line.snp.bottom).offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview()
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
         // 댓글 레이아웃
         containerView.snp.makeConstraints { make in
@@ -255,7 +255,8 @@ class CommunityDetailPageViewController: UIViewController {
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
     }
-    //키보드 따라 컨테이너뷰 동적 이동
+
+    // 키보드 따라 컨테이너뷰 동적 이동
     func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -271,7 +272,8 @@ class CommunityDetailPageViewController: UIViewController {
 
     func adjustContainerViewForKeyboard(notification: NSNotification, show: Bool) {
         guard let userInfo = notification.userInfo,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        else {
             return
         }
 
@@ -289,6 +291,7 @@ class CommunityDetailPageViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -302,15 +305,21 @@ class CommunityDetailPageViewController: UIViewController {
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == user.email {
             let action1 = UIAlertAction(title: "수정하기", style: .default) { _ in
-                //수정 기능 로직
+                // 수정 기능 로직
                 print("수정 완료")
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-                //삭제 기능 로직
+                // 삭제 기능 로직
+                
+                FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
+                    if err != nil {
+                        print("에러")
+                    }
+                }
                 print("삭제 완료")
             }
-            action1.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
-            action2.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")
+            action1.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+            action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action1)
             actionSheet.addAction(action2)
         } else {
@@ -319,7 +328,7 @@ class CommunityDetailPageViewController: UIViewController {
                 print("신고 완료")
             }
             let action4 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                //차단 기능 로직
+                // 차단 기능 로직
                 print("차단 완료")
             }
 //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
@@ -363,17 +372,29 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height * 1.5 + 20)
+            make.height.equalTo(contentSize.height * 1.7)
+        }
+    }
+    
+    func updateDeleteCommentTableViewHeight(cellHeight: CGFloat) {
+        let currentHeight = commentTableView.bounds.size.height
+        let newHeight = currentHeight - cellHeight
+        let minHeight: CGFloat = 0
+        let finalHeight = max(minHeight, newHeight)
+        commentTableView.snp.updateConstraints { make in
+            make.height.equalTo(finalHeight)
         }
     }
     
     func addComment(comment: String) {
-        let timeStamp = DateFormatter.localizedString(from: currentDate, dateStyle: .short, timeStyle: .short)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
 
         FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
             guard let self = self, let postID = self.selectedPost?.id else { return }
-            
+           
             let userNickName = nickName
             let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
             
@@ -384,7 +405,8 @@ class CommunityDetailPageViewController: UIViewController {
                     print("Comment saved successfully")
                     self.commentData.append(newComment)
                     self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
-                    
+                    print(self.commentData.count)
+                    print(self.commentData.description)
                     DispatchQueue.main.async {
                         self.commentTableView.reloadData()
                         self.updateCommentTableViewHeight()
@@ -404,7 +426,6 @@ class CommunityDetailPageViewController: UIViewController {
     private func hideKeyboard(_ sender: Any) {
         view.endEditing(true)
     }
-    
 }
 
 extension CommunityDetailPageViewController {
@@ -477,7 +498,6 @@ extension CommunityDetailPageViewController {
 }
 
 extension CommunityDetailPageViewController {
-    
     func setupHideKeyboardOnTap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -487,6 +507,4 @@ extension CommunityDetailPageViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-
 }
