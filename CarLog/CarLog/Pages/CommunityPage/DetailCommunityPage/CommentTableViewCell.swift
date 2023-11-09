@@ -33,7 +33,7 @@ class CommentTableViewCell: UITableViewCell {
     lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium)
-        label.numberOfLines = 0
+        label.numberOfLines = 5
         label.textColor = .black
         return label
     }()
@@ -69,6 +69,7 @@ class CommentTableViewCell: UITableViewCell {
             make.topMargin.equalTo(userNameLabel.snp.bottom).offset(Constants.verticalMargin)
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin + 1)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
         }
     }
     
