@@ -196,12 +196,12 @@ final class FirestoreService {
     
     
     func removePost(postID: String, completion: @escaping (Error?) -> Void) {
-        // Firestore 배치 작업을 생성
-        let batch = db.batch()
-
-        // 1. "posts" 컬렉션에서 포스트(document)를 삭제
+        
         let postsCollection = db.collection("posts")
         let postQuery = postsCollection.whereField("id", isEqualTo: postID)
+        
+        let commensCollection = db.collection("comments")
+        let commentQuery = commensCollection.whereField("postId", isEqualTo: postID)
 
         postQuery.getDocuments { querySnapshot, error in
             if let error = error {
@@ -209,34 +209,19 @@ final class FirestoreService {
                 completion(error)
                 return
             }
-
             for document in querySnapshot!.documents {
                 document.reference.delete()
+            } 
+        }
+        
+        commentQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("댓글을 조회하는 중 오류 발생: \(error)")
+                completion(error)
+                return
             }
-
-            let postRef = postsCollection.document(postID)
-            let commentsCollection = postRef.collection("comments")
-
-            commentsCollection.getDocuments { snapshot, error in
-                if let error = error {
-                    print("댓글을 조회하는 중 오류 발생: \(error)")
-                    completion(error)
-                    return
-                }
-
-                for document in snapshot!.documents {
-                    batch.deleteDocument(document.reference)
-                }
-
-                batch.commit { error in
-                    if let error = error {
-                        print("데이터 삭제 중 오류 발생: \(error)")
-                        completion(error)
-                    } else {
-                        print("포스트와 모든 댓글 삭제 완료")
-                        completion(nil)
-                    }
-                }
+            for document in querySnapshot!.documents {
+                document.reference.delete()
             }
         }
     }
