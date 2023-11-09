@@ -44,6 +44,13 @@ class CommunityPageViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var indicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.style = .large
+//        view.center = view.center
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
@@ -58,11 +65,17 @@ class CommunityPageViewController: UIViewController {
         loadPostFromFireStore()
         startBannerTimer()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     func setupUI() {
         view.addSubview(communityColletionView)
         view.addSubview(editFloatingButton)
         view.addSubview(bannerCollectionView)
+        view.addSubview(indicator)
+        indicator.center = view.center
         
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -87,19 +100,24 @@ class CommunityPageViewController: UIViewController {
             make.bottom.equalToSuperview().offset(-102 - 12)
         }
     }
-
+    
     // 배너 컬렉션 뷰 셀 전환 속도 조정
     private func startBannerTimer() {
         timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextBanner), userInfo: nil, repeats: true)
     }
     
     private func loadPostFromFireStore() {
+        self.indicator.startAnimating()
         FirestoreService.firestoreService.loadPosts { posts in
             if let posts = posts {
                 self.items = posts
-                self.communityColletionView.reloadData()
+                DispatchQueue.main.async {
+                    self.communityColletionView.reloadData()
+                    self.indicator.stopAnimating()
+                }
             } else {
                 print("데이터를 가져오는 중 오류 발생")
+                self.indicator.stopAnimating()
             }
         }
     }
@@ -113,7 +131,7 @@ class CommunityPageViewController: UIViewController {
             bannerCollectionView.setContentOffset(.zero, animated: true)
         }
     }
-
+    
     @objc func floatingButtonTapped() {
         let editPage = AddCommunityPageViewController()
         navigationController?.pushViewController(editPage, animated: true)
@@ -138,39 +156,38 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         if collectionView == bannerCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
             cell.configure(with: banners[indexPath.item])
-
+            
             return cell
         } else if collectionView == communityColletionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
             let post = items[indexPath.item]
-                
             FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                cell.userName.text = nickName
-                cell.titleLabel.text = post.title
-                cell.mainTextLabel.text = post.content
-                // 포스트에 이미지 URL이 있는지 확인
-                if let imageURL = post.image.first, let imageUrl = imageURL {
-                    // 이미지를 비동기적으로 가져오기
-                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                        if let data = data {
-                            DispatchQueue.main.async {
-                                cell.collectionViewImage.image = UIImage(data: data)
+                FirestoreService.firestoreService.getComments(forPostID: post.id ?? "") { comment, error  in
+                    if let imageURL = post.image.first, let imageUrl = imageURL {
+                        // 이미지를 비동기적으로 가져오기
+                        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                            if let data = data {
+                                DispatchQueue.main.async {
+                                    cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(data: data),spanerCount: post.emergency?.count, commentCount: comment?.count)
+//                                    self.indicator.stopAnimating()
+                                }
                             }
+                        }.resume()
+                    } else {
+                        // 이미지 URL이 없으면 기본 이미지 설정
+                        DispatchQueue.main.async {
+                            cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.count, commentCount: comment?.count)
+                            
                         }
-                    }.resume()
-                } else {
-                    // 이미지 URL이 없으면 기본 이미지 설정
-                    DispatchQueue.main.async {
-                        cell.collectionViewImage.image = UIImage(named: "defaultImage")
                     }
                 }
             }
-                
+            
             return cell
         }
         return UICollectionViewCell()
     }
-       
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCollectionView {
             return CGSize(width: collectionView.frame.width, height: 80)
@@ -179,7 +196,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         }
         return CGSize.zero
     }
-
+    
     // 커뮤니티 컬렉션 뷰 셀 사이의 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == communityColletionView {
@@ -187,16 +204,16 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         }
         return 0 // 다른 컬렉션 뷰에 대해서는 0 또는 원하는 값으로 설정
     }
-
+    
     // 셀 클릭 시 화면 전환
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == communityColletionView {
             let detailViewController = CommunityDetailPageViewController()
-
+            
             // 선택한 포스트를 가져와서 detailViewController에 설정
             let selectedPost = items[indexPath.item]
             detailViewController.selectedPost = selectedPost
-
+            
             navigationController?.pushViewController(detailViewController, animated: true)
         }
     }

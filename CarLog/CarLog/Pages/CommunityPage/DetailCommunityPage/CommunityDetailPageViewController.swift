@@ -96,7 +96,7 @@ class CommunityDetailPageViewController: UIViewController {
     
     lazy var emergencyCountLabel: UILabel = {
         let label = UILabel()
-        label.text = String(emergencyCount ?? -1)
+        label.text = String(emergencyCount ?? 0)
         label.textColor = .lightGray
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         return label
