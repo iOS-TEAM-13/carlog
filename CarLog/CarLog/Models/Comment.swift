@@ -9,8 +9,13 @@ import Foundation
 
 struct Comment: Codable {
     let id: String?
+    let postId: String?
     var content: String?
     let userName: String?
     let userEmail: String?
     let timeStamp: String?
 }
+
+    //db.collection("comments").whereField(postId, isEqualTo: selectedPost.id ?? "")
+
+// static let userEmail= Auth.auth().currentUser().email -> 저장해둘지 말지 (효율성)

@@ -90,44 +90,40 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // '삭제' 액션
-
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             if let post = self.selectedPost {
-                let userIDToMatch = Auth.auth().currentUser?.email
-                let commentsRef = FirestoreService.firestoreService.db.collection("posts").document(post.id ?? "").collection("comments")
+                let postID = post.id ?? ""
 
-                commentsRef.whereField("userEmail", isEqualTo: userIDToMatch ?? "").getDocuments { querySnapshot, error in
-                    if let error = error {
-                        print("댓글 삭제 에러: \(error.localizedDescription)")
-                    } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
-                        print("쿼리 스냅샷: \(querySnapshot.documents.description)")
-                        for document in querySnapshot.documents {
-                            if document.data()["id"] as? String == self.commentData[indexPath.row].id {
-                                document.reference.delete()
+                FirestoreService.firestoreService.loadComments(postID: postID) { comments in
+                    if let comments = comments {
+                        for comment in comments {
+                            if comment.id == self.commentData[indexPath.row].id {
                                 self.commentData.remove(at: indexPath.row)
                                 tableView.deleteRows(at: [indexPath], with: .fade)
                                 let deletedCellHeight = tableView.rectForRow(at: indexPath).height
-                                self.updateDeleteCommentTableViewHeight(cellHeight: deletedCellHeight)
-                                break
+                                FirestoreService.firestoreService.removeComment(commentId: comment.id ?? "") { err in
+                                    if let err = err {
+                                        print("err")
+                                    }
+                                }
                             }
+                            break
                         }
-                    } else {
-                        print("문서가 없음")
+                        
                     }
                 }
             }
         }
-
         deleteAction.image = UIImage(named: "trash") // 시스템 아이콘 사용
         deleteAction.backgroundColor = .backgroundCoustomColor
+
         let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
             completionHandler(true)
         }
         reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         reportAction.backgroundColor = .backgroundCoustomColor
-        // 스와이프 액션을 구성합니다.
 
+        // 스와이프 액션을 구성합니다.
         let configuration: UISwipeActionsConfiguration
 
         if let currentUserEmail = Auth.auth().currentUser?.email,
