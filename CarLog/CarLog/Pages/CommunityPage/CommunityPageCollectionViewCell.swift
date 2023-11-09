@@ -99,6 +99,11 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.collectionViewImage.image = nil
+    }
+    
     private func setupUI() {
         contentView.addSubview(topStackView)
         contentView.addSubview(collectionViewImage)

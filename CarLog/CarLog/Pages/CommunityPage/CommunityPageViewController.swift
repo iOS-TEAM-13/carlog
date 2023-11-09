@@ -47,7 +47,6 @@ class CommunityPageViewController: UIViewController {
     private lazy var indicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.style = .large
-//        view.center = view.center
         return view
     }()
     
@@ -68,6 +67,7 @@ class CommunityPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadPostFromFireStore()
     }
     
     func setupUI() {
