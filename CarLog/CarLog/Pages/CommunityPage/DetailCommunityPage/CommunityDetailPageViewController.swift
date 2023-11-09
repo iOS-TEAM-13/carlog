@@ -6,9 +6,9 @@ import SnapKit
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     var commentData: [Comment] = []
-    
-    lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
-    lazy var emergencyCount = selectedPost?.emergency?.count {
+
+    lazy var isEmergency = selectedPost?.emergency?[Constants.currentUser.userEmail ?? ""]
+    lazy var emergencyCount = selectedPost?.emergency?.filter{ $0.value == true }.count {
         didSet {
             if let count = emergencyCount {
                 emergencyCountLabel.text = String(count)
@@ -300,10 +300,10 @@ class CommunityDetailPageViewController: UIViewController {
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
     
     @objc func dotsButtonTapped() {
-        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }
+        guard let post = selectedPost else { return }
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
-        if post.userEmail == user.email {
+        if post.userEmail == Constants.currentUser.userEmail {
             //네이게션 edit
             let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
                 guard let self = self else { return }
@@ -353,7 +353,7 @@ class CommunityDetailPageViewController: UIViewController {
     // 좋아요 버튼 눌렀을 떄 동작 구현
     @objc func emergencyButtonTapped() {
         isEmergency = !(isEmergency ?? false)
-        selectedPost?.emergency?.updateValue(isEmergency ?? false, forKey: Auth.auth().currentUser?.email ?? "")
+        selectedPost?.emergency?.updateValue(isEmergency ?? false, forKey: Constants.currentUser.userEmail ?? "")
         setEmergencyButton()
     }
     

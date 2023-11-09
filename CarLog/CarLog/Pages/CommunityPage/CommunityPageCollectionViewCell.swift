@@ -50,9 +50,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     lazy var collectionViewImage: UIImageView = {
         let imageView = UIImageView()
-        if let image = UIImage(systemName: "photo.fill") {
-            imageView.image = image
-        }
+        imageView.image = UIImage(named: "defaultImage")
         imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -101,7 +99,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.collectionViewImage.image = nil
+        self.collectionViewImage.image = UIImage(named: "defaultImage")
     }
     
     private func setupUI() {

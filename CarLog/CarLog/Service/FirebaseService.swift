@@ -253,7 +253,7 @@ final class FirestoreService {
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(car)
-            db.collection("cars").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
+            db.collection("cars").document(Constants.currentUser.userEmail ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -287,7 +287,7 @@ final class FirestoreService {
     func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(carPart)
-            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
+            db.collection("carParts").document(Constants.currentUser.userEmail ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -323,9 +323,9 @@ final class FirestoreService {
             var documentID = ""
             
             if let currentTime = driving.timeStamp?.toDate()?.toStringDetail() {
-                documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(currentTime)_\(Constants.currentUser.userEmail ?? "")"
             } else {
-                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(Date().toStringDetail())_\(Constants.currentUser.userEmail ?? "")"
             }
             
             db.collection("drivings").document(documentID).setData(data) { error in
@@ -337,7 +337,7 @@ final class FirestoreService {
     }
     
     func loadDriving(completion: @escaping ([Driving]?) -> Void) {
-        db.collection("drivings").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
+        db.collection("drivings").whereField("userEmail", isEqualTo: Constants.currentUser.userEmail ?? "").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
@@ -389,9 +389,9 @@ final class FirestoreService {
             var documentID = ""
             
             if let currentTime = fueling.timeStamp?.toDate()?.toStringDetail() {
-                documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(currentTime)_\(Constants.currentUser.userEmail ?? "")"
             } else {
-                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(Date().toStringDetail())_\(Constants.currentUser.userEmail ?? "")"
             }
             
             db.collection("fuelings").document(documentID).setData(data) { error in
@@ -403,7 +403,7 @@ final class FirestoreService {
     }
     
     func loadFueling(completion: @escaping ([Fueling]?) -> Void) {
-        db.collection("fuelings").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
+        db.collection("fuelings").whereField("userEmail", isEqualTo: Constants.currentUser.userEmail ?? "").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)

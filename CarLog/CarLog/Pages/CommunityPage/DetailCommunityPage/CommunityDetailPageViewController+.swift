@@ -126,7 +126,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         // 스와이프 액션을 구성합니다.
         let configuration: UISwipeActionsConfiguration
 
-        if let currentUserEmail = Auth.auth().currentUser?.email,
+        if let currentUserEmail = Constants.currentUser.userEmail,
            let commentUserEmail = commentData[indexPath.row].userEmail,
            currentUserEmail == commentUserEmail
         {
