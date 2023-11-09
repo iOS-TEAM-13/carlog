@@ -152,48 +152,96 @@ final class FirestoreService {
     // MARK: - Comment
 
     func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
-        guard let id = comment.id,
-              let content = comment.content,
-              let userName = comment.userName,
-              let userEmail = comment.userEmail,
-              let timeStamp = comment.timeStamp
-        else { return }
-
-        let commentsRef = db.collection("posts").document(postID).collection("comments")
-        commentsRef.addDocument(data: [
-            "id": id,
-            "content": content,
-            "userName": userName,
-            "userEmail": userEmail,
-            "timeStamp": timeStamp
-        ]) { error in
-            completion(error)
-        }
-    }
-    
-    func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
-        let commentsRef = db.collection("posts").document(postID).collection("comments")
-        
-        commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(nil, error)
-            } else {
-                var comments: [Comment] = []
-                for document in querySnapshot!.documents {
-                    let data = document.data()
-                    if let content = data["content"] as? String,
-                       let userName = data["userName"] as? String,
-                       let userEmail = data["userEmail"] as? String,
-                       let timeStamp = data["timeStamp"] as? String
-                    {
-                        let comment = Comment(id: UUID().uuidString, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
-                        comments.append(comment)
-                    }
-                }
-                completion(comments, nil)
+            guard let id = comment.id,
+                  let content = comment.content,
+                  let userName = comment.userName,
+                  let userEmail = comment.userEmail,
+                  let timeStamp = comment.timeStamp
+            else { return }
+            
+            let commentsRef = db.collection("posts").document(postID).collection("comments")
+            commentsRef.addDocument(data: [
+                "id": id,
+                "content": content,
+                "userName": userName,
+                "userEmail": userEmail,
+                "timeStamp": timeStamp
+            ]) { error in
+                completion(error)
             }
         }
-    }
+        
+        func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
+            let commentsRef = db.collection("posts").document(postID).collection("comments")
+            
+            commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    var comments: [Comment] = []
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        if let content = data["content"] as? String,
+                           let userName = data["userName"] as? String,
+                           let userEmail = data["userEmail"] as? String,
+                           let timeStamp = data["timeStamp"] as? String,
+                           let id = data["id"] as? String
+                        {
+                            let comment = Comment(id: id, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
+                            comments.append(comment)
+                            print("comment임: \(comment)")
+                        }
+                    }
+                    completion(comments, nil)
+                }
+            }
+        }
+        
+        func removePost(postID: String, completion: @escaping (Error?) -> Void) {
+            // Firestore 배치 작업을 생성
+            let batch = db.batch()
+
+            // 1. "posts" 컬렉션에서 포스트(document)를 삭제
+            let postsCollection = db.collection("posts")
+            let postQuery = postsCollection.whereField("id", isEqualTo: postID)
+
+            postQuery.getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("포스트를 조회하는 중 오류 발생: \(error)")
+                    completion(error)
+                    return
+                }
+
+                for document in querySnapshot!.documents {
+                    document.reference.delete()
+                }
+
+                let postRef = postsCollection.document(postID)
+                let commentsCollection = postRef.collection("comments")
+
+                commentsCollection.getDocuments { snapshot, error in
+                    if let error = error {
+                        print("댓글을 조회하는 중 오류 발생: \(error)")
+                        completion(error)
+                        return
+                    }
+
+                    for document in snapshot!.documents {
+                        batch.deleteDocument(document.reference)
+                    }
+
+                    batch.commit { error in
+                        if let error = error {
+                            print("데이터 삭제 중 오류 발생: \(error)")
+                            completion(error)
+                        } else {
+                            print("포스트와 모든 댓글 삭제 완료")
+                            completion(nil)
+                        }
+                    }
+                }
+            }
+        }
 
     // MARK: - Car
 
