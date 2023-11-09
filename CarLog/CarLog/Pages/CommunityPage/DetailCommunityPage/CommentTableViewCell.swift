@@ -69,6 +69,7 @@ class CommentTableViewCell: UITableViewCell {
             make.topMargin.equalTo(userNameLabel.snp.bottom).offset(Constants.verticalMargin)
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin + 1)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
         }
     }
     
