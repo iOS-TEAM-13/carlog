@@ -55,11 +55,12 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "주행기록 추가"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
-            .foregroundColor: UIColor.black
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .foregroundColor: UIColor.mainNavyColor
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
+        self.navigationItem.rightBarButtonItem = self.addImageButton
     }
     
     lazy var backButton: UIBarButtonItem = {
@@ -71,6 +72,19 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
     @objc func goToHistoryPage() {
         print("주행기록 추가 페이지에서 히스토리 페이지로 뒤로간다")
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    //주행거리 추가 페이지에서 +버튼 노출
+    lazy var addImageButton: UIBarButtonItem = {
+        let addImageButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goAddImage))
+        addImageButton.tintColor = .mainNavyColor
+        return addImageButton
+    }()
+    
+    //주행거리 추가 페이지에서 +버튼 클릭 시 사진 선택 페이지로 이동
+    @objc func goAddImage() {
+        let visionDrivingViewController = VisionDrivingViewController()
+        navigationController?.pushViewController(visionDrivingViewController, animated: true)
     }
     
     // MARK: - Keyboard 관련    
