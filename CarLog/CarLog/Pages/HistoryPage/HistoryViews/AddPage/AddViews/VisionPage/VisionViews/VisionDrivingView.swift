@@ -12,6 +12,8 @@ class VisionDrivingView: UIView {
     lazy var addvisionStackView: UIStackView = {
         let visionStackView = UIStackView(arrangedSubviews: [addVisionLabel, addVisionButtonStackView])
         visionStackView.customStackView(spacing: 30, axis: .vertical, alignment: .center)
+        visionStackView.backgroundColor = .white
+        visionStackView.layer.cornerRadius = Constants.cornerRadius
         return visionStackView
     }()
     
@@ -24,12 +26,14 @@ class VisionDrivingView: UIView {
     lazy var addVisionButtonStackView: UIStackView = {
         let addVisionButtonStackView = UIStackView(arrangedSubviews: [addDepartVisionStackView, addArriveVisionStackView])
         addVisionButtonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .center)
+        addVisionButtonStackView.backgroundColor = .red
         return addVisionButtonStackView
     }()
     
     lazy var addDepartVisionStackView: UIStackView = {
-        let addDepartVisionStackView = UIStackView(arrangedSubviews: [addDepartVisionButton, departImageView])
+        let addDepartVisionStackView = UIStackView(arrangedSubviews: [addDepartVisionButton, departTextField, departImageView ])
         addDepartVisionStackView.customStackView(spacing: 30, axis: .vertical, alignment: .center)
+        addDepartVisionStackView.backgroundColor = .yellow
         return addDepartVisionStackView
     }()
     
@@ -46,6 +50,33 @@ class VisionDrivingView: UIView {
         let departImageView = UIImageView()
         departImageView.contentMode = .scaleAspectFill
         return departImageView
+    }()
+    
+    lazy var departTextField: UITextField = {
+        let departTextField = UITextField()
+        
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+        ]
+        
+        departTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 드라이브, 출퇴근", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: departTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+//        let nextTextField = UIToolbar()
+//        nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
+//        nextTextField.barStyle = UIBarStyle.default
+//        nextTextField.isTranslucent = true
+//        nextTextField.sizeToFit()
+//        
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        let closeButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.closeDrivingPurposeTextField))
+//        
+//        nextTextField.setItems([beforeButton, nextButton, flexibleSpace, closeButton], animated: false)
+//        nextTextField.isUserInteractionEnabled = true
+//        departTextField.inputAccessoryView = nextTextField
+        
+        return departTextField
     }()
     
     lazy var addArriveVisionStackView: UIStackView = {
