@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
 class VisionFuelingView: UIView {
-
+    
     lazy var addvisionStackView: UIStackView = {
-        let visionStackView = UIStackView(arrangedSubviews: [addVisionLabel, addVisionButton])
+        let visionStackView = UIStackView(arrangedSubviews: [addVisionLabel, addVisionButton, fuelingImageView])
         visionStackView.customStackView(spacing: 30, axis: .vertical, alignment: .center)
         return visionStackView
     }()
@@ -28,6 +29,12 @@ class VisionFuelingView: UIView {
         config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 80, weight: .medium))
         addVisionButton.configuration = config
         return addVisionButton
+    }()
+    
+    lazy var fuelingImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
     }()
     
     override init(frame: CGRect) {
@@ -53,5 +60,27 @@ class VisionFuelingView: UIView {
             make.width.equalTo(150)
             make.height.equalTo(150)
         }
+        
+        fuelingImageView.snp.makeConstraints { make in
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
+    }
+    
+    //
+    func setVisionImage(image: UIImage) {
+        let resizedImage = image.resize(to: CGSize(width: 150, height: 150))
+        addVisionButton.setImage(resizedImage, for: .normal)
+        addVisionButton.contentMode = .scaleAspectFit
     }
 }
+
+//extension UIImage {
+//    func resize(to newSize: CGSize) -> UIImage {
+//        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+//        defer { UIGraphicsEndImageContext() }
+//        draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+//        return UIGraphicsGetImageFromCurrentImageContext() ?? self
+//    }
+//}
+
