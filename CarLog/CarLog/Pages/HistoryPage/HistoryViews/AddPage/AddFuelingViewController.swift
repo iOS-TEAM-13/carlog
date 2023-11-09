@@ -15,6 +15,7 @@ extension Notification.Name {
 }
 
 class AddFuelingViewController: UIViewController {
+    
     lazy var addFuelingView: AddFuelingView = {
         let addFuelingView = AddFuelingView()
         return addFuelingView
@@ -56,6 +57,7 @@ class AddFuelingViewController: UIViewController {
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
+        self.navigationItem.rightBarButtonItem = self.addImageButton
     }
     
     lazy var backButton: UIBarButtonItem = {
@@ -67,6 +69,19 @@ class AddFuelingViewController: UIViewController {
     @objc func goToHistoryPage() {
         print("주유기록 추가 페이지에서 히스토리 페이지로 뒤로간다")
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    //주유 추가 페이지에서 +버튼 노출
+    lazy var addImageButton: UIBarButtonItem = {
+        let addImageButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goAddImage))
+        addImageButton.tintColor = .mainNavyColor
+        return addImageButton
+    }()
+    
+    //주유 추가 페이지에서 +버튼 클릭 시 사진 선택 페이지로 이동
+    @objc func goAddImage() {
+        let visionFuelingViewController = VisionFuelingViewController()
+        navigationController?.pushViewController(visionFuelingViewController, animated: true)
     }
     
     // MARK: - Keyboard 관련
