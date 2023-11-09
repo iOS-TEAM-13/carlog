@@ -92,20 +92,18 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                 let postID = post.id ?? ""
                 FirestoreService.firestoreService.loadComments(postID: postID) { comments in
                     if let comments = comments {
-                        for comment in comments {
-                            print("commentID: \(comment.id)")
-                            if comment.id == self.commentData[indexPath.row].id {
-                                self.commentData.remove(at: indexPath.row)
-                                tableView.deleteRows(at: [indexPath], with: .fade)
-                                _ = tableView.rectForRow(at: indexPath).height
-                                FirestoreService.firestoreService.removeComment(commentId: comment.id ?? "") { err in
-                                    if err != nil {
-                                        print("err")
-                                    }
+                        if let index = comments.firstIndex(where: { $0.id == self.commentData[indexPath.row].id }) {
+                            // 해당 comment를 찾았으므로 삭제
+                            self.commentData.remove(at: indexPath.row)
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                            _ = tableView.rectForRow(at: indexPath).height
+                            let commentID = comments[index].id ?? ""
+                            FirestoreService.firestoreService.removeComment(commentId: commentID) { err in
+                                if err != nil {
+                                    print("err")
                                 }
-                                tableView.reloadData()
                             }
-                            break
+                            tableView.reloadData()
                         }
                     }
                 }

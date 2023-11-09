@@ -505,7 +505,6 @@ extension CommunityDetailPageViewController {
                         
                     }
                     self.commentTableView.reloadData()
-                    print("commentData : \(self.commentData[0])")
                 }
             }
         }
