@@ -102,7 +102,7 @@ class AddCommunityPageViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -283,7 +283,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
 private extension AddCommunityPageViewController {
     func attribute() {
         view.backgroundColor = .backgroundCoustomColor
-    
+        
         imagePickerView.addSubview(imagePickerButton) // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
         imagePickerStackView.addArrangedSubview(imagePickerButton)
         
@@ -390,7 +390,7 @@ extension AddCommunityPageViewController: UITextViewDelegate { // ⭐️ UITextV
             subTextView.textColor = .black
         }
     }
-
+    
     func textViewDidEndEditing(_ subTextView: UITextView) {
         if subTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             subTextView.text = subTextViewPlaceHolder
