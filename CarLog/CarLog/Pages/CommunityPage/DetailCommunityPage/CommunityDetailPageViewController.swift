@@ -310,6 +310,12 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
+                
+                FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
+                    if let err = err {
+                        print("에러")
+                    }
+                }
                 print("삭제 완료")
             }
             action1.setValue(UIColor.backgroundCoustomColor, forKey: "titleTextColor")

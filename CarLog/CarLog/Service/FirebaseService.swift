@@ -13,11 +13,10 @@ import FirebaseFirestoreSwift
 final class FirestoreService {
     static let firestoreService = FirestoreService()
     
-    var id = 1
     let db = Firestore.firestore()
     
     // MARK: - User
-
+    
     func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(user)
@@ -99,7 +98,7 @@ final class FirestoreService {
     }
     
     // MARK: - Post
-
+    
     func savePosts(post: Post, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(post)
@@ -133,7 +132,7 @@ final class FirestoreService {
                 }
             }
     }
-
+    
     func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
         Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
             if let error = error {
@@ -151,7 +150,7 @@ final class FirestoreService {
     }
     
     // MARK: - Comment
-
+    
     func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
         guard let id = comment.id,
               let content = comment.content,
@@ -159,7 +158,7 @@ final class FirestoreService {
               let userEmail = comment.userEmail,
               let timeStamp = comment.timeStamp
         else { return }
-
+        
         let commentsRef = db.collection("posts").document(postID).collection("comments")
         commentsRef.addDocument(data: [
             "id": id,
@@ -197,9 +196,55 @@ final class FirestoreService {
             }
         }
     }
+    
+    func removePost(postID: String, completion: @escaping (Error?) -> Void) {
+        // Firestore 배치 작업을 생성
+        let batch = db.batch()
 
+        // 1. "posts" 컬렉션에서 포스트(document)를 삭제
+        let postsCollection = db.collection("posts")
+        let postQuery = postsCollection.whereField("id", isEqualTo: postID)
+
+        postQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("포스트를 조회하는 중 오류 발생: \(error)")
+                completion(error)
+                return
+            }
+
+            for document in querySnapshot!.documents {
+                document.reference.delete()
+            }
+
+            let postRef = postsCollection.document(postID)
+            let commentsCollection = postRef.collection("comments")
+
+            commentsCollection.getDocuments { snapshot, error in
+                if let error = error {
+                    print("댓글을 조회하는 중 오류 발생: \(error)")
+                    completion(error)
+                    return
+                }
+
+                for document in snapshot!.documents {
+                    batch.deleteDocument(document.reference)
+                }
+
+                batch.commit { error in
+                    if let error = error {
+                        print("데이터 삭제 중 오류 발생: \(error)")
+                        completion(error)
+                    } else {
+                        print("포스트와 모든 댓글 삭제 완료")
+                        completion(nil)
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Car
-
+    
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(car)
@@ -233,7 +278,7 @@ final class FirestoreService {
     }
     
     // MARK: - CarParts
-
+    
     func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(carPart)
@@ -265,7 +310,7 @@ final class FirestoreService {
     }
     
     // MARK: - Driving / timeStamp를 Date로 변환하고, 그걸 다시 String으로 변환하는데 없으면 거기다가 현재 시간을 넣어라 / currentTime값이 nil인 경우를 위해 if let 사용
-
+    
     func saveDriving(driving: Driving, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(driving)
@@ -277,7 +322,7 @@ final class FirestoreService {
             } else {
                 documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
             }
-
+            
             db.collection("drivings").document(documentID).setData(data) { error in
                 completion(error)
             }
@@ -285,7 +330,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-
+    
     func loadDriving(completion: @escaping ([Driving]?) -> Void) {
         db.collection("drivings").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
             if let error = error {
@@ -331,7 +376,7 @@ final class FirestoreService {
     }
     
     // MARK: - Fueling
-
+    
     func saveFueling(fueling: Fueling, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(fueling)
@@ -343,7 +388,7 @@ final class FirestoreService {
             } else {
                 documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
             }
-
+            
             db.collection("fuelings").document(documentID).setData(data) { error in
                 completion(error)
             }
@@ -351,7 +396,7 @@ final class FirestoreService {
             completion(error)
         }
     }
-
+    
     func loadFueling(completion: @escaping ([Fueling]?) -> Void) {
         db.collection("fuelings").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
             if let error = error {

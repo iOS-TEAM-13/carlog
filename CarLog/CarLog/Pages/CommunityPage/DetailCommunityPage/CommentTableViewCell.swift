@@ -33,7 +33,7 @@ class CommentTableViewCell: UITableViewCell {
     lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium)
-        label.numberOfLines = 0
+        label.numberOfLines = 5
         label.textColor = .black
         return label
     }()

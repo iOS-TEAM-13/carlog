@@ -111,23 +111,6 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                                 self.updateDeleteCommentTableViewHeight(cellHeight: deletedCellHeight)
                                 break
                             }
-
-//                            let commentID = document.documentID
-//                            print("댓글의 UUID: \(commentID)")
-//                            print("데이터라고.. \(document.data().values)")
-//
-//                            document.reference.delete { error in
-//                                if let error = error {
-//                                    print("Error: \(error.localizedDescription)")
-//                                } else {
-//                                    print("댓글이 성공적으로 삭제됨: \(document.data().values)")
-//                                    if let data = document.data()["content"] as? String {
-//                                        if let index = self.commentData.firstIndex(where: { $0.content == data }) {
-//
-//                                        }
-//                                    }
-//                                }
-//                            }
                         }
                     } else {
                         print("문서가 없음")
