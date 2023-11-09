@@ -8,7 +8,7 @@ class CommunityDetailPageViewController: UIViewController {
     var commentData: [Comment] = []
 
     lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
-    lazy var emergencyCount = selectedPost?.emergency?.count {
+    lazy var emergencyCount = selectedPost?.emergency?.filter{ $0.value == true }.count {
         didSet {
             if let count = emergencyCount {
                 emergencyCountLabel.text = String(count)

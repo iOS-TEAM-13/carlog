@@ -168,7 +168,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
                         URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
                             if let data = data {
                                 DispatchQueue.main.async {
-                                    cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(data: data),spanerCount: post.emergency?.count, commentCount: comment?.count)
+                                    cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(data: data),spanerCount: post.emergency?.filter{ $0.value == true }.count, commentCount: comment?.count)
 //                                    self.indicator.stopAnimating()
                                 }
                             }
@@ -176,7 +176,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
                     } else {
                         // 이미지 URL이 없으면 기본 이미지 설정
                         DispatchQueue.main.async {
-                            cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.count, commentCount: comment?.count)
+                            cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.filter{ $0.value == true }.count, commentCount: comment?.count)
                             
                         }
                     }
