@@ -142,22 +142,6 @@ final class FirestoreService {
             }
     }
     
-    func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
-        Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                completion(nil)
-            } else {
-                if let document = querySnapshot?.documents.first {
-                    let nickName = document.data()["nickName"] as? String
-                    completion(nickName)
-                } else {
-                    completion(nil)
-                }
-            }
-        }
-    }
-    
     // MARK: - Comment
     
     func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {

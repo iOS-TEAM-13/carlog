@@ -8,7 +8,7 @@ class CommunityDetailPageViewController: UIViewController {
     var commentData: [Comment] = []
 
     lazy var isEmergency = selectedPost?.emergency?[Constants.currentUser.userEmail ?? ""]
-    lazy var emergencyCount = selectedPost?.emergency?.filter{ $0.value == true }.count {
+    lazy var emergencyCount = selectedPost?.emergency?.filter { $0.value == true }.count {
         didSet {
             if let count = emergencyCount {
                 emergencyCountLabel.text = String(count)
@@ -304,7 +304,7 @@ class CommunityDetailPageViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == Constants.currentUser.userEmail {
-            //네이게션 edit
+            // 네이게션 edit
             let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
                 guard let self = self else { return }
                 let editPageViewController = EditPageViewController()
@@ -411,22 +411,17 @@ class CommunityDetailPageViewController: UIViewController {
         let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
         
-        FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
-            guard let self = self, let postID = self.selectedPost?.id else { return }
-            
-            let userNickName = nickName
-            let newComment = Comment(id: UUID().uuidString, postId: postID, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
-            FirestoreService.firestoreService.saveComment(comment: newComment) { error in
-                if let error = error {
-                    print("Error saving comment: \(error.localizedDescription)")
-                } else {
-                    print("save success")
-                    self.commentData.append(newComment)
-                    self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
-                    DispatchQueue.main.async {
-                        self.commentTableView.reloadData()
-                        self.updateCommentTableViewHeight()
-                    }
+        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp)
+        FirestoreService.firestoreService.saveComment(comment: newComment) { error in
+            if let error = error {
+                print("Error saving comment: \(error.localizedDescription)")
+            } else {
+                print("save success")
+                self.commentData.append(newComment)
+                self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
+                DispatchQueue.main.async {
+                    self.commentTableView.reloadData()
+                    self.updateCommentTableViewHeight()
                 }
             }
         }
@@ -487,12 +482,10 @@ extension CommunityDetailPageViewController {
     
     private func loadPost() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                self.userNameLabel.setTitle(nickName, for: .normal)
-                self.titleLabel.text = post.title
-                self.dateLabel.text = post.timeStamp
-                self.mainText.text = post.content
-            }
+            userNameLabel.setTitle(Constants.currentUser.nickName, for: .normal)
+            titleLabel.text = post.title
+            dateLabel.text = post.timeStamp
+            mainText.text = post.content
         }
     }
     
@@ -513,9 +506,8 @@ extension CommunityDetailPageViewController {
     private func navigateToEditPage(post: Post) {
         let editPageViewController = EditPageViewController()
         editPageViewController.postToEdit = post // EditPageViewController에 수정할 포스트 정보 전달
-        self.navigationController?.pushViewController(editPageViewController, animated: true)
+        navigationController?.pushViewController(editPageViewController, animated: true)
     }
-
 }
 
 extension CommunityDetailPageViewController {
