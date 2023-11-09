@@ -21,7 +21,6 @@ class AddCommunityPageViewController: UIViewController {
     }()
     
     // MARK: -
-
     private let imagePickerView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .white
@@ -116,7 +115,6 @@ class AddCommunityPageViewController: UIViewController {
     }
     
     // MARK: - Setup
-
     func setupUI() {
         view.addSubview(scrollView)
         scrollView.addSubview(contenView)
@@ -131,7 +129,6 @@ class AddCommunityPageViewController: UIViewController {
         ].forEach { view.addSubview($0) }
         
         // MARK: - Snap kit 제약 잡기
-
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
@@ -186,7 +183,6 @@ class AddCommunityPageViewController: UIViewController {
 }
 
 // MARK: - Actions
-
 extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarButtons
     @objc func didTapLeftBarButton() {
         tabBarController?.tabBar.isHidden = false
