@@ -42,7 +42,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     lazy var commentCounts: UILabel = {
         let label = UILabel()
-        label.text = "12"
+        label.text = "-1"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label

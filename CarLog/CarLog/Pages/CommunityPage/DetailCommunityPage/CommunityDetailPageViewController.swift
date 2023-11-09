@@ -7,14 +7,14 @@ class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     let currentDate = Date()
     var commentData: [Comment] = []
-//    // 좋아요 버튼 설정
-//    private var isLiked = false {
-//        didSet {
-//            updateLikeButton()
-//        }
-//    }
     lazy var isEmergency = selectedPost?.emergency?[Auth.auth().currentUser?.email ?? ""]
-    lazy var emergencyCount = selectedPost?.emergency?.count
+    lazy var emergencyCount = selectedPost?.emergency?.count {
+        didSet {
+            if let count = emergencyCount {
+                emergencyCountLabel.text = String(count)
+            }
+        }
+    }
     
     lazy var commentTableView: UITableView = {
         let tableView = UITableView()
@@ -347,15 +347,9 @@ class CommunityDetailPageViewController: UIViewController {
         if (isEmergency ?? false) {
             emergencyButton.setImage(UIImage(named: "spaner.fill"), for: .normal)
             emergencyCount = (emergencyCount ?? 0) + 1
-            if let count = emergencyCount {
-                emergencyCountLabel.text = String(count)
-            }
         } else {
             emergencyButton.setImage(UIImage(named: "spaner"), for: .normal)
             emergencyCount = (emergencyCount ?? 0) - 1
-            if let count = emergencyCount {
-                emergencyCountLabel.text = String(count)
-            }
         }
     }
            
