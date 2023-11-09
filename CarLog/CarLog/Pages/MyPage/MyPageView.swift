@@ -258,17 +258,17 @@ final class MyPageView: UIView {
         return myPageDesignStackView
     }()
     
-    lazy var phoneCallButton: UIButton = {
-        let phoneCallButton = UIButton()
+    lazy var inquiryButton: UIButton = {
+        let inquiryButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .mainNavyColor
         config.cornerStyle = .capsule
         config.image = UIImage(named: "Context Icon")
-        phoneCallButton.configuration = config
-        phoneCallButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-        phoneCallButton.layer.shadowRadius = 10
-        phoneCallButton.layer.shadowOpacity = 0.1
-        return phoneCallButton
+        inquiryButton.configuration = config
+        inquiryButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        inquiryButton.layer.shadowRadius = 10
+        inquiryButton.layer.shadowOpacity = 0.1
+        return inquiryButton
     }()
     
     lazy var verLabel: UILabel = {
@@ -323,7 +323,7 @@ final class MyPageView: UIView {
         contentView.addSubview(carNumberLabel)
         contentView.addSubview(stackView)
         contentView.addSubview(myPageDesignStackView)
-        contentView.addSubview(phoneCallButton)
+        contentView.addSubview(inquiryButton)
         contentView.addSubview(verLabel)
         contentView.addSubview(personalRegulations)
         scrollView.addSubview(contentView)
@@ -406,10 +406,10 @@ final class MyPageView: UIView {
             make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
         }
         
-        phoneCallButton.snp.makeConstraints { make in
+        inquiryButton.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(Constants.verticalMargin * 3.5)
-            make.trailing.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 53, height: 53))
+            make.width.height.equalTo(50)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin - 12)
         }
         
         verLabel.snp.makeConstraints { make in

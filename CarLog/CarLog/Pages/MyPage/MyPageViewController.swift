@@ -2,9 +2,10 @@ import UIKit
 
 import FirebaseAuth
 import FirebaseFirestore
+import MessageUI
 import SnapKit
 
-class MyPageViewController: UIViewController {
+class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegate {
     // MARK: - Properties
     
     let myPageView = MyPageView()
@@ -57,7 +58,8 @@ class MyPageViewController: UIViewController {
         myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         myPageView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
-        myPageView.phoneCallButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
+        //        myPageView.inquiryButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
+        myPageView.inquiryButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
     }
     
     // MARK: - Actions
@@ -93,6 +95,7 @@ class MyPageViewController: UIViewController {
     
     private func editButtonChanged(editMode: Bool) {
         if editMode {
+            tabBarController?.tabBar.isHidden = true
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
             let image = UIImage(systemName: "checkmark.circle", withConfiguration: imageConfig)
             myPageView.editButton.setImage(image, for: .normal)
@@ -101,7 +104,7 @@ class MyPageViewController: UIViewController {
             myPageView.checkCarNumberButton.isHidden = false
             myPageView.checkCarNickNameButton.isHidden = false
             myPageView.myPageDesignStackView.isHidden = true
-            myPageView.phoneCallButton.isHidden = true
+            myPageView.inquiryButton.isHidden = true
         } else {
             guard let checkCarNumber = self.myPageView.carNumberTextField.text,
                   let checkCarNickName = self.myPageView.carNickNameTextField.text
@@ -126,7 +129,7 @@ class MyPageViewController: UIViewController {
             myPageView.checkCarNumberButton.isHidden = true
             myPageView.checkCarNickNameButton.isHidden = true
             myPageView.myPageDesignStackView.isHidden = false
-            myPageView.phoneCallButton.isHidden = false
+            myPageView.inquiryButton.isHidden = false
             // ⭐ 택스트필드 6개 입력한 값들을 저장해서 파이어베이스에 넣어주기!
             guard let distanceText = myPageView.carTotalDistanceTextField.text else {
                 return
@@ -206,6 +209,7 @@ class MyPageViewController: UIViewController {
         myPageView.carNumberTextField.addAction(UIAction(handler: { _ in
             self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
             self.myPageView.checkCarNumberButton.setTitle("중복확인", for: .normal)
+            self.myPageView.checkCarNumberButton.backgroundColor = .mainNavyColor
         }), for: .editingChanged)
         myPageView.checkCarNumberButton.addAction(UIAction(handler: { _ in
             guard let carNumberToCheck = self.myPageView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
@@ -286,6 +290,7 @@ class MyPageViewController: UIViewController {
                 } else {
                     self.myPageView.checkCarNickNameButton.setTitleColor(.white, for: .normal)
                     self.myPageView.checkCarNickNameButton.setTitle("불가능", for: .normal)
+                    self.myPageView.checkCarNickNameButton.backgroundColor = .red
                     self.myPageView.checkCarNickNameButton.backgroundColor = .buttonRedColor
                     self.showAlert(message: "이미 존재하는 닉네임입니다")
                     self.myPageView.carNickNameTextField.text = ""
@@ -294,17 +299,51 @@ class MyPageViewController: UIViewController {
         }), for: .touchUpInside)
     }
     
-    @objc private func dialPhoneNumber() {
-        if let phoneCallURL = URL(string: "tel://000-000-0000") {
-            if UIApplication.shared.canOpenURL(phoneCallURL) {
-                UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: nil)
-            } else {
-                // 전화를 걸 수 없는 경우 오류 메세지 표시
-                let alert = UIAlertController(title: "오류", message: "단말기에서 전화 통화를 지원하지 않습니다.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-            }
+    //    @objc private func dialPhoneNumber() {
+    //        if let inquiryURL = URL(string: "tel://000-000-0000") {
+    //            if UIApplication.shared.canOpenURL(inquiryURL) {
+    //                UIApplication.shared.open(inquiryURL, options: [:], completionHandler: nil)
+    //            } else {
+    //                // 전화를 걸 수 없는 경우 오류 메세지 표시
+    //                let alert = UIAlertController(title: "오류", message: "단말기에서 전화 통화를 지원하지 않습니다.", preferredStyle: .alert)
+    //                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+    //                present(alert, animated: true, completion: nil)
+    //            }
+    //        }
+    //    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) {
+            (action) in
+            print("확인")
         }
+        sendMailErrorAlert.addAction(confirmAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+    
+    @objc private func sendEmailTapped() {
+        
+        if MFMailComposeViewController.canSendMail() {
+            
+            let compseViewController = MFMailComposeViewController()
+            compseViewController.mailComposeDelegate = self
+            
+            compseViewController.setToRecipients(["carlog2310@gmail.com"])
+            compseViewController.setSubject("신고/문의")
+            compseViewController.setMessageBody("Message Content", isHTML: false)
+            
+            self.present(compseViewController, animated: true, completion: nil)
+            
+        }
+        else {
+            self.showSendMailErrorAlert()
+        }
+        
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     func loadCarData() {

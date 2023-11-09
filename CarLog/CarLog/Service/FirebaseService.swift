@@ -170,34 +170,34 @@ final class FirestoreService {
             completion(error)
         }
     }
-    
-    func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
-        let commentsRef = db.collection("posts").document(postID).collection("comments")
-        
-        commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(nil, error)
-            } else {
-                var comments: [Comment] = []
-                for document in querySnapshot!.documents {
-                    let data = document.data()
-                    if let content = data["content"] as? String,
-                       let userName = data["userName"] as? String,
-                       let userEmail = data["userEmail"] as? String,
-                       let timeStamp = data["timeStamp"] as? String,
-                       let id = data["id"] as? String
-                    {
-                        let comment = Comment(id: id, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
-                        comments.append(comment)
-                        print("comment임: \(comment)")
+  
+        func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
+            let commentsRef = db.collection("posts").document(postID).collection("comments")
+            
+            commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    var comments: [Comment] = []
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        if let content = data["content"] as? String,
+                           let userName = data["userName"] as? String,
+                           let userEmail = data["userEmail"] as? String,
+                           let timeStamp = data["timeStamp"] as? String,
+                           let id = data["id"] as? String
+                        {
+                            let comment = Comment(id: id, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
+                            comments.append(comment)
+                            print("comment임: \(comment)")
+                        }
                     }
+                    completion(comments, nil)
                 }
-                completion(comments, nil)
             }
         }
-    }
-    
-    func removePost(postID: String, completion: @escaping (Error?) -> Void) {
+       
+   func removePost(postID: String, completion: @escaping (Error?) -> Void) {
         // Firestore 배치 작업을 생성
         let batch = db.batch()
 
@@ -242,7 +242,7 @@ final class FirestoreService {
             }
         }
     }
-    
+  
     // MARK: - Car
     
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
