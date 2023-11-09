@@ -10,7 +10,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     let myPageView = MyPageView()
     
-    var carDummy: [Car] = []
+    lazy var carDummy = Constants.currentUser
     
     var isEditMode = false
     
@@ -24,6 +24,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         
         // MARK: - Setup
         
+        print("@@@ dummy \(carDummy)")
+        print("@@@ Cons \(Constants.currentUser)")
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -42,9 +44,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        DispatchQueue.main.async {
-            self.loadCarData() // ⭐ 내 차 정보 가져오기
-        }
+        carDummy = Constants.currentUser
+        self.configureUI() // ⭐ 내 차 정보 가져오기
         
         if isEditMode {
             toggleTextFieldsEditing(enable: false)
@@ -72,12 +73,12 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     @objc private func cancelButtonTapped() {
         // 취소 버튼,현재 입력된 내용을 초기값으로 설정
-        myPageView.carNumberTextField.text = carDummy.first?.number
-        myPageView.carNameTextField.text = carDummy.first?.name
-        myPageView.carMakerTextField.text = carDummy.first?.maker
-        myPageView.carOilTypeTextField.text = carDummy.first?.oilType
-        myPageView.carNickNameTextField.text = carDummy.first?.nickName
-        if let totalDistance = carDummy.first?.totalDistance {
+        myPageView.carNumberTextField.text = carDummy.number
+        myPageView.carNameTextField.text = carDummy.name
+        myPageView.carMakerTextField.text = carDummy.maker
+        myPageView.carOilTypeTextField.text = carDummy.oilType
+        myPageView.carNickNameTextField.text = carDummy.nickName
+        if let totalDistance = carDummy.totalDistance {
             myPageView.carTotalDistanceTextField.text = String(totalDistance)
         } else {
             myPageView.carTotalDistanceTextField.text = "0.0"
@@ -106,6 +107,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             myPageView.myPageDesignStackView.isHidden = true
             myPageView.inquiryButton.isHidden = true
         } else {
+            tabBarController?.tabBar.isHidden = false
             guard let checkCarNumber = self.myPageView.carNumberTextField.text,
                   let checkCarNickName = self.myPageView.carNickNameTextField.text
             else {
@@ -134,27 +136,28 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             guard let distanceText = myPageView.carTotalDistanceTextField.text else {
                 return
             } // ⭐⭐⭐(Optional unwrapping) distanceText Text (String?)형태라서 nil 일수도 있어서... guard let으로 Optional unwrapping
-            FirestoreService.firestoreService.saveCar(car: Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Auth.auth().currentUser?.email)) { _ in
+            let changedCar = Car(number: myPageView.carNumberTextField.text, maker: myPageView.carMakerTextField.text, name: myPageView.carNameTextField.text, oilType: myPageView.carOilTypeTextField.text, nickName: myPageView.carNickNameTextField.text, totalDistance: Int(distanceText) ?? Int(0), userEmail: Constants.currentUser.userEmail)
+            FirestoreService.firestoreService.saveCar(car: changedCar) { _ in
             }
+            Constants.currentUser = changedCar
         }
     }
     
     private func configureUI() {
-        if let userCar = carDummy.first { // 배열에서 첫 번째 요소 가져오기
-            if let userEmail = userCar.userEmail {
+        // 배열에서 첫 번째 요소 가져오기
+            if let userEmail = carDummy.userEmail {
                 if let atIndex = userEmail.firstIndex(of: "@") {
                     let emailPrefix = String(userEmail[..<atIndex])
                     myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
                 } else {
                     myPageView.mainTitleLabel.text = "\(userEmail) 님"
                 }
-            }
-            myPageView.carNumberTextField.text = userCar.number
-            myPageView.carMakerTextField.text = userCar.maker
-            myPageView.carNameTextField.text = userCar.name // name 으로 통일!
-            myPageView.carOilTypeTextField.text = userCar.oilType
-            myPageView.carNickNameTextField.text = userCar.nickName
-            if let totalDistance = userCar.totalDistance {
+            myPageView.carNumberTextField.text = carDummy.number
+            myPageView.carMakerTextField.text = carDummy.maker
+            myPageView.carNameTextField.text = carDummy.name // name 으로 통일!
+            myPageView.carOilTypeTextField.text = carDummy.oilType
+            myPageView.carNickNameTextField.text = carDummy.nickName
+            if let totalDistance = carDummy.totalDistance {
                 myPageView.carTotalDistanceTextField.text = String(totalDistance)
             } else {
                 myPageView.carTotalDistanceTextField.text = "0.0" // 만약 totalDistance가 nil인 경우 기본값 설정
@@ -165,7 +168,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     @objc func logoutButtonTapped() {
-        if Auth.auth().currentUser != nil {
+        if Constants.currentUser != nil {
             LoginService.loginService.logout {
                 let loginViewController = LoginPageViewController()
                 self.dismiss(animated: true) {
@@ -182,10 +185,10 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     @objc func quitUserButtonTapped() {
-        if Auth.auth().currentUser != nil {
+        if Constants.currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
-                LoginService.loginService.quitUser(email: Auth.auth().currentUser?.email ?? "") { _ in
+                LoginService.loginService.quitUser(email: Constants.currentUser.userEmail ?? "") { _ in
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {
                         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -346,19 +349,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         controller.dismiss(animated: true, completion: nil)
     }
     
-    func loadCarData() {
-        FirestoreService.firestoreService.loadCar { result in
-            if let car = result {
-                self.carDummy = car
-                self.configureUI()
-            } else {
-                print("데이터 로드 중 오류 발생")
-            }
-        }
-    }
-    
     // MARK: - Keyboard 관련
-    
+
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)

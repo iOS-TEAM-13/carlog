@@ -162,13 +162,13 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
             let post = items[indexPath.item]
             FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                FirestoreService.firestoreService.getComments(forPostID: post.id ?? "") { comment, error  in
+                FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comment  in
                     if let imageURL = post.image.first, let imageUrl = imageURL {
                         // 이미지를 비동기적으로 가져오기
                         URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
                             if let data = data {
                                 DispatchQueue.main.async {
-                                    cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(data: data),spanerCount: post.emergency?.count, commentCount: comment?.count)
+                                    cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(data: data),spanerCount: post.emergency?.filter{ $0.value == true }.count, commentCount: comment?.count)
 //                                    self.indicator.stopAnimating()
                                 }
                             }
@@ -176,7 +176,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
                     } else {
                         // 이미지 URL이 없으면 기본 이미지 설정
                         DispatchQueue.main.async {
-                            cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.count, commentCount: comment?.count)
+                            cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.filter{ $0.value == true }.count, commentCount: comment?.count)
                             
                         }
                     }

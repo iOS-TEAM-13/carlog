@@ -110,13 +110,13 @@ final class FirestoreService {
         }
     }
     
-    func updatePosts(postID: String, emergency: [String?:Bool?]) {
-        db.collection("posts").whereField("id", isEqualTo: postID).getDocuments { (querySnapshot, error) in
-                    for document in querySnapshot!.documents {
-                        self.db.collection("posts").document(document.documentID).updateData(["emergency": emergency]) {_ in
-                    }
+    func updatePosts(postID: String, emergency: [String?: Bool?]) {
+        db.collection("posts").whereField("id", isEqualTo: postID).getDocuments { querySnapshot, _ in
+            for document in querySnapshot!.documents {
+                self.db.collection("posts").document(document.documentID).updateData(["emergency": emergency]) { _ in
                 }
             }
+        }
     }
     
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
@@ -160,53 +160,49 @@ final class FirestoreService {
     
     // MARK: - Comment
     
-    func saveComment(postID: String, comment: Comment, completion: @escaping (Error?) -> Void) {
-        guard let id = comment.id,
-              let content = comment.content,
-              let userName = comment.userName,
-              let userEmail = comment.userEmail,
-              let timeStamp = comment.timeStamp
-        else { return }
-        
-        let commentsRef = db.collection("posts").document(postID).collection("comments")
-        commentsRef.addDocument(data: [
-            "id": id,
-            "content": content,
-            "userName": userName,
-            "userEmail": userEmail,
-            "timeStamp": timeStamp
-        ]) { error in
+    func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
+        do {
+            let data = try Firestore.Encoder().encode(comment)
+            db.collection("comments").addDocument(data: data) { error in
+                completion(error)
+            }
+        } catch {
             completion(error)
         }
     }
-  
-        func getComments(forPostID postID: String, completion: @escaping ([Comment]?, Error?) -> Void) {
-            let commentsRef = db.collection("posts").document(postID).collection("comments")
-            
-            commentsRef.order(by: "timeStamp", descending: true).getDocuments { querySnapshot, error in
+    
+    func loadComments(postID: String, completion: @escaping ([Comment]?) -> Void) {
+        db.collection("comments").whereField("postId", isEqualTo: postID).getDocuments { querySnapshot, error in
                 if let error = error {
-                    completion(nil, error)
+                    print("데이터를 가져오지 못했습니다: \(error)")
+                    completion(nil)
                 } else {
                     var comments: [Comment] = []
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        if let content = data["content"] as? String,
-                           let userName = data["userName"] as? String,
-                           let userEmail = data["userEmail"] as? String,
-                           let timeStamp = data["timeStamp"] as? String,
-                           let id = data["id"] as? String
-                        {
-                            let comment = Comment(id: id, content: content, userName: userName, userEmail: userEmail, timeStamp: timeStamp)
+                    for document in querySnapshot?.documents ?? [] {
+                        do {
+                            let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
                             comments.append(comment)
-                            print("comment임: \(comment)")
+                        } catch {
+                            completion(nil)
+                            return
                         }
                     }
-                    completion(comments, nil)
+                    completion(comments)
                 }
             }
-        }
-       
-   func removePost(postID: String, completion: @escaping (Error?) -> Void) {
+    }
+  
+    func removeComment(commentId: String, completion: @escaping (Error?) -> Void) {
+        db.collection("comments").whereField("id", isEqualTo: commentId)
+            .getDocuments() { querySnapshot, error  in
+                for document in querySnapshot!.documents {
+                    self.db.collection("comments").document(document.documentID).delete()
+                }
+          }
+    }
+    
+    
+    func removePost(postID: String, completion: @escaping (Error?) -> Void) {
         // Firestore 배치 작업을 생성
         let batch = db.batch()
 
@@ -257,7 +253,7 @@ final class FirestoreService {
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(car)
-            db.collection("cars").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
+            db.collection("cars").document(Constants.currentUser.userEmail ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -291,7 +287,7 @@ final class FirestoreService {
     func saveCarPart(carPart: CarPart, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(carPart)
-            db.collection("carParts").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
+            db.collection("carParts").document(Constants.currentUser.userEmail ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -327,9 +323,9 @@ final class FirestoreService {
             var documentID = ""
             
             if let currentTime = driving.timeStamp?.toDate()?.toStringDetail() {
-                documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(currentTime)_\(Constants.currentUser.userEmail ?? "")"
             } else {
-                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(Date().toStringDetail())_\(Constants.currentUser.userEmail ?? "")"
             }
             
             db.collection("drivings").document(documentID).setData(data) { error in
@@ -341,7 +337,7 @@ final class FirestoreService {
     }
     
     func loadDriving(completion: @escaping ([Driving]?) -> Void) {
-        db.collection("drivings").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
+        db.collection("drivings").whereField("userEmail", isEqualTo: Constants.currentUser.userEmail ?? "").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)
@@ -393,9 +389,9 @@ final class FirestoreService {
             var documentID = ""
             
             if let currentTime = fueling.timeStamp?.toDate()?.toStringDetail() {
-                documentID = "\(currentTime)_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(currentTime)_\(Constants.currentUser.userEmail ?? "")"
             } else {
-                documentID = "\(Date().toStringDetail())_\(Auth.auth().currentUser?.email ?? "")"
+                documentID = "\(Date().toStringDetail())_\(Constants.currentUser.userEmail ?? "")"
             }
             
             db.collection("fuelings").document(documentID).setData(data) { error in
@@ -407,7 +403,7 @@ final class FirestoreService {
     }
     
     func loadFueling(completion: @escaping ([Fueling]?) -> Void) {
-        db.collection("fuelings").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments { querySnapshot, error in
+        db.collection("fuelings").whereField("userEmail", isEqualTo: Constants.currentUser.userEmail ?? "").getDocuments { querySnapshot, error in
             if let error = error {
                 print("데이터를 가져오지 못했습니다: \(error)")
                 completion(nil)

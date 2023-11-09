@@ -102,7 +102,7 @@ class AddCommunityPageViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -191,7 +191,6 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     
     @objc func didTapRightBarButton() {
         let timeStamp = String.dateFormatter.string(from: currentDate)
-        guard let user = Auth.auth().currentUser else { return }
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
         
@@ -205,21 +204,21 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             }
         }
         
-        if self.mainTextField.text != "" {
-            dispatchGroup.notify(queue: .main) { [self] in
-                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp, emergency: [:])
-                FirestoreService.firestoreService.savePosts(post: post) { error in
-                    print("err: \(String(describing: error?.localizedDescription))")
+            if self.mainTextField.text != "" {
+                dispatchGroup.notify(queue: .main) { [self] in
+                    let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
+                    FirestoreService.firestoreService.savePosts(post: post) { error in
+                        print("err: \(String(describing: error?.localizedDescription))")
+                    }
                 }
+                self.view.isUserInteractionEnabled = false
+                self.navigationItem.leftBarButtonItem?.isEnabled = false
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                self.tabBarController?.tabBar.isHidden = false
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.showAlert(message: "제목은 필수입니다!")
             }
-            view.isUserInteractionEnabled = false
-            navigationItem.leftBarButtonItem?.isEnabled = false
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            tabBarController?.tabBar.isHidden = false
-            navigationController?.popViewController(animated: true)
-        } else {
-            showAlert(message: "제목은 필수입니다!")
-        }
     }
     
     @objc func didTapImagePickerButton() {
@@ -284,7 +283,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
 private extension AddCommunityPageViewController {
     func attribute() {
         view.backgroundColor = .backgroundCoustomColor
-    
+        
         imagePickerView.addSubview(imagePickerButton) // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
         imagePickerStackView.addArrangedSubview(imagePickerButton)
         
@@ -391,7 +390,7 @@ extension AddCommunityPageViewController: UITextViewDelegate { // ⭐️ UITextV
             subTextView.textColor = .black
         }
     }
-
+    
     func textViewDidEndEditing(_ subTextView: UITextView) {
         if subTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             subTextView.text = subTextViewPlaceHolder

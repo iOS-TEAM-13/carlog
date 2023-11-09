@@ -13,6 +13,7 @@ struct Post: Codable {
     let content: String?
     let image: [URL?]
     let userEmail: String?
+    let userName: String?
     let timeStamp: String?
     var emergency: [String:Bool]?
 }
