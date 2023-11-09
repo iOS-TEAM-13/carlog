@@ -14,4 +14,5 @@ struct Post: Codable {
     let image: [URL?]
     let userEmail: String?
     let timeStamp: String?
+    var emergency: [String:Bool]?
 }

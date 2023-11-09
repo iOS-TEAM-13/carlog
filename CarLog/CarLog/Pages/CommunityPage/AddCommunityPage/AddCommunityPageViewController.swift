@@ -207,7 +207,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         
         if self.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
-                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp)
+                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: user.email, timeStamp: timeStamp, emergency: [:])
                 FirestoreService.firestoreService.savePosts(post: post) { error in
                     print("err: \(String(describing: error?.localizedDescription))")
                 }

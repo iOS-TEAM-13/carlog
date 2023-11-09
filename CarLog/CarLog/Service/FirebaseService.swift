@@ -110,6 +110,15 @@ final class FirestoreService {
         }
     }
     
+    func updatePosts(postID: String, emergency: [String?:Bool?]) {
+        db.collection("posts").whereField("id", isEqualTo: postID).getDocuments { (querySnapshot, error) in
+                    for document in querySnapshot!.documents {
+                        self.db.collection("posts").document(document.documentID).updateData(["emergency": emergency]) {_ in
+                    }
+                }
+            }
+    }
+    
     func loadPosts(completion: @escaping ([Post]?) -> Void) {
         db.collection("posts")
             .order(by: "timeStamp", descending: true) // "timeStamp" 필드를 내림차순으로 정렬
