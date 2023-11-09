@@ -62,13 +62,13 @@ class CommentTableViewCell: UITableViewCell {
         
         commentStackView.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.verticalMargin - 4)
+            make.leftMargin.equalToSuperview().offset(Constants.verticalMargin - 1)
         }
         
         commentLabel.snp.makeConstraints { make in
             make.topMargin.equalTo(userNameLabel.snp.bottom).offset(Constants.verticalMargin)
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin + 1)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin + 3)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
         }
     }

@@ -65,15 +65,12 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
 
 extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count: \(commentData.count)")
-        print("commentData : \(commentData)")
         return commentData.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
-        let comment = commentData[indexPath.row]
-
+        let comment = commentData.sorted(by: {$0.timeStamp ?? "" > $1.timeStamp ?? ""})[indexPath.row]
         cell.userNameLabel.text = comment.userName
         cell.dateLabel.text = comment.timeStamp
         cell.commentLabel.text = comment.content
@@ -93,32 +90,47 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             if let post = self.selectedPost {
                 let postID = post.id ?? ""
-
                 FirestoreService.firestoreService.loadComments(postID: postID) { comments in
                     if let comments = comments {
                         for comment in comments {
+                            print("commentID: \(comment.id)")
                             if comment.id == self.commentData[indexPath.row].id {
                                 self.commentData.remove(at: indexPath.row)
                                 tableView.deleteRows(at: [indexPath], with: .fade)
-                                let deletedCellHeight = tableView.rectForRow(at: indexPath).height
+                                _ = tableView.rectForRow(at: indexPath).height
                                 FirestoreService.firestoreService.removeComment(commentId: comment.id ?? "") { err in
-                                    if let err = err {
+                                    if err != nil {
                                         print("err")
                                     }
                                 }
+                                tableView.reloadData()
                             }
                             break
                         }
-                        
                     }
                 }
             }
         }
-        deleteAction.image = UIImage(named: "trash") // 시스템 아이콘 사용
+        deleteAction.image = UIImage(named: "trash")
         deleteAction.backgroundColor = .backgroundCoustomColor
 
-        let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-            completionHandler(true)
+        let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
+            if let post = self.selectedPost {
+                FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
+                    for var comment in comments ?? [] {
+                        var isBlocked = comment.blockComment?[Constants.currentUser.userEmail ?? ""]
+                        isBlocked = !(isBlocked ?? false)
+                        comment.blockComment?.updateValue(isBlocked ?? false, forKey: Constants.currentUser.userEmail ?? "")
+                        FirestoreService.firestoreService.updateComment(commentId: comment.id ?? "", isBlocked: comment.blockComment ?? [:])
+                        
+                        if comment.id == self.commentData[indexPath.row].id {
+                            self.commentData.remove(at: indexPath.row)
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                        }
+                        break
+                    }
+                }
+            }
         }
         reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         reportAction.backgroundColor = .backgroundCoustomColor
@@ -130,7 +142,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
            let commentUserEmail = commentData[indexPath.row].userEmail,
            currentUserEmail == commentUserEmail
         {
-            configuration = UISwipeActionsConfiguration(actions: [reportAction, deleteAction])
+            configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         } else {
             configuration = UISwipeActionsConfiguration(actions: [reportAction])
         }

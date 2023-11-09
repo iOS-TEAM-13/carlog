@@ -6,7 +6,6 @@ import SnapKit
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     var commentData: [Comment] = []
-
     lazy var isEmergency = selectedPost?.emergency?[Constants.currentUser.userEmail ?? ""]
     lazy var emergencyCount = selectedPost?.emergency?.filter { $0.value == true }.count {
         didSet {
@@ -411,7 +410,7 @@ class CommunityDetailPageViewController: UIViewController {
         let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
         
-        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp)
+        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp, blockComment: [:])
         FirestoreService.firestoreService.saveComment(comment: newComment) { error in
             if let error = error {
                 print("Error saving comment: \(error.localizedDescription)")
@@ -457,10 +456,16 @@ extension CommunityDetailPageViewController {
         setupUI()
         setupNavigationBarButton()
         loadPost()
-        loadComments()
         commentTextViewPlaceholder()
         registerKeyboardNotifications()
         setupHideKeyboardOnTap()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("==== \(commentTableView.frame.height)")
+        loadComments()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -493,11 +498,14 @@ extension CommunityDetailPageViewController {
         if let post = selectedPost {
             FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
                 if let comments = comments {
-                    print("comments = \(comments)")
+                    //print("comments = \(comments)")
+                    
                     for comment in comments {
                         self.commentData.append(comment)
-                        self.commentTableView.reloadData()
+                        
                     }
+                    self.commentTableView.reloadData()
+                    print("commentData : \(self.commentData[0])")
                 }
             }
         }
