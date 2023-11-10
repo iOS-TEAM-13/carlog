@@ -9,64 +9,116 @@ import UIKit
 
 class VisionDrivingView: UIView {
 
-    lazy var addvisionStackView: UIStackView = {
-        let visionStackView = UIStackView(arrangedSubviews: [addVisionLabel, addVisionButtonStackView])
-        visionStackView.customStackView(spacing: 30, axis: .vertical, alignment: .center)
+    lazy var visionStackView: UIStackView = {
+        let visionStackView = UIStackView(arrangedSubviews: [visionInfoLabel, visionButtonTextFieldStackView])
+        visionStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
+        visionStackView.backgroundColor = .white
+        visionStackView.layer.cornerRadius = Constants.cornerRadius
         return visionStackView
     }()
     
-    lazy var addVisionLabel: UILabel = {
-        let addVisionLabel = UILabel()
-        addVisionLabel.customLabel(text: "출발, 도착 주행거리를 선택해주세요.", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
-        return addVisionLabel
+    //안내 라벨
+    lazy var visionInfoLabel: UILabel = {
+        let visionInfoLabel = UILabel()
+        visionInfoLabel.customLabel(text: "출발, 도착 주행거리를 선택해주세요.", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        return visionInfoLabel
     }()
     
-    lazy var addVisionButtonStackView: UIStackView = {
-        let addVisionButtonStackView = UIStackView(arrangedSubviews: [addDepartVisionStackView, addArriveVisionStackView])
-        addVisionButtonStackView.customStackView(spacing: 20, axis: .horizontal, alignment: .center)
-        return addVisionButtonStackView
+    //MARK: - 버튼, 텍스트필드 스택뷰
+    lazy var visionButtonTextFieldStackView: UIStackView = {
+        let visionButtonTextFieldStackView = UIStackView(arrangedSubviews: [visionDepartDistanceStackView, visionArriveDistanceStackView])
+        visionButtonTextFieldStackView.customStackView(spacing: Constants.verticalMargin, axis: .horizontal, alignment: .center)
+        return visionButtonTextFieldStackView
     }()
     
-    lazy var addDepartVisionStackView: UIStackView = {
-        let addDepartVisionStackView = UIStackView(arrangedSubviews: [addDepartVisionButton, departImageView])
-        addDepartVisionStackView.customStackView(spacing: 30, axis: .vertical, alignment: .center)
-        return addDepartVisionStackView
+    //MARK: - 왼쪽 출발 버튼, 텍스트필드 스택뷰
+    lazy var visionDepartDistanceStackView: UIStackView = {
+        let visionDepartDistanceStackView = UIStackView(arrangedSubviews: [departLabel, visionDepartImageButton, visionDepartTextField, visionDepartImageView])
+        visionDepartDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .center)
+        return visionDepartDistanceStackView
     }()
     
-    lazy var addDepartVisionButton: UIButton = {
-        let addDepartVisionButton = UIButton()
+    lazy var departLabel: UILabel = {
+        let departLabel = UILabel()
+        departLabel.customLabel(text: "출발", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        return departLabel
+    }()
+    
+    //출발 이미지 선택 버튼
+    lazy var visionDepartImageButton: UIButton = {
+        let visionDepartImageButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .mainNavyColor
         config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 80, weight: .medium))
-        addDepartVisionButton.configuration = config
-        return addDepartVisionButton
+        visionDepartImageButton.configuration = config
+        return visionDepartImageButton
     }()
     
-    lazy var departImageView: UIImageView = {
-        let departImageView = UIImageView()
-        departImageView.contentMode = .scaleAspectFill
-        return departImageView
+    //출발 텍스트필드
+    lazy var visionDepartTextField: UITextField = {
+        let visionDepartTextField = UITextField()
+        
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+        ]
+        
+        visionDepartTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionDepartTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+        return visionDepartTextField
     }()
     
-    lazy var addArriveVisionStackView: UIStackView = {
-        let addArriveVisionStackView = UIStackView(arrangedSubviews: [addArriveVisionButton, arriveImageView])
-        addArriveVisionStackView.customStackView(spacing: 30, axis: .vertical, alignment: .center)
-        return addArriveVisionStackView
+    //출발 이미지뷰
+    lazy var visionDepartImageView: UIImageView = {
+        let visionDepartImageView = UIImageView()
+        visionDepartImageView.contentMode = .scaleAspectFit
+        return visionDepartImageView
     }()
     
-    lazy var addArriveVisionButton: UIButton = {
-        let addArriveVisionButton = UIButton()
+    //MARK: - 오른쪽 도착 버튼, 텍스트필드 스택뷰
+    lazy var visionArriveDistanceStackView: UIStackView = {
+        let visionArriveDistanceStackView = UIStackView(arrangedSubviews: [arriveLabel, visionArriveImabeButton, visionArriveTextField, visionArriveImageView])
+        visionArriveDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .center)
+        return visionArriveDistanceStackView
+    }()
+    
+    lazy var arriveLabel: UILabel = {
+        let arriveLabel = UILabel()
+        arriveLabel.customLabel(text: "도착", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        return arriveLabel
+    }()
+    
+    //도착 이미지 선택 버튼
+    lazy var visionArriveImabeButton: UIButton = {
+        let visionArriveImabeButton = UIButton()
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .mainNavyColor
         config.image = UIImage(systemName: "plus")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 80, weight: .medium))
-        addArriveVisionButton.configuration = config
-        return addArriveVisionButton
+        visionArriveImabeButton.configuration = config
+        return visionArriveImabeButton
     }()
     
-    lazy var arriveImageView: UIImageView = {
-        let arriveImageView = UIImageView()
-        arriveImageView.contentMode = .scaleAspectFill
-        return arriveImageView
+    //도착 텍스트필드
+    lazy var visionArriveTextField: UITextField = {
+        let visionArriveTextField = UITextField()
+        
+        //customTextField 수정
+        let placeholderColor: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray,
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+        ]
+        
+        visionArriveTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10020", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionArriveTextField.frame.size.height)), keyboardType: .decimalPad)
+        
+        return visionArriveTextField
+    }()
+    
+    //도착 이미지뷰
+    lazy var visionArriveImageView: UIImageView = {
+        let visionArriveImageView = UIImageView()
+        visionArriveImageView.contentMode = .scaleAspectFit
+        return visionArriveImageView
     }()
     
     override init(frame: CGRect) {
@@ -81,54 +133,35 @@ class VisionDrivingView: UIView {
     
     // MARK: - addVisionFueling UI 설정
     private func setupUI() {
-        addSubview(addvisionStackView)
-        
-        addvisionStackView.snp.makeConstraints { make in
-            make.centerX.equalTo(safeAreaLayoutGuide)
-            make.centerY.equalTo(safeAreaLayoutGuide)
+        addSubview(visionStackView)
+
+        visionStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview().multipliedBy(0.7)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin * 2)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }
         
-        addDepartVisionButton.snp.makeConstraints { make in
+        visionInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(visionStackView).offset(20)
+        }
+        
+        visionDepartTextField.snp.makeConstraints { make in
+            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
+        }
+        
+        visionArriveTextField.snp.makeConstraints { make in
+            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
+        }
+        
+        visionDepartImageButton.snp.makeConstraints { make in
             make.width.equalTo(150)
             make.height.equalTo(150)
         }
-        
-        departImageView.snp.makeConstraints { make in
-            make.width.equalTo(150)
-            make.height.equalTo(150)
-        }
-        
-        addArriveVisionButton.snp.makeConstraints { make in
-            make.width.equalTo(150)
-            make.height.equalTo(150)
-        }
-        
-        arriveImageView.snp.makeConstraints { make in
+
+        visionArriveImabeButton.snp.makeConstraints { make in
             make.width.equalTo(150)
             make.height.equalTo(150)
         }
     }
     
-    //
-    func setDepartImage(image: UIImage) {
-        let resizedImage = image.resize(to: CGSize(width: 150, height: 150))
-        addDepartVisionButton.setImage(resizedImage, for: .normal)
-        departImageView.image = resizedImage
-    }
-
-    func setArriveImage(image: UIImage) {
-        let resizedImage = image.resize(to: CGSize(width: 150, height: 150))
-        addArriveVisionButton.setImage(resizedImage, for: .normal)
-        arriveImageView.image = resizedImage
-    }
-}
-
-//
-extension UIImage {
-    func resize(to newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        return UIGraphicsGetImageFromCurrentImageContext() ?? self
-    }
 }
