@@ -27,7 +27,7 @@ extension CommunityDetailPageViewController: UITextViewDelegate {
     }
 
     func showAlert(text: String, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "\(text) 삭제", message: "\(text)을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "댓글 \(text)", message: "댓글을 정말로 \(text)하시겠습니까?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
 
@@ -39,7 +39,6 @@ extension CommunityDetailPageViewController: UITextViewDelegate {
         present(alert, animated: true, completion: nil)
     }
 }
-
 // MARK: - Community 사진
 
 extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -103,7 +102,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             // alert창
-            self.showAlert(text: "댓글") {
+            self.showAlert(text: "삭제") {
                 if let post = self.selectedPost {
                     let postID = post.id ?? ""
                     FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: postID) { comments in
@@ -129,10 +128,32 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         deleteAction.image = UIImage(named: "trash")
         deleteAction.backgroundColor = .backgroundCoustomColor
 
-        let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
+        let blockAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
+            self.showAlert(text: "차단") {
+                if let post = self.selectedPost {
+                    let postID = post.id ?? ""
+                    FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: postID) { comments in
+                        if let comments = comments {
+                            if let index = comments.firstIndex(where: { $0.id == self.commentData[indexPath.row].id }) {
+                                // 해당 comment를 찾았으므로 삭제
+                                self.commentData.remove(at: indexPath.row)
+                                tableView.deleteRows(at: [indexPath], with: .fade)
+                                _ = tableView.rectForRow(at: indexPath).height
+                                let commentID = comments[index].id ?? ""
+                                FirestoreService.firestoreService.blockComment(commentId: commentID, userEmail: Constants.currentUser.userEmail ?? "") { err in
+                                    if err != nil {
+                                        print("err")
+                                    }
+                                }
+                                tableView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
         }
-        reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
-        reportAction.backgroundColor = .backgroundCoustomColor
+        blockAction.image = UIImage(named: "report") // 시스템 아이콘 사용
+        blockAction.backgroundColor = .backgroundCoustomColor
 
         // 스와이프 액션을 구성합니다.
         let configuration: UISwipeActionsConfiguration
@@ -143,7 +164,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         {
             configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         } else {
-            configuration = UISwipeActionsConfiguration(actions: [reportAction])
+            configuration = UISwipeActionsConfiguration(actions: [blockAction])
         }
 
         return configuration
