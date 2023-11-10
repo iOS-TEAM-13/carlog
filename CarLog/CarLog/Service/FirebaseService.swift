@@ -226,7 +226,7 @@ final class FirestoreService {
                 
             let userDocRef = self.db.collection("users").document(document.documentID)
             userDocRef.updateData(["blockedUsers": FieldValue.arrayUnion([userName])]) { error in
-                if let error = error {
+                if error != nil {
                     print("유저 차단 업데이트 실패")
                 }
                 completion(error)
@@ -275,23 +275,52 @@ final class FirestoreService {
         }
     }
         
-    func loadComments(postID: String, completion: @escaping ([Comment]?) -> Void) {
-        db.collection("comments").whereField("postId", isEqualTo: postID).getDocuments { querySnapshot, error in
-            if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
+    func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, completion: @escaping ([Comment]?) -> Void) {
+        db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in
+            
+            if let userError = userError {
+                print("사용자 문서를 가져오지 못했습니다: \(userError.localizedDescription)")
                 completion(nil)
-            } else {
-                var comments: [Comment] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
-                        comments.append(comment)
-                    } catch {
-                        completion(nil)
-                        return
+                return
+            }
+                
+            guard let document = userDocSnapshot?.documents.first else {
+                print("사용자 문서가 없습니다.")
+                completion(nil)
+                return
+            }
+            
+            var blockedUsers: [String] = []
+            
+            if let userBlockedUsers = document.data()["blockedUsers"] as? [String], !userBlockedUsers.isEmpty {
+                blockedUsers = userBlockedUsers
+            }
+                
+            self.db.collection("comments").whereField("postId", isEqualTo: postID).getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("데이터를 가져오지 못했습니다: \(error)")
+                    completion(nil)
+                } else {
+                    
+                    var comments: [Comment] = []
+                    
+                    for document in querySnapshot?.documents ?? [] {
+                        let datas = document.data()
+                        
+                        if let userName = datas["userName"] as? String, blockedUsers.contains(userName) {
+                            continue
+                        }
+                        
+                        do {
+                            let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
+                            comments.append(comment)
+                        } catch {
+                            print("댓글 디코딩 실패: \(error.localizedDescription)")
+                            return
+                        }
                     }
+                    completion(comments)
                 }
-                completion(comments)
             }
         }
     }

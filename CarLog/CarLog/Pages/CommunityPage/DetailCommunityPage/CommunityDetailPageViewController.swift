@@ -532,7 +532,7 @@ extension CommunityDetailPageViewController {
     
     private func loadComments() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
+            FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comments in
                 if let comments = comments {
                     // print("comments = \(comments)")
                     
