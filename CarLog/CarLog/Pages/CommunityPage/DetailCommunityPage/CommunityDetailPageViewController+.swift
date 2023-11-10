@@ -102,7 +102,6 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
-
             // alert창
             self.showAlert(text: "댓글") {
                 if let post = self.selectedPost {
@@ -126,14 +125,11 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                     }
                 }
             }
-
-           
         }
         deleteAction.image = UIImage(named: "trash")
         deleteAction.backgroundColor = .backgroundCoustomColor
 
         let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
-          
         }
         reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         reportAction.backgroundColor = .backgroundCoustomColor
