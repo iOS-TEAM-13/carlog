@@ -311,12 +311,12 @@ func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, co
                     for document in querySnapshot?.documents ?? [] {
                         let datas = document.data()
                         
-                        if let userName = datas["userName"] as? String, blockedUsers.contains(userName) {
+                        if let userName = datas["id"] as? String, blockedUsers.contains(userName) {
                             continue
                         }
                         
-                        if let userNamceForComment = datas["userName"] as? String,
-                           blockedComments.contains(userNamceForComment)
+                        if let userNameForComment = datas["id"] as? String,
+                           blockedComments.contains(userNameForComment)
                         {
                             continue
                         }
@@ -329,6 +329,7 @@ func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, co
                             return
                         }
                     }
+                    print("커멘트 확인 \(comments)")
                     completion(comments)
                 }
             }

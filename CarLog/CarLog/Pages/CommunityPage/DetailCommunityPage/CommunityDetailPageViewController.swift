@@ -369,7 +369,6 @@ class CommunityDetailPageViewController: UIViewController {
                 confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 self.present(confirmAlert, animated: true, completion: nil)
             }
-            //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
             action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
             action4.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action3)
