@@ -328,7 +328,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             let compseViewController = MFMailComposeViewController()
             compseViewController.mailComposeDelegate = self
             
-            compseViewController.setToRecipients(["carlog2310@gmail.com"])
+            compseViewController.setToRecipients(["carlog2313@gmail.com"])
             compseViewController.setSubject("신고/문의")
             compseViewController.setMessageBody("신고나 문의를 자세히 입력해 주세요!", isHTML: false)
             
