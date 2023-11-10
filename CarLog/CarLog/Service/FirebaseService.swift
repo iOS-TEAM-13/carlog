@@ -20,7 +20,7 @@ final class FirestoreService {
     func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(user)
-            db.collection("users").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
+            db.collection("users").document(user.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
