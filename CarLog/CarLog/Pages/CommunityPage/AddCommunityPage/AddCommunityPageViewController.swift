@@ -110,17 +110,9 @@ class AddCommunityPageViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.postToEdit = post
         if postToEdit != nil {
-            //             postToEdit이 nil이면 받아오는 post의 데이터가 있으므로 수정 페이지라고 판단하여 가져온 post 데이터를 화면에 연결
-//            let titleTextAttributes: [NSAttributedString.Key: Any] = [
-//                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
-//                .foregroundColor: UIColor.mainNavyColor
-//            ]
-//            if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
-//                navigationBar.titleTextAttributes = titleTextAttributes
-//            }
-//            navigationItem.title = "수정하기"
+
             mainTextField.text = postToEdit?.title
-            subTextView.text = postToEdit?.title
+            subTextView.text = postToEdit?.content
             
                 switch postToEdit?.image.count {
                 case 1:
