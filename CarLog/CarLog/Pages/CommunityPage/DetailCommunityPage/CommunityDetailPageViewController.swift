@@ -491,9 +491,17 @@ extension CommunityDetailPageViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        print("==== \(commentTableView.frame.height)")
-        loadComments()
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(changedPost(notification:)), name: Notification.Name("changedPost"), object: nil)
+    }
+    
+    @objc func changedPost(notification: Notification) {
+        if let updatedPost = notification.object as? Post {
+            self.selectedPost = updatedPost
+            print(selectedPost?.title)
+            loadPost()
+            photoCollectionView.reloadData()
+            }
     }
     
     override func viewDidLayoutSubviews() {

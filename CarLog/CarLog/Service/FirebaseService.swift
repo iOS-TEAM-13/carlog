@@ -131,15 +131,14 @@ final class FirestoreService {
                 }
             }
         } else {
-            db.collection("posts").whereField("id", isEqualTo: post.id ?? "").getDocuments { querySnapshot, _ in
-                for document in querySnapshot!.documents {
-                    self.db.collection("posts").document(document.documentID).updateData([
-                        "title": post.title ?? "",
-                        "content": post.content ?? "",
-                        "image": post.image])
-                    { _ in
-                    }
-                }
+          db.collection("posts").whereField("id", isEqualTo: post.id ?? "").getDocuments { querySnapshot, _ in
+            for document in querySnapshot!.documents {
+              self.db.collection("posts").document(document.documentID).updateData([
+                "title": post.title ?? "",
+                "content": post.content ?? "",
+                "image": post.image.map { $0?.absoluteString }]) { _ in
+              }
+
             }
         }
     }
