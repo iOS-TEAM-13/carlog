@@ -119,7 +119,8 @@ final class FirestoreService {
         }
     }
     
-    func loadPosts(excludingBlockedPostsFor userEmail: String,completion: @escaping ([Post]?) -> Void) {
+    
+    func loadPosts(excludingBlockedPostsFor userEmail: String, completion: @escaping ([Post]?) -> Void) {
         db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in
             if let userError = userError {
                 print("사용자 문서를 가져오지 못했습니다: \(userError.localizedDescription)")
@@ -133,66 +134,82 @@ final class FirestoreService {
                 return
             }
 
-            if let blockedPosts = document.data()["blockedPosts"] as? [String], !blockedPosts.isEmpty {
-                self.db.collection("posts")
-                    .order(by: "timeStamp", descending: true)
-                    .getDocuments { querySnapshot, postError in
-                        if let postError = postError {
-                            print("게시글을 가져오지 못했습니다: \(postError.localizedDescription)")
-                            completion(nil)
-                            return
-                        }
+            var blockedUsers: [String] = []
+            var blockedPosts: [String] = []
 
-                        var posts: [Post] = []
-                        for document in querySnapshot?.documents ?? [] {
-                            let datas = document.data()
-                            
-                            guard let postId = datas["id"] as? String else { return }
-                        
-                            if blockedPosts.firstIndex(where: { $0 == postId}) != nil {
-                                dump("blockedPosts = \(blockedPosts)")
-                                dump("documentID = \(document.documentID)")
-                                continue
-                            }
-                            do {
-                                let post = try Firestore.Decoder().decode(Post.self, from: document.data())
-                                posts.append(post)
-                            } catch let decodeError {
-                                print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
-                                // 여기서는 계속해서 다른 게시물들을 로드할 수 있으므로, completion을 호출하지 않고 계속 진행합니다.
-                            }
-                        }
-                        dump("posts: \(posts)")
-                        completion(posts)
-                    }
-            } else {
-                // 차단된 게시글이 없는 경우
-                print("차단된 게시글이 없습니다. 모든 게시글을 가져옵니다.")
-                self.db.collection("posts")
-                    .order(by: "timeStamp", descending: true)
-                    .getDocuments { querySnapshot, error in
-                        if let error = error {
-                            print("게시글을 가져오지 못했습니다: \(error.localizedDescription)")
-                            completion(nil)
-                            return
-                        }
+            if let userBlockedUsers = document.data()["blockedUsers"] as? [String], !userBlockedUsers.isEmpty {
+                blockedUsers = userBlockedUsers
+            }
 
-                        var posts: [Post] = []
-                        for document in querySnapshot?.documents ?? [] {
-                            do {
-                                let post = try Firestore.Decoder().decode(Post.self, from: document.data())
-                                posts.append(post)
-                            } catch let decodeError {
-                                print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
-                                // 여기서는 계속해서 다른 게시물들을 로드할 수 있으므로, completion을 호출하지 않고 계속 진행합니다.
-                            }
-                        }
-                        completion(posts)
+            if let userBlockedPosts = document.data()["blockedPosts"] as? [String], !userBlockedPosts.isEmpty {
+                blockedPosts = userBlockedPosts
+            }
+
+            let query = self.db.collection("posts").order(by: "timeStamp", descending: true)
+
+            query.getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("게시글을 가져오지 못했습니다: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+
+                var posts: [Post] = []
+
+                for document in querySnapshot?.documents ?? [] {
+                    let datas = document.data()
+
+                    if let userName = datas["userName"] as? String, blockedUsers.contains(userName) {
+                        continue
                     }
+
+                    if let postId = datas["id"] as? String, blockedPosts.contains(postId) {
+                        dump("blockedPosts = \(blockedPosts)")
+                        dump("documentID = \(document.documentID)")
+                        continue
+                    }
+
+                    do {
+                        let post = try Firestore.Decoder().decode(Post.self, from: document.data())
+                        posts.append(post)
+                    } catch let decodeError {
+                        print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
+                    }
+                }
+
+                dump("posts: \(posts)")
+                completion(posts)
             }
         }
     }
 
+    func blockUser(userName: String, userEmail: String, completion: @escaping (Error?) -> Void) {
+        let userQuery = db.collection("users").whereField("email", isEqualTo: userEmail)
+        
+        userQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("사용자 문서를 가져오지 못했습니다")
+                completion(error)
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                print("사용자 문서가 없습니다")
+                let notFoundError = NSError(domain: "BlockPost", code: 404, userInfo: nil)
+                completion(notFoundError)
+                return
+            }
+            
+            let userDocRef = self.db.collection("users").document(document.documentID)
+            userDocRef.updateData(["blockedUsers": FieldValue.arrayUnion([userName])]) { error in
+                if let error = error {
+                    print("유저 차단 업데이트 실패")
+                }
+                completion(error)
+            }
+        }
+    }
+    
     func blockPost(postID: String, userEmail: String, completion: @escaping (Error?) -> Void) {
         let userQuery = db.collection("users").whereField("email", isEqualTo: userEmail)
         
