@@ -340,29 +340,6 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
     }
-    
-    func showAlertAuth(
-        _ type: String
-    ) {
-        if let appName = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String {
-            let alertViewCell = UIAlertController(
-                title: "설정",
-                message: "\(appName)이(가) \(type) 접근 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
-                preferredStyle: .alert
-            )
-            let cancelAction = UIAlertAction(
-                title: "취소",
-                style: .cancel,
-                handler: nil
-            )
-            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-            }
-            alertViewCell.addAction(cancelAction)
-            alertViewCell.addAction(confirmAction)
-            self.present(alertViewCell, animated: true, completion: nil)
-        }
-    }
 }
 
 private extension AddCommunityPageViewController {

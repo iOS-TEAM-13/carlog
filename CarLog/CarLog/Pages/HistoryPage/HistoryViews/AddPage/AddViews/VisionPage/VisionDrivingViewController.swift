@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Vision
+import Photos
 
 //MARK: - 출발, 도착 케이스
 enum ImageType {
@@ -126,12 +127,39 @@ class VisionDrivingViewController: UIViewController {
     
     func selectImageAndRecognizeText(from type: ImageType) {
         currentImageType = type
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.allowsEditing = true
-        
-        present(imagePickerController, animated: true, completion: nil)
+        checkAlbumPermission()
+    }
+    
+    func checkAlbumPermission() { // 앨범 권한 허용 거부 요청
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                print("Album: 권한 허용")
+                DispatchQueue.main.async {
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.delegate = self
+                    imagePickerController.sourceType = .photoLibrary
+                    imagePickerController.allowsEditing = true
+                    self.present(imagePickerController, animated: true, completion: nil)
+                }
+            default:
+                DispatchQueue.main.async {
+                    self.moveToSettingAlert(reason: "사진 접근 요청 거부됨", discription: "설정에서 권한을 허용해 주세요.")
+                }
+            }
+        }
+    }
+    
+    func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        alert.addAction(cancle)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
     }
     
 }
