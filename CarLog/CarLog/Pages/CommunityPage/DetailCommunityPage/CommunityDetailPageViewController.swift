@@ -320,13 +320,15 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
-                
-                FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
-                    if err != nil {
-                        print("에러")
+                self.showAlert(text: "게시글") {
+                    FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
+                        if err != nil {
+                            print("에러")
+                        }
                     }
+                    print("삭제 완료")
+                    self.navigationController?.popViewController(animated: true)
                 }
-                print("삭제 완료")
             }
             editAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
             action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
@@ -337,9 +339,23 @@ class CommunityDetailPageViewController: UIViewController {
                 // 신고 기능 로직
                 print("신고 완료")
             }
-            let action4 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                // 차단 기능 로직
-                print("차단 완료")
+            let action4 = UIAlertAction(title: "차단하기", style: .default) { [weak self] _ in
+                guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
+
+                // 사용자가 확인을 누르면 차단 목록에 추가하는 로직
+                let confirmAlert = UIAlertController(title: "해당 게시글을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    FirestoreService.firestoreService.blockPost(postID: postID, userEmail: userEmail) { error in
+                        if let error = error {
+                            print("차단 오류: \(error.localizedDescription)")
+                        } else {
+                            print("차단 완료")
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(confirmAlert, animated: true, completion: nil)
             }
             //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
             action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
@@ -468,7 +484,6 @@ extension CommunityDetailPageViewController {
         super.viewWillAppear(true)
         print("==== \(commentTableView.frame.height)")
         loadComments()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -501,11 +516,10 @@ extension CommunityDetailPageViewController {
         if let post = selectedPost {
             FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
                 if let comments = comments {
-                    //print("comments = \(comments)")
+                    // print("comments = \(comments)")
                     
                     for comment in comments {
                         self.commentData.append(comment)
-                        
                     }
                     self.commentTableView.reloadData()
                 }

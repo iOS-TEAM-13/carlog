@@ -119,29 +119,108 @@ final class FirestoreService {
         }
     }
     
-    func loadPosts(completion: @escaping ([Post]?) -> Void) {
-        db.collection("posts")
-            .order(by: "timeStamp", descending: true) // "timeStamp" 필드를 내림차순으로 정렬
-            .getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("데이터를 가져오지 못했습니다: \(error)")
-                    completion(nil)
-                } else {
-                    var posts: [Post] = []
-                    for document in querySnapshot?.documents ?? [] {
-                        do {
-                            let post = try Firestore.Decoder().decode(Post.self, from: document.data())
-                            posts.append(post)
-                        } catch {
+    func loadPosts(excludingBlockedPostsFor userEmail: String,completion: @escaping ([Post]?) -> Void) {
+        db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in
+            if let userError = userError {
+                print("사용자 문서를 가져오지 못했습니다: \(userError.localizedDescription)")
+                completion(nil)
+                return
+            }
+
+            guard let document = userDocSnapshot?.documents.first else {
+                print("사용자 문서가 없습니다.")
+                completion(nil)
+                return
+            }
+
+            if let blockedPosts = document.data()["blockedPosts"] as? [String], !blockedPosts.isEmpty {
+                self.db.collection("posts")
+                    .order(by: "timeStamp", descending: true)
+                    .getDocuments { querySnapshot, postError in
+                        if let postError = postError {
+                            print("게시글을 가져오지 못했습니다: \(postError.localizedDescription)")
                             completion(nil)
                             return
                         }
+
+                        var posts: [Post] = []
+                        for document in querySnapshot?.documents ?? [] {
+                            let datas = document.data()
+                            
+                            guard let postId = datas["id"] as? String else { return }
+                        
+                            if blockedPosts.firstIndex(where: { $0 == postId}) != nil {
+                                dump("blockedPosts = \(blockedPosts)")
+                                dump("documentID = \(document.documentID)")
+                                continue
+                            }
+                            do {
+                                let post = try Firestore.Decoder().decode(Post.self, from: document.data())
+                                posts.append(post)
+                            } catch let decodeError {
+                                print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
+                                // 여기서는 계속해서 다른 게시물들을 로드할 수 있으므로, completion을 호출하지 않고 계속 진행합니다.
+                            }
+                        }
+                        dump("posts: \(posts)")
+                        completion(posts)
                     }
-                    completion(posts)
-                }
+            } else {
+                // 차단된 게시글이 없는 경우
+                print("차단된 게시글이 없습니다. 모든 게시글을 가져옵니다.")
+                self.db.collection("posts")
+                    .order(by: "timeStamp", descending: true)
+                    .getDocuments { querySnapshot, error in
+                        if let error = error {
+                            print("게시글을 가져오지 못했습니다: \(error.localizedDescription)")
+                            completion(nil)
+                            return
+                        }
+
+                        var posts: [Post] = []
+                        for document in querySnapshot?.documents ?? [] {
+                            do {
+                                let post = try Firestore.Decoder().decode(Post.self, from: document.data())
+                                posts.append(post)
+                            } catch let decodeError {
+                                print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
+                                // 여기서는 계속해서 다른 게시물들을 로드할 수 있으므로, completion을 호출하지 않고 계속 진행합니다.
+                            }
+                        }
+                        completion(posts)
+                    }
             }
+        }
     }
-    
+
+    func blockPost(postID: String, userEmail: String, completion: @escaping (Error?) -> Void) {
+        let userQuery = db.collection("users").whereField("email", isEqualTo: userEmail)
+        
+        userQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("사용자 문서를 가져오지 못했습니다: \(error.localizedDescription)")
+                completion(error)
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                print("사용자 문서가 없습니다.")
+                let notFoundError = NSError(domain: "BlockPost", code: 404, userInfo: nil)
+                completion(notFoundError)
+                return
+            }
+            
+            // 차단된 게시글 업데이트
+            let userDocRef = self.db.collection("users").document(document.documentID)
+            userDocRef.updateData(["blockedPosts": FieldValue.arrayUnion([postID])]) { error in
+                if let error = error {
+                    print("게시글 차단 업데이트 실패: \(error.localizedDescription)")
+                }
+                completion(error)
+            }
+        }
+    }
+
     // MARK: - Comment
     
     func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
@@ -157,23 +236,23 @@ final class FirestoreService {
     
     func loadComments(postID: String, completion: @escaping ([Comment]?) -> Void) {
         db.collection("comments").whereField("postId", isEqualTo: postID).getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("데이터를 가져오지 못했습니다: \(error)")
-                    completion(nil)
-                } else {
-                    var comments: [Comment] = []
-                    for document in querySnapshot?.documents ?? [] {
-                        do {
-                            let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
-                            comments.append(comment)
-                        } catch {
-                            completion(nil)
-                            return
-                        }
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var comments: [Comment] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
+                        comments.append(comment)
+                    } catch {
+                        completion(nil)
+                        return
                     }
-                    completion(comments)
                 }
+                completion(comments)
             }
+        }
     }
     
     func updateComment(commentId: String, isBlocked: [String?: Bool?]) {
@@ -187,16 +266,14 @@ final class FirestoreService {
   
     func removeComment(commentId: String, completion: @escaping (Error?) -> Void) {
         db.collection("comments").whereField("id", isEqualTo: commentId)
-            .getDocuments() { querySnapshot, error  in
+            .getDocuments { querySnapshot, _ in
                 for document in querySnapshot!.documents {
                     self.db.collection("comments").document(document.documentID).delete()
                 }
-          }
+            }
     }
     
-    
     func removePost(postID: String, completion: @escaping (Error?) -> Void) {
-        
         let postsCollection = db.collection("posts")
         let postQuery = postsCollection.whereField("id", isEqualTo: postID)
         
@@ -211,7 +288,7 @@ final class FirestoreService {
             }
             for document in querySnapshot!.documents {
                 document.reference.delete()
-            } 
+            }
         }
         
         commentQuery.getDocuments { querySnapshot, error in

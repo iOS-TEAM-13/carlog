@@ -107,8 +107,15 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
+        guard let userEmail = Constants.currentUser.userEmail else {
+            print("사용자 이메일 정보가 없습니다.")
+            indicator.stopAnimating()
+            return
+        }
+             
         indicator.startAnimating()
-        FirestoreService.firestoreService.loadPosts { posts in
+        FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
+            guard let self = self else { return }
             if let posts = posts {
                 self.items = posts
                 DispatchQueue.main.async {
@@ -117,7 +124,9 @@ class CommunityPageViewController: UIViewController {
                 }
             } else {
                 print("데이터를 가져오는 중 오류 발생")
-                self.indicator.stopAnimating()
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                }
             }
         }
     }
