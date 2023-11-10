@@ -20,7 +20,7 @@ final class FirestoreService {
     func saveUsers(user: User, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(user)
-            db.collection("users").addDocument(data: data) { error in
+            db.collection("users").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
@@ -352,7 +352,7 @@ func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, co
             
             let userDocRef = self.db.collection("users").document(document.documentID)
             userDocRef.updateData(["blockedComments": FieldValue.arrayUnion([commentId])]) { error in
-                if let error = error {
+                if error != nil {
                     print("코멘트 차단 업데이트 실패")
                 }
                 completion(error)
