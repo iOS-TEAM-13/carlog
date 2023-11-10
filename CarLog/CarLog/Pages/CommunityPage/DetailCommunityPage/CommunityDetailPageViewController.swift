@@ -377,7 +377,6 @@ class CommunityDetailPageViewController: UIViewController {
         if let commentText = commentTextView.text, !commentText.isEmpty {
             addComment(comment: commentText)
             commentTableView.reloadData()
-            updateCommentTableViewHeight() // 댓글이 추가된 후에 높이를 업데이트합니다.
             commentTextView.text = ""
         }
     }
@@ -391,7 +390,7 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height)
+            make.height.equalTo(contentSize.height + 50)
         }
     }
     
