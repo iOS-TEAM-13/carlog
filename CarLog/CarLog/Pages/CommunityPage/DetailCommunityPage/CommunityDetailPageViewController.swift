@@ -335,7 +335,7 @@ class CommunityDetailPageViewController: UIViewController {
             actionSheet.addAction(action2)
         } else {
             let action3 = UIAlertAction(title: "\(String(describing: post.userName ?? ""))님 차단하기", style: .default) { _ in
-                let confirmAlert = UIAlertController(title: "해당 게시글을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
+                let confirmAlert = UIAlertController(title: "\(post.userName ?? "")님을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
                 confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                     FirestoreService.firestoreService.blockUser(userName: self.selectedPost?.userName ?? "", userEmail: Constants.currentUser.userEmail ?? "") { error in
                         if let error = error {
@@ -349,8 +349,6 @@ class CommunityDetailPageViewController: UIViewController {
                 }))
                 confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 self.present(confirmAlert, animated: true, completion: nil)
-                
-                print("해당 유저 차단 완료")
             }
             let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
                 guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
