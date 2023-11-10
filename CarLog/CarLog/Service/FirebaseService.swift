@@ -404,7 +404,7 @@ func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, co
     func saveCar(car: Car, completion: @escaping (Error?) -> Void) {
         do {
             let data = try Firestore.Encoder().encode(car)
-            db.collection("cars").document(Constants.currentUser.userEmail ?? "").setData(data) { error in
+            db.collection("cars").document(Auth.auth().currentUser?.email ?? "").setData(data) { error in
                 completion(error)
             }
         } catch {
