@@ -41,7 +41,7 @@ class VisionFuelingViewController: UIViewController, UIImagePickerControllerDele
         visionFuelingView.endEditing(true)
     }
     
-    //MARK: - 비전 페이지 네비게이션바
+    //MARK: - 주유 비전 페이지 네비게이션바
     func navigationUI() {
         navigationItem.title = "사진으로 인식하기"
         

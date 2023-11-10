@@ -27,13 +27,13 @@ class VisionDrivingView: UIView {
     //MARK: - 버튼, 텍스트필드 스택뷰
     lazy var visionButtonTextFieldStackView: UIStackView = {
         let visionButtonTextFieldStackView = UIStackView(arrangedSubviews: [visionDepartDistanceStackView, visionArriveDistanceStackView])
-        visionButtonTextFieldStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        visionButtonTextFieldStackView.customStackView(spacing: Constants.verticalMargin, axis: .horizontal, alignment: .center)
         return visionButtonTextFieldStackView
     }()
     
     //MARK: - 왼쪽 출발 버튼, 텍스트필드 스택뷰
     lazy var visionDepartDistanceStackView: UIStackView = {
-        let visionDepartDistanceStackView = UIStackView(arrangedSubviews: [departLabel, visionDepartImageButton, visionDepartTextField])
+        let visionDepartDistanceStackView = UIStackView(arrangedSubviews: [departLabel, visionDepartImageButton, visionDepartTextField, visionDepartImageView])
         visionDepartDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .center)
         return visionDepartDistanceStackView
     }()
@@ -44,6 +44,7 @@ class VisionDrivingView: UIView {
         return departLabel
     }()
     
+    //출발 이미지 선택 버튼
     lazy var visionDepartImageButton: UIButton = {
         let visionDepartImageButton = UIButton()
         var config = UIButton.Configuration.filled()
@@ -53,6 +54,7 @@ class VisionDrivingView: UIView {
         return visionDepartImageButton
     }()
     
+    //출발 텍스트필드
     lazy var visionDepartTextField: UITextField = {
         let visionDepartTextField = UITextField()
         
@@ -67,15 +69,16 @@ class VisionDrivingView: UIView {
         return visionDepartTextField
     }()
     
+    //출발 이미지뷰
     lazy var visionDepartImageView: UIImageView = {
         let visionDepartImageView = UIImageView()
-        visionDepartImageView.contentMode = .scaleAspectFill
+        visionDepartImageView.contentMode = .scaleAspectFit
         return visionDepartImageView
     }()
     
     //MARK: - 오른쪽 도착 버튼, 텍스트필드 스택뷰
     lazy var visionArriveDistanceStackView: UIStackView = {
-        let visionArriveDistanceStackView = UIStackView(arrangedSubviews: [arriveLabel, visionArriveImabeButton, visionArriveTextField])
+        let visionArriveDistanceStackView = UIStackView(arrangedSubviews: [arriveLabel, visionArriveImabeButton, visionArriveTextField, visionArriveImageView])
         visionArriveDistanceStackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .center)
         return visionArriveDistanceStackView
     }()
@@ -86,6 +89,7 @@ class VisionDrivingView: UIView {
         return arriveLabel
     }()
     
+    //도착 이미지 선택 버튼
     lazy var visionArriveImabeButton: UIButton = {
         let visionArriveImabeButton = UIButton()
         var config = UIButton.Configuration.filled()
@@ -95,6 +99,7 @@ class VisionDrivingView: UIView {
         return visionArriveImabeButton
     }()
     
+    //도착 텍스트필드
     lazy var visionArriveTextField: UITextField = {
         let visionArriveTextField = UITextField()
         
@@ -109,10 +114,11 @@ class VisionDrivingView: UIView {
         return visionArriveTextField
     }()
     
-    lazy var arriveImageView: UIImageView = {
-        let arriveImageView = UIImageView()
-        arriveImageView.contentMode = .scaleAspectFill
-        return arriveImageView
+    //도착 이미지뷰
+    lazy var visionArriveImageView: UIImageView = {
+        let visionArriveImageView = UIImageView()
+        visionArriveImageView.contentMode = .scaleAspectFit
+        return visionArriveImageView
     }()
     
     override init(frame: CGRect) {
@@ -137,6 +143,10 @@ class VisionDrivingView: UIView {
         
         visionInfoLabel.snp.makeConstraints { make in
             make.top.equalTo(visionStackView).offset(20)
+        }
+        
+        visionDepartTextField.snp.makeConstraints { make in
+            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
         }
         
         visionArriveTextField.snp.makeConstraints { make in
