@@ -22,9 +22,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
         // MARK: - Setup
-        
-        print("@@@ dummy \(carDummy)")
-        print("@@@ Cons \(Constants.currentUser)")
         view.addSubview(myPageView)
         myPageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
