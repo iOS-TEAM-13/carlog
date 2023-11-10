@@ -12,13 +12,30 @@ class CommentTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         label.textColor = .black
+        label.setContentHuggingPriority(.init(251), for: .horizontal)
         return label
+    }()
+    
+    lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "2022.08.28"
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .light)
+        label.textColor = .black
+        label.setContentHuggingPriority(.init(250), for: .horizontal)
+        return label
+    }()
+    
+    lazy var commentStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, dateLabel])
+        stackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .center)
+        stackView.distribution = .fill
+        return stackView
     }()
     
     lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium)
-        label.numberOfLines = 0
+        label.numberOfLines = 5
         label.textColor = .black
         return label
     }()
@@ -42,18 +59,20 @@ class CommentTableViewCell: UITableViewCell {
     
     private func setupUI() {
         backgroundColor = .clear
-        contentView.addSubview(userNameLabel)
+        contentView.addSubview(commentStackView)
         contentView.addSubview(commentLabel)
         
-        userNameLabel.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+        commentStackView.snp.makeConstraints { make in
+            make.top.equalTo(contentView).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
         commentLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(userNameLabel.snp.bottom).offset(Constants.verticalMargin)
-            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.top.equalTo(commentStackView.snp.bottom).offset(Constants.verticalMargin)
+            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
     }
     

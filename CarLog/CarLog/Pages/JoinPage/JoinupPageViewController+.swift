@@ -112,6 +112,11 @@ extension JoinupPageViewController {
     
     // 아이디 중복체크 코드
     func addCheckEmailButtonAction() {
+        joinupView.emailTextField.addAction(UIAction(handler: { _ in
+            self.joinupView.checkEmailButton.setTitleColor(.black, for: .normal)
+            self.joinupView.checkEmailButton.setTitle("중복확인", for: .normal)
+        }), for: .editingChanged)
+        
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty, emailToCheck.isValidEmail() else {
                 return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
@@ -138,6 +143,11 @@ extension JoinupPageViewController {
     
     // 차 번호 중복검사 버튼
     func checkCarNumberButtonAction() {
+        carNumberView.carNumberTextField.addAction(UIAction(handler: { _ in
+            self.carNumberView.checkCarNumberButton.setTitleColor(.black, for: .normal)
+            self.carNumberView.checkCarNumberButton.setTitle("중복확인", for: .normal)
+        }), for: .editingChanged)
+        
         carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
             guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
                 return self.showAlert(message: "00가0000 형식으로 써주세요")
@@ -178,6 +188,11 @@ extension JoinupPageViewController {
     }
     
     func CheckNickNameButtonAction() {
+        nickNameView.carNickNameTextField.addAction(UIAction(handler: { _ in
+            self.nickNameView.checkNickNameButton.setTitleColor(.black, for: .normal)
+            self.nickNameView.checkNickNameButton.setTitle("중복확인", for: .normal)
+        }), for: .editingChanged)
+        
         nickNameView.checkNickNameButton.addAction(UIAction(handler: { _ in
             guard let nickNameToCheck = self.nickNameView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
             
@@ -212,9 +227,9 @@ extension JoinupPageViewController {
             }
             
             // smtp 로직
-            let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
+            let smtp = SMTP(hostname: "smtp.gmail.com", email: "carlog2313@gmail.com", password: "jucyydwmjblsyamf")
             
-            let from = Mail.User(name: "CarLog", email: "user3rum@gmail.com")
+            let from = Mail.User(name: "CarLog", email: "carlog2313@gmail.com")
             let to = Mail.User(name: "User", email: self.joinupView.emailTextField.text!)
             
             let code = "\(Int.random(in: 100000 ... 999999))"

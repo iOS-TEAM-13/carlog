@@ -99,13 +99,6 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         return totalDistanceLabel
     }()
     
-    //totalDistanceTextField, totalDistanceAddButton 스택뷰
-    //    lazy var totalTextFieldAddButtonStackView: UIStackView = {
-    //        let totalTextFieldaddButtonStackView = UIStackView(arrangedSubviews: [totalDistanceTextField, totalDistanceAddButton])
-    //        totalTextFieldaddButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-    //        return totalTextFieldaddButtonStackView
-    //    }()
-    
     lazy var totalDistanceTextField: UITextField = {
         let totalDistanceTextField = UITextField()
         
@@ -149,17 +142,6 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         totalDistanceTextField.resignFirstResponder()
     }
     
-    //totalDistanceAddButton
-    //    lazy var totalDistanceAddButton: UIButton = {
-    //        let totalDistanceAddButton = UIButton()
-    //        var config = UIButton.Configuration.filled()
-    //        config.cornerStyle = .medium
-    //        config.baseBackgroundColor = .mainNavyColor
-    //        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
-    //        totalDistanceAddButton.configuration = config
-    //        return totalDistanceAddButton
-    //    }()
-    
     //MARK: - 도착 주행거리 영역
     lazy var arriveDistanceStackView: UIStackView = {
         let arriveDistanceStackView = UIStackView(arrangedSubviews: [arriveDistanceLabel, arriveDistanceTextField])
@@ -173,13 +155,6 @@ class AddDrivingView: UIView, UITextFieldDelegate {
         arriveDistanceLabel.customLabel(text: "도착 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return arriveDistanceLabel
     }()
-    
-    //arriveDistanceTextField, arriveDistanceAddButton 스택뷰
-    //    lazy var arriveTextFieldAddButtonStackView: UIStackView = {
-    //        let arriveTextFieldAddButtonStackView = UIStackView(arrangedSubviews: [arriveDistanceTextField, arriveDistanceAddButton])
-    //        arriveTextFieldAddButtonStackView.customStackView(spacing: Constants.horizontalMargin, axis: .horizontal, alignment: .fill)
-    //        return arriveTextFieldAddButtonStackView
-    //    }()
     
     lazy var arriveDistanceTextField: UITextField = {
         let arriveDistanceTextField = UITextField()
@@ -215,17 +190,6 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     @objc func closeArriveDistanceTextField() {
         arriveDistanceTextField.resignFirstResponder()
     }
-    
-    //arriveDistanceAddButton
-    //    lazy var arriveDistanceAddButton: UIButton = {
-    //        let arriveDistanceAddButton = UIButton()
-    //        var config = UIButton.Configuration.filled()
-    //        config.cornerStyle = .medium
-    //        config.baseBackgroundColor = .mainNavyColor
-    //        config.image = UIImage(systemName: "photo")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .medium))
-    //        arriveDistanceAddButton.configuration = config
-    //        return arriveDistanceAddButton
-    //    }()
     
     //MARK: - 주행거리 영역
     lazy var driveDistenceStackView: UIStackView = {

@@ -34,7 +34,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     lazy var spanerCounts: UILabel = {
         let label = UILabel()
-        label.text = "27"
+        label.text = "-1"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
@@ -42,7 +42,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     lazy var commentCounts: UILabel = {
         let label = UILabel()
-        label.text = "12"
+        label.text = "-1"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
@@ -50,9 +50,8 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     
     lazy var collectionViewImage: UIImageView = {
         let imageView = UIImageView()
-        if let image = UIImage(systemName: "photo.fill") {
-            imageView.image = image
-        }
+        imageView.image = UIImage(named: "defaultImage")
+        imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
@@ -98,6 +97,11 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.collectionViewImage.image = UIImage(named: "defaultImage")
+    }
+    
     private func setupUI() {
         contentView.addSubview(topStackView)
         contentView.addSubview(collectionViewImage)
@@ -139,5 +143,14 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
         }
+    }
+    
+    func bind(userName: String?, title: String?, content: String?, image: UIImage?, spanerCount: Int?, commentCount: Int?) {
+        self.userName.text = userName
+        self.titleLabel.text = title
+        self.mainTextLabel.text = content
+        self.collectionViewImage.image = image
+        self.spanerCounts.text = String(spanerCount ?? 0)
+        self.commentCounts.text = String(commentCount ?? 0)
     }
 }

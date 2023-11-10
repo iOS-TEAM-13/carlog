@@ -28,6 +28,7 @@
 		3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B432AF9FCCE00007122 /* CommunityDetailPageViewController+.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */; };
+		7E95DE062AFE02ED008F45FA /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95DE052AFE02ED008F45FA /* UIImageView+.swift */; };
 		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
@@ -43,6 +44,10 @@
 		B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */; };
 		B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */; };
 		B892B89A2AFA536500875CA7 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B892B8992AFA536500875CA7 /* Int+.swift */; };
+		B8E5C1962AFBFDDF00604DE7 /* VisionDrivingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */; };
+		B8E5C1982AFBFDEC00604DE7 /* VisionFuelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */; };
+		B8E5C19B2AFBFE2E00604DE7 /* VisionDrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C19A2AFBFE2E00604DE7 /* VisionDrivingView.swift */; };
+		B8E5C19D2AFBFE4000604DE7 /* VisionFuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C19C2AFBFE4000604DE7 /* VisionFuelingView.swift */; };
 		C94DC0550E1194B30AE45F80 /* Pods_CarLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7667BEE61F719035220D9C64 /* Pods_CarLog.framework */; };
 		FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B96A22ADF5D39003827B1 /* LoginService.swift */; };
 		FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */; };
@@ -141,6 +146,7 @@
 		7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
 		7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
 		7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityPageViewController.swift; sourceTree = "<group>"; };
+		7E95DE052AFE02ED008F45FA /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		9BA5765F838EDB353BDABB5B /* Pods-CarLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.debug.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.debug.xcconfig"; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
@@ -157,6 +163,10 @@
 		B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailViewController.swift; sourceTree = "<group>"; };
 		B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailView.swift; sourceTree = "<group>"; };
 		B892B8992AFA536500875CA7 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionDrivingViewController.swift; sourceTree = "<group>"; };
+		B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFuelingViewController.swift; sourceTree = "<group>"; };
+		B8E5C19A2AFBFE2E00604DE7 /* VisionDrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionDrivingView.swift; sourceTree = "<group>"; };
+		B8E5C19C2AFBFE4000604DE7 /* VisionFuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFuelingView.swift; sourceTree = "<group>"; };
 		EAA11E4444771AE8A4F99ACA /* Pods-CarLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.release.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.release.xcconfig"; sourceTree = "<group>"; };
 		FB1B96A22ADF5D39003827B1 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarLog.entitlements; sourceTree = "<group>"; };
@@ -320,6 +330,7 @@
 			children = (
 				B85A0F3C2AD8CFC0009E0A00 /* AddDrivingView.swift */,
 				B85A0F3E2AD8CFD0009E0A00 /* AddFuelingView.swift */,
+				B8E5C1942AFBFAED00604DE7 /* VisionPage */,
 			);
 			path = AddViews;
 			sourceTree = "<group>";
@@ -350,6 +361,25 @@
 				B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */,
 			);
 			path = DetailViews;
+			sourceTree = "<group>";
+		};
+		B8E5C1942AFBFAED00604DE7 /* VisionPage */ = {
+			isa = PBXGroup;
+			children = (
+				B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */,
+				B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */,
+				B8E5C1992AFBFDFF00604DE7 /* VisionViews */,
+			);
+			path = VisionPage;
+			sourceTree = "<group>";
+		};
+		B8E5C1992AFBFDFF00604DE7 /* VisionViews */ = {
+			isa = PBXGroup;
+			children = (
+				B8E5C19A2AFBFE2E00604DE7 /* VisionDrivingView.swift */,
+				B8E5C19C2AFBFE4000604DE7 /* VisionFuelingView.swift */,
+			);
+			path = VisionViews;
 			sourceTree = "<group>";
 		};
 		FB748B132AD53B5E00CC6A1F = {
@@ -497,8 +527,8 @@
 		FBC712912AD6C8D1006C2BB0 /* CommunityPage */ = {
 			isa = PBXGroup;
 			children = (
-				3BF32B422AF9FC5C00007122 /* DetailCommunityPage */,
 				FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */,
+				3BF32B422AF9FC5C00007122 /* DetailCommunityPage */,
 				7E7EE0C72AF1E9C400AB4151 /* AddCommunityPage */,
 				3BF21A4D2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift */,
 				3BF21A4F2AEF830D0063822A /* EditPageViewController.swift */,
@@ -527,6 +557,7 @@
 				FBE051872AD6672F00F39E7F /* DateFormatter.swift */,
 				FBE051892AD6678E00F39E7F /* UITextField+.swift */,
 				FB6311C52ADCEBB80038929A /* String+.swift */,
+				7E95DE052AFE02ED008F45FA /* UIImageView+.swift */,
 				FFFFAF832AE1644800A7677E /* Date+.swift */,
 				7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */,
 				FF2648752AEBA36A009CD1D7 /* UICollectionViewCell+.swift */,
@@ -752,6 +783,7 @@
 				B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				B85A0F3F2AD8CFD0009E0A00 /* AddFuelingView.swift in Sources */,
+				B8E5C1962AFBFDDF00604DE7 /* VisionDrivingViewController.swift in Sources */,
 				B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */,
 				B85A0F4C2ADEFB57009E0A00 /* DriveDetailViewController.swift in Sources */,
 				FBBDA7152AD7A2350031C17B /* JoinupView.swift in Sources */,
@@ -778,10 +810,12 @@
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
 				B892B89A2AFA536500875CA7 /* Int+.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
+				B8E5C1982AFBFDEC00604DE7 /* VisionFuelingViewController.swift in Sources */,
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
 				3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */,
+				B8E5C19B2AFBFE2E00604DE7 /* VisionDrivingView.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
 				B85A0F3A2AD86A6E009E0A00 /* AddFuelingViewController.swift in Sources */,
 				7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */,
@@ -798,11 +832,13 @@
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */,
 				3BA8B0F92AD955D9007C3F68 /* GasStationDetailViewController.swift in Sources */,
+				B8E5C19D2AFBFE4000604DE7 /* VisionFuelingView.swift in Sources */,
 				FF50716A2AD6BC4100713A81 /* Post.swift in Sources */,
 				FF5071782AD6E0DF00713A81 /* MyCarCollectionViewCell.swift in Sources */,
 				B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
+				7E95DE062AFE02ED008F45FA /* UIImageView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
 				FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */,
 				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
@@ -956,13 +992,14 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 785X8Q9TA9;
+				DEVELOPMENT_TEAM = USP329MK32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "카로그";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치정보를 받아오려고 합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받아오려고 합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "카로그에서 게시글 작성을 위해 앨범 접근 권한이 필요합니다. ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -972,7 +1009,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.underdog.CarLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -993,13 +1030,14 @@
 				CODE_SIGN_ENTITLEMENTS = CarLog/CarLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 785X8Q9TA9;
+				DEVELOPMENT_TEAM = USP329MK32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarLog/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "카로그";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치정보를 받아오려고 합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받아오려고 합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "카로그에서 게시글 작성을 위해 앨범 접근 권한이 필요합니다. ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1009,7 +1047,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.underdog.CarLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

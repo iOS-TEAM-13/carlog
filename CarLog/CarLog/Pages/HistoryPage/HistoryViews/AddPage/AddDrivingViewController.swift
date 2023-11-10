@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import SnapKit
 
-// 노티피케이션
+// 히스토리페이지로 데이터 연결
 extension Notification.Name {
     static let newDrivingRecordAdded = Notification.Name("newDrivingRecordAdded")
 }
@@ -48,6 +48,41 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         
         //저장, 취소 버튼 클릭 이벤트
         buttonActions()
+        
+        //visionDriving에서 오는 출발 데이터
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisionDepart(_:)), name: .visionDepart, object: nil)
+        
+        //visionDriving에서 오는 도착 데이터
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisionArrive(_:)), name: .visionArrive, object: nil)
+        
+        //visionDriving에서 오는 운행거리 데이터
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisionDrive(_:)), name: .visionDrive, object: nil)
+    }
+    
+    //visionDriving에서 오는 출발 데이터
+    @objc func handleVisionDepart(_ notification: Notification) {
+        if let departText = notification.object as? String {
+            addDrivingView.totalDistanceTextField.text = departText
+        }
+    }
+    
+    //visionDriving에서 오는 출발 데이터
+    @objc func handleVisionArrive(_ notification: Notification) {
+        if let arriveText = notification.object as? String {
+            addDrivingView.arriveDistanceTextField.text = arriveText
+        }
+    }
+    
+    //visionDriving에서 오는 운행거리 데이터
+    @objc func handleVisionDrive(_ notification: Notification) {
+        if let driveText = notification.object as? String {
+            addDrivingView.driveDistenceTextField.text = driveText
+        }
+    }
+    
+    //Notification제거?
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - 주행기록 페이지 네비게이션바
@@ -55,11 +90,12 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "주행기록 추가"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
-            .foregroundColor: UIColor.black
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .foregroundColor: UIColor.mainNavyColor
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
+        self.navigationItem.rightBarButtonItem = self.addImageButton
     }
     
     lazy var backButton: UIBarButtonItem = {
@@ -73,7 +109,20 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Keyboard 관련    
+    //주행거리 추가 페이지에서 +버튼 노출
+    lazy var addImageButton: UIBarButtonItem = {
+        let addImageButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goAddImage))
+        addImageButton.tintColor = .mainNavyColor
+        return addImageButton
+    }()
+    
+    //주행거리 추가 페이지에서 +버튼 클릭 시 사진 선택 페이지로 이동
+    @objc func goAddImage() {
+        let visionDrivingViewController = VisionDrivingViewController()
+        navigationController?.pushViewController(visionDrivingViewController, animated: true)
+    }
+    
+    // MARK: - Keyboard 관련
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -108,7 +157,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         addDrivingView.endEditing(true)
     }
-
+    
     //MARK: - 운행 목적 텍스트 입력 수 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
@@ -148,7 +197,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
             let departDistance = Int(addDrivingView.totalDistanceTextField.text ?? "0") ?? 0
             let arriveDistance = Int(addDrivingView.arriveDistanceTextField.text ?? "0") ?? 0
             let driveDistance = Int(addDrivingView.driveDistenceTextField.text ?? "0") ?? 0
-            let userEmail = Auth.auth().currentUser?.email
+            let userEmail = Constants.currentUser.userEmail
             
             let newDriving = Driving(timeStamp: timeStamp, drivingPurpose: drivingPurpose, id: id, departDistance: departDistance, arriveDistance: arriveDistance, driveDistance: driveDistance, userEmail: userEmail)
             

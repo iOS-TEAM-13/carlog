@@ -1,22 +1,17 @@
-//
-//  CommunityDetailPageViewController.swift
-//  CarLog
-//
-//  Created by t2023-m0075 on 11/1/23.
-//
+import UIKit
 
 import FirebaseAuth
 import SnapKit
-import UIKit
 
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
-    let currentDate = Date()
     var commentData: [Comment] = []
-    // 좋아요 버튼 설정
-    private var isLiked = false {
+    lazy var isEmergency = selectedPost?.emergency?[Constants.currentUser.userEmail ?? ""]
+    lazy var emergencyCount = selectedPost?.emergency?.filter { $0.value == true }.count {
         didSet {
-            updateLikeButton()
+            if let count = emergencyCount {
+                emergencyCountLabel.text = String(count)
+            }
         }
     }
     
@@ -57,30 +52,31 @@ class CommunityDetailPageViewController: UIViewController {
         let button = UIButton()
         button.setTitle("왕바우", for: .normal) // "게시"라는 텍스트 설정
         button.setTitleColor(.black, for: .normal) // 텍스트 색상 설정
-        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium) // 폰트와 크기 설정
+        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium) // 폰트와 크기 설정
         button.backgroundColor = .clear // 버튼의 배경색 설정
         return button
     }()
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2023.11.02"
         label.textColor = .black
         label.font = UIFont.spoqaHanSansNeo(size: 12, weight: .medium)
         return label
     }()
     
+    lazy var divideView = UIView()
+    
     lazy var subTitleStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [userNameLabel, UIView(), dateLabel])
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, divideView, dateLabel])
         stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .center)
-        
+        stackView.distribution = .fill
         return stackView
     }()
     
     lazy var photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 361, height: 346)
+        layout.itemSize = CGSize(width: 360, height: 345)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -92,23 +88,27 @@ class CommunityDetailPageViewController: UIViewController {
         return collectionView
     }()
     
-    lazy var likeButton: UIButton = {
+    lazy var emergencyButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "spaner"), for: .normal)
-        button.setImage(UIImage(named: "spaner.fill"), for: .selected)
-        button.tintColor = .red
-        button.addTarget(CommunityDetailPageViewController.self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(emergencyButtonTapped), for: .touchUpInside)
+        button.setImage(UIImage(named: isEmergency ?? false ? "spaner.fill" : "spaner"), for: .normal)
         return button
     }()
     
-    lazy var likeCount: UILabel = {
+    lazy var emergencyCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "264"
+        label.text = String(emergencyCount ?? 0)
         label.textColor = .lightGray
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         return label
     }()
-
+    
+    lazy var likeStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [emergencyButton, emergencyCountLabel])
+        stackView.customStackView(spacing: 10, axis: .horizontal, alignment: .center)
+        return stackView
+    }()
+    
     // textview 로 수정
     lazy var mainText: UILabel = {
         let label = UILabel()
@@ -133,6 +133,13 @@ class CommunityDetailPageViewController: UIViewController {
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    lazy var allStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleStackView, photoCollectionView, likeStackView, mainText, line])
+        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .leading)
+        stackView.distribution = .fill
+        return stackView
     }()
     
     lazy var commentLabel: UILabel = {
@@ -172,29 +179,38 @@ class CommunityDetailPageViewController: UIViewController {
         button.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         return button
     }()
-
+    
     private func setupUI() {
         view.addSubview(communityDetailPageScrollView)
         view.addSubview(containerView)
         communityDetailPageScrollView.addSubview(communityDetailPageContentView)
-        communityDetailPageContentView.addSubview(titleLabel)
-        communityDetailPageContentView.addSubview(subTitleStackView)
-        communityDetailPageContentView.addSubview(photoCollectionView)
-        communityDetailPageContentView.addSubview(likeButton)
-        communityDetailPageContentView.addSubview(likeCount)
-        communityDetailPageContentView.addSubview(mainText)
+        communityDetailPageScrollView.addSubview(allStackView)
         communityDetailPageContentView.addSubview(line)
         communityDetailPageContentView.addSubview(commentTableView)
         containerView.addSubview(commentTextView)
         containerView.addSubview(button)
+        
+        if selectedPost?.image.count == 0 {
+            photoCollectionView.isHidden = true
+        } else {
+            photoCollectionView.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 360, height: 345))
+            }
+        }
         
         commentTableView.snp.makeConstraints { make in
             make.height.equalTo(100)
         }
         
         communityDetailPageScrollView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalTo(containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
+        }
+        
+        emergencyButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
         communityDetailPageContentView.snp.makeConstraints { make in
@@ -202,101 +218,159 @@ class CommunityDetailPageViewController: UIViewController {
             make.width.equalTo(communityDetailPageScrollView)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(12)
-            make.leftMargin.rightMargin.equalToSuperview().offset(Constants.horizontalMargin)
+        subTitleStackView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
         }
         
-        subTitleStackView.snp.makeConstraints { make in
-            make.topMargin.equalTo(titleLabel.snp.bottom).offset(12)
+        allStackView.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-        }
-        
-        photoCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(subTitleStackView.snp.bottom).offset(12)
-            make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 361, height: 346))
-        }
-        
-        likeButton.snp.makeConstraints { make in
-            make.top.equalTo(photoCollectionView.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.size.equalTo(CGSize(width: 24, height: 24))
-        }
-        
-        likeCount.snp.makeConstraints { make in
-            make.height.equalTo(24)
-            make.top.equalTo(photoCollectionView.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(56)
-        }
-        
-        mainText.snp.makeConstraints { make in
-            make.width.equalTo(361)
-            make.top.equalTo(likeButton.snp.bottom).offset(12)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
         }
         
         line.snp.makeConstraints { make in
-            make.top.equalTo(mainText.snp.bottom).offset(20)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.top.equalTo(allStackView.snp.bottom).offset(20)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin * 2)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin * 2)
             make.height.equalTo(1)
         }
-
+        
         commentTableView.snp.makeConstraints { make in
-            make.top.equalTo(line.snp.bottom).offset(20)
+            make.top.equalTo(line.snp.bottom).offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
             make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview()
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
         // 댓글 레이아웃
         containerView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leftMargin.equalToSuperview()
-            make.rightMargin.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
         commentTextView.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(12)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-12)
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
         
         button.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(12)
-            make.left.equalTo(commentTextView.snp.right).offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-12)
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
+            make.leading.equalTo(commentTextView.snp.trailing).offset(Constants.horizontalMargin)
+            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
     }
     
+    // 키보드 따라 컨테이너뷰 동적 이동
+    func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        adjustContainerViewForKeyboard(notification: notification, show: true)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        adjustContainerViewForKeyboard(notification: notification, show: false)
+    }
+    
+    func adjustContainerViewForKeyboard(notification: NSNotification, show: Bool) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        else {
+            return
+        }
+        
+        let keyboardHeight = show ? keyboardFrame.height : 0
+        let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.3
+        
+        // 기존 레이아웃을 유지하되, 키보드 올라올때는 이 레이아웃 사용
+        containerView.snp.remakeConstraints { make in
+            make.bottom.equalToSuperview().offset(-keyboardHeight)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("completedCheckingView"), object: nil)
+    }
+    
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
-
+    
     @objc func dotsButtonTapped() {
-        guard let user = Auth.auth().currentUser, let post = selectedPost else { return }  
+        guard let post = selectedPost else { return }
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-         //현재 사용자가 포스트의 작성자가 일치하는지 확인
-        if post.userEmail == user.email {
-            let action1 = UIAlertAction(title: "삭제하기", style: .default) { _ in
-                //삭제 기능 로직
-                print("삭제 완료")
+        // 현재 사용자가 포스트의 작성자가 일치하는지 확인
+        if post.userEmail == Constants.currentUser.userEmail {
+            // 네이게션 edit
+            let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                
+                self.navigateToEditPage(post: post)
+                // 수정 기능 로직
+                //                print("수정 완료")
             }
-            action1.setValue(UIColor.red, forKey: "titleTextColor")
-            actionSheet.addAction(action1)
-        } else {
-            let action2 = UIAlertAction(title: "신고하기", style: .default) { _ in
-                // 신고 기능 로직
-                print("신고 완료")
+            let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
+                // 삭제 기능 로직
+                self.showAlert(text: "게시글") {
+                    FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
+                        if err != nil {
+                            print("에러")
+                        }
+                    }
+                    print("삭제 완료")
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
-            let action3 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                //차단 기능 로직
-                print("차단 완료")
-            }
-            action2.setValue(UIColor.red, forKey: "titleTextColor")
-            action3.setValue(UIColor.red, forKey: "titleTextColor")
+            editAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+            action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
+            actionSheet.addAction(editAction)
             actionSheet.addAction(action2)
+        } else {
+            let action3 = UIAlertAction(title: "\(String(describing: post.userName ?? ""))님 차단하기", style: .default) { _ in
+                let confirmAlert = UIAlertController(title: "\(post.userName ?? "")님을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    FirestoreService.firestoreService.blockUser(userName: self.selectedPost?.userName ?? "", userEmail: Constants.currentUser.userEmail ?? "") { error in
+                        if let error = error {
+                            print("차단 오류: \(error.localizedDescription)")
+                        } else {
+                            print("차단 완료")
+                            self.navigationController?.popViewController(animated: true)
+                            self.tabBarController?.tabBar.isHidden = false
+                        }
+                    }
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(confirmAlert, animated: true, completion: nil)
+            }
+            let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
+                guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
+                let confirmAlert = UIAlertController(title: "해당 게시글을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    FirestoreService.firestoreService.blockPost(postID: postID, userEmail: userEmail) { error in
+                        if let error = error {
+                            print("차단 오류: \(error.localizedDescription)")
+                        } else {
+                            print("차단 완료")
+                            self.navigationController?.popViewController(animated: true)
+                            self.tabBarController?.tabBar.isHidden = false
+                        }
+                    }
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(confirmAlert, animated: true, completion: nil)
+            }
+            action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
+            action4.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(action3)
+            actionSheet.addAction(action4)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         actionSheet.addAction(cancelAction)
@@ -304,14 +378,25 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     // 좋아요 버튼 눌렀을 떄 동작 구현
-    @objc func likeButtonTapped() {
-        isLiked.toggle()
+    @objc func emergencyButtonTapped() {
+        isEmergency = !(isEmergency ?? false)
+        selectedPost?.emergency?.updateValue(isEmergency ?? false, forKey: Constants.currentUser.userEmail ?? "")
+        setEmergencyButton()
     }
-
-    private func updateLikeButton() {
-        likeButton.isSelected = isLiked
+    
+    private func setEmergencyButton() {
+        if let post = selectedPost {
+            FirestoreService.firestoreService.updatePosts(postID: post.id ?? "", emergency: post.emergency ?? [:])
+        }
+        if isEmergency ?? false {
+            emergencyButton.setImage(UIImage(named: "spaner.fill"), for: .normal)
+            emergencyCount = (emergencyCount ?? 0) + 1
+        } else {
+            emergencyButton.setImage(UIImage(named: "spaner"), for: .normal)
+            emergencyCount = (emergencyCount ?? 0) - 1
+        }
     }
-           
+    
     // MARK: - 댓글 기능
     
     @objc func commentButtonTapped() {
@@ -319,7 +404,6 @@ class CommunityDetailPageViewController: UIViewController {
         if let commentText = commentTextView.text, !commentText.isEmpty {
             addComment(comment: commentText)
             commentTableView.reloadData()
-            updateCommentTableViewHeight() // 댓글이 추가된 후에 높이를 업데이트합니다.
             commentTextView.text = ""
         }
     }
@@ -333,35 +417,51 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height * 1.5 + 20)
+            make.height.equalTo(contentSize.height + 50)
+        }
+    }
+    
+    func updateDeleteCommentTableViewHeight(cellHeight: CGFloat) {
+        let currentHeight = commentTableView.bounds.size.height
+        let newHeight = currentHeight - cellHeight
+        let minHeight: CGFloat = 0
+        let finalHeight = max(minHeight, newHeight)
+        commentTableView.snp.updateConstraints { make in
+            make.height.equalTo(finalHeight)
         }
     }
     
     func addComment(comment: String) {
-        let timeStamp = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .long)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
-
-        FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
-            guard let self = self, let postID = self.selectedPost?.id else { return }
-            
-            let userNickName = nickName
-            let newComment = Comment(id: UUID().uuidString, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
-            
-            FirestoreService.firestoreService.saveComment(postID: postID, comment: newComment) { error in
-                if let error = error {
-                    print("Error saving comment: \(error.localizedDescription)")
-                } else {
-                    print("Comment saved successfully")
-                    self.commentData.append(newComment)
-                    self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
-                    
-                    DispatchQueue.main.async {
-                        self.commentTableView.reloadData()
-                        self.updateCommentTableViewHeight()
-                    }
+        
+        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp)
+        FirestoreService.firestoreService.saveComment(comment: newComment) { error in
+            if let error = error {
+                print("Error saving comment: \(error.localizedDescription)")
+            } else {
+                print("save success")
+                self.commentData.append(newComment)
+                self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
+                DispatchQueue.main.async {
+                    self.commentTableView.reloadData()
+                    self.updateCommentTableViewHeight()
                 }
             }
         }
+    }
+    
+    // 키보드
+    private func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(_:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func hideKeyboard(_ sender: Any) {
+        view.endEditing(true)
     }
 }
 
@@ -383,8 +483,23 @@ extension CommunityDetailPageViewController {
         setupUI()
         setupNavigationBarButton()
         loadPost()
-        loadComments()
         commentTextViewPlaceholder()
+        registerKeyboardNotifications()
+        setupHideKeyboardOnTap()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(changedPost(notification:)), name: Notification.Name("changedPost"), object: nil)
+        loadComments()
+    }
+    
+    @objc func changedPost(notification: Notification) {
+        if let updatedPost = notification.object as? Post {
+            self.selectedPost = updatedPost
+            loadPost()
+            photoCollectionView.reloadData()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -398,36 +513,49 @@ extension CommunityDetailPageViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(didTapLeftBarButton))
         }
     }
-       
+    
     @objc func didTapLeftBarButton() {
         tabBarController?.tabBar.isHidden = false
         navigationController?.popViewController(animated: true)
     }
-
+    
     private func loadPost() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                self.userNameLabel.setTitle(nickName, for: .normal)
-                self.titleLabel.text = post.title
-                self.dateLabel.text = post.timeStamp
-                self.mainText.text = post.content
-            }
+            userNameLabel.setTitle(post.userName, for: .normal)
+            titleLabel.text = post.title
+            dateLabel.text = post.timeStamp
+            mainText.text = post.content
         }
     }
     
     private func loadComments() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.getComments(forPostID: post.id!) { comments, error in
-                if let error = error {
-                    print("Error loading comments: \(error.localizedDescription)")
-                } else if let comments = comments {
-                    print("Loaded comments: \(comments)")
+            // FirestoreService의 새로운 loadComments 함수를 호출합니다. 이 함수는 차단된 코멘트를 제외한 코멘트를 로드합니다.
+            FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comments in
+                if let comments = comments {
                     for comment in comments {
                         self.commentData.append(comment)
-                        self.commentTableView.reloadData()
                     }
+                    self.commentTableView.reloadData()
                 }
             }
         }
+    }
+    
+    private func navigateToEditPage(post: Post) {
+        let vc = AddCommunityPageViewController(post: post)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension CommunityDetailPageViewController {
+    func setupHideKeyboardOnTap() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

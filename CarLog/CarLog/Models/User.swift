@@ -10,4 +10,7 @@ import Foundation
 // 로그인할 때 서버에 저장용도 (중복검사 등등)
 struct User: Codable {
     let email: String?
+    var blockedPosts: [String]?
+    var blockedUsers: [String]?
+    var blockedComments: [String]?
 }

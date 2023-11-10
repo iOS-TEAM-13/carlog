@@ -18,7 +18,7 @@ class Util {
             (MyCarPageViewController(), "car"),
             (HistoryPageViewController(), "book"),
             (MapPageViewController(), "map"),
-//            (CommunityPageViewController(), "play"),
+            (CommunityPageViewController(), "person.3"),
             (MyPageViewController(), "person"),
         ]
 
@@ -28,7 +28,7 @@ class Util {
             navigationController.tabBarItem = tabBarItem
             return navigationController
         }, animated: false)
-
+        
         return tabBarController
     }
 

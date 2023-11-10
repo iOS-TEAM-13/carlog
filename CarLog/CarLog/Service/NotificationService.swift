@@ -60,7 +60,7 @@ class NotificationService {
             }
             
             let trigger = UNCalendarNotificationTrigger(dateMatching: alarmDateComponents , repeats: false)
-            guard let email = Auth.auth().currentUser?.email else { return }
+            guard let email = Constants.currentUser.userEmail else { return }
             let request = UNNotificationRequest(identifier: "\(email)+\(part.name)", content: notificationContent, trigger: trigger)
             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         }

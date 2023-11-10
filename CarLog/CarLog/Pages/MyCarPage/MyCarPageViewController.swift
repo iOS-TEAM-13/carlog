@@ -77,7 +77,7 @@ class MyCarPageViewController: UIViewController {
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard
-        guard userDefaults.string(forKey: Auth.auth().currentUser?.email ?? "") != nil else { userDefaults.set("false", forKey: Auth.auth().currentUser?.email ?? "")
+        guard userDefaults.string(forKey: Constants.currentUser.userEmail ?? "") != nil else { userDefaults.set("false", forKey: Constants.currentUser.userEmail ?? "")
             let vc = MyCarCheckViewController()
             navigationController?.pushViewController(vc, animated: true)
             return
@@ -92,6 +92,15 @@ class MyCarPageViewController: UIViewController {
             } else {
                 let vc = MyCarCheckViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        if Auth.auth().currentUser?.email != Constants.currentUser.userEmail {
+            FirestoreService.firestoreService.loadCar { result in
+                if let car = result {
+                    Constants.currentUser = car.first ?? Car(number: "", maker: "", name: "", oilType: "", nickName: "", totalDistance: 0, userEmail: "")
+                } else {
+                    print("데이터 로드 중 오류 발생")
+                }
             }
         }
     }

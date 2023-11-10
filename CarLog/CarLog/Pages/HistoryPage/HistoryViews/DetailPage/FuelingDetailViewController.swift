@@ -54,8 +54,8 @@ class FuelingDetailViewController: UIViewController {
         navigationItem.title = "주유기록"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
-            .foregroundColor: UIColor.black
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .foregroundColor: UIColor.mainNavyColor
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton

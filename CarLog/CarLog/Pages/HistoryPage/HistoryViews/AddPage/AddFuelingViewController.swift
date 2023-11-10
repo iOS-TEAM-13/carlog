@@ -15,6 +15,7 @@ extension Notification.Name {
 }
 
 class AddFuelingViewController: UIViewController {
+    
     lazy var addFuelingView: AddFuelingView = {
         let addFuelingView = AddFuelingView()
         return addFuelingView
@@ -51,11 +52,13 @@ class AddFuelingViewController: UIViewController {
         navigationItem.title = "주유기록 추가"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
-            .foregroundColor: UIColor.black
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .foregroundColor: UIColor.mainNavyColor
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
+        //주유 사진 인식 + 버튼 숨김처리 - 주말에 해라
+//        self.navigationItem.rightBarButtonItem = self.addImageButton
     }
     
     lazy var backButton: UIBarButtonItem = {
@@ -67,6 +70,19 @@ class AddFuelingViewController: UIViewController {
     @objc func goToHistoryPage() {
         print("주유기록 추가 페이지에서 히스토리 페이지로 뒤로간다")
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    //주유 추가 페이지에서 +버튼 노출
+    lazy var addImageButton: UIBarButtonItem = {
+        let addImageButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goAddImage))
+        addImageButton.tintColor = .mainNavyColor
+        return addImageButton
+    }()
+    
+    //주유 추가 페이지에서 +버튼 클릭 시 사진 선택 페이지로 이동
+    @objc func goAddImage() {
+        let visionFuelingViewController = VisionFuelingViewController()
+        navigationController?.pushViewController(visionFuelingViewController, animated: true)
     }
     
     // MARK: - Keyboard 관련
@@ -147,7 +163,7 @@ class AddFuelingViewController: UIViewController {
             let price = Int(addFuelingView.priceTextField.text ?? "0") ?? 0
             let count = String(addFuelingView.countTextField.text ?? "")
             let totalPrice = Int(addFuelingView.totalPriceTextField.text ?? "0") ?? 0
-            let userEmail = Auth.auth().currentUser?.email
+            let userEmail = Constants.currentUser.userEmail
             
             let newFueling = Fueling(timeStamp: timeStamp, id: id, totalDistance: totalDistance, price: price, count: count, totalPrice: totalPrice, userEmail: userEmail)
             
