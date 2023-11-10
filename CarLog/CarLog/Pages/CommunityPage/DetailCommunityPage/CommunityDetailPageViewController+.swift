@@ -132,22 +132,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         deleteAction.backgroundColor = .backgroundCoustomColor
 
         let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
-            if let post = self.selectedPost {
-                FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
-                    for var comment in comments ?? [] {
-                        var isBlocked = comment.blockComment?[Constants.currentUser.userEmail ?? ""]
-                        isBlocked = !(isBlocked ?? false)
-                        comment.blockComment?.updateValue(isBlocked ?? false, forKey: Constants.currentUser.userEmail ?? "")
-                        FirestoreService.firestoreService.updateComment(commentId: comment.id ?? "", isBlocked: comment.blockComment ?? [:])
-
-                        if comment.id == self.commentData[indexPath.row].id {
-                            self.commentData.remove(at: indexPath.row)
-                            tableView.deleteRows(at: [indexPath], with: .fade)
-                        }
-                        break
-                    }
-                }
-            }
+          
         }
         reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         reportAction.backgroundColor = .backgroundCoustomColor

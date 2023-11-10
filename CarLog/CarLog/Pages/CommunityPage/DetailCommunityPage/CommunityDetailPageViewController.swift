@@ -335,11 +335,11 @@ class CommunityDetailPageViewController: UIViewController {
             actionSheet.addAction(editAction)
             actionSheet.addAction(action2)
         } else {
-            let action3 = UIAlertAction(title: "신고하기", style: .default) { _ in
+            let action3 = UIAlertAction(title: "\(post.userName)님 신고하기", style: .default) { _ in
                 // 신고 기능 로직
                 print("신고 완료")
             }
-            let action4 = UIAlertAction(title: "차단하기", style: .default) { [weak self] _ in
+            let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
                 guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
 
                 // 사용자가 확인을 누르면 차단 목록에 추가하는 로직
@@ -351,6 +351,7 @@ class CommunityDetailPageViewController: UIViewController {
                         } else {
                             print("차단 완료")
                             self.navigationController?.popViewController(animated: true)
+                            self.tabBarController?.tabBar.isHidden = false
                         }
                     }
                 }))
@@ -429,7 +430,7 @@ class CommunityDetailPageViewController: UIViewController {
         let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
         
-        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp, blockComment: [:])
+        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp)
         FirestoreService.firestoreService.saveComment(comment: newComment) { error in
             if let error = error {
                 print("Error saving comment: \(error.localizedDescription)")

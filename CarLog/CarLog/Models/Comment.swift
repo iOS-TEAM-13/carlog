@@ -14,7 +14,6 @@ struct Comment: Codable {
     let userName: String?
     let userEmail: String?
     let timeStamp: String?
-    var blockComment: [String: Bool]?
 }
 
 // db.collection("comments").whereField(postId, isEqualTo: selectedPost.id ?? "")

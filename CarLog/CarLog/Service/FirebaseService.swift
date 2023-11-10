@@ -254,15 +254,6 @@ final class FirestoreService {
             }
         }
     }
-    
-    func updateComment(commentId: String, isBlocked: [String?: Bool?]) {
-        db.collection("comments").whereField("id", isEqualTo: commentId).getDocuments { querySnapshot, _ in
-            for document in querySnapshot!.documents {
-                self.db.collection("comments").document(document.documentID).updateData(["blockComment": isBlocked]) { _ in
-                }
-            }
-        }
-    }
   
     func removeComment(commentId: String, completion: @escaping (Error?) -> Void) {
         db.collection("comments").whereField("id", isEqualTo: commentId)

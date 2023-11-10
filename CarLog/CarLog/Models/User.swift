@@ -11,4 +11,6 @@ import Foundation
 struct User: Codable {
     let email: String?
     var blockedPosts: [String]?
+    var blockedUsers: [String]?
+    var blockedComments: [String]?
 }
