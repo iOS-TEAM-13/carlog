@@ -111,14 +111,14 @@ class AddCommunityPageViewController: UIViewController {
         self.postToEdit = post
         if postToEdit != nil {
             //             postToEdit이 nil이면 받아오는 post의 데이터가 있으므로 수정 페이지라고 판단하여 가져온 post 데이터를 화면에 연결
-            let titleTextAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
-                .foregroundColor: UIColor.mainNavyColor
-            ]
-            if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
-                navigationBar.titleTextAttributes = titleTextAttributes
-            }
-            navigationItem.title = "수정하기"
+//            let titleTextAttributes: [NSAttributedString.Key: Any] = [
+//                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+//                .foregroundColor: UIColor.mainNavyColor
+//            ]
+//            if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
+//                navigationBar.titleTextAttributes = titleTextAttributes
+//            }
+//            navigationItem.title = "수정하기"
             mainTextField.text = postToEdit?.title
             subTextView.text = postToEdit?.title
             
@@ -277,6 +277,37 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         }
     }
     
+    @objc func EditTapRightBarButton() {
+        let timeStamp = String.dateFormatter.string(from: currentDate)
+        let dispatchGroup = DispatchGroup()
+        var imageURLs: [URL] = []
+        
+        for i in selectedImages {
+            dispatchGroup.enter()
+            StorageService.storageService.uploadImage(image: i) { url in
+                if let url = url {
+                    imageURLs.append(url)
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        if self.mainTextField.text != "" {
+            dispatchGroup.notify(queue: .main) { [self] in
+                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
+                
+                
+            }
+            self.view.isUserInteractionEnabled = false
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.tabBarController?.tabBar.isHidden = false
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.showAlert(message: "제목은 필수입니다!")
+        }
+    }
+    
     @objc func didTapImagePickerButton() {
         func checkAlbumPermission() { // 앨범 권한 허용 거부 요청
             PHPhotoLibrary.requestAuthorization { status in
@@ -341,41 +372,74 @@ private extension AddCommunityPageViewController {
     }
     
     func setupNavigationBar() { // NavigationBar 폰트와 컬러 설정
-        let titleTextAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
-            .foregroundColor: UIColor.mainNavyColor
-        ]
-        
-        if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
-            navigationBar.titleTextAttributes = titleTextAttributes
-        }
-        
-        navigationItem.title = "새 게시물" // UINavigationItem의 title 설정
-        
         let leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
             style: .plain,
             target: self,
             action: #selector(didTapLeftBarButton)
         )
-        let rightBarButtonItem = UIBarButtonItem(
-            title: "공유",
-            style: .plain,
-            target: self,
-            action: #selector(didTapRightBarButton)
-        )
-        
-        let rightBarButtontextAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
-            .foregroundColor: UIColor.mainNavyColor
-        ]
-        
-        rightBarButtonItem.setTitleTextAttributes(rightBarButtontextAttributes, for: .normal)
-        
         leftBarButtonItem.tintColor = .mainNavyColor
-        rightBarButtonItem.tintColor = .mainNavyColor
         navigationItem.leftBarButtonItem = leftBarButtonItem
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        if postToEdit == nil {
+            let titleTextAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .foregroundColor: UIColor.mainNavyColor
+            ]
+            
+            if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
+                navigationBar.titleTextAttributes = titleTextAttributes
+            }
+            
+            navigationItem.title = "새 게시물" // UINavigationItem의 title 설정
+            
+            let rightBarButtonItem = UIBarButtonItem(
+                title: "공유",
+                style: .plain,
+                target: self,
+                action: #selector(didTapRightBarButton)
+            )
+            
+            let rightBarButtontextAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .foregroundColor: UIColor.mainNavyColor
+            ]
+            
+            rightBarButtonItem.setTitleTextAttributes(rightBarButtontextAttributes, for: .normal)
+            
+            rightBarButtonItem.tintColor = .mainNavyColor
+            navigationItem.rightBarButtonItem = rightBarButtonItem
+        } else {
+            let titleTextAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .foregroundColor: UIColor.mainNavyColor
+            ]
+            
+            if let navigationBar = navigationController?.navigationBar { // UINavigationBar의 titleTextAttributes를 설정
+                navigationBar.titleTextAttributes = titleTextAttributes
+            }
+            
+            navigationItem.title = "수정하기" // UINavigationItem의 title 설정
+            
+            let rightBarButtonItem = UIBarButtonItem(
+                title: "완료",
+                style: .plain,
+                target: self,
+                action: #selector(EditTapRightBarButton)
+            )
+            
+            let rightBarButtontextAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .foregroundColor: UIColor.mainNavyColor
+            ]
+            
+            rightBarButtonItem.setTitleTextAttributes(rightBarButtontextAttributes, for: .normal)
+            
+            rightBarButtonItem.tintColor = .mainNavyColor
+            navigationItem.rightBarButtonItem = rightBarButtonItem
+            
+        }
+       
     }
     
     private func showAlert(message: String) {
