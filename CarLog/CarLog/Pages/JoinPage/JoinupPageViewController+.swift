@@ -227,9 +227,9 @@ extension JoinupPageViewController {
             }
             
             // smtp 로직
-            let smtp = SMTP(hostname: "smtp.gmail.com", email: "user3rum@gmail.com", password: "ciihfefuexaihugu")
+            let smtp = SMTP(hostname: "smtp.gmail.com", email: "carlog2313@gmail.com", password: "jucyydwmjblsyamf")
             
-            let from = Mail.User(name: "CarLog", email: "user3rum@gmail.com")
+            let from = Mail.User(name: "CarLog", email: "carlog2313@gmail.com")
             let to = Mail.User(name: "User", email: self.joinupView.emailTextField.text!)
             
             let code = "\(Int.random(in: 100000 ... 999999))"
