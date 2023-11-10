@@ -118,17 +118,18 @@ final class FirestoreService {
             }
         }
     }
-    
+  
     func updatePosts(post: Post) {
         if post.image == [] {
-          db.collection("posts").whereField("id", isEqualTo: post.id ?? "").getDocuments { querySnapshot, _ in
-            for document in querySnapshot!.documents {
-              self.db.collection("posts").document(document.documentID).updateData([
-                "title": post.title ?? "",
-                "content": post.content ?? ""]) { _ in
-              }
+            db.collection("posts").whereField("id", isEqualTo: post.id ?? "").getDocuments { querySnapshot, _ in
+                for document in querySnapshot!.documents {
+                    self.db.collection("posts").document(document.documentID).updateData([
+                        "title": post.title ?? "",
+                        "content": post.content ?? ""])
+                    { _ in
+                    }
+                }
             }
-          }
         } else {
           db.collection("posts").whereField("id", isEqualTo: post.id ?? "").getDocuments { querySnapshot, _ in
             for document in querySnapshot!.documents {
@@ -137,50 +138,129 @@ final class FirestoreService {
                 "content": post.content ?? "",
                 "image": post.image.map { $0?.absoluteString }]) { _ in
               }
+
             }
-          }
         }
-      }
-    
-    func loadPosts(completion: @escaping ([Post]?) -> Void) {
-        db.collection("posts")
-            .order(by: "timeStamp", descending: true) // "timeStamp" 필드를 내림차순으로 정렬
-            .getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("데이터를 가져오지 못했습니다: \(error)")
-                    completion(nil)
-                } else {
-                    var posts: [Post] = []
-                    for document in querySnapshot?.documents ?? [] {
-                        do {
-                            let post = try Firestore.Decoder().decode(Post.self, from: document.data())
-                            posts.append(post)
-                        } catch {
-                            completion(nil)
-                            return
-                        }
-                    }
-                    completion(posts)
-                }
-            }
     }
     
-    func fetchNickName(userEmail: String, completion: @escaping (String?) -> Void) {
-        Firestore.firestore().collection("cars").whereField("userEmail", isEqualTo: userEmail).getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
+    func loadPosts(excludingBlockedPostsFor userEmail: String, completion: @escaping ([Post]?) -> Void) {
+        db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in
+            if let userError = userError {
+                print("사용자 문서를 가져오지 못했습니다: \(userError.localizedDescription)")
                 completion(nil)
-            } else {
-                if let document = querySnapshot?.documents.first {
-                    let nickName = document.data()["nickName"] as? String
-                    completion(nickName)
-                } else {
+                return
+            }
+
+            guard let document = userDocSnapshot?.documents.first else {
+                print("사용자 문서가 없습니다.")
+                completion(nil)
+                return
+            }
+
+            var blockedUsers: [String] = []
+            var blockedPosts: [String] = []
+
+            if let userBlockedUsers = document.data()["blockedUsers"] as? [String], !userBlockedUsers.isEmpty {
+                blockedUsers = userBlockedUsers
+            }
+
+            if let userBlockedPosts = document.data()["blockedPosts"] as? [String], !userBlockedPosts.isEmpty {
+                blockedPosts = userBlockedPosts
+            }
+
+            let query = self.db.collection("posts").order(by: "timeStamp", descending: true)
+
+            query.getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("게시글을 가져오지 못했습니다: \(error.localizedDescription)")
                     completion(nil)
+                    return
                 }
+
+                var posts: [Post] = []
+
+                for document in querySnapshot?.documents ?? [] {
+                    let datas = document.data()
+
+                    if let userName = datas["userName"] as? String, blockedUsers.contains(userName) {
+                        continue
+                    }
+
+                    if let postId = datas["id"] as? String, blockedPosts.contains(postId) {
+                        dump("blockedPosts = \(blockedPosts)")
+                        dump("documentID = \(document.documentID)")
+                        continue
+                    }
+
+                    do {
+                        let post = try Firestore.Decoder().decode(Post.self, from: document.data())
+                        posts.append(post)
+                    } catch let decodeError {
+                        print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
+                    }
+                }
+
+                dump("posts: \(posts)")
+                completion(posts)
+            }
+        }
+    }
+
+    func blockUser(userName: String, userEmail: String, completion: @escaping (Error?) -> Void) {
+        let userQuery = db.collection("users").whereField("email", isEqualTo: userEmail)
+        
+        userQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("사용자 문서를 가져오지 못했습니다")
+                completion(error)
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                print("사용자 문서가 없습니다")
+                let notFoundError = NSError(domain: "BlockPost", code: 404, userInfo: nil)
+                completion(notFoundError)
+                return
+            }
+            
+            let userDocRef = self.db.collection("users").document(document.documentID)
+            userDocRef.updateData(["blockedUsers": FieldValue.arrayUnion([userName])]) { error in
+                if let error = error {
+                    print("유저 차단 업데이트 실패")
+                }
+                completion(error)
             }
         }
     }
     
+    func blockPost(postID: String, userEmail: String, completion: @escaping (Error?) -> Void) {
+        let userQuery = db.collection("users").whereField("email", isEqualTo: userEmail)
+        
+        userQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("사용자 문서를 가져오지 못했습니다: \(error.localizedDescription)")
+                completion(error)
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                print("사용자 문서가 없습니다.")
+                let notFoundError = NSError(domain: "BlockPost", code: 404, userInfo: nil)
+                completion(notFoundError)
+                return
+            }
+            
+            // 차단된 게시글 업데이트
+            let userDocRef = self.db.collection("users").document(document.documentID)
+            userDocRef.updateData(["blockedPosts": FieldValue.arrayUnion([postID])]) { error in
+                if let error = error {
+                    print("게시글 차단 업데이트 실패: \(error.localizedDescription)")
+                }
+                completion(error)
+            }
+        }
+    }
+
     // MARK: - Comment
     
     func saveComment(comment: Comment, completion: @escaping (Error?) -> Void) {
@@ -196,42 +276,40 @@ final class FirestoreService {
     
     func loadComments(postID: String, completion: @escaping ([Comment]?) -> Void) {
         db.collection("comments").whereField("postId", isEqualTo: postID).getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("데이터를 가져오지 못했습니다: \(error)")
-                    completion(nil)
-                } else {
-                    var comments: [Comment] = []
-                    for document in querySnapshot?.documents ?? [] {
-                        do {
-                            let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
-                            comments.append(comment)
-                        } catch {
-                            completion(nil)
-                            return
-                        }
+            if let error = error {
+                print("데이터를 가져오지 못했습니다: \(error)")
+                completion(nil)
+            } else {
+                var comments: [Comment] = []
+                for document in querySnapshot?.documents ?? [] {
+                    do {
+                        let comment = try Firestore.Decoder().decode(Comment.self, from: document.data())
+                        comments.append(comment)
+                    } catch {
+                        completion(nil)
+                        return
                     }
-                    completion(comments)
                 }
+                completion(comments)
             }
+        }
     }
   
     func removeComment(commentId: String, completion: @escaping (Error?) -> Void) {
         db.collection("comments").whereField("id", isEqualTo: commentId)
-            .getDocuments() { querySnapshot, error  in
+            .getDocuments { querySnapshot, _ in
                 for document in querySnapshot!.documents {
                     self.db.collection("comments").document(document.documentID).delete()
                 }
-          }
+            }
     }
     
-    
     func removePost(postID: String, completion: @escaping (Error?) -> Void) {
-        // Firestore 배치 작업을 생성
-        let batch = db.batch()
-
-        // 1. "posts" 컬렉션에서 포스트(document)를 삭제
         let postsCollection = db.collection("posts")
         let postQuery = postsCollection.whereField("id", isEqualTo: postID)
+        
+        let commensCollection = db.collection("comments")
+        let commentQuery = commensCollection.whereField("postId", isEqualTo: postID)
 
         postQuery.getDocuments { querySnapshot, error in
             if let error = error {
@@ -239,34 +317,19 @@ final class FirestoreService {
                 completion(error)
                 return
             }
-
             for document in querySnapshot!.documents {
                 document.reference.delete()
             }
-
-            let postRef = postsCollection.document(postID)
-            let commentsCollection = postRef.collection("comments")
-
-            commentsCollection.getDocuments { snapshot, error in
-                if let error = error {
-                    print("댓글을 조회하는 중 오류 발생: \(error)")
-                    completion(error)
-                    return
-                }
-
-                for document in snapshot!.documents {
-                    batch.deleteDocument(document.reference)
-                }
-
-                batch.commit { error in
-                    if let error = error {
-                        print("데이터 삭제 중 오류 발생: \(error)")
-                        completion(error)
-                    } else {
-                        print("포스트와 모든 댓글 삭제 완료")
-                        completion(nil)
-                    }
-                }
+        }
+        
+        commentQuery.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("댓글을 조회하는 중 오류 발생: \(error)")
+                completion(error)
+                return
+            }
+            for document in querySnapshot!.documents {
+                document.reference.delete()
             }
         }
     }

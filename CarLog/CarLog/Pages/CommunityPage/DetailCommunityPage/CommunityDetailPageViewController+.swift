@@ -25,6 +25,19 @@ extension CommunityDetailPageViewController: UITextViewDelegate {
             textView.textColor = UIColor.lightGray
         }
     }
+
+    func showAlert(text: String, completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: "\(text) 삭제", message: "\(text)을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+
+        let deleteAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+            completion()
+        }
+        alert.addAction(deleteAction)
+
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Community 사진
@@ -65,15 +78,12 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
 
 extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count: \(commentData.count)")
-        print("commentData : \(commentData)")
         return commentData.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as! CommentTableViewCell
-        let comment = commentData[indexPath.row]
-
+        let comment = commentData.sorted(by: { $0.timeStamp ?? "" > $1.timeStamp ?? "" })[indexPath.row]
         cell.userNameLabel.text = comment.userName
         cell.dateLabel.text = comment.timeStamp
         cell.commentLabel.text = comment.content
@@ -91,34 +101,38 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
-            if let post = self.selectedPost {
-                let postID = post.id ?? ""
 
-                FirestoreService.firestoreService.loadComments(postID: postID) { comments in
-                    if let comments = comments {
-                        for comment in comments {
-                            if comment.id == self.commentData[indexPath.row].id {
+            // alert창
+            self.showAlert(text: "댓글") {
+                if let post = self.selectedPost {
+                    let postID = post.id ?? ""
+                    FirestoreService.firestoreService.loadComments(postID: postID) { comments in
+                        if let comments = comments {
+                            if let index = comments.firstIndex(where: { $0.id == self.commentData[indexPath.row].id }) {
+                                // 해당 comment를 찾았으므로 삭제
                                 self.commentData.remove(at: indexPath.row)
                                 tableView.deleteRows(at: [indexPath], with: .fade)
-                                let deletedCellHeight = tableView.rectForRow(at: indexPath).height
-                                FirestoreService.firestoreService.removeComment(commentId: comment.id ?? "") { err in
-                                    if let err = err {
+                                _ = tableView.rectForRow(at: indexPath).height
+                                let commentID = comments[index].id ?? ""
+                                FirestoreService.firestoreService.removeComment(commentId: commentID) { err in
+                                    if err != nil {
                                         print("err")
                                     }
                                 }
+                                tableView.reloadData()
                             }
-                            break
                         }
-                        
                     }
                 }
             }
+
+           
         }
-        deleteAction.image = UIImage(named: "trash") // 시스템 아이콘 사용
+        deleteAction.image = UIImage(named: "trash")
         deleteAction.backgroundColor = .backgroundCoustomColor
 
-        let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-            completionHandler(true)
+        let reportAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
+          
         }
         reportAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         reportAction.backgroundColor = .backgroundCoustomColor
@@ -130,7 +144,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
            let commentUserEmail = commentData[indexPath.row].userEmail,
            currentUserEmail == commentUserEmail
         {
-            configuration = UISwipeActionsConfiguration(actions: [reportAction, deleteAction])
+            configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         } else {
             configuration = UISwipeActionsConfiguration(actions: [reportAction])
         }
