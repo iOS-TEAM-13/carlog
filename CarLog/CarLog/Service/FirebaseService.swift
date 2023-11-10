@@ -118,7 +118,29 @@ final class FirestoreService {
             }
         }
     }
-    
+  
+  func updatePosts(post: Post) {
+    if post.image == [] {
+      db.collection(“posts”).whereField(“id”, isEqualTo: post.id ?? “”).getDocuments { querySnapshot, _ in
+        for document in querySnapshot!.documents {
+          self.db.collection(“posts”).document(document.documentID).updateData([
+            “title”: post.title ?? “”,
+            “content”: post.content ?? “”]) { _ in
+          }
+        }
+      }
+    } else {
+      db.collection(“posts”).whereField(“id”, isEqualTo: post.id ?? “”).getDocuments { querySnapshot, _ in
+        for document in querySnapshot!.documents {
+          self.db.collection(“posts”).document(document.documentID).updateData([
+            “title”: post.title ?? “”,
+            “content”: post.content ?? “”,
+            “image”: post.image]) { _ in
+          }
+        }
+      }
+    }
+  }
     
     func loadPosts(excludingBlockedPostsFor userEmail: String, completion: @escaping ([Post]?) -> Void) {
         db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in

@@ -12,6 +12,7 @@ class CommentTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
         label.textColor = .black
+        label.setContentHuggingPriority(.init(251), for: .horizontal)
         return label
     }()
     
@@ -20,6 +21,7 @@ class CommentTableViewCell: UITableViewCell {
         label.text = "2022.08.28"
         label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .light)
         label.textColor = .black
+        label.setContentHuggingPriority(.init(250), for: .horizontal)
         return label
     }()
     
@@ -61,15 +63,16 @@ class CommentTableViewCell: UITableViewCell {
         contentView.addSubview(commentLabel)
         
         commentStackView.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.verticalMargin - 1)
+            make.top.equalTo(contentView).offset(Constants.verticalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
         
         commentLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(userNameLabel.snp.bottom).offset(Constants.verticalMargin)
-            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin + 3)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.top.equalTo(commentStackView.snp.bottom).offset(Constants.verticalMargin)
+            make.bottom.equalTo(contentView).offset(-Constants.verticalMargin)
+            make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
+            make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
     }
     
