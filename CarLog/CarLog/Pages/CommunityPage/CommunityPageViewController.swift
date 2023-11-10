@@ -171,7 +171,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
             let post = items[indexPath.item]
           
-            FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comment in
+            FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comment in
                 if let imageURL = post.image.first, let imageUrl = imageURL {
                     // 이미지를 비동기적으로 가져오기
                     URLSession.shared.dataTask(with: imageUrl) { data, _, _ in

@@ -534,14 +534,18 @@ extension CommunityDetailPageViewController {
     
     private func loadComments() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
+            // 현재 사용자의 이메일을 가져옵니다. 예를 들어, Auth.auth().currentUser?.email 또는 다른 방법을 사용할 수 있습니다.
+            guard let userEmail = Auth.auth().currentUser?.email else { return }
+
+            // FirestoreService의 새로운 loadComments 함수를 호출합니다. 이 함수는 차단된 코멘트를 제외한 코멘트를 로드합니다.
+            FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comments in
+
                 if let comments = comments {
-                    print("@@@ comments = \(comments)")
                     for comment in comments {
                         self.commentData.append(comment)
                     }
                     self.commentTableView.reloadData()
-                    print("@@@ reload")
+
                 }
             }
         }
