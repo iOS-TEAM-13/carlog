@@ -285,17 +285,15 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         let timeStamp = String.dateFormatter.string(from: currentDate)
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
-        
-        for i in selectedImages {
-            dispatchGroup.enter()
-            StorageService.storageService.uploadImage(image: i) { url in
-                if let url = url {
-                    imageURLs.append(url)
+            for i in selectedImages {
+                dispatchGroup.enter()
+                StorageService.storageService.uploadImage(image: i) { url in
+                    if let url = url {
+                        imageURLs.append(url)
+                    }
+                    dispatchGroup.leave()
                 }
-                dispatchGroup.leave()
             }
-        }
-        
         if self.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
                 let post = Post(id: postToEdit?.id, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])

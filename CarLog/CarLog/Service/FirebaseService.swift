@@ -135,7 +135,7 @@ final class FirestoreService {
               self.db.collection("posts").document(document.documentID).updateData([
                 "title": post.title ?? "",
                 "content": post.content ?? "",
-                "image": post.image]) { _ in
+                "image": post.image.map { $0?.absoluteString }]) { _ in
               }
             }
           }
