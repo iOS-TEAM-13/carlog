@@ -299,6 +299,7 @@ class CommunityDetailPageViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("completedCheckingView"), object: nil)
     }
     
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
