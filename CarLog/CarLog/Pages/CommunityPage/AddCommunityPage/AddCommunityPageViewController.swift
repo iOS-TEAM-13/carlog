@@ -20,32 +20,32 @@ class AddCommunityPageViewController: UIViewController {
     
     // MARK: -
     private let imagePickerView: UIImageView = {
-        let view = UIImageView()
-        view.backgroundColor = .white
-        view.clipsToBounds = true // 사진 cornerRadius 적용되게
-        view.layer.cornerRadius = 5
-        return view
+        let imagePickerView = UIImageView()
+        imagePickerView.backgroundColor = .white
+        imagePickerView.clipsToBounds = true // 사진 cornerRadius 적용되게
+        imagePickerView.layer.cornerRadius = 5
+        return imagePickerView
     }()
     
     private let secondImageView: UIImageView = {
-        let view = UIImageView()
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 5
-        return view
+        let secondImageView = UIImageView()
+        secondImageView.clipsToBounds = true
+        secondImageView.layer.cornerRadius = 5
+        return secondImageView
     }()
     
     private let thirdImageView: UIImageView = {
-        let view = UIImageView()
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 5
-        return view
+        let thirdImageView = UIImageView()
+        thirdImageView.clipsToBounds = true
+        thirdImageView.layer.cornerRadius = 5
+        return thirdImageView
     }()
     
     private let imagePickerButton: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal) // 플러스 버튼의 속성을 설정
-        btn.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
-        return btn
+        let imagePickerButton = UIButton()
+        imagePickerButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal) // 플러스 버튼의 속성을 설정
+        imagePickerButton.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
+        return imagePickerButton
     }()
     
     lazy var numberOfSelectedImageLabel: UILabel = {
@@ -67,7 +67,7 @@ class AddCommunityPageViewController: UIViewController {
         mainTextField.attributedPlaceholder = NSAttributedString(string: "제목", attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.gray
         ])
-//        mainTextField.placeholder = "제목"
+        //        mainTextField.placeholder = "제목"
         mainTextField.textColor = .black
         mainTextField.backgroundColor = .white
         mainTextField.layer.borderColor = UIColor.clear.cgColor
@@ -79,6 +79,8 @@ class AddCommunityPageViewController: UIViewController {
         mainTextField.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
         return mainTextField
     }()
+    
+    
     
     private let subTextViewPlaceHolder = "택스트를 입력하세요"
     lazy var subTextView: UITextView = {
@@ -110,37 +112,37 @@ class AddCommunityPageViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.postToEdit = post
         if postToEdit != nil {
-
+            
             mainTextField.text = postToEdit?.title
             subTextView.text = postToEdit?.content
             
-                switch postToEdit?.image.count {
-                case 1:
-                    if let first = postToEdit?.image[0] {
-                        imagePickerView.load(url: first)
-                    }
-                case 2:
-                    if let first = postToEdit?.image[0],
-                       let second = postToEdit?.image[1] {
-                        self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                        imagePickerView.load(url: first)
-                        secondImageView.load(url: second)
-                    }
-                case 3:
-                    if let first = postToEdit?.image[0],
-                       let second = postToEdit?.image[1],
-                       let third = postToEdit?.image[2] {
-                        
-                        self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                        self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
-                        imagePickerView.load(url: first)
-                        secondImageView.load(url: second)
-                        thirdImageView.load(url: third)
-                    }
-                case .none:
-                    break
-                case .some(_):
-                    break
+            switch postToEdit?.image.count {
+            case 1:
+                if let first = postToEdit?.image[0] {
+                    imagePickerView.load(url: first)
+                }
+            case 2:
+                if let first = postToEdit?.image[0],
+                   let second = postToEdit?.image[1] {
+                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
+                    imagePickerView.load(url: first)
+                    secondImageView.load(url: second)
+                }
+            case 3:
+                if let first = postToEdit?.image[0],
+                   let second = postToEdit?.image[1],
+                   let third = postToEdit?.image[2] {
+                    
+                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
+                    self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
+                    imagePickerView.load(url: first)
+                    secondImageView.load(url: second)
+                    thirdImageView.load(url: third)
+                }
+            case .none:
+                break
+            case .some(_):
+                break
             }
         } else {
             // postToEdit이 nil일떄는 생성 페이지
@@ -156,7 +158,7 @@ class AddCommunityPageViewController: UIViewController {
         setupNavigationBar()
         attribute()
         setupUI()
-        //        checkAlbumPermission()
+
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -277,15 +279,15 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         let timeStamp = String.dateFormatter.string(from: currentDate)
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
-            for i in selectedImages {
-                dispatchGroup.enter()
-                StorageService.storageService.uploadImage(image: i) { url in
-                    if let url = url {
-                        imageURLs.append(url)
-                    }
-                    dispatchGroup.leave()
+        for i in selectedImages {
+            dispatchGroup.enter()
+            StorageService.storageService.uploadImage(image: i) { url in
+                if let url = url {
+                    imageURLs.append(url)
                 }
+                dispatchGroup.leave()
             }
+        }
         if self.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
                 let post = Post(id: postToEdit?.id, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
@@ -303,43 +305,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     }
     
     @objc func didTapImagePickerButton() {
-        func checkAlbumPermission() { // 앨범 권한 허용 거부 요청
-            PHPhotoLibrary.requestAuthorization { status in
-                switch status {
-                case .authorized:
-                    print("Album: 권한 허용")
-                case .denied:
-                    print("Album: 권한 거부")
-                case .restricted, .notDetermined:
-                    print("Album: 선택하지 않음")
-                default:
-                    break
-                }
-            }
-        }
-        
-        func showAlertAuth(
-            _ type: String
-        ) {
-            if let appName = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String {
-                let alertViewCell = UIAlertController(
-                    title: "설정",
-                    message: "\(appName)이(가) \(type) 접근 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
-                    preferredStyle: .alert
-                )
-                let cancelAction = UIAlertAction(
-                    title: "취소",
-                    style: .cancel,
-                    handler: nil
-                )
-                let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-                }
-                alertViewCell.addAction(cancelAction)
-                alertViewCell.addAction(confirmAction)
-                self.present(alertViewCell, animated: true, completion: nil)
-            }
-        }
+        checkAlbumPermission()
         var config = PHPickerConfiguration()
         config.filter = .images
         config.selection = .ordered
@@ -347,6 +313,44 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         let imagePickerViewController = PHPickerViewController(configuration: config)
         imagePickerViewController.delegate = self
         present(imagePickerViewController, animated: true)
+    }
+    
+    func checkAlbumPermission() { // 앨범 권한 허용 거부 요청
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                print("Album: 권한 허용")
+            case .denied:
+                print("Album: 권한 거부")
+            case .restricted, .notDetermined:
+                print("Album: 선택하지 않음")
+            default:
+                break
+            }
+        }
+    }
+    
+    func showAlertAuth(
+        _ type: String
+    ) {
+        if let appName = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String {
+            let alertViewCell = UIAlertController(
+                title: "설정",
+                message: "\(appName)이(가) \(type) 접근 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                preferredStyle: .alert
+            )
+            let cancelAction = UIAlertAction(
+                title: "취소",
+                style: .cancel,
+                handler: nil
+            )
+            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+            alertViewCell.addAction(cancelAction)
+            alertViewCell.addAction(confirmAction)
+            self.present(alertViewCell, animated: true, completion: nil)
+        }
     }
 }
 
@@ -433,7 +437,7 @@ private extension AddCommunityPageViewController {
             navigationItem.rightBarButtonItem = rightBarButtonItem
             
         }
-       
+        
     }
     
     private func showAlert(message: String) {
@@ -496,7 +500,6 @@ extension AddCommunityPageViewController: UITextViewDelegate { // ⭐️ UITextV
     
     func textViewDidEndEditing(_ subTextView: UITextView) {
         if subTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            subTextView.text = subTextViewPlaceHolder
             subTextView.textColor = .lightGray
         }
     }
