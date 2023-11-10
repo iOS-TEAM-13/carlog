@@ -64,8 +64,10 @@ class CommunityDetailPageViewController: UIViewController {
         return label
     }()
     
+    lazy var divideView = UIView()
+    
     lazy var subTitleStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [userNameLabel, UIView(), dateLabel])
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, divideView, dateLabel])
         stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .center)
         stackView.distribution = .fill
         return stackView
@@ -136,6 +138,7 @@ class CommunityDetailPageViewController: UIViewController {
     lazy var allStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleStackView, photoCollectionView, likeStackView, mainText, line])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .leading)
+        stackView.distribution = .fill
         return stackView
     }()
     
@@ -487,7 +490,7 @@ extension CommunityDetailPageViewController {
     
     private func loadPost() {
         if let post = selectedPost {
-            userNameLabel.setTitle(Constants.currentUser.nickName, for: .normal)
+            userNameLabel.setTitle(post.userName, for: .normal)
             titleLabel.text = post.title
             dateLabel.text = post.timeStamp
             mainText.text = post.content
