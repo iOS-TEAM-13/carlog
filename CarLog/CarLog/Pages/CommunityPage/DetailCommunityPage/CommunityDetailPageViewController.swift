@@ -299,6 +299,7 @@ class CommunityDetailPageViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("completedCheckingView"), object: nil)
     }
     
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
@@ -418,6 +419,7 @@ class CommunityDetailPageViewController: UIViewController {
     
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
+        print("@@@ content \(contentSize)")
         commentTableView.snp.updateConstraints { make in
             make.height.equalTo(contentSize.height + 50)
         }
@@ -493,15 +495,15 @@ extension CommunityDetailPageViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(changedPost(notification:)), name: Notification.Name("changedPost"), object: nil)
+        loadComments()
     }
     
     @objc func changedPost(notification: Notification) {
         if let updatedPost = notification.object as? Post {
             self.selectedPost = updatedPost
-            print(selectedPost?.title)
             loadPost()
             photoCollectionView.reloadData()
-            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -534,12 +536,12 @@ extension CommunityDetailPageViewController {
         if let post = selectedPost {
             FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
                 if let comments = comments {
-                    // print("comments = \(comments)")
-                    
+                    print("@@@ comments = \(comments)")
                     for comment in comments {
                         self.commentData.append(comment)
                     }
                     self.commentTableView.reloadData()
+                    print("@@@ reload")
                 }
             }
         }
