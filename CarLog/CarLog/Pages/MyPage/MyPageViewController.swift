@@ -20,7 +20,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
-        //        self.navigationController?.isNavigationBarHidden = true
         
         // MARK: - Setup
         
@@ -302,7 +301,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         }), for: .touchUpInside)
     }
     
-    //    @objc private func dialPhoneNumber() {
+    //    @objc private func dialPhoneNumber() { //전화 거는 메서드
     //        if let inquiryURL = URL(string: "tel://000-000-0000") {
     //            if UIApplication.shared.canOpenURL(inquiryURL) {
     //                UIApplication.shared.open(inquiryURL, options: [:], completionHandler: nil)
@@ -334,7 +333,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             
             compseViewController.setToRecipients(["carlog2310@gmail.com"])
             compseViewController.setSubject("신고/문의")
-            compseViewController.setMessageBody("Message Content", isHTML: false)
+            compseViewController.setMessageBody("신고나 문의를 자세히 입력해 주세요!", isHTML: false)
             
             self.present(compseViewController, animated: true, completion: nil)
             

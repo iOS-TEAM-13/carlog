@@ -28,6 +28,7 @@
 		3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF32B432AF9FCCE00007122 /* CommunityDetailPageViewController+.swift */; };
 		7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E08D8852AD948B500998E27 /* MyPageView.swift */; };
 		7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */; };
+		7E95DE062AFE02ED008F45FA /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95DE052AFE02ED008F45FA /* UIImageView+.swift */; };
 		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
@@ -145,6 +146,7 @@
 		7E62C9BC2AE4F38700391BB1 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
 		7E62C9BD2AE4F38700391BB1 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
 		7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityPageViewController.swift; sourceTree = "<group>"; };
+		7E95DE052AFE02ED008F45FA /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		9BA5765F838EDB353BDABB5B /* Pods-CarLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.debug.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.debug.xcconfig"; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 				FBE051872AD6672F00F39E7F /* DateFormatter.swift */,
 				FBE051892AD6678E00F39E7F /* UITextField+.swift */,
 				FB6311C52ADCEBB80038929A /* String+.swift */,
+				7E95DE052AFE02ED008F45FA /* UIImageView+.swift */,
 				FFFFAF832AE1644800A7677E /* Date+.swift */,
 				7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */,
 				FF2648752AEBA36A009CD1D7 /* UICollectionViewCell+.swift */,
@@ -835,6 +838,7 @@
 				B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
+				7E95DE062AFE02ED008F45FA /* UIImageView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
 				FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */,
 				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,

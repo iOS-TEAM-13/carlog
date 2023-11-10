@@ -133,7 +133,7 @@ class CommunityPageViewController: UIViewController {
     }
     
     @objc func floatingButtonTapped() {
-        let editPage = AddCommunityPageViewController()
+        let editPage = AddCommunityPageViewController(post: nil)
         navigationController?.pushViewController(editPage, animated: true)
     }
 }
