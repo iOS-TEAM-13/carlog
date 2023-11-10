@@ -298,9 +298,8 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         
         if self.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
-                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
-                
-                
+                let post = Post(id: postToEdit?.id, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
+                FirestoreService.firestoreService.updatePosts(post: post)
             }
             self.view.isUserInteractionEnabled = false
             self.navigationItem.leftBarButtonItem?.isEnabled = false
