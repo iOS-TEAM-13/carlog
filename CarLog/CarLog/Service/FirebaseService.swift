@@ -200,8 +200,6 @@ final class FirestoreService {
                         print("게시글 디코딩 실패: \(decodeError.localizedDescription)")
                     }
                 }
-                    
-                dump("posts: \(posts)")
                 completion(posts)
             }
         }
@@ -329,7 +327,6 @@ func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, co
                             return
                         }
                     }
-                    print("커멘트 확인 \(comments)")
                     completion(comments)
                 }
             }

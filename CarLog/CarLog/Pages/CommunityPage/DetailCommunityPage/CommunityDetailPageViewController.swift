@@ -416,7 +416,6 @@ class CommunityDetailPageViewController: UIViewController {
     
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
-        print("@@@ content \(contentSize)")
         commentTableView.snp.updateConstraints { make in
             make.height.equalTo(contentSize.height + 50)
         }
