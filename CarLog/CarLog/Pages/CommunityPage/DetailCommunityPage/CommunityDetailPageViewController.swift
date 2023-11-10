@@ -309,11 +309,7 @@ class CommunityDetailPageViewController: UIViewController {
             //네이게션 edit
             let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
                 guard let self = self else { return }
-                let editPageViewController = EditPageViewController()
                 
-                // 선택한 포스트를 가져와서 EditPageViewController에 설정
-                let editPost = selectedPost
-                editPageViewController.postToEdit = editPost
                 self.navigateToEditPage(post: post)
                 // 수정 기능 로직
                 //                print("수정 완료")
@@ -512,9 +508,11 @@ extension CommunityDetailPageViewController {
     }
     
     private func navigateToEditPage(post: Post) {
-        let editPageViewController = EditPageViewController()
-        editPageViewController.postToEdit = post // EditPageViewController에 수정할 포스트 정보 전달
-        self.navigationController?.pushViewController(editPageViewController, animated: true)
+//        let editPageViewController = EditPageViewController()
+//        editPageViewController.postToEdit = post // EditPageViewController에 수정할 포스트 정보 전달
+//        self.navigationController?.pushViewController(editPageViewController, animated: true)
+        let vc = AddCommunityPageViewController(post: post)
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }
