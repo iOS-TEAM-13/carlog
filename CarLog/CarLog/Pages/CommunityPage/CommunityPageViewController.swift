@@ -91,7 +91,7 @@ class CommunityPageViewController: UIViewController {
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-        //커뮤니티 마지막 셀 safearea 마진
+        // 커뮤니티 마지막 셀 safearea 마진
         communityColletionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.horizontalMargin, right: 0)
         
         editFloatingButton.snp.makeConstraints { make in
@@ -107,8 +107,15 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
-        self.indicator.startAnimating()
-        FirestoreService.firestoreService.loadPosts { posts in
+        guard let userEmail = Constants.currentUser.userEmail else {
+            print("사용자 이메일 정보가 없습니다.")
+            indicator.stopAnimating()
+            return
+        }
+             
+        indicator.startAnimating()
+        FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
+            guard let self = self else { return }
             if let posts = posts {
                 self.items = posts
                 DispatchQueue.main.async {
@@ -117,7 +124,9 @@ class CommunityPageViewController: UIViewController {
                 }
             } else {
                 print("데이터를 가져오는 중 오류 발생")
-                self.indicator.stopAnimating()
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                }
             }
         }
     }
@@ -161,24 +170,22 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         } else if collectionView == communityColletionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
             let post = items[indexPath.item]
-            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comment  in
-                    if let imageURL = post.image.first, let imageUrl = imageURL {
-                        // 이미지를 비동기적으로 가져오기
-                        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                            if let data = data {
-                                DispatchQueue.main.async {
-                                    cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(data: data),spanerCount: post.emergency?.filter{ $0.value == true }.count, commentCount: comment?.count)
+          
+            FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comment in
+                if let imageURL = post.image.first, let imageUrl = imageURL {
+                    // 이미지를 비동기적으로 가져오기
+                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                        if let data = data {
+                            DispatchQueue.main.async {
+                                cell.bind(userName: post.userName, title: post.title, content: post.content, image: UIImage(data: data), spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: comment?.count)
 //                                    self.indicator.stopAnimating()
-                                }
                             }
-                        }.resume()
-                    } else {
-                        // 이미지 URL이 없으면 기본 이미지 설정
-                        DispatchQueue.main.async {
-                            cell.bind(userName: nickName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.filter{ $0.value == true }.count, commentCount: comment?.count)
-                            
                         }
+                    }.resume()
+                } else {
+                    // 이미지 URL이 없으면 기본 이미지 설정
+                    DispatchQueue.main.async {
+                        cell.bind(userName: post.userName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: comment?.count)
                     }
                 }
             }

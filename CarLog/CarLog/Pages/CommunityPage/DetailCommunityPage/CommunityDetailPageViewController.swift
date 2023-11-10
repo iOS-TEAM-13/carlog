@@ -6,9 +6,8 @@ import SnapKit
 class CommunityDetailPageViewController: UIViewController {
     var selectedPost: Post?
     var commentData: [Comment] = []
-
     lazy var isEmergency = selectedPost?.emergency?[Constants.currentUser.userEmail ?? ""]
-    lazy var emergencyCount = selectedPost?.emergency?.filter{ $0.value == true }.count {
+    lazy var emergencyCount = selectedPost?.emergency?.filter { $0.value == true }.count {
         didSet {
             if let count = emergencyCount {
                 emergencyCountLabel.text = String(count)
@@ -65,8 +64,10 @@ class CommunityDetailPageViewController: UIViewController {
         return label
     }()
     
+    lazy var divideView = UIView()
+    
     lazy var subTitleStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [userNameLabel, UIView(), dateLabel])
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, divideView, dateLabel])
         stackView.customStackView(spacing: 0, axis: .horizontal, alignment: .center)
         stackView.distribution = .fill
         return stackView
@@ -137,6 +138,7 @@ class CommunityDetailPageViewController: UIViewController {
     lazy var allStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleStackView, photoCollectionView, likeStackView, mainText, line])
         stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .leading)
+        stackView.distribution = .fill
         return stackView
     }()
     
@@ -306,7 +308,7 @@ class CommunityDetailPageViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         // 현재 사용자가 포스트의 작성자가 일치하는지 확인
         if post.userEmail == Constants.currentUser.userEmail {
-            //네이게션 edit
+            // 네이게션 edit
             let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
                 guard let self = self else { return }
                 
@@ -316,26 +318,55 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
-                
-                FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
-                    if err != nil {
-                        print("에러")
+                self.showAlert(text: "게시글") {
+                    FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
+                        if err != nil {
+                            print("에러")
+                        }
                     }
+                    print("삭제 완료")
+                    self.navigationController?.popViewController(animated: true)
                 }
-                print("삭제 완료")
             }
             editAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
             action2.setValue(UIColor.systemRed, forKey: "titleTextColor")
             actionSheet.addAction(editAction)
             actionSheet.addAction(action2)
         } else {
-            let action3 = UIAlertAction(title: "신고하기", style: .default) { _ in
-                // 신고 기능 로직
-                print("신고 완료")
+            let action3 = UIAlertAction(title: "\(String(describing: post.userName ?? ""))님 차단하기", style: .default) { _ in
+                let confirmAlert = UIAlertController(title: "해당 게시글을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    FirestoreService.firestoreService.blockUser(userName: self.selectedPost?.userName ?? "", userEmail: Constants.currentUser.userEmail ?? "") { error in
+                        if let error = error {
+                            print("차단 오류: \(error.localizedDescription)")
+                        } else {
+                            print("차단 완료")
+                            self.navigationController?.popViewController(animated: true)
+                            self.tabBarController?.tabBar.isHidden = false
+                        }
+                    }
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(confirmAlert, animated: true, completion: nil)
+                
+                print("해당 유저 차단 완료")
             }
-            let action4 = UIAlertAction(title: "차단하기", style: .default) { _ in
-                // 차단 기능 로직
-                print("차단 완료")
+            let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
+                guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
+                let confirmAlert = UIAlertController(title: "해당 게시글을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    FirestoreService.firestoreService.blockPost(postID: postID, userEmail: userEmail) { error in
+                        if let error = error {
+                            print("차단 오류: \(error.localizedDescription)")
+                        } else {
+                            print("차단 완료")
+                            self.navigationController?.popViewController(animated: true)
+                            self.tabBarController?.tabBar.isHidden = false
+                        }
+                    }
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(confirmAlert, animated: true, completion: nil)
             }
             //            let action5 = UIAlertAction(title: "\(Auth.().)", style: <#T##UIAlertAction.Style#>)
             action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
@@ -408,22 +439,17 @@ class CommunityDetailPageViewController: UIViewController {
         let timeStamp = dateFormatter.string(from: Date())
         guard let user = Auth.auth().currentUser, let userEmail = user.email else { return }
         
-        FirestoreService.firestoreService.fetchNickName(userEmail: userEmail) { [weak self] nickName in
-            guard let self = self, let postID = self.selectedPost?.id else { return }
-            
-            let userNickName = nickName
-            let newComment = Comment(id: UUID().uuidString, postId: postID, content: comment, userName: userNickName, userEmail: userEmail, timeStamp: timeStamp)
-            FirestoreService.firestoreService.saveComment(comment: newComment) { error in
-                if let error = error {
-                    print("Error saving comment: \(error.localizedDescription)")
-                } else {
-                    print("save success")
-                    self.commentData.append(newComment)
-                    self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
-                    DispatchQueue.main.async {
-                        self.commentTableView.reloadData()
-                        self.updateCommentTableViewHeight()
-                    }
+        let newComment = Comment(id: UUID().uuidString, postId: selectedPost?.id ?? "", content: comment, userName: Constants.currentUser.nickName, userEmail: userEmail, timeStamp: timeStamp)
+        FirestoreService.firestoreService.saveComment(comment: newComment) { error in
+            if let error = error {
+                print("Error saving comment: \(error.localizedDescription)")
+            } else {
+                print("save success")
+                self.commentData.append(newComment)
+                self.commentData.sort { $0.timeStamp ?? "" > $1.timeStamp ?? "" }
+                DispatchQueue.main.async {
+                    self.commentTableView.reloadData()
+                    self.updateCommentTableViewHeight()
                 }
             }
         }
@@ -459,10 +485,15 @@ extension CommunityDetailPageViewController {
         setupUI()
         setupNavigationBarButton()
         loadPost()
-        loadComments()
         commentTextViewPlaceholder()
         registerKeyboardNotifications()
         setupHideKeyboardOnTap()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("==== \(commentTableView.frame.height)")
+        loadComments()
     }
     
     override func viewDidLayoutSubviews() {
@@ -484,12 +515,10 @@ extension CommunityDetailPageViewController {
     
     private func loadPost() {
         if let post = selectedPost {
-            FirestoreService.firestoreService.fetchNickName(userEmail: post.userEmail ?? "") { nickName in
-                self.userNameLabel.setTitle(nickName, for: .normal)
-                self.titleLabel.text = post.title
-                self.dateLabel.text = post.timeStamp
-                self.mainText.text = post.content
-            }
+            userNameLabel.setTitle(post.userName, for: .normal)
+            titleLabel.text = post.title
+            dateLabel.text = post.timeStamp
+            mainText.text = post.content
         }
     }
     
@@ -497,24 +526,21 @@ extension CommunityDetailPageViewController {
         if let post = selectedPost {
             FirestoreService.firestoreService.loadComments(postID: post.id ?? "") { comments in
                 if let comments = comments {
-                    print("comments = \(comments)")
+                    // print("comments = \(comments)")
+                    
                     for comment in comments {
                         self.commentData.append(comment)
-                        self.commentTableView.reloadData()
                     }
+                    self.commentTableView.reloadData()
                 }
             }
         }
     }
     
     private func navigateToEditPage(post: Post) {
-//        let editPageViewController = EditPageViewController()
-//        editPageViewController.postToEdit = post // EditPageViewController에 수정할 포스트 정보 전달
-//        self.navigationController?.pushViewController(editPageViewController, animated: true)
         let vc = AddCommunityPageViewController(post: post)
         navigationController?.pushViewController(vc, animated: true)
     }
-
 }
 
 extension CommunityDetailPageViewController {
