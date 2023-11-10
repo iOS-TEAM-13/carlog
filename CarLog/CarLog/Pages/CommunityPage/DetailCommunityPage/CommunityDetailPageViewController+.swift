@@ -106,7 +106,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
             self.showAlert(text: "댓글") {
                 if let post = self.selectedPost {
                     let postID = post.id ?? ""
-                    FirestoreService.firestoreService.loadComments(postID: postID) { comments in
+                    FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: postID) { comments in
                         if let comments = comments {
                             if let index = comments.firstIndex(where: { $0.id == self.commentData[indexPath.row].id }) {
                                 // 해당 comment를 찾았으므로 삭제
