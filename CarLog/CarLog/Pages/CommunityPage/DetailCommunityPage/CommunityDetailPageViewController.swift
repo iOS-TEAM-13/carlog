@@ -216,6 +216,10 @@ class CommunityDetailPageViewController: UIViewController {
             make.width.equalTo(communityDetailPageScrollView)
         }
         
+        subTitleStackView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+        }
+        
         allStackView.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
