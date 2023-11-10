@@ -275,7 +275,7 @@ final class FirestoreService {
         }
     }
         
-    func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, completion: @escaping ([Comment]?) -> Void) {
+func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, completion: @escaping ([Comment]?) -> Void) {
         db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in
             
             if let userError = userError {

@@ -299,6 +299,7 @@ class CommunityDetailPageViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("completedCheckingView"), object: nil)
     }
     
     // dots 버튼 눌렸을때 동작(드롭다운 메뉴)
@@ -418,6 +419,7 @@ class CommunityDetailPageViewController: UIViewController {
     
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
+        print("@@@ content \(contentSize)")
         commentTableView.snp.updateConstraints { make in
             make.height.equalTo(contentSize.height + 50)
         }
@@ -493,15 +495,15 @@ extension CommunityDetailPageViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(changedPost(notification:)), name: Notification.Name("changedPost"), object: nil)
+        loadComments()
     }
     
     @objc func changedPost(notification: Notification) {
         if let updatedPost = notification.object as? Post {
             self.selectedPost = updatedPost
-            print(selectedPost?.title)
             loadPost()
             photoCollectionView.reloadData()
-            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -532,10 +534,9 @@ extension CommunityDetailPageViewController {
     
     private func loadComments() {
         if let post = selectedPost {
+            // FirestoreService의 새로운 loadComments 함수를 호출합니다. 이 함수는 차단된 코멘트를 제외한 코멘트를 로드합니다.
             FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comments in
                 if let comments = comments {
-                    // print("comments = \(comments)")
-                    
                     for comment in comments {
                         self.commentData.append(comment)
                     }
