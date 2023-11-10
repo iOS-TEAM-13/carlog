@@ -88,6 +88,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
         cell.dateLabel.text = comment.timeStamp
         cell.commentLabel.text = comment.content
         cell.selectionStyle = .none
+        updateCommentTableViewHeight()
         return cell
     }
 
