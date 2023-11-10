@@ -158,7 +158,6 @@ class AddCommunityPageViewController: UIViewController {
         setupNavigationBar()
         attribute()
         setupUI()
-
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -306,13 +305,6 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     
     @objc func didTapImagePickerButton() {
         checkAlbumPermission()
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selection = .ordered
-        config.selectionLimit = 3 // 사진 선택 리미티드 3장 까지만
-        let imagePickerViewController = PHPickerViewController(configuration: config)
-        imagePickerViewController.delegate = self
-        present(imagePickerViewController, animated: true)
     }
     
     func checkAlbumPermission() { // 앨범 권한 허용 거부 요청
@@ -320,14 +312,33 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             switch status {
             case .authorized:
                 print("Album: 권한 허용")
-            case .denied:
-                print("Album: 권한 거부")
-            case .restricted, .notDetermined:
-                print("Album: 선택하지 않음")
+                var config = PHPickerConfiguration()
+                config.filter = .images
+                config.selection = .ordered
+                config.selectionLimit = 3 // 사진 선택 리미티드 3장 까지만
+                DispatchQueue.main.async {
+                    let imagePickerViewController = PHPickerViewController(configuration: config)
+                    imagePickerViewController.delegate = self
+                    self.present(imagePickerViewController, animated: true)
+                }
             default:
-                break
+                DispatchQueue.main.async {
+                    self.moveToSettingAlert(reason: "사진 접근 요청 거부됨", discription: "설정에서 권한을 허용해 주세요.")
+                }
             }
         }
+    }
+    
+    func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        alert.addAction(cancle)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
     }
     
     func showAlertAuth(
