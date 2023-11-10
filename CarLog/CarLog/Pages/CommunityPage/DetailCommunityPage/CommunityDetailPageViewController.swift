@@ -216,6 +216,10 @@ class CommunityDetailPageViewController: UIViewController {
             make.width.equalTo(communityDetailPageScrollView)
         }
         
+        subTitleStackView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+        }
+        
         allStackView.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
             make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
@@ -238,20 +242,19 @@ class CommunityDetailPageViewController: UIViewController {
         // 댓글 레이아웃
         containerView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
         commentTextView.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
         
         button.snp.makeConstraints { make in
             make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.left.equalTo(commentTextView.snp.right).offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.leading.equalTo(commentTextView.snp.trailing).offset(Constants.horizontalMargin)
+            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
             make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
         }
     }
@@ -283,8 +286,7 @@ class CommunityDetailPageViewController: UIViewController {
         // 기존 레이아웃을 유지하되, 키보드 올라올때는 이 레이아웃 사용
         containerView.snp.remakeConstraints { make in
             make.bottom.equalToSuperview().offset(-keyboardHeight)
-            make.leftMargin.equalToSuperview()
-            make.rightMargin.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
         UIView.animate(withDuration: animationDuration) {
@@ -377,7 +379,6 @@ class CommunityDetailPageViewController: UIViewController {
         if let commentText = commentTextView.text, !commentText.isEmpty {
             addComment(comment: commentText)
             commentTableView.reloadData()
-            updateCommentTableViewHeight() // 댓글이 추가된 후에 높이를 업데이트합니다.
             commentTextView.text = ""
         }
     }
@@ -391,7 +392,7 @@ class CommunityDetailPageViewController: UIViewController {
     func updateCommentTableViewHeight() {
         let contentSize = commentTableView.contentSize
         commentTableView.snp.updateConstraints { make in
-            make.height.equalTo(contentSize.height)
+            make.height.equalTo(contentSize.height + 50)
         }
     }
     

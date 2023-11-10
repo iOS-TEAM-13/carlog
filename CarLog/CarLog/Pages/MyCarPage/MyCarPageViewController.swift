@@ -98,7 +98,6 @@ class MyCarPageViewController: UIViewController {
             FirestoreService.firestoreService.loadCar { result in
                 if let car = result {
                     Constants.currentUser = car.first ?? Car(number: "", maker: "", name: "", oilType: "", nickName: "", totalDistance: 0, userEmail: "")
-                    print("@@@ my \(Constants.currentUser)")
                 } else {
                     print("데이터 로드 중 오류 발생")
                 }
