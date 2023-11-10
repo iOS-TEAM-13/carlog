@@ -342,8 +342,12 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if let error = error {
+            print("Mail compose error: \(error.localizedDescription)")
+        }
         controller.dismiss(animated: true, completion: nil)
     }
+
     
     // MARK: - Keyboard 관련
 
