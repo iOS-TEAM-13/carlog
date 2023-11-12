@@ -60,7 +60,11 @@ class MyCarPageViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = false
         loadData()
-        NotificationService.service.setAuthorization()
+        NotificationService.service.setAuthorization() {
+            DispatchQueue.main.async {
+                self.moveToSettingAlert(reason: "알림 권한 요철 거부됨", discription: "설정에서 권한을 허용해주세요.")
+            }
+        }
     }
     
     // MARK: Method
@@ -74,6 +78,19 @@ class MyCarPageViewController: UIViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    
+    func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        alert.addAction(cancle)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard

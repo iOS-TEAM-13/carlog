@@ -15,10 +15,15 @@ class NotificationService {
     
     private init() { }
     
-    func setAuthorization() {
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in }
-        )
+    func setAuthorization(completion: @escaping () -> Void) {
+        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
+            if granted {
+                
+            } else {
+                completion()
+            }
+        }
     }
     
     func impact(style: UIImpactFeedbackGenerator.FeedbackStyle) {
