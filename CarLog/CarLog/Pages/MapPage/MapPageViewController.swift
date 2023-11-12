@@ -277,7 +277,6 @@ extension MapPageViewController: CLLocationManagerDelegate {
     }
         
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("@@@ \(status)")
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
             print("GPS 권한 설정됨")

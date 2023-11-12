@@ -242,9 +242,6 @@ class MyCarDetailPageViewController: UIViewController {
         for i in 0...(saveData.parts.count) - 1 {
             if saveData.parts[i].name == selectedParts?.name {
                 saveData.parts[i].currentTime = currentTime.toStringDetail()
-                print("@@@ currentTime1 \(saveData.parts[i].currentTime)")
-                print("@@@ date \(currentTime)")
-                print("@@@ currentTime2 \(currentTime.toStringDetail())")
                 saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, newDate: currentTime, changedType: type), at: 0)
                 NotificationService.service.pushNotification(part: saveData.parts[i])
             }

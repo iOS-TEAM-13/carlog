@@ -157,7 +157,6 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         if let icon = menuIcon[indexPath.row], let start = carParts.parts[indexPath.row].startTime, let end = carParts.parts[indexPath.row].endTime {
             progress = Util.util.calculatorProgress(firstInterval: start, secondInterval: end)
             cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(start.toString()) ~ \(end.toString())", icon: icon, progress: progress)
-            print("@@@ \(carParts.parts[indexPath.row].name) + \(start)")
         }
         return cell
     }
