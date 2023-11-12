@@ -31,27 +31,27 @@ extension String {
         }
     }
     
-    func toSaveDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
-        }
-    }
+//    func toSaveDate() -> Date? {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy.MM.dd"
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+//        if let date = dateFormatter.date(from: self) {
+//            return date
+//        } else {
+//            return nil
+//        }
+//    }
     
-    func intervalToDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
-        }
-    }
+//    func intervalToDate() -> Date? {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+//        if let date = dateFormatter.date(from: self) {
+//            return date
+//        } else {
+//            return nil
+//        }
+//    }
     
     func isValidateCarNumber(_ carNumber: String) -> Bool {
         // 최소 7자리 길이 검사
@@ -74,13 +74,13 @@ extension String {
         }
     }
 
-    static let dateFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateStyle = .long
-        f.timeStyle = .short
-        f.locale = Locale(identifier: "ko_KR")
-        return f
-    }()
+//    static let dateFormatter: DateFormatter = {
+//        let f = DateFormatter()
+//        f.dateStyle = .long
+//        f.timeStyle = .short
+//        f.locale = Locale(identifier: "ko_KR")
+//        return f
+//    }()
     
     func addedComma() -> String {
         let reversedStr = String(self.reversed())
