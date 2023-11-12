@@ -28,7 +28,6 @@ final class LoginService {
                 print("회원가입 실패: \(error.localizedDescription)")
                 return
             }
-            print("test1: \(authResult?.user.email)")
             if let email = authResult?.user.email {
                 FirestoreService.firestoreService.saveUsers(user: User(email: email)) { err in
                     print("err: \(String(describing: err?.localizedDescription))")
