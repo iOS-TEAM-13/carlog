@@ -100,15 +100,27 @@ class Util {
         }
     }
     
-    func calculatorProgress(firstInterval: String, secondInterval: String) -> Double {
+//    func calculatorProgress(firstInterval: String, secondInterval: String) -> Double {
+//        let calendar = Calendar.current
+//        let currentDate = Date()
+//
+//        guard let first = firstInterval.intervalToDate() else { return 0.0 }
+//        guard let second = secondInterval.intervalToDate() else { return 0.0 }
+//
+//        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
+//        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
+//        guard let firstDays = totalProgress.day else { return 0.0 }
+//        guard let secoundDays = currentProgress.day else { return 0.0 }
+//
+//        return Double(secoundDays) / Double(firstDays)
+//    }
+    
+    func calculatorProgress(firstInterval: Date, secondInterval: Date) -> Double {
         let calendar = Calendar.current
         let currentDate = Date()
-        
-        guard let first = firstInterval.intervalToDate() else { return 0.0 }
-        guard let second = secondInterval.intervalToDate() else { return 0.0 }
 
-        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
-        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
+        let totalProgress = calendar.dateComponents([.day], from: firstInterval, to: secondInterval)
+        let currentProgress = calendar.dateComponents([.day], from: firstInterval, to: currentDate)
         guard let firstDays = totalProgress.day else { return 0.0 }
         guard let secoundDays = currentProgress.day else { return 0.0 }
         

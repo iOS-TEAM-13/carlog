@@ -23,6 +23,7 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         if let date = dateFormatter.date(from: self) {
             return date
         } else {

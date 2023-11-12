@@ -6,7 +6,7 @@ import SwiftUI
 
 class MyCarPageViewController: UIViewController {
     // MARK: Properties
-
+    
     private let flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -42,7 +42,7 @@ class MyCarPageViewController: UIViewController {
     var progress = 0.0
     
     // MARK: LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
@@ -68,7 +68,7 @@ class MyCarPageViewController: UIViewController {
     }
     
     // MARK: Method
-
+    
     private func setupUI() {
         view.addSubview(myCarCollectionView)
         
@@ -90,7 +90,7 @@ class MyCarPageViewController: UIViewController {
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
     }
-
+    
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard
@@ -130,51 +130,77 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
         return carParts.parts.count
     }
     
+    //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    //        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
+    //        if let icon = menuIcon[indexPath.row] {
+    //            if carParts.parts[indexPath.row].name != .insurance {
+    //                if let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth {
+    //                    firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
+    //                    secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
+    //                }
+    //                progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+    //            } else {
+    //                if let time = carParts.parts[indexPath.row].currentTime {
+    //                    firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
+    //                    secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
+    //                }
+    //
+    //                progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
+    //            }
+    //            cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
+    //        }
+    //        return cell
+    //    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
-        if let icon = menuIcon[indexPath.row] {
-            if carParts.parts[indexPath.row].name != .insurance {
-                if let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth {
-                    firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-                    secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
-                }
-                progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-            } else {
-                if let time = carParts.parts[indexPath.row].currentTime {
-                    firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
-                    secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
-                }
-                
-                progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
-            }
-            cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
+        if let icon = menuIcon[indexPath.row], let start = carParts.parts[indexPath.row].startTime, let end = carParts.parts[indexPath.row].endTime {
+            progress = Util.util.calculatorProgress(firstInterval: start, secondInterval: end)
+            cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(start.toString()) ~ \(end.toString())", icon: icon, progress: progress)
+            print("@@@ \(carParts.parts[indexPath.row].name) + \(start)")
         }
         return cell
     }
     
+    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //        let vc = MyCarDetailPageViewController()
+    //        guard let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth else { return }
+    //        guard let time = carParts.parts[indexPath.row].currentTime else { return }
+    //        if carParts.parts[indexPath.row].name != .insurance {
+    //            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
+    //            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
+    //            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
+    //            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
+    //            progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+    //        } else {
+    //            firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
+    //            secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
+    //            progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
+    //        }
+    //        vc.selectedParts = carParts.parts[indexPath.row]
+    //        for i in 0 ... vc.saveData.parts.count - 1 {
+    //            if vc.saveData.parts[i].name == carParts.parts[indexPath.row].name {
+    //                vc.saveData.parts[i] = carParts.parts[indexPath.row]
+    //            }
+    //        }
+    //        vc.selectedProgress = progress
+    //        vc.selectedInterval = "\(firstInterval) ~ \(secondInterval)"
+    //        vc.selectedIcon = menuIcon[indexPath.row]
+    //        navigationController?.pushViewController(vc, animated: true)
+    //    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = MyCarDetailPageViewController()
-        guard let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth else { return }
-        guard let time = carParts.parts[indexPath.row].currentTime else { return }
-        if carParts.parts[indexPath.row].name != .insurance {
-            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
-            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
-            progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-        } else {
-            firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
-            secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
-            progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
-        }
-        vc.selectedParts = carParts.parts[indexPath.row]
-        for i in 0 ... vc.saveData.parts.count - 1 {
-            if vc.saveData.parts[i].name == carParts.parts[indexPath.row].name {
-                vc.saveData.parts[i] = carParts.parts[indexPath.row]
-            }
+        guard let start = carParts.parts[indexPath.row].startTime, let end = carParts.parts[indexPath.row].endTime else { return }
+            progress = Util.util.calculatorProgress(firstInterval: start, secondInterval: end)
+            vc.selectedParts = carParts.parts[indexPath.row]
+            for i in 0 ... vc.saveData.parts.count - 1 {
+                if vc.saveData.parts[i].name == carParts.parts[indexPath.row].name {
+                    vc.saveData.parts[i] = carParts.parts[indexPath.row]
+                }
         }
         vc.selectedProgress = progress
-        vc.selectedInterval = "\(firstInterval) ~ \(secondInterval)"
+//        vc.selectedInterval = "\(start.toString()) ~ \(end.toString())"
         vc.selectedIcon = menuIcon[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -83,9 +83,14 @@ class MyCarDetailPageViewController: UIViewController {
     
     // MARK: Data
 
-    var selectedParts: PartsInfo?
+    var selectedParts: PartsInfo? {
+        didSet {
+            if let start = selectedParts?.startTime, let end = selectedParts?.endTime {
+                selectedProgress = Util.util.calculatorProgress(firstInterval: start, secondInterval: end)
+            }
+        }
+    }
     var selectedProgress: Double?
-    var selectedInterval: String?
     var selectedIcon: UIImage?
     
     var saveData = Constants.carParts
@@ -174,13 +179,22 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
+//    private func configureUI() {
+//        let firstInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth! ?? 0).toString()
+//        let secondInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth ?? 0, type: selectedParts!.name).toString()
+//        let progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+//        selectedImageView.image = selectedIcon
+//        selectedTitleLabel.text = selectedParts!.name.rawValue
+//        selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
+//        selectedprogressView.progress = Float(progress)
+//    }
+    
     private func configureUI() {
-        let firstInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth! ?? 0).toString()
-        let secondInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth ?? 0, type: selectedParts!.name).toString()
-        let progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
+        guard let start = selectedParts?.startTime, let end = selectedParts?.endTime else { return }
+        let progress = Util.util.calculatorProgress(firstInterval: selectedParts?.startTime ?? Date(), secondInterval: selectedParts?.endTime ?? Date())
         selectedImageView.image = selectedIcon
         selectedTitleLabel.text = selectedParts!.name.rawValue
-        selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
+        selectedIntervalLabel.text = "\(start.toString()) ~ \(end.toString())"
         selectedprogressView.progress = Float(progress)
     }
     
@@ -224,24 +238,24 @@ class MyCarDetailPageViewController: UIViewController {
         }
     }
     
-    private func addHistory(date: Date, currentTime: String, type: ChangedType) {
+    private func addHistory(date: Date, currentTime: Date, type: ChangedType) {
         for i in 0...(saveData.parts.count) - 1 {
             if saveData.parts[i].name == selectedParts?.name {
-                saveData.parts[i].currentTime = currentTime
+                saveData.parts[i].currentTime = currentTime.toStringDetail()
+                print("@@@ currentTime1 \(saveData.parts[i].currentTime)")
+                print("@@@ date \(currentTime)")
+                print("@@@ currentTime2 \(currentTime.toStringDetail())")
                 saveData.parts[i].fixHistory.insert(FixHistory(changedDate: date, newDate: currentTime, changedType: type), at: 0)
                 NotificationService.service.pushNotification(part: saveData.parts[i])
             }
         }
-        saveCarParts()
-        updateSelectParts()
-        configureUI()
         NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
     }
     
     private func showAlert() {
         let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
         let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            self.addHistory(date: Date(), currentTime: Date().toString(), type: .isFixedParts)
+            self.addHistory(date: Date(), currentTime: Date(), type: .isFixedParts)
         }
         let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
             print("취소 버튼이 눌렸습니다.")
@@ -254,7 +268,10 @@ class MyCarDetailPageViewController: UIViewController {
     // MARK: @Objc
 
     @objc func completedModified() {
+        saveCarParts()
         loadCarParts()
+        updateSelectParts()
+        configureUI()
     }
 }
 
@@ -267,7 +284,7 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarDetialViewCell.identifier, for: indexPath) as? MyCarDetialViewCell else { return UICollectionViewCell() }
-        cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", newDate: selectedParts?.fixHistory[indexPath.row]?.newDate ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
+        cell.bind(date: selectedParts?.fixHistory[indexPath.row]?.changedDate?.toString() ?? "", newDate: selectedParts?.fixHistory[indexPath.row]?.newDate?.toString() ?? "", type: selectedParts?.fixHistory[indexPath.row]?.changedType?.rawValue ?? "")
         return cell
     }
     

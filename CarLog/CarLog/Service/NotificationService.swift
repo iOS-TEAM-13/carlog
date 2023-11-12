@@ -52,8 +52,9 @@ class NotificationService {
             notificationContent.title = "\(part.name.rawValue)의 교체 알림"
             notificationContent.body = "교체 시기가 \(month)개월 남았습니다!"
             
-            let targetDate = Util.util.toInterval(seletedDate: part.currentTimeToMonth ?? 0)
-            var alarmDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: targetDate)
+//            let targetDate = Util.util.toInterval(seletedDate: part.currentTimeToMonth ?? 0)
+            let targetDate = part.startTime
+            var alarmDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: targetDate ?? Date())
             alarmDateComponents.hour = 9
             alarmDateComponents.minute = 0
             alarmDateComponents.second = 0
