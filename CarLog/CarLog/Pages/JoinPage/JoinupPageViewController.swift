@@ -106,19 +106,21 @@ class JoinupPageViewController: JoinupPageHelperController {
 
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
-
-            FirestoreService.firestoreService.saveCar(
-                car: Car(
-                    number: self.carNumberView.carNumberTextField.text,
-                    maker: self.carMakerView.carMakerTextField.text,
-                    name: self.carModelView.carModelTextField.text,
-                    oilType: selectedOilType ?? "",
-                    nickName: self.nickNameView.carNickNameTextField.text,
-                    totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
-                    userEmail: self.joinupView.emailTextField.text),
-                completion: { _ in
-                    self.doneButtonTapped()
-                })
+            LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
+                FirestoreService.firestoreService.saveCar(
+                    car: Car(
+                        number: self.carNumberView.carNumberTextField.text,
+                        maker: self.carMakerView.carMakerTextField.text,
+                        name: self.carModelView.carModelTextField.text,
+                        oilType: selectedOilType ?? "",
+                        nickName: self.nickNameView.carNickNameTextField.text,
+                        totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
+                        userEmail: self.joinupView.emailTextField.text),
+                    completion: { _ in
+                        self.doneButtonTapped()
+                        //self.dismiss(animated: true)
+                    })
+            }
         }), for: .touchUpInside)
     }
 
