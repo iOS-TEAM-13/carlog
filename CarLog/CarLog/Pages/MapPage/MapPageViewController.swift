@@ -63,13 +63,14 @@ class MapPageViewController: UIViewController {
         setupMapView()
         addCustomPin()
         addButtonActions()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        setupLocationManager()
         setAuthorization()
+        setupLocationManager()
     }
     
     // MARK: Method
@@ -81,7 +82,7 @@ class MapPageViewController: UIViewController {
         
         mapView.map.showsCompass = true
         mapView.map.showsScale = true
-        mapView.map.showsUserLocation = true
+        mapView.map.showsUserLocation = false
         
         guideView.snp.makeConstraints {
             $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
@@ -138,6 +139,7 @@ class MapPageViewController: UIViewController {
                     self?.stationDetailList.forEach { item in
                         self?.locationList.append(CustomAnnotation(title: item.name, gasolinePrice: String(item.oilPrice.filter { $0.prodcd == "B027" }.first?.price ?? 0), dieselPrice: String(item.oilPrice.filter { $0.prodcd == "D047" }.first?.price ?? 0), coordinate: CLLocationCoordinate2D(latitude: Double(item.gisYCoor), longitude: Double(item.gisXCoor))))
                         self?.addCustomPin()
+                        self?.locationManager.stopUpdatingLocation()
                     }
                 }
             }
