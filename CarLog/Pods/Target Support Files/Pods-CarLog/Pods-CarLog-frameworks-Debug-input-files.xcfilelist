@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-CarLog/Pods-CarLog-frameworks.sh
+${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/inavi-maps-sdk/iNaviMaps.framework/iNaviMaps
