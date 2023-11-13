@@ -14,7 +14,7 @@ extension Notification.Name {
     static let newFuelingRecordAdded = Notification.Name("newFuelingRecordAdded")
 }
 
-class AddFuelingViewController: UIViewController {
+class AddFuelingViewController: UIViewController, UITextFieldDelegate {
     
     lazy var addFuelingView: AddFuelingView = {
         let addFuelingView = AddFuelingView()
@@ -39,6 +39,11 @@ class AddFuelingViewController: UIViewController {
         
         //키보드 스크롤
         registerForKeyboardNotifications()
+        
+        //addFuelingView에 텍스트 필드 글자수 제한 설정 시
+        addFuelingView.totalDistanceTextField.delegate = self
+        addFuelingView.priceTextField.delegate = self
+        addFuelingView.countTextField.delegate = self
         
         //자동 계산
         autoCalculate()
@@ -119,6 +124,24 @@ class AddFuelingViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         addFuelingView.endEditing(true)
+    }
+    
+    //MARK: - 텍스트필드 글자수 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        //텍스트필드 마다 다른 글자수 제한 설정
+        switch textField {
+        case addFuelingView.totalDistanceTextField, addFuelingView.countTextField:
+            let maxLength = 6
+            return updatedText.count <= maxLength
+        case addFuelingView.priceTextField:
+            let maxLength = 4
+            return updatedText.count <= maxLength
+        default:
+            return true
+        }
     }
     
     //MARK: - 주유 자동 계산
