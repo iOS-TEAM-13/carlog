@@ -167,16 +167,21 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     @objc func logoutButtonTapped() {
         if Constants.currentUser != nil {
-            LoginService.loginService.logout {
-                let loginViewController = LoginPageViewController()
-                self.dismiss(animated: true) {
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let sceneDelegate = windowScene.delegate as? SceneDelegate
-                    {
-                        sceneDelegate.window?.rootViewController = loginViewController
+            let alert = UIAlertController(title: "로그아웃", message: "지금 로그아웃하시겠어요?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
+            present(alert, animated: true)
+            alert.addAction(UIAlertAction(title: "로그아웃", style: .default, handler: { _ in
+                LoginService.loginService.logout {
+                    let loginViewController = LoginPageViewController()
+                    self.dismiss(animated: true) {
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let sceneDelegate = windowScene.delegate as? SceneDelegate
+                        {
+                            sceneDelegate.window?.rootViewController = loginViewController
+                        }
                     }
                 }
-            }
+            }))
         } else {
             dismiss(animated: true)
         }
@@ -185,6 +190,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     @objc func quitUserButtonTapped() {
         if Constants.currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
+            present(alert, animated: true)
             alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
                 LoginService.loginService.quitUser(email: Constants.currentUser.userEmail ?? "") { _ in
                     let loginViewController = LoginPageViewController()
@@ -197,10 +204,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                     }
                 }
             }))
-            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
-            present(alert, animated: true)
-            // 회원탈퇴 하기전, alert 창에 확인버튼으로 감싸기
-            
         } else {
             dismiss(animated: true)
         }

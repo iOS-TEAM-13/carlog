@@ -30,6 +30,16 @@ final class MyPageView: UIView {
         return mainTitleLabel
     }()
     
+//    lazy var mainTitleLabel: UILabel = {
+//        let mainTitleLabel = UILabel()
+//        mainTitleLabel.text = "내 차 정보"
+//        mainTitleLabel.textColor = .black
+//        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
+//        mainTitleLabel.layer.backgroundColor = UIColor.mainNavyColor.cgColor
+//        mainTitleLabel.layer.cornerRadius = 5
+//        return mainTitleLabel
+//    }()
+    
     lazy var editButton: UIButton = {
         let editButton = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
