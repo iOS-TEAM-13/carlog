@@ -73,6 +73,10 @@ class MyCarPageViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.currentTooltip?.dismiss()
+    }
+    
     // MARK: Method
     
     private func setupUI() {
@@ -185,13 +189,9 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
 
 extension MyCarPageViewController: EasyTipViewDelegate {
     func easyTipViewDidTap(_ tipView: EasyTipView) {
-        print("@@@ tap")
     }
     
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
         myCarCollectionView.visibleCells.forEach { $0.isUserInteractionEnabled = true }
-        print("@@@ dismiss")
     }
-    
-    
 }
