@@ -56,6 +56,80 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     private func setupUI() {
+        view.addSubview(detailView.communityDetailPageScrollView)
+        view.addSubview(detailView.containerView)
+        detailView.communityDetailPageScrollView.addSubview(detailView.communityDetailPageContentView)
+        detailView.communityDetailPageContentView.addSubview(detailView.allStackView)
+        detailView.communityDetailPageContentView.addSubview(detailView.line)
+        detailView.communityDetailPageContentView.addSubview(detailView.commentTableView)
+        detailView.containerView.addSubview(detailView.commentTextView)
+        detailView.containerView.addSubview(detailView.button)
+        
+        
+        
+        detailView.commentTableView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+        }
+        
+        detailView.communityDetailPageScrollView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(detailView.containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
+        }
+        
+        detailView.emergencyButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 24, height: 24))
+        }
+        
+        detailView.communityDetailPageContentView.snp.makeConstraints { make in
+            make.top.bottom.trailing.leading.equalToSuperview()
+            make.width.equalTo(detailView.communityDetailPageScrollView)
+        }
+        
+        detailView.subTitleStackView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        detailView.allStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
+            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
+        }
+        
+        detailView.line.snp.makeConstraints { make in
+            make.top.equalTo(detailView.allStackView.snp.bottom).offset(20)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin * 2)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin * 2)
+            make.height.equalTo(1)
+        }
+        
+        detailView.commentTableView.snp.makeConstraints { make in
+            make.top.equalTo(detailView.line.snp.bottom).offset(Constants.verticalMargin)
+            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
+        }
+        // 댓글 레이아웃
+        detailView.containerView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        detailView.commentTextView.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
+        }
+        
+        detailView.button.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
+            make.leading.equalTo(detailView.commentTextView.snp.trailing).offset(Constants.horizontalMargin)
+            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
+        }
+        
+        
         if selectedPost?.image.count == 0 {
             detailView.photoCollectionView.isHidden = true
         } else {

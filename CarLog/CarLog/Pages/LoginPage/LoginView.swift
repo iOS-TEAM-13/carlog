@@ -3,12 +3,6 @@ import UIKit
 import AuthenticationServices
 
 final class LoginView: UIView {
-    lazy var logo: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "logo"))
-        imageView.contentMode = .bottom
-        return imageView
-    }()
-
     lazy var logoLabel: UILabel = {
         let label = UILabel()
         label.text = "CARLOG"
@@ -31,18 +25,11 @@ final class LoginView: UIView {
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
 
-        // addSubview(logo)
         addSubview(logoLabel)
         addSubview(emailTextField)
         addSubview(passwordTextField)
         addSubview(loginButton)
         addSubview(signupStackView)
-
-//        logo.snp.makeConstraints { make in
-//            make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin)
-//            make.leading.equalTo(safeArea.snp.leading).offset(85)
-//            make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-//        }
 
         logoLabel.snp.makeConstraints { make in
             make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin * 12)
@@ -50,8 +37,7 @@ final class LoginView: UIView {
         }
 
         emailTextField.snp.makeConstraints { make in
-            //make.top.equalTo(safeArea.snp.top).offset(Constants.verticalMargin * 10)
-             make.top.equalTo(logoLabel.snp.bottom).offset(Constants.verticalMargin)
+            make.top.equalTo(logoLabel.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }

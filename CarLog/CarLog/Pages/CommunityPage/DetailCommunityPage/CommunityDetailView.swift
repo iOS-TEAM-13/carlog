@@ -165,85 +165,10 @@ class CommunityDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func setupUI() {
-        addSubview(communityDetailPageScrollView)
-        addSubview(containerView)
-        communityDetailPageScrollView.addSubview(communityDetailPageContentView)
-        communityDetailPageContentView.addSubview(allStackView)
-        communityDetailPageContentView.addSubview(line)
-        communityDetailPageContentView.addSubview(commentTableView)
-        containerView.addSubview(commentTextView)
-        containerView.addSubview(button)
-        
-        
-        
-        commentTableView.snp.makeConstraints { make in
-            make.height.equalTo(100)
-        }
-        
-        communityDetailPageScrollView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalTo(containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
-        }
-        
-        emergencyButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 24, height: 24))
-        }
-        
-        communityDetailPageContentView.snp.makeConstraints { make in
-            make.top.bottom.trailing.leading.equalToSuperview()
-            make.width.equalTo(communityDetailPageScrollView)
-        }
-        
-        subTitleStackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-        }
-        
-        allStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(Constants.verticalMargin)
-            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
-            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
-        }
-        
-        line.snp.makeConstraints { make in
-            make.top.equalTo(allStackView.snp.bottom).offset(20)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin * 2)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin * 2)
-            make.height.equalTo(1)
-        }
-        
-        commentTableView.snp.makeConstraints { make in
-            make.top.equalTo(line.snp.bottom).offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-        }
-        // 댓글 레이아웃
-        containerView.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide)
-            make.leading.trailing.equalTo(safeAreaLayoutGuide)
-        }
-        
-        commentTextView.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-        }
-        
-        button.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leading.equalTo(commentTextView.snp.trailing).offset(Constants.horizontalMargin)
-            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.bottomMargin.equalToSuperview().offset(-Constants.verticalMargin)
-        }
-    }
+
 }
