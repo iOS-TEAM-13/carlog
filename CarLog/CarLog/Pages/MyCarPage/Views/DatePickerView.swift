@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class DatePickerView: UIView {
+    // MARK: Properties
     let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
@@ -26,6 +27,7 @@ class DatePickerView: UIView {
         return button
     }()
     
+    // MARK: LifeCycle
     init() {
         super.init(frame: .zero)
         setupUI()
@@ -36,6 +38,7 @@ class DatePickerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
     private func setupUI() {
         addSubview(datePicker)
         addSubview(completeButton)

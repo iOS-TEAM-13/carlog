@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class MyCarDetailPageView: UIView {
+    // MARK: Properties
     var selectedTitleLabel: UILabel = {
         var label = UILabel()
         label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left)
@@ -36,6 +37,7 @@ class MyCarDetailPageView: UIView {
         return view
     }()
     
+    // MARK: LifeCycle
     init() {
         super.init(frame: .zero)
         setupUI()
@@ -46,6 +48,7 @@ class MyCarDetailPageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
     private func setupUI() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 20

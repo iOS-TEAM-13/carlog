@@ -10,9 +10,11 @@ import UIKit
 import SnapKit
 
 class HorizontalButtonStackView: UIStackView {
+    // MARK: Properties
     lazy var firstButton = UIButton()
     lazy var secondButton = UIButton()
     
+    // MARK: LifeCycle
     init(firstButtonText: String, secondButtonText: String) {
         super.init(frame: .zero)
         firstButton.customButton(text: firstButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
@@ -25,6 +27,7 @@ class HorizontalButtonStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
   
+    // MARK: Method
     private func setupUI() {
         self.addArrangedSubview(firstButton)
         self.addArrangedSubview(secondButton)

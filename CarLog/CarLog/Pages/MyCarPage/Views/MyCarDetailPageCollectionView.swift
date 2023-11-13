@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class MyCarDetailPageCollectionView: UIView {
+    // MARK: Properties
     private let flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -26,6 +27,7 @@ class MyCarDetailPageCollectionView: UIView {
         return view
     }()
     
+    // MARK: LifeCycle
     init() {
         super.init(frame: .zero)
         setupUI()
@@ -36,6 +38,7 @@ class MyCarDetailPageCollectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
     private func setupUI() {
         self.addSubview(detailCollectionView)
         

@@ -14,8 +14,8 @@ class MyCarDetailPageViewController: UIViewController {
     // MARK: Properties
     
     private lazy var myCarDetailPageView = MyCarDetailPageView()
-    lazy var myCarDetailButtonStackView = HorizontalButtonStackView(firstButtonText: "날짜 변경", secondButtonText: "수정 완료")
-    lazy var myCarDetailPageCollectionView = MyCarDetailPageCollectionView()
+    private lazy var myCarDetailButtonStackView = HorizontalButtonStackView(firstButtonText: "날짜 변경", secondButtonText: "수정 완료")
+    private lazy var myCarDetailPageCollectionView = MyCarDetailPageCollectionView()
     
     // MARK: Data
 
