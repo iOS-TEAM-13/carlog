@@ -16,7 +16,6 @@
 			dependencies = (
 			);
 			name = "inavi-maps-sdk";
-			productName = "inavi-maps-sdk";
 		};
 /* End PBXAggregateTarget section */
 
@@ -49,13 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD
-		05E5A0E7D083F9666F94F2322FAEE1AD /* Pods_CarLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		07C07D2A996EE842C76670B5D1F62083 /* iNaviMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = iNaviMaps.xcframework; path = framework/iNaviMaps.xcframework; sourceTree = "<group>"; };
-=======
 		05E5A0E7D083F9666F94F2322FAEE1AD /* Pods-CarLog */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CarLog"; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07C07D2A996EE842C76670B5D1F62083 /* iNaviMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = iNaviMaps.xcframework; path = framework/iNaviMaps.xcframework; sourceTree = "<group>"; };
->>>>>>> develop
 		131985C664DF246FC38D04F150619E1F /* EasyTipView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyTipView.debug.xcconfig; sourceTree = "<group>"; };
 		1B9209102BB7F9079D241287D7E2D337 /* EasyTipView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyTipView-umbrella.h"; sourceTree = "<group>"; };
 		2DEA4D84FE101B898D32F32D3658ACFA /* UIKitExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIKitExtensions.swift; path = Sources/EasyTipView/UIKitExtensions.swift; sourceTree = "<group>"; };
@@ -70,11 +64,7 @@
 		8A63F6AA6A1D241970B6D28C2970A8B9 /* EasyTipView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = EasyTipView; path = EasyTipView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD5237564D6856D5FC8783BA1E646B3 /* inavi-maps-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "inavi-maps-sdk.release.xcconfig"; sourceTree = "<group>"; };
 		9CFBD3A847588E65DED8289BE559C031 /* Pods-CarLog-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CarLog-dummy.m"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-=======
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
->>>>>>> develop
 		A07DAFE249289BAEBC0193AB73D89D48 /* EasyTipView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyTipView.release.xcconfig; sourceTree = "<group>"; };
 		A1DA02539B261159EBDDAF08640CB06C /* Pods-CarLog-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CarLog-frameworks.sh"; sourceTree = "<group>"; };
 		ADD6921A26BB3F4AFA341D3D2D68EFA1 /* inavi-maps-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "inavi-maps-sdk.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,11 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				8A63F6AA6A1D241970B6D28C2970A8B9 /* EasyTipView */,
-<<<<<<< HEAD
-				05E5A0E7D083F9666F94F2322FAEE1AD /* Pods_CarLog.framework */,
-=======
 				05E5A0E7D083F9666F94F2322FAEE1AD /* Pods-CarLog */,
->>>>>>> develop
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,10 +157,7 @@
 				2DEA4D84FE101B898D32F32D3658ACFA /* UIKitExtensions.swift */,
 				BD77F2298A2E576E41A5AED95A822335 /* Support Files */,
 			);
-<<<<<<< HEAD
-=======
 			name = EasyTipView;
->>>>>>> develop
 			path = EasyTipView;
 			sourceTree = "<group>";
 		};
@@ -192,10 +175,7 @@
 				9B89E9269B63C5D69CEC801C86B3560A /* Frameworks */,
 				6CE5DA4F73F053A780A00DCE03344A80 /* Support Files */,
 			);
-<<<<<<< HEAD
-=======
 			name = "inavi-maps-sdk";
->>>>>>> develop
 			path = "inavi-maps-sdk";
 			sourceTree = "<group>";
 		};
@@ -298,7 +278,7 @@
 			);
 			name = "Pods-CarLog";
 			productName = Pods_CarLog;
-			productReference = 05E5A0E7D083F9666F94F2322FAEE1AD /* Pods_CarLog.framework */;
+			productReference = 05E5A0E7D083F9666F94F2322FAEE1AD /* Pods-CarLog */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -307,8 +287,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 14.0";
