@@ -21,10 +21,7 @@ class FindIDPassWordViewController: UIViewController {
     }
     
     private func setupUI() {
-        //view.addSubview(findView.segmentedControl)
         view.addSubview(findView.passwordLabel)
-        //view.addSubview(findView.findIDView)
-        //view.addSubview(findView.reSettingPasswordView)
         view.addSubview(findView.emailTextField)
         view.addSubview(findView.buttonStackView)
         
@@ -32,23 +29,8 @@ class FindIDPassWordViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.horizontalMargin)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.horizontalMargin)
-            //make.height.equalTo(60)
         }
-        
-//        findView.findIDView.snp.makeConstraints { make in
-//            make.top.equalTo(findView.passwordLabel.snp.bottom).offset(20)
-//            make.leading.equalTo(view.safeAreaLayoutGuide)
-//            make.trailing.equalTo(view.safeAreaLayoutGuide)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
-//        }
-        
-//        findView.reSettingPasswordView.snp.makeConstraints { make in
-//            make.top.equalTo(findView.segmentedControl.snp.bottom).offset(20)
-//            make.leading.equalTo(view.safeAreaLayoutGuide)
-//            make.trailing.equalTo(view.safeAreaLayoutGuide)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
-//        }
-        
+
         findView.emailTextField.snp.makeConstraints { make in
             make.top.equalTo(findView.passwordLabel.snp.bottom).offset(Constants.verticalMargin * 2)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.verticalMargin)
@@ -63,7 +45,6 @@ class FindIDPassWordViewController: UIViewController {
     }
     
     private func addTarget() {
-        //findView.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         findView.sendButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
         
         findView.popButton.addAction(UIAction(handler: { _ in
