@@ -48,12 +48,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
     private func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
-            let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-                self.dismiss(animated: true, completion: nil)
-            })
-            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-            self.present(alert, animated: true, completion: nil)
+            self.alertView(message: "회원가입을\n취소하시겠습니까?")
         }), for: .touchUpInside)
 
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
