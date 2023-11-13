@@ -12,74 +12,10 @@ import SwiftUI
 
 class MyCarDetailPageViewController: UIViewController {
     // MARK: Properties
-
-    private let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 20
-        return view
-    }()
     
-    private var selectedTitleLabel: UILabel = {
-        var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left)
-        return label
-    }()
-    
-    private lazy var selectedprogressView: UIProgressView = {
-        let view = UIProgressView()
-        view.trackTintColor = .buttonSkyBlueColor
-        view.progressTintColor = .mainNavyColor
-        view.progress = 0.1
-        return view
-    }()
-    
-    private var selectedIntervalLabel: UILabel = {
-        var label = UILabel()
-        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
-        return label
-    }()
-    
-    private let selectedImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(systemName: "chevron.forward")
-        return view
-    }()
-    
-    private lazy var buttonStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [modifiedButton, completedButton])
-        view.customStackView(spacing: Constants.horizontalMargin * 2, axis: .horizontal, alignment: .fill)
-        view.distribution = .fillEqually
-        return view
-    }()
-    
-    private let modifiedButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "날짜 변경", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
-        return button
-    }()
-    
-    private let completedButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "점검 완료", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
-        return button
-    }()
-    
-    private let flowLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        return layout
-    }()
-    
-    private lazy var detailCollectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
-        view.isScrollEnabled = true
-        view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .backgroundCoustomColor
-        view.clipsToBounds = true
-        view.register(MyCarDetialViewCell.self, forCellWithReuseIdentifier: MyCarDetialViewCell.identifier)
-        return view
-    }()
+    private lazy var myCarDetailPageView = MyCarDetailPageView()
+    lazy var myCarDetailButtonStackView = HorizontalButtonStackView(firstButtonText: "날짜 변경", secondButtonText: "수정 완료")
+    lazy var myCarDetailPageCollectionView = MyCarDetailPageCollectionView()
     
     // MARK: Data
 
@@ -116,98 +52,50 @@ class MyCarDetailPageViewController: UIViewController {
         FirestoreService.firestoreService.loadCarPart { data in
             if let data = data {
                 self.saveData = data
-                self.detailCollectionView.reloadData()
+                self.myCarDetailPageCollectionView.detailCollectionView.reloadData()
             }
         }
     }
     
     private func setupUI() {
-        view.addSubview(backgroundView)
-        view.addSubview(buttonStackView)
-        view.addSubview(detailCollectionView)
+        view.addSubview(myCarDetailPageView)
+        view.addSubview(myCarDetailButtonStackView)
+        view.addSubview(myCarDetailPageCollectionView)
         
-        backgroundView.addSubview(selectedTitleLabel)
-        backgroundView.addSubview(selectedprogressView)
-        backgroundView.addSubview(selectedIntervalLabel)
-        backgroundView.addSubview(selectedImageView)
-        
-        backgroundView.snp.makeConstraints {
+        myCarDetailPageView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
         }
         
-        selectedImageView.snp.makeConstraints {
-            $0.top.leading.bottom.equalTo(backgroundView).inset(Constants.horizontalMargin)
-            $0.width.height.equalTo(60)
-            $0.centerY.equalTo(backgroundView)
-        }
-        
-        selectedTitleLabel.snp.makeConstraints {
-            $0.top.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
-            $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.verticalMargin)
-        }
-        
-        selectedprogressView.snp.makeConstraints {
-            $0.top.equalTo(selectedTitleLabel.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.horizontalMargin)
-            $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
-            $0.height.equalTo(4)
-        }
-        
-        selectedIntervalLabel.snp.makeConstraints {
-            $0.top.equalTo(selectedprogressView.snp.bottom).inset(-Constants.verticalMargin)
-            $0.leading.equalTo(selectedImageView.snp.trailing).inset(-Constants.horizontalMargin)
-            $0.trailing.equalTo(backgroundView).inset(Constants.horizontalMargin)
-            $0.bottom.equalTo(backgroundView).inset(Constants.verticalMargin)
-        }
-        
-        buttonStackView.snp.makeConstraints {
-            $0.top.equalTo(backgroundView.snp.bottom).inset(-Constants.verticalMargin)
+        myCarDetailButtonStackView.snp.makeConstraints {
+            $0.top.equalTo(myCarDetailPageView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.trailing.equalToSuperview().inset(Constants.horizontalMargin)
         }
         
-        detailCollectionView.snp.makeConstraints {
-            $0.top.equalTo(buttonStackView.snp.bottom).inset(-Constants.verticalMargin)
+        myCarDetailPageCollectionView.snp.makeConstraints {
+            $0.top.equalTo(myCarDetailButtonStackView.snp.bottom).inset(-Constants.verticalMargin)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        modifiedButton.snp.makeConstraints {
-            $0.height.equalTo(60)
-        }
-        
-        completedButton.snp.makeConstraints {
-            $0.height.equalTo(60)
-        }
     }
-    
-//    private func configureUI() {
-//        let firstInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth! ?? 0).toString()
-//        let secondInterval = Util.util.toInterval(seletedDate: selectedParts?.currentTimeToMonth ?? 0, type: selectedParts!.name).toString()
-//        let progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-//        selectedImageView.image = selectedIcon
-//        selectedTitleLabel.text = selectedParts!.name.rawValue
-//        selectedIntervalLabel.text = "\(firstInterval) ~ \(secondInterval)"
-//        selectedprogressView.progress = Float(progress)
-//    }
     
     private func configureUI() {
         guard let start = selectedParts?.startTime, let end = selectedParts?.endTime else { return }
         let progress = Util.util.calculatorProgress(firstInterval: selectedParts?.startTime ?? Date(), secondInterval: selectedParts?.endTime ?? Date())
-        selectedImageView.image = selectedIcon
-        selectedTitleLabel.text = selectedParts!.name.rawValue
-        selectedIntervalLabel.text = "\(start.toString()) ~ \(end.toString())"
-        selectedprogressView.progress = Float(progress)
+        myCarDetailPageView.selectedImageView.image = selectedIcon
+        myCarDetailPageView.selectedTitleLabel.text = selectedParts!.name.rawValue
+        myCarDetailPageView.selectedIntervalLabel.text = "\(start.toString()) ~ \(end.toString())"
+        myCarDetailPageView.selectedprogressView.progress = Float(progress)
     }
     
     private func setCollectionView() {
-        detailCollectionView.delegate = self
-        detailCollectionView.dataSource = self
+        myCarDetailPageCollectionView.detailCollectionView.delegate = self
+        myCarDetailPageCollectionView.detailCollectionView.dataSource = self
     }
     
     private func addButtonActions() {
-        modifiedButton.addAction(UIAction(handler: { _ in
+        myCarDetailButtonStackView.firstButton.addAction(UIAction(handler: { _ in
             self.modifiedButtonTapped()
         }), for: .touchUpInside)
-        completedButton.addAction(UIAction(handler: { _ in
+        myCarDetailButtonStackView.secondButton.addAction(UIAction(handler: { _ in
             self.completedButtonTapped()
         }), for: .touchUpInside)
     }
@@ -292,12 +180,4 @@ extension MyCarDetailPageViewController: UICollectionViewDelegateFlowLayout, UIC
     func collectionView(_ collectionView: UICollectionView, canEditItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, trailingSwipeActionsConfigurationForItemAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
-//            completionHandler(true)
-//        }
-//        deleteAction.backgroundColor = .red
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
 }
