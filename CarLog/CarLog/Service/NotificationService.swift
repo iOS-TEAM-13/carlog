@@ -59,7 +59,6 @@ class NotificationService {
             } else {
                 alarmDateComponents.month = (alarmDateComponents.month ?? 0) + month
             }
-            print("@@@ \(alarmDateComponents)")
             let trigger = UNCalendarNotificationTrigger(dateMatching: alarmDateComponents , repeats: false)
             guard let email = Constants.currentUser.userEmail else { return }
             let request = UNNotificationRequest(identifier: "\(email)+\(part.name)", content: notificationContent, trigger: trigger)
