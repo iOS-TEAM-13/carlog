@@ -430,11 +430,11 @@ private extension AddCommunityPageViewController {
         
     }
     
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+//    private func showAlert(message: String) {
+//        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
+//    }
 }
 
 extension AddCommunityPageViewController: PHPickerViewControllerDelegate {

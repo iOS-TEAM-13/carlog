@@ -391,10 +391,10 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         myPageView.endEditing(true)
     }
     
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+//    func showAlert(message: String) {
+//        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
+//    }
     
 }
