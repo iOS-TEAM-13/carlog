@@ -99,6 +99,7 @@
 		FF31E3B42B02791F0098B29C /* HorizontalButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31E3B32B02791F0098B29C /* HorizontalButtonStackView.swift */; };
 		FF31E3B62B0280D90098B29C /* MyCarDetailPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31E3B52B0280D90098B29C /* MyCarDetailPageCollectionView.swift */; };
 		FF31E3B82B02872E0098B29C /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31E3B72B02872E0098B29C /* DatePickerView.swift */; };
+		FF31E3BA2B028D100098B29C /* GasStationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31E3B92B028D100098B29C /* GasStationDetailView.swift */; };
 		FF342E462AF8E74600E22022 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF342E452AF8E74600E22022 /* GuideView.swift */; };
 		FF50716A2AD6BC4100713A81 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5071692AD6BC4100713A81 /* Post.swift */; };
 		FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50716B2AD6BC4800713A81 /* Comment.swift */; };
@@ -225,6 +226,7 @@
 		FF31E3B32B02791F0098B29C /* HorizontalButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalButtonStackView.swift; sourceTree = "<group>"; };
 		FF31E3B52B0280D90098B29C /* MyCarDetailPageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarDetailPageCollectionView.swift; sourceTree = "<group>"; };
 		FF31E3B72B02872E0098B29C /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
+		FF31E3B92B028D100098B29C /* GasStationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailView.swift; sourceTree = "<group>"; };
 		FF342E452AF8E74600E22022 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		FF5071692AD6BC4100713A81 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FF50716B2AD6BC4800713A81 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				FF23E3422AF3F0DC00626B63 /* CustomMapView.swift */,
 				FF23E3442AF3F72800626B63 /* CustomAnnotationView.swift */,
 				FF342E452AF8E74600E22022 /* GuideView.swift */,
+				FF31E3B92B028D100098B29C /* GasStationDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				FFD5F7512ADFC02000A06771 /* MyCarDetailViewCell.swift in Sources */,
 				FB748B242AD53B5E00CC6A1F /* MyCarPageViewController.swift in Sources */,
 				FF5D5F9C2AF15798000AFAFD /* NetworkService.swift in Sources */,
+				FF31E3BA2B028D100098B29C /* GasStationDetailView.swift in Sources */,
 				B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */,
 				FBBDA71C2AD7E77C0031C17B /* NickNameView.swift in Sources */,
 				FFFFAF842AE1644800A7677E /* Date+.swift in Sources */,

@@ -15,7 +15,7 @@ class NetworkService {
     // 반경 주유소
     func fetchNearbyGasStation(x: String, y: String, sort: String, prodcd: String, completion: @escaping ([String]?) -> Void) {
         // GET 요청을 보낸다
-        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231027298&"
+        let url = "https://www.opinet.co.kr/api/aroundAll.do?code=F231011278&"
         let query = "x=\(x)&y=\(y)&radius=1000&sort=\(sort)&prodcd=\(prodcd)&out=json"
         let urlString = url + query
         
@@ -68,7 +68,7 @@ class NetworkService {
             idList.forEach { id in
                 dispatchGroup.enter()
 
-                let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231027298&"
+                let baseURL = "https://www.opinet.co.kr/api/detailById.do?code=F231011278&"
                 let query = "id=\(id)&out=json"
                 let urlString = baseURL + query
 
