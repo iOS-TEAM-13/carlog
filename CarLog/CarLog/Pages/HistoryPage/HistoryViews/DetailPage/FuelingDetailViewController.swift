@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SnapKit
 
-class FuelingDetailViewController: UIViewController {
+class FuelingDetailViewController: UIViewController, UITextFieldDelegate {
     let db = Firestore.firestore()
     
     var fuelingData: Fueling?
@@ -35,11 +35,18 @@ class FuelingDetailViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        //
         navigationUI()
         
         //키보드 스크롤
         registerForKeyboardNotifications()
         
+        //fuelingDetailView에 텍스트 필드 글자수 제한 설정 시
+        fuelingDetailView.totalDistanceTextField.delegate = self
+        fuelingDetailView.priceTextField.delegate = self
+        fuelingDetailView.countTextField.delegate = self
+        
+        //
         loadFuelingData()
         
         //자동 계산
@@ -108,6 +115,24 @@ class FuelingDetailViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         fuelingDetailView.endEditing(true)
+    }
+    
+    //MARK: - 텍스트필드 글자수 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        //텍스트필드 마다 다른 글자수 제한 설정
+        switch textField {
+        case fuelingDetailView.totalDistanceTextField, fuelingDetailView.countTextField:
+            let maxLength = 6
+            return updatedText.count <= maxLength
+        case fuelingDetailView.priceTextField:
+            let maxLength = 4
+            return updatedText.count <= maxLength
+        default:
+            return true
+        }
     }
     
     //MARK: - 주행기록 디테일페이지 데이터 로드

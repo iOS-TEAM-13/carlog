@@ -95,7 +95,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적(출발) 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        totalDistanceLabel.customLabel(text: "누적(출발) 주행거리 (6자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return totalDistanceLabel
     }()
     
@@ -152,7 +152,7 @@ class AddDrivingView: UIView, UITextFieldDelegate {
     
     lazy var arriveDistanceLabel: UILabel = {
         let arriveDistanceLabel = UILabel()
-        arriveDistanceLabel.customLabel(text: "도착 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        arriveDistanceLabel.customLabel(text: "도착 주행거리 (6자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return arriveDistanceLabel
     }()
     
