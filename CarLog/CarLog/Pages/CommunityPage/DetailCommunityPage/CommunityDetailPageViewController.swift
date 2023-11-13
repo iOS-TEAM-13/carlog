@@ -315,6 +315,7 @@ class CommunityDetailPageViewController: UIViewController {
                 guard let self = self else { return }
                 
                 self.navigateToEditPage(post: post)
+                
                 // 수정 기능 로직
                 //                print("수정 완료")
             }
@@ -328,6 +329,7 @@ class CommunityDetailPageViewController: UIViewController {
                     }
                     print("삭제 완료")
                     self.navigationController?.popViewController(animated: true)
+                    self.tabBarController?.tabBar.isHidden = false
                 }
             }
             editAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
