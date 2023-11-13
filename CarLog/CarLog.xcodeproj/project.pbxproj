@@ -381,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				B85D105B2B02652A00F2C54A /* ButtonView.swift */,
+				FF31E3B32B02791F0098B29C /* HorizontalButtonStackView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -622,7 +623,6 @@
 				FF0287E82AD7C9A4006657C1 /* ComponentsView.swift */,
 				FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */,
 				FF31E3B12B02764B0098B29C /* MyCarDetailPageView.swift */,
-				FF31E3B32B02791F0098B29C /* HorizontalButtonStackView.swift */,
 				FF31E3B52B0280D90098B29C /* MyCarDetailPageCollectionView.swift */,
 				FF31E3B72B02872E0098B29C /* DatePickerView.swift */,
 			);

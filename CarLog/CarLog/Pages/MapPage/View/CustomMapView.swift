@@ -12,6 +12,8 @@ import SnapKit
 
 class CustomMapView: UIView {
     // MARK: Properties
+    lazy var map = MKMapView()
+    
     lazy var searchButton: UIButton = {
         var btn = UIButton()
         btn.setTitle("현 위치에서 검색", for: .normal)
@@ -20,8 +22,6 @@ class CustomMapView: UIView {
         btn.layer.cornerRadius = Constants.cornerRadius
         return btn
     }()
-    
-    lazy var map = MKMapView()
     
     lazy var myLocationButton = {
         let btn = UIButton()
