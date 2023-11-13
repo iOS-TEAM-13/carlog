@@ -73,10 +73,7 @@ class ModifiedDatePickerViewController: UIViewController {
 
     @objc func completeButtonTapped() {
         let selectedDate = datePicker.date
-        let calendar = Calendar.current
-        if let dayBefore = calendar.date(byAdding: .day, value: +1, to: selectedDate) {
-            onDateSelected?(dayBefore)
-        }
+        onDateSelected?(selectedDate)
         
         dismiss(animated: true, completion: nil)
     }

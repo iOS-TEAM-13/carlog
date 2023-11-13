@@ -26,11 +26,6 @@ class NotificationService {
         }
     }
     
-    func impact(style: UIImpactFeedbackGenerator.FeedbackStyle) {
-        let generator = UIImpactFeedbackGenerator(style: style)
-        generator.impactOccurred()
-    }
-    
     func pushNotification(part: PartsInfo) {
         let month = {
             switch part.name {
@@ -51,8 +46,8 @@ class NotificationService {
             let notificationContent = UNMutableNotificationContent()
             notificationContent.title = "\(part.name.rawValue)의 교체 알림"
             notificationContent.body = "교체 시기가 \(month)개월 남았습니다!"
+            notificationContent.sound = .default
             
-//            let targetDate = Util.util.toInterval(seletedDate: part.currentTimeToMonth ?? 0)
             let targetDate = part.startTime
             var alarmDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: targetDate ?? Date())
             alarmDateComponents.hour = 9
@@ -64,7 +59,7 @@ class NotificationService {
             } else {
                 alarmDateComponents.month = (alarmDateComponents.month ?? 0) + month
             }
-            
+            print("@@@ \(alarmDateComponents)")
             let trigger = UNCalendarNotificationTrigger(dateMatching: alarmDateComponents , repeats: false)
             guard let email = Constants.currentUser.userEmail else { return }
             let request = UNNotificationRequest(identifier: "\(email)+\(part.name)", content: notificationContent, trigger: trigger)
