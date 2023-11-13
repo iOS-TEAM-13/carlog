@@ -196,7 +196,6 @@ class CommunityDetailPageViewController: UIViewController {
                 make.height.equalTo(345)
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
-                //make.size.equalTo(CGSize(width: 360, height: 345))
             }
         }
         
@@ -216,7 +215,6 @@ class CommunityDetailPageViewController: UIViewController {
         }
         
         communityDetailPageContentView.snp.makeConstraints { make in
-            //make.edges.equalTo(communityDetailPageScrollView)
             make.top.bottom.trailing.leading.equalToSuperview()
             make.width.equalTo(communityDetailPageScrollView)
         }
