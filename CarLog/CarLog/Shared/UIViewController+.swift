@@ -21,7 +21,6 @@ extension UIViewController {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
             completion()
-            self.dismiss(animated: true, completion: nil)
         })
         present(alert, animated: true, completion: nil)
     }

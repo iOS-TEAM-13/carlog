@@ -29,7 +29,7 @@ final class CarNumberView: UIView {
         return button
     }()
 
-    lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
+    lazy var nextButton: UIButton = largeButton(text: "다 음", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
     
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide

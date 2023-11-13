@@ -3,6 +3,7 @@ import UIKit
 import AuthenticationServices
 
 final class LoginView: UIView {
+
     lazy var logoLabel: UILabel = {
         let label = UILabel()
         label.text = "CARLOG"
@@ -14,7 +15,7 @@ final class LoginView: UIView {
     lazy var emailTextField = loginTextField(placeholder: "이메일")
     lazy var passwordTextField = loginTextField(placeholder: "비밀번호")
 
-    lazy var loginButton = loginButton(text: "로 그 인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
+    lazy var loginButton = largeButton(text: "로 그 인", titleColor: .gray, backgroundColor: .lightGray)
     lazy var joinupButton = loginButton(text: "회원가입", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
     lazy var spaceView = UIView()
     lazy var findIdPassword = loginButton(text: "아이디 · 비밀번호 찾기", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .black, backgroundColor: .clear)
@@ -37,7 +38,7 @@ final class LoginView: UIView {
         }
 
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(logoLabel.snp.bottom).offset(Constants.verticalMargin)
+             make.top.equalTo(logoLabel.snp.bottom).offset(Constants.verticalMargin)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
         }
@@ -52,7 +53,7 @@ final class LoginView: UIView {
             make.top.equalTo(passwordTextField.snp.bottom).offset(40)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
+            //make.height.equalTo(50)
         }
 
         signupStackView.snp.makeConstraints { make in

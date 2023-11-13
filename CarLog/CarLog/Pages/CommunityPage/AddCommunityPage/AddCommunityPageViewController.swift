@@ -268,7 +268,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.showAlert(message: "제목은 필수입니다!")
+            self.showAlert(message: "제목은 필수입니다!", completion: {})
         }
     }
     
@@ -301,7 +301,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.showAlert(message: "제목은 필수입니다!")
+            self.showAlert(message: "제목은 필수입니다!", completion: {})
         }
     }
     
