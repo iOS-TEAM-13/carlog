@@ -9,4 +9,6 @@ target 'CarLog' do
 
   pod 'inavi-maps-sdk'
 
+  pod 'EasyTipView', '~> 2.1'
+
 end

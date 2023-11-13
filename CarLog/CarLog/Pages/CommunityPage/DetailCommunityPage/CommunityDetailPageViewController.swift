@@ -28,13 +28,11 @@ class CommunityDetailPageViewController: UIViewController {
     
     lazy var communityDetailPageScrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
     lazy var communityDetailPageContentView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -76,7 +74,8 @@ class CommunityDetailPageViewController: UIViewController {
     lazy var photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 360, height: 345)
+        //layout.itemSize = CGSize(width: 360, height: 345)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 345 )
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -154,7 +153,6 @@ class CommunityDetailPageViewController: UIViewController {
     lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .backgroundCoustomColor
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -181,10 +179,11 @@ class CommunityDetailPageViewController: UIViewController {
     }()
     
     private func setupUI() {
+        //communityDetailPageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         view.addSubview(communityDetailPageScrollView)
         view.addSubview(containerView)
         communityDetailPageScrollView.addSubview(communityDetailPageContentView)
-        communityDetailPageScrollView.addSubview(allStackView)
+        communityDetailPageContentView.addSubview(allStackView)
         communityDetailPageContentView.addSubview(line)
         communityDetailPageContentView.addSubview(commentTableView)
         containerView.addSubview(commentTextView)
@@ -194,7 +193,9 @@ class CommunityDetailPageViewController: UIViewController {
             photoCollectionView.isHidden = true
         } else {
             photoCollectionView.snp.makeConstraints { make in
-                make.size.equalTo(CGSize(width: 360, height: 345))
+                make.height.equalTo(345)
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
             }
         }
         
@@ -214,7 +215,7 @@ class CommunityDetailPageViewController: UIViewController {
         }
         
         communityDetailPageContentView.snp.makeConstraints { make in
-            make.edges.equalTo(communityDetailPageScrollView)
+            make.top.bottom.trailing.leading.equalToSuperview()
             make.width.equalTo(communityDetailPageScrollView)
         }
         
@@ -223,9 +224,9 @@ class CommunityDetailPageViewController: UIViewController {
         }
         
         allStackView.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(Constants.verticalMargin)
-            make.leftMargin.equalToSuperview().offset(Constants.horizontalMargin)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.top.equalToSuperview().offset(Constants.verticalMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
+            make.trailing.equalToSuperview().offset(-Constants.horizontalMargin)
         }
         
         line.snp.makeConstraints { make in
@@ -314,6 +315,7 @@ class CommunityDetailPageViewController: UIViewController {
                 guard let self = self else { return }
                 
                 self.navigateToEditPage(post: post)
+                
                 // 수정 기능 로직
                 //                print("수정 완료")
             }
@@ -327,6 +329,7 @@ class CommunityDetailPageViewController: UIViewController {
                     }
                     print("삭제 완료")
                     self.navigationController?.popViewController(animated: true)
+                    self.tabBarController?.tabBar.isHidden = false
                 }
             }
             editAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")

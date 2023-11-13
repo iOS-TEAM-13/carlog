@@ -28,7 +28,7 @@ class ModifiedDatePickerViewController: UIViewController {
         return button
     }()
     
-    var onDateSelected: ((String) -> Void)?
+    var onDateSelected: ((Date) -> Void)?
     
     // MARK: LifeCycle
 
@@ -72,8 +72,9 @@ class ModifiedDatePickerViewController: UIViewController {
     // MARK: @Objc
 
     @objc func completeButtonTapped() {
-        let selectedDate = datePicker.date.toString()
+        let selectedDate = datePicker.date
         onDateSelected?(selectedDate)
+        
         dismiss(animated: true, completion: nil)
     }
 }

@@ -60,22 +60,21 @@ class MapPageViewController: UIViewController {
         mapView.map.delegate = self
         locationManager.delegate = self
         
-        getLocationUsagePermission()
-        
         setupMapView()
         addCustomPin()
         addButtonActions()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-//        tabBarController?.tabBar.barTintColor = .white
-        getLoaction()
+        setAuthorization()
+        setupLocationManager()
     }
     
     // MARK: Method
-    func setupMapView() {
+    private func setupMapView() {
         view.addSubview(guideView)
         view.addSubview(myLocationButton)
         view.addSubview(zoomInButton)
@@ -83,8 +82,7 @@ class MapPageViewController: UIViewController {
         
         mapView.map.showsCompass = true
         mapView.map.showsScale = true
-        mapView.map.showsUserLocation = true
-        mapView.map.setUserTrackingMode(.followWithHeading, animated: true)
+        mapView.map.showsUserLocation = false
         
         guideView.snp.makeConstraints {
             $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
@@ -108,6 +106,7 @@ class MapPageViewController: UIViewController {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        mapView.map.setUserTrackingMode(.followWithHeading, animated: true)
         if let currentLocation = locations.last {
             myLatitude = currentLocation.coordinate.latitude
             myLongitude = currentLocation.coordinate.longitude
@@ -118,13 +117,13 @@ class MapPageViewController: UIViewController {
         }
     }
     
-    func fetchCoordinateCurrentLocation(_ location: CLLocation) {
+    private func fetchCoordinateCurrentLocation(_ location: CLLocation) {
         let lat = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).x)
         let lon = String(INVKatec(latLng: INVLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)).y)
         fetchNearByList(x: lat, y: lon)
     }
     
-    func fetchNearByList(x: String, y: String) {
+    private func fetchNearByList(x: String, y: String) {
         NetworkService.service.fetchNearbyGasStation(x: x, y: y, sort: "2", prodcd: "B027") { [weak self] data in
             if let data = data {
                 self?.fetchDetailGasStation(id: data)
@@ -132,7 +131,7 @@ class MapPageViewController: UIViewController {
         }
     }
     
-    func fetchDetailGasStation(id: [String]) {
+    private func fetchDetailGasStation(id: [String]) {
         NetworkService.service.fetchDetailGasStation(idList: id) { [weak self] data in
             if let data = data {
                 self?.stationDetailList = data
@@ -140,13 +139,14 @@ class MapPageViewController: UIViewController {
                     self?.stationDetailList.forEach { item in
                         self?.locationList.append(CustomAnnotation(title: item.name, gasolinePrice: String(item.oilPrice.filter { $0.prodcd == "B027" }.first?.price ?? 0), dieselPrice: String(item.oilPrice.filter { $0.prodcd == "D047" }.first?.price ?? 0), coordinate: CLLocationCoordinate2D(latitude: Double(item.gisYCoor), longitude: Double(item.gisXCoor))))
                         self?.addCustomPin()
+                        self?.locationManager.stopUpdatingLocation()
                     }
                 }
             }
         }
     }
     
-    func changeAdress(gasStation: [CustomGasStation], completion: @escaping () -> Void) {
+    private func changeAdress(gasStation: [CustomGasStation], completion: @escaping () -> Void) {
         NetworkService.service.changeAddress(gasStation: gasStation) { [weak self] data in
             if data?.count != 0 {
                 if let data = data {
@@ -155,10 +155,6 @@ class MapPageViewController: UIViewController {
                 completion()
             }
         }
-    }
-    
-    private func getLoaction() {
-        setupLocationManager()
     }
     
     private func removeAnnotation() {
@@ -178,6 +174,27 @@ class MapPageViewController: UIViewController {
             self.removeAnnotation()
             self.fetchCoordinateCurrentLocation(CLLocation(latitude: self.myLatitude ?? 0.0, longitude: self.myLongitude ?? 0.0))
         }), for: .touchUpInside)
+    }
+    
+    private func setAuthorization() {
+        let status = locationManager.authorizationStatus
+        if status == .denied || status == .restricted {
+            DispatchQueue.main.async {
+                self.moveToSettingAlert(reason: "위치 권한 요청 거부됨", discription: "설정에서 권한을 허용해 주세요.")
+            }
+        }
+    }
+    
+    private func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        alert.addAction(cancle)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: @Objc
@@ -244,8 +261,6 @@ extension MapPageViewController: MKMapViewDelegate {
             }
         }
         if let data = data {
-//            let vc = GasStationDetailViewController(presentedViewController: MapPageViewController, presenting: , size: 0.4, data: data)
-//            present(vc, animated: true)
             self.data = data
             
             let vc = GasStationDetailViewController(data: data)
@@ -262,23 +277,16 @@ extension MapPageViewController: CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-    
-    func getLocationUsagePermission() {
-        locationManager.requestWhenInUseAuthorization()
-    }
-    
+        
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
             print("GPS 권한 설정됨")
             locationManager.startUpdatingLocation() // 중요!
-        case .restricted, .notDetermined:
-            print("GPS 권한 설정되지 않음")
-            getLocationUsagePermission()
-        case .denied:
-            print("GPS 권한 요청 거부됨")
-            getLocationUsagePermission()
         default:
+            DispatchQueue.main.async {
+                self.moveToSettingAlert(reason: "위치 권한 요청 거부됨", discription: "설정에서 권한을 허용해 주세요.")
+            }
             print("GPS: Default")
         }
     }

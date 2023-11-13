@@ -59,9 +59,6 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
                 DispatchQueue.main.async {
                     if let data = data, let image = UIImage(data: data) {
                         cell.imageView.image = image
-                        self.photoCollectionView.snp.makeConstraints { make in
-                            make.size.equalTo(CGSize(width: 360, height: 345))
-                        }
                     } else if let error = error {
                         print("Error downloading image: \(error.localizedDescription)")
                     }

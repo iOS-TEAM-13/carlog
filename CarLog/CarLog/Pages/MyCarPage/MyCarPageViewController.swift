@@ -1,4 +1,5 @@
 import UIKit
+import EasyTipView
 
 import FirebaseAuth
 import SnapKit
@@ -6,7 +7,7 @@ import SwiftUI
 
 class MyCarPageViewController: UIViewController {
     // MARK: Properties
-
+    
     private let flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -35,14 +36,18 @@ class MyCarPageViewController: UIViewController {
     
     private let menuIcon = [UIImage(named: "engineOil"), UIImage(named: "missionOil"), UIImage(named: "brakeOil"), UIImage(named: "brakePad"), UIImage(named: "tireRotation"), UIImage(named: "tire"), UIImage(named: "fuelFilter"), UIImage(named: "wiperBlade"), UIImage(named: "airconFilter"), UIImage(named: "insurance")]
     
-    private let engToKor: [String: String] = ["engineOil": "엔진 오일", "missionOil": "미션 오일", "brakeOil": "브레이크 오일", "brakePad": "브레이크 패드", "tireRotation": "타이어 로테이션", "tire": "타이어 교체", "fuelFilter": "연료 필터", "wiper": "와이퍼 블레이드", "airconFilter": "에어컨 필터", "insurance": "보험"]
-    
+    private let tooltipList = [("6개월", "3"), ("2년", "6"), ("2년", "6"), ("1년", "3"), ("1년", "3"), ("3년", "12"), ("1년", "3"), ("1년", "3"), ("1년", "3"), ("1년", "3")]
+
     var firstInterval = ""
     var secondInterval = ""
     var progress = 0.0
     
+    var preferences = EasyTipView.Preferences()
+    
+    private var currentTooltip: EasyTipView?
+    
     // MARK: LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
@@ -53,6 +58,7 @@ class MyCarPageViewController: UIViewController {
         navigationItem.backBarButtonItem = backButton
         
         setupUI()
+        setTooltip()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,11 +66,19 @@ class MyCarPageViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = false
         loadData()
-        NotificationService.service.setAuthorization()
+        NotificationService.service.setAuthorization() {
+            DispatchQueue.main.async {
+                self.moveToSettingAlert(reason: "알림 권한 요철 거부됨", discription: "설정에서 권한을 허용해주세요.")
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.currentTooltip?.dismiss()
     }
     
     // MARK: Method
-
+    
     private func setupUI() {
         view.addSubview(myCarCollectionView)
         
@@ -74,6 +88,19 @@ class MyCarPageViewController: UIViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    
+    func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        alert.addAction(cancle)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard
@@ -104,6 +131,15 @@ class MyCarPageViewController: UIViewController {
             }
         }
     }
+    
+    private func setTooltip() {
+        preferences.drawing.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .regular)
+        preferences.drawing.foregroundColor = .black
+        preferences.drawing.backgroundColor = .buttonSkyBlueColor
+        preferences.animating.dismissOnTap = true
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.any
+        EasyTipView.globalPreferences = preferences
+    }
 }
 
 // MARK: Extension
@@ -115,54 +151,51 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCarCollectionViewCell.identifier, for: indexPath) as? MyCarCollectionViewCell else { return UICollectionViewCell() }
-        if let icon = menuIcon[indexPath.row] {
-            if carParts.parts[indexPath.row].name != .insurance {
-                if let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth {
-                    firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-                    secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
+        let item = carParts.parts[indexPath.row]
+        if let icon = menuIcon[indexPath.row], let start = item.startTime, let end = item.endTime {
+            progress = Util.util.calculatorProgress(firstInterval: start, secondInterval: end)
+            cell.tooltipTapped = {
+                self.currentTooltip?.dismiss()
+                let tooltip = EasyTipView(text: "\(item.name.rawValue) 권장 교체 기간: \(self.tooltipList[indexPath.row].0) \n 교체가 \(self.tooltipList[indexPath.row].1)개월 남으면 알림을 보내드려요!", preferences: self.preferences, delegate: self)
+                tooltip.show(forView: cell.tooltipIcon)
+                cell.isUserInteractionEnabled = false
+                self.currentTooltip = tooltip
                 }
-                progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-            } else {
-                if let time = carParts.parts[indexPath.row].currentTime {
-                    firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
-                    secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
-                }
-                
-                progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
-            }
-            cell.bind(title: carParts.parts[indexPath.row].name.rawValue, interval: "\(firstInterval) ~ \(secondInterval)", icon: icon, progress: progress)
+            cell.bind(title: item.name.rawValue, interval: "\(start.toString()) ~ \(end.toString())", icon: icon, progress: progress)
         }
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        currentTooltip?.dismiss()
         let vc = MyCarDetailPageViewController()
-        guard let timetoMonth = carParts.parts[indexPath.row].currentTimeToMonth else { return }
-        guard let time = carParts.parts[indexPath.row].currentTime else { return }
-        if carParts.parts[indexPath.row].name != .insurance {
-            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
-            firstInterval = Util.util.toInterval(seletedDate: timetoMonth).toString()
-            secondInterval = Util.util.toInterval(seletedDate: timetoMonth, type: carParts.parts[indexPath.row].name).toString()
-            progress = Util.util.calculatorProgress(firstInterval: firstInterval, secondInterval: secondInterval)
-        } else {
-            firstInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).0.toString()
-            secondInterval = Util.util.toInterval(seletedInsuranceDate: Int(time) ?? 0).1.toString()
-            progress = Util.util.calculatorProgress(firstInsurance: firstInterval, secondInsurance: secondInterval)
-        }
-        vc.selectedParts = carParts.parts[indexPath.row]
-        for i in 0 ... vc.saveData.parts.count - 1 {
-            if vc.saveData.parts[i].name == carParts.parts[indexPath.row].name {
-                vc.saveData.parts[i] = carParts.parts[indexPath.row]
-            }
+        guard let start = carParts.parts[indexPath.row].startTime, let end = carParts.parts[indexPath.row].endTime else { return }
+            progress = Util.util.calculatorProgress(firstInterval: start, secondInterval: end)
+            vc.selectedParts = carParts.parts[indexPath.row]
+            for i in 0 ... vc.saveData.parts.count - 1 {
+                if vc.saveData.parts[i].name == carParts.parts[indexPath.row].name {
+                    vc.saveData.parts[i] = carParts.parts[indexPath.row]
+                }
         }
         vc.selectedProgress = progress
-        vc.selectedInterval = "\(firstInterval) ~ \(secondInterval)"
         vc.selectedIcon = menuIcon[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 100)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.currentTooltip?.dismiss()
+    }
+}
+
+extension MyCarPageViewController: EasyTipViewDelegate {
+    func easyTipViewDidTap(_ tipView: EasyTipView) {
+    }
+    
+    func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+        myCarCollectionView.visibleCells.forEach { $0.isUserInteractionEnabled = true }
     }
 }

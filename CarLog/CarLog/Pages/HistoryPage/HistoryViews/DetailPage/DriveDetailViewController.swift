@@ -35,15 +35,24 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        //
+        navigationUI()
+        
         //키보드 스크롤
         registerForKeyboardNotifications()
         
-        //detailDrivingView에 운행 목적 텍스트 필드 글자수 제한 설정 시
+        //detailDrivingView에 텍스트 필드 글자수 제한 설정 시
         drivingDetailView.drivingPurposeTextField.delegate = self
+        drivingDetailView.totalDistanceTextField.delegate = self
+        drivingDetailView.arriveDistanceTextField.delegate = self
         
-        navigationUI()
+        //데이터 로드
         loadDrivingData()
+        
+        //자동계산
         autoCalculate()
+        
+        //수정, 삭제 버튼 클릭 이벤트
         buttonActions()
     }
     
@@ -112,8 +121,18 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        let maxLength = 15
-        return updatedText.count <= maxLength
+        
+        //텍스트필드 마다 다른 글자수 제한 설정
+        switch textField {
+        case drivingDetailView.drivingPurposeTextField:
+            let maxLength = 15
+            return updatedText.count <= maxLength
+        case drivingDetailView.totalDistanceTextField, drivingDetailView.arriveDistanceTextField:
+            let maxLength = 6
+            return updatedText.count <= maxLength
+        default:
+            return true
+        }
     }
     
     //MARK: - 주행기록 디테일페이지 데이터 로드

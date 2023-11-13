@@ -6,8 +6,6 @@ import PhotosUI
 import SnapKit
 
 class AddCommunityPageViewController: UIViewController {
-    let currentDate = Date()
-    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
@@ -275,7 +273,11 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
     }
     
     @objc func EditTapRightBarButton() {
-        let timeStamp = String.dateFormatter.string(from: currentDate)
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 a hh:mm:ss"
+        let timeStamp = dateFormatter.string(from: currentDate)
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
         for i in selectedImages {

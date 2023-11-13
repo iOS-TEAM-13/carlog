@@ -41,7 +41,7 @@ class AddFuelingView: UIView {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        totalDistanceLabel.customLabel(text: "누적 주행거리 (6자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return totalDistanceLabel
     }()
     
@@ -99,7 +99,7 @@ class AddFuelingView: UIView {
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        priceLabel.customLabel(text: "단가 (4자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return priceLabel
     }()
     
@@ -157,7 +157,7 @@ class AddFuelingView: UIView {
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        countLabel.customLabel(text: "수량 (소수점 포함 6자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
         return countLabel
     }()
     

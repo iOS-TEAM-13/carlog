@@ -15,15 +15,15 @@ class NotificationService {
     
     private init() { }
     
-    func setAuthorization() {
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in }
-        )
-    }
-    
-    func impact(style: UIImpactFeedbackGenerator.FeedbackStyle) {
-        let generator = UIImpactFeedbackGenerator(style: style)
-        generator.impactOccurred()
+    func setAuthorization(completion: @escaping () -> Void) {
+        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
+            if granted {
+                
+            } else {
+                completion()
+            }
+        }
     }
     
     func pushNotification(part: PartsInfo) {
@@ -46,9 +46,10 @@ class NotificationService {
             let notificationContent = UNMutableNotificationContent()
             notificationContent.title = "\(part.name.rawValue)의 교체 알림"
             notificationContent.body = "교체 시기가 \(month)개월 남았습니다!"
+            notificationContent.sound = .default
             
-            let targetDate = Util.util.toInterval(seletedDate: part.currentTimeToMonth ?? 0)
-            var alarmDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: targetDate)
+            let targetDate = part.startTime
+            var alarmDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: targetDate ?? Date())
             alarmDateComponents.hour = 9
             alarmDateComponents.minute = 0
             alarmDateComponents.second = 0
@@ -58,7 +59,6 @@ class NotificationService {
             } else {
                 alarmDateComponents.month = (alarmDateComponents.month ?? 0) + month
             }
-            
             let trigger = UNCalendarNotificationTrigger(dateMatching: alarmDateComponents , repeats: false)
             guard let email = Constants.currentUser.userEmail else { return }
             let request = UNNotificationRequest(identifier: "\(email)+\(part.name)", content: notificationContent, trigger: trigger)
