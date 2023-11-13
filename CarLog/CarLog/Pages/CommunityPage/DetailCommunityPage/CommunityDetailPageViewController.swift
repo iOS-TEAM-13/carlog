@@ -204,7 +204,7 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
-                self.showAlert(message: "게시글을 정말로 삭제하시겠습니까?") {
+                self.alertView(message: "게시글을 정말로 삭제하시겠습니까?") {
                     FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
                         if err != nil {
                             print("에러")
@@ -235,8 +235,7 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
                 guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
-                let confirmAlert = UIAlertController(title: "해당 게시글을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
-                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                self.alertView(message: "해당 게시글을 차단하시겠습니까?") {
                     FirestoreService.firestoreService.blockPost(postID: postID, userEmail: userEmail) { error in
                         if let error = error {
                             print("차단 오류: \(error.localizedDescription)")
@@ -246,9 +245,7 @@ class CommunityDetailPageViewController: UIViewController {
                             self.tabBarController?.tabBar.isHidden = false
                         }
                     }
-                }))
-                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                self.present(confirmAlert, animated: true, completion: nil)
+                }
             }
             action3.setValue(UIColor.systemRed, forKey: "titleTextColor")
             action4.setValue(UIColor.systemRed, forKey: "titleTextColor")
@@ -283,7 +280,6 @@ class CommunityDetailPageViewController: UIViewController {
     // MARK: - 댓글 기능
     
     @objc func commentButtonTapped() {
-        print("눌렸습니다!")
         if let commentText = detailView.commentTextView.text, !commentText.isEmpty {
             addComment(comment: commentText)
             detailView.commentTableView.reloadData()
