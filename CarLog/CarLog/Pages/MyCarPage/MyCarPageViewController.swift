@@ -185,6 +185,10 @@ extension MyCarPageViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         .init(width: collectionView.bounds.width - Constants.horizontalMargin * 2, height: 100)
     }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.currentTooltip?.dismiss()
+    }
 }
 
 extension MyCarPageViewController: EasyTipViewDelegate {
