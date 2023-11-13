@@ -3,6 +3,7 @@ import Foundation
 import AuthenticationServices
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 
 final class LoginService {
     static let loginService = LoginService()
@@ -22,18 +23,18 @@ final class LoginService {
     }
 
     // 회원가입
-    func signUpUser(email: String, password: String) {
+    func signUpUser(email: String, password: String, completion: @escaping (() -> Void)) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("회원가입 실패: \(error.localizedDescription)")
                 return
             }
-
             if let email = authResult?.user.email {
                 FirestoreService.firestoreService.saveUsers(user: User(email: email)) { err in
                     print("err: \(String(describing: err?.localizedDescription))")
                 }
             }
+            completion()
         }
     }
 
@@ -67,7 +68,7 @@ final class LoginService {
             print("로그아웃 실패: \(error.localizedDescription)")
         }
     }
-
+ 
     // 회원탈퇴
     func quitUser(email: String, completion: @escaping (Error?) -> Void) {
         // 1. Firebase Authentication에서 사용자 삭제
@@ -147,6 +148,40 @@ final class LoginService {
                         }
                     }
                     self.db.collection("fuelings").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
+                        if let error = error {
+                            // 에러 처리
+                            completion(error)
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete { error in
+                                    if let error = error {
+                                        completion(error)
+                                    } else {
+                                        // 성공
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.db.collection("posts").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
+                        if let error = error {
+                            // 에러 처리
+                            completion(error)
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete { error in
+                                    if let error = error {
+                                        completion(error)
+                                    } else {
+                                        // 성공
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    self.db.collection("comments").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
                         if let error = error {
                             // 에러 처리
                             completion(error)
