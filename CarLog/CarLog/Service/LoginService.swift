@@ -22,18 +22,18 @@ final class LoginService {
     }
 
     // 회원가입
-    func signUpUser(email: String, password: String) {
+    func signUpUser(email: String, password: String, completion: @escaping (() -> Void)) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("회원가입 실패: \(error.localizedDescription)")
                 return
             }
-
             if let email = authResult?.user.email {
                 FirestoreService.firestoreService.saveUsers(user: User(email: email)) { err in
                     print("err: \(String(describing: err?.localizedDescription))")
                 }
             }
+            completion()
         }
     }
 

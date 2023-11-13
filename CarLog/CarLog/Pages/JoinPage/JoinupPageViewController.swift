@@ -106,34 +106,39 @@ class JoinupPageViewController: JoinupPageHelperController {
 
         totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
-
-            FirestoreService.firestoreService.saveCar(
-                car: Car(
-                    number: self.carNumberView.carNumberTextField.text,
-                    maker: self.carMakerView.carMakerTextField.text,
-                    name: self.carModelView.carModelTextField.text,
-                    oilType: selectedOilType ?? "",
-                    nickName: self.nickNameView.carNickNameTextField.text,
-                    totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
-                    userEmail: self.joinupView.emailTextField.text),
-                completion: { _ in
-                    self.doneButtonTapped()
-                })
+            LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
+                FirestoreService.firestoreService.saveCar(
+                    car: Car(
+                        number: self.carNumberView.carNumberTextField.text,
+                        maker: self.carMakerView.carMakerTextField.text,
+                        name: self.carModelView.carModelTextField.text,
+                        oilType: selectedOilType ?? "",
+                        nickName: self.nickNameView.carNickNameTextField.text,
+                        totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
+                        userEmail: self.joinupView.emailTextField.text),
+                    completion: { _ in
+                        self.doneButtonTapped()
+                    })
+            }
         }), for: .touchUpInside)
     }
 
     // 최종 주행거리 "완료" 버튼
     private func doneButtonTapped() {
-        LoginService.loginService.keepLogin { user in
-            if user != nil {
-                let tabBarController = Util.mainTabBarController()
-                if let windowScene = UIApplication.shared.connectedScenes
-                    .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
-                    let window = windowScene.windows.first
-                {
-                    window.rootViewController = tabBarController
+        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            LoginService.loginService.keepLogin { user in
+                if user != nil {
+                    let tabBarController = Util.mainTabBarController()
+                    if let windowScene = UIApplication.shared.connectedScenes
+                        .first(where: { $0 is UIWindowScene }) as? UIWindowScene,
+                        let window = windowScene.windows.first
+                    {
+                        window.rootViewController = tabBarController
+                    }
                 }
             }
-        }
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }

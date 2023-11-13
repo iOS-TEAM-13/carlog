@@ -134,7 +134,6 @@ extension JoinupPageViewController {
                 } else {
                     self.joinupView.checkEmailButton.setTitleColor(.red, for: .normal)
                     self.joinupView.checkEmailButton.setTitle("불가능", for: .normal)
-                    // dfself.showAlert(message: "이미 사용중인 아이디입니다")
                     self.joinupView.emailTextField.text = ""
                 }
             }
@@ -165,7 +164,7 @@ extension JoinupPageViewController {
             let fifthCharacter = carNumberToCheck[fifthCharacterIndex]
 
             if String(fifthCharacter).range(of: "[가-힣]+", options: .regularExpression) == nil {
-                return self.showAlert(message: "가운데 한글이 빠졌습니다")
+                return self.showAlert(message: "00가0000 형식으로 써주세요")
             }
             
             FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
@@ -302,30 +301,14 @@ extension JoinupPageViewController {
             let personalInfoCheck = self.joinupView.checkboxButton.isSelected == !self.isChecked
             
             if isEmailValid, isPasswordValid, isConfirmPasswordValid, isSMTPNumber, personalInfoCheck {
-                LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "")
-                // 모든 조건을 만족하면 다음 단계로 이동
                 self.checkVerificationCode { success in
                     if success {
-                        if let user = Auth.auth().currentUser {
-                            if user.isEmailVerified {
-                                // 사용자가 이메일 확인을 완료한 경우
-                                self.showAlert(message: "이메일 확인이 완료되었습니다.")
-                            } else {
-                                // 사용자가 이메일 확인을 아직 하지 않은 경우
-                                self.showAlert(message: "이메일 확인을 하지 않았습니다. 이메일을 확인해주세요.")
-                            }
+                        self.view.addSubview(self.carNumberView)
+                        self.joinupView.isHidden = true
+                        self.carNumberView.isHidden = false
+                        self.carNumberView.snp.makeConstraints { make in
+                            make.edges.equalToSuperview()
                         }
-                        
-                        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                            self.view.addSubview(self.carNumberView)
-                            self.joinupView.isHidden = true
-                            self.carNumberView.isHidden = false
-                            self.carNumberView.snp.makeConstraints { make in
-                                make.edges.equalToSuperview()
-                            }
-                        }))
-                        self.present(alert, animated: true, completion: nil)
                     } else {
                         if self.joinupView.smtpNumberTextField.text?.count == 6 {
                             self.joinupView.smtpNumberTextField.text = "" // 6자리이고 일치하지 않으면 입력값 초기화

@@ -40,8 +40,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        carDummy = Constants.currentUser
-        self.configureUI() // ⭐ 내 차 정보 가져오기
+        self.setupUI() // ⭐ 내 차 정보 가져오기
         
         if isEditMode {
             toggleTextFieldsEditing(enable: false)
@@ -139,27 +138,30 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         }
     }
     
-    private func configureUI() {
-        // 배열에서 첫 번째 요소 가져오기
-            if let userEmail = carDummy.userEmail {
-                if let atIndex = userEmail.firstIndex(of: "@") {
-                    let emailPrefix = String(userEmail[..<atIndex])
-                    myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
-                } else {
-                    myPageView.mainTitleLabel.text = "\(userEmail) 님"
+    private func setupUI() {
+        FirestoreService.firestoreService.loadCar { carInfoArray in
+            if let index = carInfoArray?.firstIndex(where: { $0.userEmail == Constants.currentUser.userEmail }) {
+                if let car = carInfoArray?[index] {
+                    if let userEmail = car.userEmail {
+                        if let atIndex = userEmail.firstIndex(of: "@") {
+                            let emailPrefix = String(userEmail[..<atIndex])
+                            self.myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
+                        } else {
+                            self.myPageView.mainTitleLabel.text = "\(userEmail) 님"
+                        }
+                        self.myPageView.carNumberTextField.text = car.number
+                        self.myPageView.carMakerTextField.text = car.maker
+                        self.myPageView.carNameTextField.text = car.name
+                        self.myPageView.carOilTypeTextField.text = car.oilType
+                        self.myPageView.carNickNameTextField.text = car.nickName
+                        if let totalDistance = car.totalDistance {
+                            self.myPageView.carTotalDistanceTextField.text = String(totalDistance)
+                        } else {
+                            self.myPageView.carTotalDistanceTextField.text = "0.0"
+                        }
+                    }
                 }
-            myPageView.carNumberTextField.text = carDummy.number
-            myPageView.carMakerTextField.text = carDummy.maker
-            myPageView.carNameTextField.text = carDummy.name // name 으로 통일!
-            myPageView.carOilTypeTextField.text = carDummy.oilType
-            myPageView.carNickNameTextField.text = carDummy.nickName
-            if let totalDistance = carDummy.totalDistance {
-                myPageView.carTotalDistanceTextField.text = String(totalDistance)
-            } else {
-                myPageView.carTotalDistanceTextField.text = "0.0" // 만약 totalDistance가 nil인 경우 기본값 설정
             }
-        } else {
-            // carDummy 배열이 비어있을 때 대응할 내용을 여기에 추가할 수 있습니다.
         }
     }
     
