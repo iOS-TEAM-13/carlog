@@ -201,13 +201,10 @@ class CommunityDetailPageViewController: UIViewController {
                 guard let self = self else { return }
                 
                 self.navigateToEditPage(post: post)
-                
-                // 수정 기능 로직
-                //                print("수정 완료")
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
-                self.showAlert(text: "게시글") {
+                self.showAlert(message: "게시글을 정말로 삭제하시겠습니까?") {
                     FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
                         if err != nil {
                             print("에러")
@@ -224,8 +221,7 @@ class CommunityDetailPageViewController: UIViewController {
             actionSheet.addAction(action2)
         } else {
             let action3 = UIAlertAction(title: "\(String(describing: post.userName ?? ""))님 차단하기", style: .default) { _ in
-                let confirmAlert = UIAlertController(title: "\(post.userName ?? "")님을 차단하시겠습니까?", message: nil, preferredStyle: .alert)
-                confirmAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                self.alertView(message: "\(post.userName ?? "")님을 차단하시겠습니까?") {
                     FirestoreService.firestoreService.blockUser(userName: self.selectedPost?.userName ?? "", userEmail: Constants.currentUser.userEmail ?? "") { error in
                         if let error = error {
                             print("차단 오류: \(error.localizedDescription)")
@@ -235,9 +231,7 @@ class CommunityDetailPageViewController: UIViewController {
                             self.tabBarController?.tabBar.isHidden = false
                         }
                     }
-                }))
-                confirmAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                self.present(confirmAlert, animated: true, completion: nil)
+                }
             }
             let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
                 guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
@@ -386,7 +380,6 @@ extension CommunityDetailPageViewController {
     
     private func loadComments() {
         if let post = selectedPost {
-            // FirestoreService의 새로운 loadComments 함수를 호출합니다. 이 함수는 차단된 코멘트를 제외한 코멘트를 로드합니다.
             FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comments in
                 if let comments = comments {
                     for comment in comments {

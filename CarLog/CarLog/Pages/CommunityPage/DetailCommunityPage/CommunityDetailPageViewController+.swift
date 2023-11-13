@@ -26,19 +26,20 @@ extension CommunityDetailPageViewController: UITextViewDelegate {
         }
     }
 
-    func showAlert(text: String, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "댓글 \(text)", message: "댓글을 정말로 \(text)하시겠습니까?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-
-        let deleteAction = UIAlertAction(title: "확인", style: .destructive) { _ in
-            completion()
-        }
-        alert.addAction(deleteAction)
-
-        present(alert, animated: true, completion: nil)
-    }
+//    func showAlert(text: String, completion: @escaping () -> Void) {
+//        let alert = UIAlertController(title: "댓글 \(text)", message: "댓글을 정말로 \(text)하시겠습니까?", preferredStyle: .alert)
+//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+//        alert.addAction(cancelAction)
+//
+//        let deleteAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+//            completion()
+//        }
+//        alert.addAction(deleteAction)
+//
+//        present(alert, animated: true, completion: nil)
+//    }
 }
+
 // MARK: - Community 사진
 
 extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -99,7 +100,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             // alert창
-            self.showAlert(text: "삭제") {
+            self.showAlert(message: "삭제", completion: {
                 if let post = self.selectedPost {
                     let postID = post.id ?? ""
                     FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: postID) { comments in
@@ -120,13 +121,13 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                         }
                     }
                 }
-            }
+            })
         }
         deleteAction.image = UIImage(named: "trash")
         deleteAction.backgroundColor = .backgroundCoustomColor
 
         let blockAction = UIContextualAction(style: .destructive, title: nil) { _, _, _ in
-            self.showAlert(text: "차단") {
+            self.showAlert(message: "차단", completion: {
                 if let post = self.selectedPost {
                     let postID = post.id ?? ""
                     FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: postID) { comments in
@@ -147,7 +148,7 @@ extension CommunityDetailPageViewController: UITableViewDelegate, UITableViewDat
                         }
                     }
                 }
-            }
+            })
         }
         blockAction.image = UIImage(named: "report") // 시스템 아이콘 사용
         blockAction.backgroundColor = .backgroundCoustomColor
