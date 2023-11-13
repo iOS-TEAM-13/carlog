@@ -110,10 +110,10 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             }
             // 조건을 만족하지 않을 때 경고 표시
             if checkCarNumber.isEmpty {
-                self.showAlert(message: "00가0000 형식으로 써주세요")
+                self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
                 return
             } else if checkCarNickName.isEmpty {
-                self.showAlert(message: "닉네임을 꼭 작성해 주세요")
+                self.showAlert(message: "닉네임을 꼭 작성해 주세요", completion: {})
                 return
             }
             
@@ -221,7 +221,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
                 self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
-                return self.showAlert(message: "00가0000 형식으로 써주세요")
+                return self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
             }
             
             guard carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
@@ -229,7 +229,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
                 self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
-                return self.showAlert(message: "00가0000 형식으로 써주세요")
+                return self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
             }
             
             guard carNumberToCheck.count >= 7 else {
@@ -237,7 +237,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
                 self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
-                return self.showAlert(message: "7자리 이상 입력하세요")
+                return self.showAlert(message: "7자리 이상 입력하세요", completion: {})
             }
             
             let fifthCharacterIndex = carNumberToCheck.index(carNumberToCheck.endIndex, offsetBy: -5)
@@ -248,7 +248,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                 self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
                 self.myPageView.checkCarNumberButton.backgroundColor = .red
                 self.myPageView.carNumberTextField.text = ""
-                return self.showAlert(message: "가운데 한글이 빠졌습니다")
+                return self.showAlert(message: "가운데 한글이 빠졌습니다", completion: {})
             }
             
             FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
@@ -265,7 +265,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                     self.myPageView.checkCarNumberButton.setTitleColor(.white, for: .normal)
                     self.myPageView.checkCarNumberButton.setTitle("불가능", for: .normal)
                     self.myPageView.checkCarNumberButton.backgroundColor = .red
-                    self.showAlert(message: "이미 존재하는 차번호입니다")
+                    self.showAlert(message: "이미 존재하는 차번호입니다", completion: {})
                     self.myPageView.carNumberTextField.text = ""
                 }
             })
@@ -296,7 +296,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                     self.myPageView.checkCarNickNameButton.setTitle("불가능", for: .normal)
                     self.myPageView.checkCarNickNameButton.backgroundColor = .red
                     self.myPageView.checkCarNickNameButton.backgroundColor = .buttonRedColor
-                    self.showAlert(message: "이미 존재하는 닉네임입니다")
+                    self.showAlert(message: "이미 존재하는 닉네임입니다", completion: {})
                     self.myPageView.carNickNameTextField.text = ""
                 }
             })

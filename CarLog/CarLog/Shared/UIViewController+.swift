@@ -17,9 +17,12 @@ extension UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showAlert(message: String) {
+    func showAlert(message: String, completion: @escaping () -> Void) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+            completion()
+            self.dismiss(animated: true, completion: nil)
+        })
         present(alert, animated: true, completion: nil)
     }
 }

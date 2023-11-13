@@ -53,7 +53,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
         carNumberView.nextButton.addAction(UIAction(handler: { _ in
             guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "중복확인을 해주세요\nex)00가0000")
+                self.showAlert(message: "중복확인을 해주세요\nex)00가0000", completion: {})
                 return
             }
             self.view.addSubview(self.carMakerView)
@@ -89,7 +89,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
         nickNameView.nextButton.addAction(UIAction(handler: { _ in
             guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "중복확인을 해주세요")
+                self.showAlert(message: "중복확인을 해주세요", completion: {})
                 return
             }
             self.view.addSubview(self.totalDistanceView)
@@ -120,8 +120,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
     // 최종 주행거리 "완료" 버튼
     private func doneButtonTapped() {
-        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+        showAlert(message: "회원가입을 완료하였습니다") {
             LoginService.loginService.keepLogin { user in
                 if user != nil {
                     let tabBarController = Util.mainTabBarController()
@@ -133,7 +132,6 @@ class JoinupPageViewController: JoinupPageHelperController {
                     }
                 }
             }
-        }))
-        present(alert, animated: true, completion: nil)
+        }
     }
 }
