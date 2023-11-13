@@ -43,6 +43,7 @@
 		B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */; };
 		B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */; };
 		B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */; };
+		B85D105C2B02652A00F2C54A /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85D105B2B02652A00F2C54A /* ButtonView.swift */; };
 		B892B89A2AFA536500875CA7 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B892B8992AFA536500875CA7 /* Int+.swift */; };
 		B8E5C1962AFBFDDF00604DE7 /* VisionDrivingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */; };
 		B8E5C1982AFBFDEC00604DE7 /* VisionFuelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */; };
@@ -162,6 +163,7 @@
 		B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingDetailView.swift; sourceTree = "<group>"; };
 		B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailViewController.swift; sourceTree = "<group>"; };
 		B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailView.swift; sourceTree = "<group>"; };
+		B85D105B2B02652A00F2C54A /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		B892B8992AFA536500875CA7 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionDrivingViewController.swift; sourceTree = "<group>"; };
 		B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFuelingViewController.swift; sourceTree = "<group>"; };
@@ -363,6 +365,14 @@
 			path = DetailViews;
 			sourceTree = "<group>";
 		};
+		B85D105A2B0264F100F2C54A /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B85D105B2B02652A00F2C54A /* ButtonView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		B8E5C1942AFBFAED00604DE7 /* VisionPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +417,7 @@
 				FF126E202ADAE66D00B2A109 /* Service */,
 				FBE051782AD652D800F39E7F /* Constants.swift */,
 				FFFFAF852AE18A5500A7677E /* Util.swift */,
+				B85D105A2B0264F100F2C54A /* Shared */,
 				FBE0517E2AD660BC00F39E7F /* Extension */,
 				FB748B362AD53BB500CC6A1F /* Models */,
 				FB748B352AD53BAD00CC6A1F /* Pages */,
@@ -808,6 +819,7 @@
 				FFB0CC4E2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift in Sources */,
 				FF126E1F2AD8DCC700B2A109 /* InsuranceView.swift in Sources */,
 				FBE0518A2AD6678E00F39E7F /* UITextField+.swift in Sources */,
+				B85D105C2B02652A00F2C54A /* ButtonView.swift in Sources */,
 				B892B89A2AFA536500875CA7 /* Int+.swift in Sources */,
 				FBE051842AD666FF00F39E7F /* UILabel+.swift in Sources */,
 				B8E5C1982AFBFDEC00604DE7 /* VisionFuelingViewController.swift in Sources */,
@@ -1008,7 +1020,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.underdog.CarLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1045,7 +1057,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.underdog.CarLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
