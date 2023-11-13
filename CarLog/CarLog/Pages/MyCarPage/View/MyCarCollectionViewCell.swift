@@ -45,11 +45,21 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    let tooltipIcon: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(systemName: "questionmark.circle")
+        view.tintColor = .lightGray
+        return view
+    }()
+    
+    var tooltipTapped: (() -> Void)?
+    
     // MARK: LifeCycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        setupTooltipIcon()
     }
     
     @available(*, unavailable)
@@ -65,7 +75,8 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(collectionViewTitle)
         contentView.addSubview(progressView)
         contentView.addSubview(interval)
-        
+        contentView.addSubview(tooltipIcon)
+            
         contentView.layer.cornerRadius = Constants.cornerRadius * 4
         contentView.backgroundColor = .white
         
@@ -107,6 +118,11 @@ class MyCarCollectionViewCell: UICollectionViewCell {
             $0.width.equalTo(15)
             $0.height.equalTo(20)
         }
+        
+        tooltipIcon.snp.makeConstraints {
+            $0.top.trailing.equalTo(contentView).inset(Constants.horizontalMargin)
+            $0.size.equalTo(15)
+        }
     }
     
     func bind(title: String, interval: String, icon: UIImage, progress: Double) {
@@ -115,4 +131,14 @@ class MyCarCollectionViewCell: UICollectionViewCell {
         progressView.progress = Float(progress)
         collectionViewImage.image = icon
     }
+    
+    func setupTooltipIcon() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTooltipTap))
+            tooltipIcon.addGestureRecognizer(tapGesture)
+            tooltipIcon.isUserInteractionEnabled = true
+        }
+    
+    @objc func handleTooltipTap() {
+           tooltipTapped?()
+       }
 }
