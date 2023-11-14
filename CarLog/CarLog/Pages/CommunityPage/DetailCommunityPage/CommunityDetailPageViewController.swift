@@ -56,6 +56,12 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     private func setupUI() {
+//        view.addSubview(detailView)
+//
+//        detailView.snp.makeConstraints { make in
+//            make.top.equalToSuperview()
+//        }
+//        
         view.addSubview(detailView.communityDetailPageScrollView)
         view.addSubview(detailView.containerView)
         detailView.communityDetailPageScrollView.addSubview(detailView.communityDetailPageContentView)
@@ -204,7 +210,7 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action2 = UIAlertAction(title: "삭제하기", style: .default) { _ in
                 // 삭제 기능 로직
-                self.alertView(message: "게시글을 정말로 삭제하시겠습니까?") {
+                self.showAlert(checkText: "게시글을 정말로 삭제하시겠습니까?") {
                     FirestoreService.firestoreService.removePost(postID: self.selectedPost?.id ?? "") { err in
                         if err != nil {
                             print("에러")
@@ -221,7 +227,7 @@ class CommunityDetailPageViewController: UIViewController {
             actionSheet.addAction(action2)
         } else {
             let action3 = UIAlertAction(title: "\(String(describing: post.userName ?? ""))님 차단하기", style: .default) { _ in
-                self.alertView(message: "\(post.userName ?? "")님을 차단하시겠습니까?") {
+                self.showAlert(checkText: "\(post.userName ?? "")님을 차단하시겠습니까?") {
                     FirestoreService.firestoreService.blockUser(userName: self.selectedPost?.userName ?? "", userEmail: Constants.currentUser.userEmail ?? "") { error in
                         if let error = error {
                             print("차단 오류: \(error.localizedDescription)")
@@ -235,7 +241,7 @@ class CommunityDetailPageViewController: UIViewController {
             }
             let action4 = UIAlertAction(title: "해당 게시글 차단하기", style: .default) { [weak self] _ in
                 guard let self = self, let postID = self.selectedPost?.id, let userEmail = Constants.currentUser.userEmail else { return }
-                self.alertView(message: "해당 게시글을 차단하시겠습니까?") {
+                self.showAlert(checkText: "해당 게시글을 차단하시겠습니까?") {
                     FirestoreService.firestoreService.blockPost(postID: postID, userEmail: userEmail) { error in
                         if let error = error {
                             print("차단 오류: \(error.localizedDescription)")
