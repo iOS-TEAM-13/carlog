@@ -91,7 +91,7 @@ class CommunityPageViewController: UIViewController {
                 self.posts = posts
                 for post in posts {
                     self.loadComment(email: userEmail,id: post.id ?? "") {
-                        self.communityColletionView.reloadData()
+                        self.communityCollectionView.reloadData()
                         self.indicator.stopAnimating()
                     }
                 }
@@ -133,7 +133,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bannerCollectionView {
             return banners.count
-        } else if collectionView == communityColletionView {
+        } else if collectionView == communityCollectionView {
             return posts.count
         }
         return 0
