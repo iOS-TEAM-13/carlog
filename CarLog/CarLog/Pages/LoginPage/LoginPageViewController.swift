@@ -26,7 +26,7 @@ class LoginPageViewController: UIViewController {
     func setupUI() {
         view.addSubview(loginView)
         loginView.snp.makeConstraints { make in
-            make.edges.equalToSuperview() // LoginPageProperties 뷰를 슈퍼뷰에 맞게 설정
+            make.edges.equalToSuperview()
         }
         loginView.passwordTextField.isSecureTextEntry = true
     }
@@ -48,15 +48,10 @@ class LoginPageViewController: UIViewController {
                     }
                 } else {
                     if error != nil {
-                        // 로그인 실패 시 에러 메시지 표시
-                        let alert = UIAlertController(title: "로그인 실패", message: "이메일과 비밀번호를 다시 입력해주세요", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "확인", style: .default))
-                        self.present(alert, animated: true, completion: nil)
+                        self.showAlert(message: "이메일과 비밀번호를 다시 입력해주세요", completion: {})
                     } else {
                         // 에러가 Firebase에서 반환되지 않은 경우 에러 메시지 표시
-                        let alert = UIAlertController(title: "로그인 실패", message: "서버가 연결되지 않았습니다.", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "확인", style: .default))
-                        self.present(alert, animated: true, completion: nil)
+                        self.showAlert(message: "서버가 연결되지 않았습니다.", completion: {})
                     }
                 }
             }
