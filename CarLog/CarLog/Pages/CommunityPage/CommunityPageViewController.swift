@@ -2,7 +2,8 @@ import SnapKit
 import UIKit
 
 class CommunityPageViewController: UIViewController {
-    private var items: [Post] = [] // 커뮤니티 셀 배열
+    private var posts: [Post] = [] // 커뮤니티 셀 배열
+    private var comments: [String:[Comment]] = [:]
     private var banners: [String] = ["banner", "banner", "banner"] // 배너 셀 배열
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
@@ -87,17 +88,24 @@ class CommunityPageViewController: UIViewController {
         FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
             guard let self = self else { return }
             if let posts = posts {
-                self.items = posts
-                DispatchQueue.main.async {
-                    self.communityCollectionView.reloadData()
-                    self.indicator.stopAnimating()
+                self.posts = posts
+                for post in posts {
+                    self.loadComment(email: userEmail,id: post.id ?? "") {
+                        self.communityColletionView.reloadData()
+                        self.indicator.stopAnimating()
+                    }
                 }
             } else {
                 print("데이터를 가져오는 중 오류 발생")
-                DispatchQueue.main.async {
                     self.indicator.stopAnimating()
-                }
             }
+        }
+    }
+
+    private func loadComment(email: String, id: String, completion: @escaping () -> Void) {
+        FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: email , postID: id) { comments in
+            self.comments[id] = comments
+            completion()
         }
     }
     
@@ -125,8 +133,8 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bannerCollectionView {
             return banners.count
-        } else if collectionView == communityCollectionView {
-            return items.count
+        } else if collectionView == communityColletionView {
+            return posts.count
         }
         return 0
     }
@@ -135,31 +143,13 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
         if collectionView == bannerCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
             cell.configure(with: banners[indexPath.item])
-            
             return cell
         } else if collectionView == communityCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
-            let post = items[indexPath.item]
-          
-            FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comment in
-                if let imageURL = post.image.first, let imageUrl = imageURL {
-                    // 이미지를 비동기적으로 가져오기
-                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                        if let data = data {
-                            DispatchQueue.main.async {
-                                cell.bind(userName: post.userName, title: post.title, content: post.content, image: UIImage(data: data), spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: comment?.count)
-//                                    self.indicator.stopAnimating()
-                            }
-                        }
-                    }.resume()
-                } else {
-                    // 이미지 URL이 없으면 기본 이미지 설정
-                    DispatchQueue.main.async {
-                        cell.bind(userName: post.userName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: comment?.count)
-                    }
-                }
+            let post = posts[indexPath.item]
+            if let imageURL = post.image.first {
+                cell.bind(userName: post.userName, title: post.title, content: post.content, image: imageURL, spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: self.comments[post.id ?? ""]?.count)
             }
-            
             return cell
         }
         return UICollectionViewCell()
@@ -188,7 +178,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             let detailViewController = CommunityDetailPageViewController()
             
             // 선택한 포스트를 가져와서 detailViewController에 설정
-            let selectedPost = items[indexPath.item]
+            let selectedPost = posts[indexPath.item]
             detailViewController.selectedPost = selectedPost
             
             navigationController?.pushViewController(detailViewController, animated: true)

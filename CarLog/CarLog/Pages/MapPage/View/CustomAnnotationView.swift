@@ -94,8 +94,8 @@ class CustomAnnotationView: MKAnnotationView {
 
         if let title = annotation.title, let gasoline = annotation.gasolinePrice, let diesel = annotation.dieselPrice {
             titleLabel.text = " \(title) "
-            gasolinePriceLabel.text = " \(String(gasoline).addedComma())"
-            dieselPriceLabel.text = " \(String(diesel).addedComma())"
+            gasolinePriceLabel.text = " \(Int(gasoline)?.stringToInt() ?? "가격정보없음")"
+            dieselPriceLabel.text = " \(Int(diesel)?.stringToInt() ?? "가격정보없음")"
         }
         setNeedsLayout()
     }

@@ -71,50 +71,6 @@ class Util {
         return newDate
     }
     
-//    func toInterval(seletedInsuranceDate: Int) -> (Date, Date) {
-//        let calendar = Calendar.current
-//        let currentDate = Date()
-//        var thisYearComponents = DateComponents()
-//        thisYearComponents.year = calendar.component(.year, from: currentDate)
-//        thisYearComponents.month = seletedInsuranceDate
-//        thisYearComponents.day = 1
-//
-//        var lastYearComponents = DateComponents()
-//        lastYearComponents.year = calendar.component(.year, from: currentDate) - 1
-//        lastYearComponents.month = seletedInsuranceDate
-//        lastYearComponents.day = 1
-//
-//        var nextYearComponents = DateComponents()
-//        nextYearComponents.year = calendar.component(.year, from: currentDate) + 1
-//        nextYearComponents.month = seletedInsuranceDate
-//        nextYearComponents.day = 1
-//
-//        guard let thisYearDate = calendar.date(from: thisYearComponents) else { return (Date(), Date()) }
-//        guard let lastYearDate = calendar.date(from: lastYearComponents) else { return (Date(), Date()) }
-//        guard let nextYearDate = calendar.date(from: nextYearComponents) else { return (Date(), Date()) }
-//
-//        if currentDate < thisYearDate {
-//            return (lastYearDate, thisYearDate)
-//        } else {
-//            return (thisYearDate, nextYearDate)
-//        }
-//    }
-    
-//    func calculatorProgress(firstInterval: String, secondInterval: String) -> Double {
-//        let calendar = Calendar.current
-//        let currentDate = Date()
-//
-//        guard let first = firstInterval.intervalToDate() else { return 0.0 }
-//        guard let second = secondInterval.intervalToDate() else { return 0.0 }
-//
-//        let totalProgress = calendar.dateComponents([.day], from: first, to: second)
-//        let currentProgress = calendar.dateComponents([.day], from: first, to: currentDate)
-//        guard let firstDays = totalProgress.day else { return 0.0 }
-//        guard let secoundDays = currentProgress.day else { return 0.0 }
-//
-//        return Double(secoundDays) / Double(firstDays)
-//    }
-    
     func calculatorProgress(firstInterval: Date, secondInterval: Date) -> Double {
         let calendar = Calendar.current
         let currentDate = Date()
@@ -175,4 +131,11 @@ final class PresentationController: UIPresentationController {
     @objc func dismissController(){
         self.presentedViewController.dismiss(animated: true, completion: nil)
     }
+}
+
+class ImageCacheManager {
+    
+    static let shared = NSCache<NSString, UIImage>()
+    
+    private init() {}
 }
