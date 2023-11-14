@@ -142,13 +142,13 @@ extension JoinupPageViewController {
     
     // 차 번호 중복검사 버튼
     func checkCarNumberButtonAction() {
-        carNumberView.carNumberTextField.addAction(UIAction(handler: { _ in
-            self.carNumberView.checkCarNumberButton.setTitleColor(.black, for: .normal)
-            self.carNumberView.checkCarNumberButton.setTitle("중복확인", for: .normal)
+        carNumberView.textField.addAction(UIAction(handler: { _ in
+            self.carNumberView.button.setTitleColor(.black, for: .normal)
+            self.carNumberView.button.setTitle("중복확인", for: .normal)
         }), for: .editingChanged)
         
-        carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
-            guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
+        carNumberView.button.addAction(UIAction(handler: { _ in
+            guard let carNumberToCheck = self.carNumberView.textField.text, !carNumberToCheck.isEmpty else {
                 return self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
             }
             
@@ -174,26 +174,26 @@ extension JoinupPageViewController {
                 }
                 
                 if isCarAvailable {
-                    self.carNumberView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
-                    self.carNumberView.checkCarNumberButton.setTitle("가능", for: .normal)
+                    self.carNumberView.button.setTitleColor(.mainNavyColor, for: .normal)
+                    self.carNumberView.button.setTitle("가능", for: .normal)
                 } else {
-                    self.carNumberView.checkCarNumberButton.setTitleColor(.red, for: .normal)
-                    self.carNumberView.checkCarNumberButton.setTitle("불가능", for: .normal)
+                    self.carNumberView.button.setTitleColor(.red, for: .normal)
+                    self.carNumberView.button.setTitle("불가능", for: .normal)
                     self.showAlert(message: "이미 존재하는 차번호입니다", completion: {})
-                    self.carNumberView.carNumberTextField.text = ""
+                    self.carNumberView.textField.text = ""
                 }
             })
         }), for: .touchUpInside)
     }
     
     func CheckNickNameButtonAction() {
-        nickNameView.carNickNameTextField.addAction(UIAction(handler: { _ in
-            self.nickNameView.checkNickNameButton.setTitleColor(.black, for: .normal)
-            self.nickNameView.checkNickNameButton.setTitle("중복확인", for: .normal)
+        nickNameView.textField.addAction(UIAction(handler: { _ in
+            self.nickNameView.button.setTitleColor(.black, for: .normal)
+            self.nickNameView.button.setTitle("중복확인", for: .normal)
         }), for: .editingChanged)
         
-        nickNameView.checkNickNameButton.addAction(UIAction(handler: { _ in
-            guard let nickNameToCheck = self.nickNameView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
+        nickNameView.button.addAction(UIAction(handler: { _ in
+            guard let nickNameToCheck = self.nickNameView.textField.text, !nickNameToCheck.isEmpty else { return }
             
             FirestoreService.firestoreService.checkDuplicate(car: nickNameToCheck, data: "nickName", completion: { isCarAvailable, error in
                 if let error = error {
@@ -202,13 +202,13 @@ extension JoinupPageViewController {
                 }
                 
                 if isCarAvailable {
-                    self.nickNameView.checkNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
-                    self.nickNameView.checkNickNameButton.setTitle("가능", for: .normal)
+                    self.nickNameView.button.setTitleColor(.mainNavyColor, for: .normal)
+                    self.nickNameView.button.setTitle("가능", for: .normal)
                 } else {
-                    self.nickNameView.checkNickNameButton.setTitleColor(.red, for: .normal)
-                    self.nickNameView.checkNickNameButton.setTitle("불가능", for: .normal)
+                    self.nickNameView.button.setTitleColor(.red, for: .normal)
+                    self.nickNameView.button.setTitle("불가능", for: .normal)
                     self.showAlert(message: "이미 존재하는 닉네임입니다", completion: {})
-                    self.nickNameView.carNickNameTextField.text = ""
+                    self.nickNameView.textField.text = ""
                 }
             })
         }), for: .touchUpInside)

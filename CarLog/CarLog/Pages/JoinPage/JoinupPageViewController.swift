@@ -8,12 +8,14 @@ class JoinupPageViewController: JoinupPageHelperController {
     var isChecked = false
     let dummyData = ["휘발유", "경유", "LPG"]
 
+    // MARK: LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
 
         joinupView.buttonStackView.firstButton.isEnabled = false
-        carNumberView.carNumberTextField.delegate = self
+        carNumberView.textField.delegate = self
 
         setupUI()
     }
@@ -48,11 +50,11 @@ class JoinupPageViewController: JoinupPageHelperController {
 
     private func forHiddenViews() {
         joinupView.buttonStackView.secondButton.addAction(UIAction(handler: { _ in
-            self.showAlert(checkText: "회원가입을\n취소하시겠습니까?") {self.dismiss(animated: true)}
+            self.showAlert(checkText: "회원가입을\n취소하시겠습니까?") { self.dismiss(animated: true) }
         }), for: .touchUpInside)
 
         carNumberView.nextButton.firstButton.addAction(UIAction(handler: { _ in
-            guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
+            guard self.carNumberView.button.title(for: .normal) == "가능" else {
                 self.showAlert(message: "중복확인을 해주세요\nex)00가0000", completion: {})
                 return
             }
@@ -62,7 +64,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         carNumberView.nextButton.secondButton.isHidden = true
 
         carMakerView.nextButton.firstButton.addAction(UIAction(handler: { _ in
@@ -72,7 +74,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         carMakerView.nextButton.secondButton.isHidden = true
 
         carModelView.nextButton.firstButton.addAction(UIAction(handler: { _ in
@@ -82,7 +84,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         carModelView.nextButton.secondButton.isHidden = true
 
         oilModelView.nextButton.firstButton.addAction(UIAction(handler: { _ in
@@ -92,11 +94,11 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         oilModelView.nextButton.secondButton.isHidden = true
 
         nickNameView.nextButton.firstButton.addAction(UIAction(handler: { _ in
-            guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
+            guard self.nickNameView.button.title(for: .normal) == "가능" else {
                 self.showAlert(message: "중복확인을 해주세요", completion: {})
                 return
             }
@@ -106,7 +108,7 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
-        
+
         nickNameView.nextButton.secondButton.isHidden = true
 
         totalDistanceView.nextButton.firstButton.addAction(UIAction(handler: { _ in
@@ -114,19 +116,19 @@ class JoinupPageViewController: JoinupPageHelperController {
             LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
                 FirestoreService.firestoreService.saveCar(
                     car: Car(
-                        number: self.carNumberView.carNumberTextField.text,
-                        maker: self.carMakerView.carMakerTextField.text,
-                        name: self.carModelView.carModelTextField.text,
+                        number: self.carNumberView.textField.text,
+                        maker: self.carMakerView.textField.text,
+                        name: self.carModelView.textField.text,
                         oilType: selectedOilType ?? "",
-                        nickName: self.nickNameView.carNickNameTextField.text,
-                        totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
+                        nickName: self.nickNameView.textField.text,
+                        totalDistance: Int(self.totalDistanceView.textField.text ?? "") ?? 0,
                         userEmail: self.joinupView.emailTextField.text),
                     completion: { _ in
                         self.doneButtonTapped()
                     })
             }
         }), for: .touchUpInside)
-        
+
         totalDistanceView.nextButton.secondButton.isHidden = true
     }
 
