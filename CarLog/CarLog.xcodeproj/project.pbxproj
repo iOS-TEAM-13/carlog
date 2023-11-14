@@ -30,6 +30,8 @@
 		7E7EE0C42AF1E9A100AB4151 /* AddCommunityPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */; };
 		7E95DE062AFE02ED008F45FA /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95DE052AFE02ED008F45FA /* UIImageView+.swift */; };
 		7ED9B9AE2AE60A80004EF102 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */; };
+		7EE9331C2B03531000043A30 /* MyPageSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE9331B2B03531000043A30 /* MyPageSettingView.swift */; };
+		7EE9331F2B035DBA00043A30 /* AddCommunityPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE9331E2B035DBA00043A30 /* AddCommunityPageView.swift */; };
 		B85A0F2E2AD7D576009E0A00 /* DrivingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */; };
 		B85A0F302AD7D586009E0A00 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */; };
 		B85A0F322AD85458009E0A00 /* FloatingButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F312AD85458009E0A00 /* FloatingButtonStackView.swift */; };
@@ -149,6 +151,8 @@
 		7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityPageViewController.swift; sourceTree = "<group>"; };
 		7E95DE052AFE02ED008F45FA /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		7ED9B9AD2AE60A80004EF102 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		7EE9331B2B03531000043A30 /* MyPageSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSettingView.swift; sourceTree = "<group>"; };
+		7EE9331E2B035DBA00043A30 /* AddCommunityPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityPageView.swift; sourceTree = "<group>"; };
 		9BA5765F838EDB353BDABB5B /* Pods-CarLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.debug.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.debug.xcconfig"; sourceTree = "<group>"; };
 		B85A0F2D2AD7D576009E0A00 /* DrivingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingView.swift; sourceTree = "<group>"; };
 		B85A0F2F2AD7D586009E0A00 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
@@ -299,6 +303,7 @@
 		7E7EE0C72AF1E9C400AB4151 /* AddCommunityPage */ = {
 			isa = PBXGroup;
 			children = (
+				7EE9331E2B035DBA00043A30 /* AddCommunityPageView.swift */,
 				7E7EE0C32AF1E9A100AB4151 /* AddCommunityPageViewController.swift */,
 			);
 			path = AddCommunityPage;
@@ -552,6 +557,7 @@
 			isa = PBXGroup;
 			children = (
 				7E08D8852AD948B500998E27 /* MyPageView.swift */,
+				7EE9331B2B03531000043A30 /* MyPageSettingView.swift */,
 				FB748B3F2AD5725100CC6A1F /* MyPageViewController.swift */,
 			);
 			path = MyPage;
@@ -769,6 +775,7 @@
 				FF0287E22AD789B0006657C1 /* MyCarCheckViewController.swift in Sources */,
 				FF23E3432AF3F0DC00626B63 /* CustomMapView.swift in Sources */,
 				FF5071762AD6BC7000713A81 /* GasStation.swift in Sources */,
+				7EE9331C2B03531000043A30 /* MyPageSettingView.swift in Sources */,
 				FBE051882AD6672F00F39E7F /* DateFormatter.swift in Sources */,
 				FF5071702AD6BC5800713A81 /* CarPart.swift in Sources */,
 				FF5D5F9A2AEFF276000AFAFD /* NotificationService.swift in Sources */,
@@ -826,6 +833,7 @@
 				B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */,
 				FB748B382AD5703C00CC6A1F /* TabBarController.swift in Sources */,
 				FBE0517B2AD653AE00F39E7F /* User.swift in Sources */,
+				7EE9331F2B035DBA00043A30 /* AddCommunityPageView.swift in Sources */,
 				3BF32B442AF9FCCE00007122 /* CommunityDetailPageViewController+.swift in Sources */,
 				B8E5C19B2AFBFE2E00604DE7 /* VisionDrivingView.swift in Sources */,
 				FBE051802AD660D900F39E7F /* UIColor+.swift in Sources */,
