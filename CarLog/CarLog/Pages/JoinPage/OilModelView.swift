@@ -15,7 +15,7 @@ final class OilModelView: UIView {
         return pickerView
     }()
 
-    lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
+    lazy var nextButton = LargeButtonView(title: "다 음", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
 
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide

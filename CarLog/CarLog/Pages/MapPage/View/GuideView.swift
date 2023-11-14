@@ -8,6 +8,7 @@
 import UIKit
 
 class GuideView: UIView {
+    // MARK: Properties
     private lazy var totalStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [gasolineStackView, dieselStackView, carWashStackView, storeStackView])
         view.customStackView(spacing: 5, axis: .vertical, alignment: .leading)
@@ -95,6 +96,7 @@ class GuideView: UIView {
         return label
     }()
     
+    // MARK: LifeCycle
     init() {
         super.init(frame: .zero)
         setupUI()
@@ -104,6 +106,7 @@ class GuideView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Method
     private func setupUI() {
         self.addSubview(totalStackView)
         

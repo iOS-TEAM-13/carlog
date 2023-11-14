@@ -11,22 +11,7 @@ import SnapKit
 
 class ModifiedDatePickerViewController: UIViewController {
     // MARK: Properties
-
-    let datePicker: UIDatePicker = {
-        let picker = UIDatePicker()
-        picker.datePickerMode = .date
-        picker.preferredDatePickerStyle = .inline
-        return picker
-    }()
-    
-    let completeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("선택", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.backgroundColor = .mainNavyColor
-        return button
-    }()
+    private let datePickerView = DatePickerView()
     
     var onDateSelected: ((Date) -> Void)?
     
@@ -46,33 +31,19 @@ class ModifiedDatePickerViewController: UIViewController {
     // MARK: Method
 
     private func setupUI() {
-        view.addSubview(datePicker)
-        view.addSubview(completeButton)
+        view.addSubview(datePickerView)
         
-        datePicker.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.horizontalMargin)
-        }
-        
-        completeButton.snp.makeConstraints {
-            $0.top.equalTo(datePicker.snp.bottom).inset(Constants.verticalMargin)
-            $0.centerX.equalTo(view)
-            $0.width.equalTo(200)
-        }
-        if traitCollection.userInterfaceStyle == .dark {
-            view.backgroundColor = .mainNavyColor
-        } else {
-            view.backgroundColor = .buttonSkyBlueColor
+        datePickerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
     private func buttonActions() {
-        completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
+        datePickerView.completeButton.addAction(UIAction(handler: { _ in self.completeButtonTapped() }), for: .touchUpInside)
     }
-    
-    // MARK: @Objc
 
-    @objc func completeButtonTapped() {
-        let selectedDate = datePicker.date
+    private func completeButtonTapped() {
+        let selectedDate = datePickerView.datePicker.date
         onDateSelected?(selectedDate)
         
         dismiss(animated: true, completion: nil)

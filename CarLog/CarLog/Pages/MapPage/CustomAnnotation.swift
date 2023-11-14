@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 
 class CustomAnnotation: NSObject, MKAnnotation {
+    // MARK: Properties
     var title: String?
     var gasolineImage: UIImage?
     var dieselImage: UIImage?
@@ -17,6 +18,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
     var dieselPrice: String?
     var coordinate: CLLocationCoordinate2D
 
+    // MARK: LifeCycle
     init(title: String? = nil, gasolineImage: UIImage? = nil, dieselImage: UIImage? = nil, gasolinePrice: String? = nil, dieselPrice: String? = nil, coordinate: CLLocationCoordinate2D) {
         self.title = title
         self.gasolineImage = gasolineImage
