@@ -29,7 +29,7 @@ final class CarNumberView: UIView {
         return button
     }()
 
-    lazy var nextButton: UIButton = duplicateComponents.joininButton(text: "다 음")
+    lazy var nextButton = LargeButtonView(title: "다 음", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
     
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
@@ -55,7 +55,6 @@ final class CarNumberView: UIView {
             make.centerX.equalTo(safeArea.snp.centerX)
             make.leading.equalTo(safeArea.snp.leading).offset(Constants.horizontalMargin)
             make.trailing.equalTo(safeArea.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(50)
         }
     }
     

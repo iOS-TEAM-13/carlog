@@ -57,14 +57,6 @@ open class JoinupPageHelperController: UIViewController {
         }
     }
 
-    // MARK: - Alert 창 구현
-
-    open func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-
     // MARK: - Keyboard 관련
 
     open func registerForKeyboardNotifications() {

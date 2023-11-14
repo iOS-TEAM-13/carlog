@@ -34,7 +34,7 @@ class LoginPageViewController: UIViewController {
     func addTargets() {
         loginView.emailTextField.addAction(UIAction(handler: { _ in self.textFieldDidChange() }), for: .editingChanged)
         loginView.passwordTextField.addAction(UIAction(handler: { _ in self.textFieldDidChange() }), for: .editingChanged)
-        loginView.loginButton.addAction(UIAction(handler: { _ in
+        loginView.loginButton.anyButton.addAction(UIAction(handler: { _ in
             guard let email = self.loginView.emailTextField.text, let password = self.loginView.passwordTextField.text else { return }
 
             LoginService.loginService.loginUser(email: email, password: password) { isSuccess, error in
@@ -61,6 +61,7 @@ class LoginPageViewController: UIViewController {
                 }
             }
         }), for: .touchUpInside)
+
         loginView.joinupButton.addAction(UIAction(handler: { _ in
             let joinPageViewController = JoinupPageViewController()
             joinPageViewController.modalPresentationStyle = .fullScreen
@@ -79,9 +80,9 @@ class LoginPageViewController: UIViewController {
 
         UIView.animate(withDuration: 0.3) {
             if isEmailValid && isPasswordValid {
-                self.loginView.loginButton.isEnabled = true
-                self.loginView.loginButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-                self.loginView.loginButton.backgroundColor = .mainNavyColor
+                self.loginView.loginButton.anyButton.isEnabled = true
+                self.loginView.loginButton.anyButton.setTitleColor(.buttonSkyBlueColor, for: .selected)
+                self.loginView.loginButton.anyButton.backgroundColor = .mainNavyColor
             }
         }
     }
