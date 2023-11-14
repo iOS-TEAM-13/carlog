@@ -6,101 +6,92 @@ import PhotosUI
 import SnapKit
 
 class AddCommunityPageViewController: UIViewController {
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        return scrollView
-    }()
+    lazy var addCommunityPageView = AddCommunityPageView()
+//    // MARK: -
+//    private let imagePickerView: UIImageView = {
+//        let imagePickerView = UIImageView()
+//        imagePickerView.backgroundColor = .white
+//        imagePickerView.clipsToBounds = true // 사진 cornerRadius 적용되게
+//        imagePickerView.layer.cornerRadius = 5
+//        return imagePickerView
+//    }()
+//    
+//    private let secondImageView: UIImageView = {
+//        let secondImageView = UIImageView()
+//        secondImageView.clipsToBounds = true
+//        secondImageView.layer.cornerRadius = 5
+//        return secondImageView
+//    }()
+//    
+//    private let thirdImageView: UIImageView = {
+//        let thirdImageView = UIImageView()
+//        thirdImageView.clipsToBounds = true
+//        thirdImageView.layer.cornerRadius = 5
+//        return thirdImageView
+//    }()
+//    
+//    private let imagePickerButton: UIButton = {
+//        let imagePickerButton = UIButton()
+//        imagePickerButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal) // 플러스 버튼의 속성을 설정
+//        imagePickerButton.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
+//        return imagePickerButton
+//    }()
+//    
+//    lazy var numberOfSelectedImageLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "\(selectedImages.count)"
+//        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+//        label.textColor = .white
+//        label.textAlignment = .center
+//        label.backgroundColor = .mainNavyColor
+//        label.clipsToBounds = true
+//        label.layer.cornerRadius = 12.0
+//        return label
+//    }()
+//    
+//    private var selectedImages = [UIImage]()
+//    
+//    private let mainTextField: UITextField = {
+//        let mainTextField = UITextField()
+//        mainTextField.attributedPlaceholder = NSAttributedString(string: "제목", attributes: [
+//            NSAttributedString.Key.foregroundColor: UIColor.gray
+//        ])
+//        //        mainTextField.placeholder = "제목"
+//        mainTextField.textColor = .black
+//        mainTextField.backgroundColor = .white
+//        mainTextField.layer.borderColor = UIColor.clear.cgColor
+//        mainTextField.layer.borderWidth = 0
+//        mainTextField.layer.cornerRadius = 5
+//        mainTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        mainTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTextField.frame.size.height))
+//        mainTextField.leftViewMode = .always
+//        mainTextField.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+//        return mainTextField
+//    }()
+//    
+//    private let subTextViewPlaceHolder = "택스트를 입력하세요"
+//    lazy var subTextView: UITextView = {
+//        let subTextView = UITextView()
+//        subTextView.textColor = .black
+//        subTextView.backgroundColor = .white
+//        subTextView.layer.borderColor = UIColor.clear.cgColor
+//        subTextView.layer.borderWidth = 0
+//        subTextView.layer.cornerRadius = 3
+//        subTextView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
+//        subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+//        subTextView.delegate = self
+//        return subTextView
+//    }()
+//    
+//    lazy var imagePickerStackView: UIStackView = {
+//        let imagePickerStackView = UIStackView()
+//        imagePickerStackView.axis = .horizontal
+//        imagePickerStackView.spacing = 16
+//        imagePickerStackView.distribution = .fill
+//        return imagePickerStackView
+//    }()
     
-    private let contentView: UIView = {
-        let contentView = UIView()
-        return contentView
-    }()
-    
-    // MARK: -
-    private let imagePickerView: UIImageView = {
-        let imagePickerView = UIImageView()
-        imagePickerView.backgroundColor = .white
-        imagePickerView.clipsToBounds = true // 사진 cornerRadius 적용되게
-        imagePickerView.layer.cornerRadius = 5
-        return imagePickerView
-    }()
-    
-    private let secondImageView: UIImageView = {
-        let secondImageView = UIImageView()
-        secondImageView.clipsToBounds = true
-        secondImageView.layer.cornerRadius = 5
-        return secondImageView
-    }()
-    
-    private let thirdImageView: UIImageView = {
-        let thirdImageView = UIImageView()
-        thirdImageView.clipsToBounds = true
-        thirdImageView.layer.cornerRadius = 5
-        return thirdImageView
-    }()
-    
-    private let imagePickerButton: UIButton = {
-        let imagePickerButton = UIButton()
-        imagePickerButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal) // 플러스 버튼의 속성을 설정
-        imagePickerButton.tintColor = .buttonSkyBlueColor // 아이콘 색상 설정
-        return imagePickerButton
-    }()
-    
-    lazy var numberOfSelectedImageLabel: UILabel = {
-        let label = UILabel()
-        label.text = "\(selectedImages.count)"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
-        label.textColor = .white
-        label.textAlignment = .center
-        label.backgroundColor = .mainNavyColor
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 12.0
-        return label
-    }()
-    
-    private var selectedImages = [UIImage]()
-    
-    private let mainTextField: UITextField = {
-        let mainTextField = UITextField()
-        mainTextField.attributedPlaceholder = NSAttributedString(string: "제목", attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor.gray
-        ])
-        //        mainTextField.placeholder = "제목"
-        mainTextField.textColor = .black
-        mainTextField.backgroundColor = .white
-        mainTextField.layer.borderColor = UIColor.clear.cgColor
-        mainTextField.layer.borderWidth = 0
-        mainTextField.layer.cornerRadius = 5
-        mainTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        mainTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTextField.frame.size.height))
-        mainTextField.leftViewMode = .always
-        mainTextField.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
-        return mainTextField
-    }()
-    
-    
-    
-    private let subTextViewPlaceHolder = "택스트를 입력하세요"
-    lazy var subTextView: UITextView = {
-        let subTextView = UITextView()
-        subTextView.textColor = .black
-        subTextView.backgroundColor = .white
-        subTextView.layer.borderColor = UIColor.clear.cgColor
-        subTextView.layer.borderWidth = 0
-        subTextView.layer.cornerRadius = 3
-        subTextView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
-        subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
-        subTextView.delegate = self
-        return subTextView
-    }()
-    
-    lazy var imagePickerStackView: UIStackView = {
-        let imagePickerStackView = UIStackView()
-        imagePickerStackView.axis = .horizontal
-        imagePickerStackView.spacing = 16
-        imagePickerStackView.distribution = .fill
-        return imagePickerStackView
-    }()
+    lazy var selectedImages = [UIImage]()
     
     var postToEdit: Post?
     
@@ -111,13 +102,14 @@ class AddCommunityPageViewController: UIViewController {
         self.postToEdit = post
         if postToEdit != nil {
             
-            mainTextField.text = postToEdit?.title
-            subTextView.text = postToEdit?.content
+            addCommunityPageView.mainTextField.text = postToEdit?.title
+            addCommunityPageView.subTextView.text = postToEdit?.content
             
             switch postToEdit?.image.count {
             case 1:
                 if let first = postToEdit?.image[0] {
                     imagePickerView.load(first)
+                    addCommunityPageView.imagePickerView.load(url: first)
                 }
             case 2:
                 if let first = postToEdit?.image[0],
@@ -125,17 +117,24 @@ class AddCommunityPageViewController: UIViewController {
                     self.imagePickerStackView.addArrangedSubview(self.secondImageView)
                     imagePickerView.load(first)
                     secondImageView.load(second)
+                    addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.secondImageView)
+                    addCommunityPageView.imagePickerView.load(url: first)
+                    addCommunityPageView.secondImageView.load(url: second)
                 }
             case 3:
                 if let first = postToEdit?.image[0],
                    let second = postToEdit?.image[1],
                    let third = postToEdit?.image[2] {
-                    
                     self.imagePickerStackView.addArrangedSubview(self.secondImageView)
                     self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
                     imagePickerView.load(first)
                     secondImageView.load(second)
                     thirdImageView.load(third)
+                    addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.secondImageView)
+                    addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.thirdImageView)
+                    addCommunityPageView.imagePickerView.load(url: first)
+                    addCommunityPageView.secondImageView.load(url: second)
+                    addCommunityPageView.thirdImageView.load(url: third)
                 }
             case .none:
                 break
@@ -159,74 +158,69 @@ class AddCommunityPageViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    // MARK: - Setup
+//    // MARK: - Setup
     func setupUI() {
-        //        view.addSubview(scrollView)
-        //        scrollView.addSubview(contentView)
-        view.addSubview(contentView)
+        view.addSubview(addCommunityPageView)
         
-        [
-            mainTextField,
-            subTextView,
-            imagePickerView,
-            imagePickerStackView,
-            imagePickerButton,
-            numberOfSelectedImageLabel
-        ].forEach { view.addSubview($0) }
-        
-        // MARK: - Snap kit 제약 잡기
-        //        scrollView.snp.makeConstraints { make in
-        //            make.edges.equalTo(view)
-        //        }
-        //
-        contentView.snp.makeConstraints { make in
+        addCommunityPageView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
-            //            make.top.bottom.equalTo(view)
-            //            make.left.right.equalTo(view)
-        }
-        
-        mainTextField.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(Constants.horizontalMargin)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-        }
-        
-        subTextView.snp.makeConstraints { make in
-            make.top.equalTo(mainTextField.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-            make.height.equalTo(400)
-        }
-        
-        imagePickerView.snp.makeConstraints { make in
-            make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
-            make.size.equalTo(90)
-        }
-        
-        imagePickerStackView.snp.makeConstraints { make in
-            make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
-            make.leading.equalTo(imagePickerView.snp.trailing).inset(-Constants.horizontalMargin)
-            make.height.equalTo(90)
-        }
-        
-        secondImageView.snp.makeConstraints {
-            $0.width.height.equalTo(90)
-        }
-        
-        thirdImageView.snp.makeConstraints {
-            $0.width.height.equalTo(90)
-        }
-        
-        imagePickerButton.snp.makeConstraints {
-            $0.center.size.equalTo(imagePickerView)
-        }
-        
-        numberOfSelectedImageLabel.snp.makeConstraints {
-            $0.size.equalTo(24)
-            $0.top.trailing.equalTo(imagePickerView).inset(-Constants.horizontalMargin * 0.5)
         }
     }
+//    func setupUI() {
+//        view.addSubview(contentView)
+//        
+//        [
+//            mainTextField,
+//            subTextView,
+//            imagePickerView,
+//            imagePickerStackView,
+//            imagePickerButton,
+//            numberOfSelectedImageLabel
+//        ].forEach { view.addSubview($0) }
+//        
+//        // MARK: - Snap kit 제약 잡기
+//        mainTextField.snp.makeConstraints { make in
+//            make.top.equalTo(contentView).offset(Constants.horizontalMargin)
+//            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+//        }
+//        
+//        subTextView.snp.makeConstraints { make in
+//            make.top.equalTo(mainTextField.snp.bottom).offset(Constants.verticalMargin)
+//            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
+//            make.height.equalTo(400)
+//        }
+//        
+//        imagePickerView.snp.makeConstraints { make in
+//            make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
+//            make.leading.equalToSuperview().offset(Constants.horizontalMargin)
+//            make.size.equalTo(90)
+//        }
+//        
+//        imagePickerStackView.snp.makeConstraints { make in
+//            make.top.equalTo(subTextView.snp.bottom).offset(Constants.verticalMargin)
+//            make.leading.equalTo(imagePickerView.snp.trailing).inset(-Constants.horizontalMargin)
+//            make.height.equalTo(90)
+//        }
+//        
+//        secondImageView.snp.makeConstraints {
+//            $0.width.height.equalTo(90)
+//        }
+//        
+//        thirdImageView.snp.makeConstraints {
+//            $0.width.height.equalTo(90)
+//        }
+//        
+//        imagePickerButton.snp.makeConstraints {
+//            $0.center.size.equalTo(imagePickerView)
+//        }
+//        
+//        numberOfSelectedImageLabel.snp.makeConstraints {
+//            $0.size.equalTo(24)
+//            $0.top.trailing.equalTo(imagePickerView).inset(-Constants.horizontalMargin * 0.5)
+//        }
+//    }
 }
 
 // MARK: - Actions
@@ -245,7 +239,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
         let dispatchGroup = DispatchGroup()
         var imageURLs: [URL] = []
         
-        for i in selectedImages {
+        for i in self.selectedImages {
             dispatchGroup.enter()
             StorageService.storageService.uploadImage(image: i) { url in
                 if let url = url {
@@ -255,9 +249,9 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             }
         }
         
-        if self.mainTextField.text != "" {
+        if addCommunityPageView.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
-                let post = Post(id: UUID().uuidString, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
+                let post = Post(id: UUID().uuidString, title: addCommunityPageView.mainTextField.text, content: addCommunityPageView.subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
                 FirestoreService.firestoreService.savePosts(post: post) { error in
                     print("err: \(String(describing: error?.localizedDescription))")
                 }
@@ -268,7 +262,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.showAlert(message: "제목은 필수입니다!")
+            self.showAlert(message: "제목은 필수입니다!", completion: {})
         }
     }
     
@@ -289,9 +283,9 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
                 dispatchGroup.leave()
             }
         }
-        if self.mainTextField.text != "" {
+        if addCommunityPageView.mainTextField.text != "" {
             dispatchGroup.notify(queue: .main) { [self] in
-                let post = Post(id: postToEdit?.id, title: self.mainTextField.text, content: subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
+                let post = Post(id: postToEdit?.id, title: addCommunityPageView.mainTextField.text, content: addCommunityPageView.subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
                 FirestoreService.firestoreService.updatePosts(post: post)
                 NotificationCenter.default.post(name: Notification.Name("changedPost"), object: post)
             }
@@ -301,7 +295,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.showAlert(message: "제목은 필수입니다!")
+            self.showAlert(message: "제목은 필수입니다!", completion: {})
         }
     }
     
@@ -348,10 +342,10 @@ private extension AddCommunityPageViewController {
     func attribute() {
         view.backgroundColor = .backgroundCoustomColor
         
-        imagePickerView.addSubview(imagePickerButton) // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
-        imagePickerStackView.addArrangedSubview(imagePickerButton)
+        addCommunityPageView.imagePickerView.addSubview(addCommunityPageView.imagePickerButton) // 이미지 뷰(imagePickerView)에 플러스 버튼을 추가
+        addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.imagePickerButton)
         
-        imagePickerButton.addTarget(
+        addCommunityPageView.imagePickerButton.addTarget(
             self,
             action: #selector(didTapImagePickerButton),
             for: .touchUpInside
@@ -430,11 +424,11 @@ private extension AddCommunityPageViewController {
         
     }
     
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+//    private func showAlert(message: String) {
+//        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
+//    }
 }
 
 extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
@@ -449,21 +443,21 @@ extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
                         if let image = image as? UIImage {
                             self.selectedImages.append(image)
                             DispatchQueue.main.async { // 사진 1-3장 순서대로 나열(0,1,3 순서대로)
-                                self.imagePickerView.image = self.selectedImages[0]
-                                self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
-                                self.imagePickerStackView.removeArrangedSubview(self.secondImageView)
-                                self.imagePickerStackView.removeArrangedSubview(self.thirdImageView)
-                                self.secondImageView.removeFromSuperview()
-                                self.thirdImageView.removeFromSuperview()
+                                self.addCommunityPageView.imagePickerView.image = self.selectedImages[0]
+                                self.addCommunityPageView.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
+                                self.addCommunityPageView.imagePickerStackView.removeArrangedSubview(self.addCommunityPageView.secondImageView)
+                                self.addCommunityPageView.imagePickerStackView.removeArrangedSubview(self.addCommunityPageView.thirdImageView)
+                                self.addCommunityPageView.secondImageView.removeFromSuperview()
+                                self.addCommunityPageView.thirdImageView.removeFromSuperview()
                                 switch self.selectedImages.count {
                                 case 2:
-                                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                                    self.secondImageView.image = self.selectedImages[1]
+                                    self.addCommunityPageView.imagePickerStackView.addArrangedSubview(self.addCommunityPageView.secondImageView)
+                                    self.addCommunityPageView.secondImageView.image = self.selectedImages[1]
                                 case 3:
-                                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                                    self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
-                                    self.secondImageView.image = self.selectedImages[1]
-                                    self.thirdImageView.image = self.selectedImages[2]
+                                    self.addCommunityPageView.imagePickerStackView.addArrangedSubview(self.addCommunityPageView.secondImageView)
+                                    self.addCommunityPageView.imagePickerStackView.addArrangedSubview(self.addCommunityPageView.thirdImageView)
+                                    self.addCommunityPageView.secondImageView.image = self.selectedImages[1]
+                                    self.addCommunityPageView.thirdImageView.image = self.selectedImages[2]
                                 default:
                                     break
                                 }
@@ -482,7 +476,7 @@ extension AddCommunityPageViewController: PHPickerViewControllerDelegate {
 
 extension AddCommunityPageViewController: UITextViewDelegate { // ⭐️ UITextViewDelegate
     func textViewDidBeginEditing(_ subTextView: UITextView) {
-        if subTextView.text == subTextViewPlaceHolder {
+        if subTextView.text == addCommunityPageView.subTextViewPlaceHolder {
             subTextView.text = nil
             subTextView.textColor = .black
         }

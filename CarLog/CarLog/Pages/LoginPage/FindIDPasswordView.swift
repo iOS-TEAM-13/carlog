@@ -46,28 +46,8 @@ class FindIDPasswordView: UIView {
         textField.loginCustomTextField(placeholder: "이메일 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }()
-
-    lazy var sendButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "전 송", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return button
-    }()
     
-    lazy var popButton: UIButton = {
-        let button = UIButton()
-        button.customButton(text: "취 소", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return button
-    }()
-    
-    lazy var buttonStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [sendButton, popButton])
-        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
-        return stackView
-    }()
+    lazy var buttonStackView = LargeButtonStackView(firstButtonText: "전 송", firstTitleColor: .buttonSkyBlueColor, firstBackgroudColor: .mainNavyColor, secondButtonText: "취 소")
 
     var shouldHideFirstView: Bool? {
         didSet {

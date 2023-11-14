@@ -14,12 +14,12 @@ open class JoinupPageHelperController: UIViewController {
     var isCheckedEmail = false
 
     let joinupView = JoinupView()
-    let carNumberView = CarNumberView()
-    let carMakerView = CarMakerView()
-    let carModelView = CarModelView()
+    let carNumberView = CarPartsToCheckDuplicateView(text: "차량번호를\n입력해주세요", placeholder: "00가0000", buttonText: "다 음")
+    let carMakerView = CarPartsView(text: "제조사를\n입력해주세요", placeholder: "제조사 입력", buttonText: "다 음")
+    let carModelView = CarPartsView(text: "차량명을\n입력해주세요", placeholder: "차종 입력", buttonText: "다 음")
     let oilModelView = OilModelView()
-    let nickNameView = NickNameView()
-    let totalDistanceView = TotalDistanceView()
+    let nickNameView = CarPartsToCheckDuplicateView(text: "차량 별명(닉네임)을\n입력해주세요", placeholder: "차 별명 입력", buttonText: "다 음")
+    let totalDistanceView = CarPartsView(text: "최종 주행거리는\n얼마인가요?", placeholder: "최종 주행거리 입력", buttonText: "완 료")
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -55,14 +55,6 @@ open class JoinupPageHelperController: UIViewController {
             isCheckedEmail = false
             stopTimer()
         }
-    }
-
-    // MARK: - Alert 창 구현
-
-    open func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
     }
 
     // MARK: - Keyboard 관련
