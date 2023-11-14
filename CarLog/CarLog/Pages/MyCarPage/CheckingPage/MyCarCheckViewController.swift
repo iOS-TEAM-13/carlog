@@ -27,7 +27,7 @@ class MyCarCheckViewController: UIViewController {
     
     var checkCountLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "0/10", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .center)
+        label.customLabel(text: "0/10", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .bold), alignment: .center)
        return label
     }()
     

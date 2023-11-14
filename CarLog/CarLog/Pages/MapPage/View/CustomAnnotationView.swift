@@ -11,6 +11,7 @@ import MapKit
 import SnapKit
 
 class CustomAnnotationView: MKAnnotationView {
+    // MARK: Properties
     private lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -21,7 +22,7 @@ class CustomAnnotationView: MKAnnotationView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize8, weight: .bold)
         label.textColor = .black
         label.lineBreakMode = .byClipping
         label.adjustsFontSizeToFitWidth = true
@@ -51,7 +52,7 @@ class CustomAnnotationView: MKAnnotationView {
     
     private lazy var gasolinePriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold)
         label.textColor = .black
         label.text = "휘발유"
         label.textAlignment = .center
@@ -60,13 +61,14 @@ class CustomAnnotationView: MKAnnotationView {
     
     private lazy var dieselPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold)
         label.textColor = .black
         label.text = "경유"
         label.textAlignment = .center
         return label
     }()
     
+    // MARK: LifeCycle
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
@@ -78,6 +80,33 @@ class CustomAnnotationView: MKAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        gasolinePriceLabel.text = nil
+        dieselPriceLabel.text = nil
+    }
+    
+    override func prepareForDisplay() {
+        super.prepareForDisplay()
+        
+        guard let annotation = annotation as? CustomAnnotation else { return }
+
+        if let title = annotation.title, let gasoline = annotation.gasolinePrice, let diesel = annotation.dieselPrice {
+            titleLabel.text = " \(title) "
+            gasolinePriceLabel.text = " \(Int(gasoline)?.stringToInt() ?? "가격정보없음")"
+            dieselPriceLabel.text = " \(Int(diesel)?.stringToInt() ?? "가격정보없음")"
+        }
+        setNeedsLayout()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        bounds.size = CGSize(width: 70, height: 50)
+        centerOffset = CGPoint(x: 0, y: 50)
+    }
+    
+    // MARK: Method
     private func configureUI() {
         addSubview(backgroundView)
         backgroundView.addSubview(titleLabel)
@@ -120,31 +149,5 @@ class CustomAnnotationView: MKAnnotationView {
             $0.leading.equalTo(dieselImageView.snp.trailing)
             $0.trailing.bottom.equalTo(backgroundView).inset(5)
         }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        titleLabel.text = nil
-        gasolinePriceLabel.text = nil
-        dieselPriceLabel.text = nil
-    }
-    
-    override func prepareForDisplay() {
-        super.prepareForDisplay()
-        
-        guard let annotation = annotation as? CustomAnnotation else { return }
-
-        if let title = annotation.title, let gasoline = annotation.gasolinePrice, let diesel = annotation.dieselPrice {
-            titleLabel.text = " \(title) "
-            gasolinePriceLabel.text = " \(String(gasoline).addedComma())"
-            dieselPriceLabel.text = " \(String(diesel).addedComma())"
-        }
-        setNeedsLayout()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        bounds.size = CGSize(width: 70, height: 50)
-        centerOffset = CGPoint(x: 0, y: 50)
     }
 }

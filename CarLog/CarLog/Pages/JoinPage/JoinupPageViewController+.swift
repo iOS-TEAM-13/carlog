@@ -99,13 +99,13 @@ extension JoinupPageViewController {
 
         UIView.animate(withDuration: 0.3) {
             if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPNumber {
-                self.joinupView.joinInButton.isEnabled = true
-                self.joinupView.joinInButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-                self.joinupView.joinInButton.backgroundColor = .mainNavyColor
+                self.joinupView.buttonStackView.firstButton.isEnabled = true
+                self.joinupView.buttonStackView.firstButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.buttonStackView.firstButton.backgroundColor = .mainNavyColor
             } else {
-                self.joinupView.joinInButton.isEnabled = false
-                self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
-                self.joinupView.joinInButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
+                self.joinupView.buttonStackView.firstButton.isEnabled = false
+                self.joinupView.buttonStackView.firstButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
+                self.joinupView.buttonStackView.firstButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
             }
         }
     }
@@ -119,7 +119,7 @@ extension JoinupPageViewController {
         
         joinupView.checkEmailButton.addAction(UIAction(handler: { _ in
             guard let emailToCheck = self.joinupView.emailTextField.text, !emailToCheck.isEmpty, emailToCheck.isValidEmail() else {
-                return self.showAlert(message: "올바른 이메일 형식이 아닙니다")
+                return self.showAlert(message: "올바른 이메일 형식이 아닙니다", completion: {})
             }
             
             FirestoreService.firestoreService.checkingEmail(email: emailToCheck) { isEmailAvailable, error in
@@ -142,29 +142,29 @@ extension JoinupPageViewController {
     
     // 차 번호 중복검사 버튼
     func checkCarNumberButtonAction() {
-        carNumberView.carNumberTextField.addAction(UIAction(handler: { _ in
-            self.carNumberView.checkCarNumberButton.setTitleColor(.black, for: .normal)
-            self.carNumberView.checkCarNumberButton.setTitle("중복확인", for: .normal)
+        carNumberView.textField.addAction(UIAction(handler: { _ in
+            self.carNumberView.button.setTitleColor(.black, for: .normal)
+            self.carNumberView.button.setTitle("중복확인", for: .normal)
         }), for: .editingChanged)
         
-        carNumberView.checkCarNumberButton.addAction(UIAction(handler: { _ in
-            guard let carNumberToCheck = self.carNumberView.carNumberTextField.text, !carNumberToCheck.isEmpty else {
-                return self.showAlert(message: "00가0000 형식으로 써주세요")
+        carNumberView.button.addAction(UIAction(handler: { _ in
+            guard let carNumberToCheck = self.carNumberView.textField.text, !carNumberToCheck.isEmpty else {
+                return self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
             }
             
             guard carNumberToCheck.isValidateCarNumber(carNumberToCheck) else {
-                return self.showAlert(message: "00가0000 형식으로 써주세요")
+                return self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
             }
             
             guard carNumberToCheck.count >= 7 else {
-                return self.showAlert(message: "7자리 이상 입력하세요")
+                return self.showAlert(message: "7자리 이상 입력하세요", completion: {})
             }
             
             let fifthCharacterIndex = carNumberToCheck.index(carNumberToCheck.endIndex, offsetBy: -5)
             let fifthCharacter = carNumberToCheck[fifthCharacterIndex]
 
             if String(fifthCharacter).range(of: "[가-힣]+", options: .regularExpression) == nil {
-                return self.showAlert(message: "00가0000 형식으로 써주세요")
+                return self.showAlert(message: "00가0000 형식으로 써주세요", completion: {})
             }
             
             FirestoreService.firestoreService.checkDuplicate(car: carNumberToCheck, data: "number", completion: { isCarAvailable, error in
@@ -174,26 +174,26 @@ extension JoinupPageViewController {
                 }
                 
                 if isCarAvailable {
-                    self.carNumberView.checkCarNumberButton.setTitleColor(.mainNavyColor, for: .normal)
-                    self.carNumberView.checkCarNumberButton.setTitle("가능", for: .normal)
+                    self.carNumberView.button.setTitleColor(.mainNavyColor, for: .normal)
+                    self.carNumberView.button.setTitle("가능", for: .normal)
                 } else {
-                    self.carNumberView.checkCarNumberButton.setTitleColor(.red, for: .normal)
-                    self.carNumberView.checkCarNumberButton.setTitle("불가능", for: .normal)
-                    self.showAlert(message: "이미 존재하는 차번호입니다")
-                    self.carNumberView.carNumberTextField.text = ""
+                    self.carNumberView.button.setTitleColor(.red, for: .normal)
+                    self.carNumberView.button.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 존재하는 차번호입니다", completion: {})
+                    self.carNumberView.textField.text = ""
                 }
             })
         }), for: .touchUpInside)
     }
     
     func CheckNickNameButtonAction() {
-        nickNameView.carNickNameTextField.addAction(UIAction(handler: { _ in
-            self.nickNameView.checkNickNameButton.setTitleColor(.black, for: .normal)
-            self.nickNameView.checkNickNameButton.setTitle("중복확인", for: .normal)
+        nickNameView.textField.addAction(UIAction(handler: { _ in
+            self.nickNameView.button.setTitleColor(.black, for: .normal)
+            self.nickNameView.button.setTitle("중복확인", for: .normal)
         }), for: .editingChanged)
         
-        nickNameView.checkNickNameButton.addAction(UIAction(handler: { _ in
-            guard let nickNameToCheck = self.nickNameView.carNickNameTextField.text, !nickNameToCheck.isEmpty else { return }
+        nickNameView.button.addAction(UIAction(handler: { _ in
+            guard let nickNameToCheck = self.nickNameView.textField.text, !nickNameToCheck.isEmpty else { return }
             
             FirestoreService.firestoreService.checkDuplicate(car: nickNameToCheck, data: "nickName", completion: { isCarAvailable, error in
                 if let error = error {
@@ -202,13 +202,13 @@ extension JoinupPageViewController {
                 }
                 
                 if isCarAvailable {
-                    self.nickNameView.checkNickNameButton.setTitleColor(.mainNavyColor, for: .normal)
-                    self.nickNameView.checkNickNameButton.setTitle("가능", for: .normal)
+                    self.nickNameView.button.setTitleColor(.mainNavyColor, for: .normal)
+                    self.nickNameView.button.setTitle("가능", for: .normal)
                 } else {
-                    self.nickNameView.checkNickNameButton.setTitleColor(.red, for: .normal)
-                    self.nickNameView.checkNickNameButton.setTitle("불가능", for: .normal)
-                    self.showAlert(message: "이미 존재하는 닉네임입니다")
-                    self.nickNameView.carNickNameTextField.text = ""
+                    self.nickNameView.button.setTitleColor(.red, for: .normal)
+                    self.nickNameView.button.setTitle("불가능", for: .normal)
+                    self.showAlert(message: "이미 존재하는 닉네임입니다", completion: {})
+                    self.nickNameView.textField.text = ""
                 }
             })
         }), for: .touchUpInside)
@@ -221,7 +221,7 @@ extension JoinupPageViewController {
                   !emailText.isEmpty,
                   emailText.isValidEmail()
             else {
-                self.showAlert(message: "유효하지 않는 이메일 형식이거나 이메일이 비어 있습니다")
+                self.showAlert(message: "유효하지 않는 이메일 형식이거나 이메일이 비어 있습니다", completion: {})
                 return
             }
             
@@ -262,7 +262,7 @@ extension JoinupPageViewController {
         joinupView.smtpNumberButton.addAction(UIAction(handler: { _ in
             self.checkVerificationCode { success in
                 if success {
-                    self.showAlert(message: "인증이 성공적으로 처리되었습니다")
+                    self.showAlert(message: "인증이 성공적으로 처리되었습니다", completion: {})
                     self.joinupView.smtpTimerLabel.isHidden = true
                     self.stopTimer()
                     self.joinupView.smtpNumberButton.setTitle("완료", for: .normal)
@@ -276,14 +276,14 @@ extension JoinupPageViewController {
     
     // 회원가입 "다음" 버튼 코드
     func addJoinInButtonAction() {
-        joinupView.joinInButton.addAction(UIAction(handler: { _ in
+        joinupView.buttonStackView.firstButton.addAction(UIAction(handler: { _ in
             if self.joinupView.checkEmailButton.title(for: .normal) != "가능" {
-                self.showAlert(message: "아이디 중복검사를 해주세요")
+                self.showAlert(message: "아이디 중복검사를 해주세요", completion: {})
                 return
             }
             
             if self.joinupView.smtpNumberButton.title(for: .normal) != "완료" {
-                self.showAlert(message: "인증번호를 확인해주세요")
+                self.showAlert(message: "인증번호를 확인해주세요", completion: {})
             }
             
             guard let email = self.joinupView.emailTextField.text,
@@ -312,7 +312,7 @@ extension JoinupPageViewController {
                     } else {
                         if self.joinupView.smtpNumberTextField.text?.count == 6 {
                             self.joinupView.smtpNumberTextField.text = "" // 6자리이고 일치하지 않으면 입력값 초기화
-                            self.showAlert(message: "인증번호가 일치하지 않습니다")
+                            self.showAlert(message: "인증번호가 일치하지 않습니다", completion: {})
                         }
                     }
                 }
@@ -330,7 +330,7 @@ extension JoinupPageViewController {
                 } else if personalInfoCheck == self.isChecked {
                     alertMessage = "개인정보수집에 동의해주세요"
                 }
-                self.showAlert(message: alertMessage)
+                self.showAlert(message: alertMessage, completion: {})
             }
         }), for: .touchUpInside)
     }
@@ -362,7 +362,7 @@ extension JoinupPageViewController {
         } else {
             joinupView.smtpNumberButton.isEnabled = true
             joinupView.smtpNumberTextField.text = ""
-            showAlert(message: "인증번호가 일치하지 않습니다.")
+            showAlert(message: "인증번호가 일치하지 않습니다.", completion: {})
             
             // 인증에 실패한 경우 false를 반환
             completion(false)

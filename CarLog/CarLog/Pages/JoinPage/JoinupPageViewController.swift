@@ -8,12 +8,14 @@ class JoinupPageViewController: JoinupPageHelperController {
     var isChecked = false
     let dummyData = ["휘발유", "경유", "LPG"]
 
+    // MARK: LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
 
-        joinupView.joinInButton.isEnabled = false
-        carNumberView.carNumberTextField.delegate = self
+        joinupView.buttonStackView.firstButton.isEnabled = false
+        carNumberView.textField.delegate = self
 
         setupUI()
     }
@@ -47,18 +49,13 @@ class JoinupPageViewController: JoinupPageHelperController {
     // MARK: - 모든 뷰들
 
     private func forHiddenViews() {
-        joinupView.popButton.addAction(UIAction(handler: { _ in
-            let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-                self.dismiss(animated: true, completion: nil)
-            })
-            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-            self.present(alert, animated: true, completion: nil)
+        joinupView.buttonStackView.secondButton.addAction(UIAction(handler: { _ in
+            self.showAlert(checkText: "회원가입을\n취소하시겠습니까?") { self.dismiss(animated: true) }
         }), for: .touchUpInside)
 
-        carNumberView.nextButton.addAction(UIAction(handler: { _ in
-            guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "중복확인을 해주세요\nex)00가0000")
+        carNumberView.nextButton.firstButton.addAction(UIAction(handler: { _ in
+            guard self.carNumberView.button.title(for: .normal) == "가능" else {
+                self.showAlert(message: "중복확인을 해주세요\nex)00가0000", completion: {})
                 return
             }
             self.view.addSubview(self.carMakerView)
@@ -68,7 +65,9 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        carMakerView.nextButton.addAction(UIAction(handler: { _ in
+        carNumberView.nextButton.secondButton.isHidden = true
+
+        carMakerView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
             self.carModelView.snp.makeConstraints { make in
@@ -76,7 +75,9 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        carModelView.nextButton.addAction(UIAction(handler: { _ in
+        carMakerView.nextButton.secondButton.isHidden = true
+
+        carModelView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
             self.oilModelView.snp.makeConstraints { make in
@@ -84,7 +85,9 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        oilModelView.nextButton.addAction(UIAction(handler: { _ in
+        carModelView.nextButton.secondButton.isHidden = true
+
+        oilModelView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
             self.nickNameView.snp.makeConstraints { make in
@@ -92,9 +95,11 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        nickNameView.nextButton.addAction(UIAction(handler: { _ in
-            guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "중복확인을 해주세요")
+        oilModelView.nextButton.secondButton.isHidden = true
+
+        nickNameView.nextButton.firstButton.addAction(UIAction(handler: { _ in
+            guard self.nickNameView.button.title(for: .normal) == "가능" else {
+                self.showAlert(message: "중복확인을 해주세요", completion: {})
                 return
             }
             self.view.addSubview(self.totalDistanceView)
@@ -104,29 +109,32 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
+        nickNameView.nextButton.secondButton.isHidden = true
+
+        totalDistanceView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
             LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
                 FirestoreService.firestoreService.saveCar(
                     car: Car(
-                        number: self.carNumberView.carNumberTextField.text,
-                        maker: self.carMakerView.carMakerTextField.text,
-                        name: self.carModelView.carModelTextField.text,
+                        number: self.carNumberView.textField.text,
+                        maker: self.carMakerView.textField.text,
+                        name: self.carModelView.textField.text,
                         oilType: selectedOilType ?? "",
-                        nickName: self.nickNameView.carNickNameTextField.text,
-                        totalDistance: Int(self.totalDistanceView.totalDistanceTextField.text ?? "") ?? 0,
+                        nickName: self.nickNameView.textField.text,
+                        totalDistance: Int(self.totalDistanceView.textField.text ?? "") ?? 0,
                         userEmail: self.joinupView.emailTextField.text),
                     completion: { _ in
                         self.doneButtonTapped()
                     })
             }
         }), for: .touchUpInside)
+
+        totalDistanceView.nextButton.secondButton.isHidden = true
     }
 
     // 최종 주행거리 "완료" 버튼
     private func doneButtonTapped() {
-        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+        showAlert(message: "회원가입을 완료하였습니다") {
             LoginService.loginService.keepLogin { user in
                 if user != nil {
                     let tabBarController = Util.mainTabBarController()
@@ -138,7 +146,6 @@ class JoinupPageViewController: JoinupPageHelperController {
                     }
                 }
             }
-        }))
-        present(alert, animated: true, completion: nil)
+        }
     }
 }

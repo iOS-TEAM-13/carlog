@@ -61,7 +61,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "제목"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .medium)
         return label
     }()
     
@@ -69,7 +69,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "본문"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium)
         return label
     }()
     
@@ -145,11 +145,13 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func bind(userName: String?, title: String?, content: String?, image: UIImage?, spanerCount: Int?, commentCount: Int?) {
+    func bind(userName: String?, title: String?, content: String?, image: URL?, spanerCount: Int?, commentCount: Int?) {
         self.userName.text = userName
         self.titleLabel.text = title
         self.mainTextLabel.text = content
-        self.collectionViewImage.image = image
+        if let image = image {
+            self.collectionViewImage.load(url: image)
+        }
         self.spanerCounts.text = String(spanerCount ?? 0)
         self.commentCounts.text = String(commentCount ?? 0)
     }
