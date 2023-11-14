@@ -55,11 +55,9 @@ class FindIDPassWordViewController: UIViewController {
     @objc private func sendEmailTapped() {
         LoginService.loginService.sendPasswordReset(email: findView.emailTextField.text ?? "") { isSuccess, _ in
             if isSuccess {
-                let alert = UIAlertController(title: "이메일로가서 비밀번호를 설정해주세요", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in 
+                self.showAlert(message: "이메일로가서 비밀번호를 설정해주세요") {
                     self.dismiss(animated: true)
-                }))
-                self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
