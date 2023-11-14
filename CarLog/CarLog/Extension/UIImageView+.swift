@@ -20,7 +20,7 @@ extension UIImageView {
 //        }
 //    }
     
-    func load(_ url: URL) {
+    func load(url: URL) {
             
         let cacheKey = NSString(string: url.absoluteString) // 캐시에 사용될 Key 값
             

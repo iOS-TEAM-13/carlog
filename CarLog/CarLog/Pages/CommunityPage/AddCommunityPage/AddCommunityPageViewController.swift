@@ -108,15 +108,12 @@ class AddCommunityPageViewController: UIViewController {
             switch postToEdit?.image.count {
             case 1:
                 if let first = postToEdit?.image[0] {
-                    imagePickerView.load(first)
                     addCommunityPageView.imagePickerView.load(url: first)
                 }
             case 2:
                 if let first = postToEdit?.image[0],
                    let second = postToEdit?.image[1] {
-                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                    imagePickerView.load(first)
-                    secondImageView.load(second)
+                    
                     addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.secondImageView)
                     addCommunityPageView.imagePickerView.load(url: first)
                     addCommunityPageView.secondImageView.load(url: second)
@@ -125,11 +122,7 @@ class AddCommunityPageViewController: UIViewController {
                 if let first = postToEdit?.image[0],
                    let second = postToEdit?.image[1],
                    let third = postToEdit?.image[2] {
-                    self.imagePickerStackView.addArrangedSubview(self.secondImageView)
-                    self.imagePickerStackView.addArrangedSubview(self.thirdImageView)
-                    imagePickerView.load(first)
-                    secondImageView.load(second)
-                    thirdImageView.load(third)
+                   
                     addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.secondImageView)
                     addCommunityPageView.imagePickerStackView.addArrangedSubview(addCommunityPageView.thirdImageView)
                     addCommunityPageView.imagePickerView.load(url: first)

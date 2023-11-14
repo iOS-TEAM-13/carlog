@@ -150,7 +150,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         self.titleLabel.text = title
         self.mainTextLabel.text = content
         if let image = image {
-            self.collectionViewImage.load(image)
+            self.collectionViewImage.load(url: image)
         }
         self.spanerCounts.text = String(spanerCount ?? 0)
         self.commentCounts.text = String(commentCount ?? 0)
