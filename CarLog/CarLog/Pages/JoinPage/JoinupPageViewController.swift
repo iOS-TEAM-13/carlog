@@ -12,7 +12,7 @@ class JoinupPageViewController: JoinupPageHelperController {
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
 
-        joinupView.joinInButton.isEnabled = false
+        joinupView.buttonStackView.firstButton.isEnabled = false
         carNumberView.carNumberTextField.delegate = self
 
         setupUI()
@@ -47,11 +47,11 @@ class JoinupPageViewController: JoinupPageHelperController {
     // MARK: - 모든 뷰들
 
     private func forHiddenViews() {
-        joinupView.popButton.addAction(UIAction(handler: { _ in
+        joinupView.buttonStackView.secondButton.addAction(UIAction(handler: { _ in
             self.showAlert(checkText: "회원가입을\n취소하시겠습니까?") {self.dismiss(animated: true)}
         }), for: .touchUpInside)
 
-        carNumberView.nextButton.anyButton.addAction(UIAction(handler: { _ in
+        carNumberView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
                 self.showAlert(message: "중복확인을 해주세요\nex)00가0000", completion: {})
                 return
@@ -62,32 +62,40 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
+        carNumberView.nextButton.secondButton.isHidden = true
 
-        carMakerView.nextButton.anyButton.addAction(UIAction(handler: { _ in
+        carMakerView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
             self.carModelView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
+        carMakerView.nextButton.secondButton.isHidden = true
 
-        carModelView.nextButton.anyButton.addAction(UIAction(handler: { _ in
+        carModelView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
             self.oilModelView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
+        carModelView.nextButton.secondButton.isHidden = true
 
-        oilModelView.nextButton.anyButton.addAction(UIAction(handler: { _ in
+        oilModelView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
             self.nickNameView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
+        oilModelView.nextButton.secondButton.isHidden = true
 
-        nickNameView.nextButton.anyButton.addAction(UIAction(handler: { _ in
+        nickNameView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
                 self.showAlert(message: "중복확인을 해주세요", completion: {})
                 return
@@ -98,8 +106,10 @@ class JoinupPageViewController: JoinupPageHelperController {
                 make.edges.equalToSuperview()
             }
         }), for: .touchUpInside)
+        
+        nickNameView.nextButton.secondButton.isHidden = true
 
-        totalDistanceView.nextButton.anyButton.addAction(UIAction(handler: { _ in
+        totalDistanceView.nextButton.firstButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
             LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
                 FirestoreService.firestoreService.saveCar(
@@ -116,6 +126,8 @@ class JoinupPageViewController: JoinupPageHelperController {
                     })
             }
         }), for: .touchUpInside)
+        
+        totalDistanceView.nextButton.secondButton.isHidden = true
     }
 
     // 최종 주행거리 "완료" 버튼

@@ -99,13 +99,13 @@ extension JoinupPageViewController {
 
         UIView.animate(withDuration: 0.3) {
             if isEmailValid, isPasswordValid, isConfirmPassword, isSMTPNumber {
-                self.joinupView.joinInButton.isEnabled = true
-                self.joinupView.joinInButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
-                self.joinupView.joinInButton.backgroundColor = .mainNavyColor
+                self.joinupView.buttonStackView.firstButton.isEnabled = true
+                self.joinupView.buttonStackView.firstButton.setTitleColor(.buttonSkyBlueColor, for: .normal)
+                self.joinupView.buttonStackView.firstButton.backgroundColor = .mainNavyColor
             } else {
-                self.joinupView.joinInButton.isEnabled = false
-                self.joinupView.joinInButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
-                self.joinupView.joinInButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
+                self.joinupView.buttonStackView.firstButton.isEnabled = false
+                self.joinupView.buttonStackView.firstButton.setTitleColor(.gray, for: .normal) // 비활성화 시 글자 색 변경
+                self.joinupView.buttonStackView.firstButton.backgroundColor = .lightGray // 비활성화 시 배경색 변경
             }
         }
     }
@@ -276,7 +276,7 @@ extension JoinupPageViewController {
     
     // 회원가입 "다음" 버튼 코드
     func addJoinInButtonAction() {
-        joinupView.joinInButton.addAction(UIAction(handler: { _ in
+        joinupView.buttonStackView.firstButton.addAction(UIAction(handler: { _ in
             if self.joinupView.checkEmailButton.title(for: .normal) != "가능" {
                 self.showAlert(message: "아이디 중복검사를 해주세요", completion: {})
                 return

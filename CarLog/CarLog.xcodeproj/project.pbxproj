@@ -18,7 +18,6 @@
 		139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */; };
 		13A8D8BE2AF909CF00496DCA /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */; };
 		13E478CD2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */; };
-		13E478D12B032D0B00B234B8 /* LargeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E478D02B032D0B00B234B8 /* LargeButtonView.swift */; };
 		13E478D32B034E3800B234B8 /* LargeButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E478D22B034E3800B234B8 /* LargeButtonStackView.swift */; };
 		13EB46002AFA6D9500A1A040 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EB45FF2AFA6D9500A1A040 /* UIView+.swift */; };
 		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
@@ -145,7 +144,6 @@
 		139FB53D2AF0E9C0007B605A /* FindIDPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordView.swift; sourceTree = "<group>"; };
 		13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPartsToCheckDuplicateView.swift; sourceTree = "<group>"; };
-		13E478D02B032D0B00B234B8 /* LargeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButtonView.swift; sourceTree = "<group>"; };
 		13E478D22B034E3800B234B8 /* LargeButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButtonStackView.swift; sourceTree = "<group>"; };
 		13EB45FF2AFA6D9500A1A040 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -401,7 +399,6 @@
 				FF31E3B32B02791F0098B29C /* HorizontalButtonStackView.swift */,
 				3B7EC3C52B0348A600E0005D /* CustomFloatingButton.swift */,
 				13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */,
-				13E478D02B032D0B00B234B8 /* LargeButtonView.swift */,
 				13E478D22B034E3800B234B8 /* LargeButtonStackView.swift */,
 			);
 			path = Shared;
@@ -897,7 +894,6 @@
 				FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */,
 				13EB46002AFA6D9500A1A040 /* UIView+.swift in Sources */,
 				FBBDA7172AD7D18B0031C17B /* CarNumberView.swift in Sources */,
-				13E478D12B032D0B00B234B8 /* LargeButtonView.swift in Sources */,
 				FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
 				3B7EC3C62B0348A600E0005D /* CustomFloatingButton.swift in Sources */,

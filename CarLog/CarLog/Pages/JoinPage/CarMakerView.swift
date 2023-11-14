@@ -7,7 +7,7 @@ class CarMakerView: UIView {
     
     lazy var label: UILabel = duplicateComponents.joinupLabel(text: "제조사를\n입력해주세요")
     lazy var carMakerTextField: UITextField = duplicateComponents.joinupTextField(placeholder: "제조사 입력", keyboardType: .default)
-    lazy var nextButton = LargeButtonView(title: "다 음", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+    lazy var nextButton = LargeButtonStackView(firstButtonText: "다 음", firstTitleColor: .buttonSkyBlueColor, firstBackgroudColor: .mainNavyColor, secondButtonText: "")
     
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide

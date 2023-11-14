@@ -135,11 +135,7 @@ final class JoinupView: UIView {
         return stackView
     }()
     
-    lazy var buttonStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [joinInButton, popButton])
-        stackView.customStackView(spacing: Constants.verticalMargin, axis: .vertical, alignment: .fill)
-        return stackView
-    }()
+    lazy var buttonStackView = LargeButtonStackView(firstButtonText: "다 음", firstTitleColor: .gray, firstBackgroudColor: .lightGray, secondButtonText: "취 소")
 
     lazy var allStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [allTextFieldStackView, buttonStackView])
@@ -150,9 +146,6 @@ final class JoinupView: UIView {
     
     lazy var showPasswordButton: UIButton = makeToggleButton()
     lazy var showConfirmPasswordButton: UIButton = makeToggleButton()
-
-    lazy var joinInButton = largeButton(text: "다 음", titleColor: .gray, backgroundColor: .lightGray)
-    lazy var popButton = largeButton(text: "취 소", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide
