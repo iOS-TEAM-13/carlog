@@ -8,7 +8,8 @@ import SnapKit
 class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegate {
     // MARK: - Properties
     
-    let myPageView = MyPageView()
+    lazy var myPageView = MyPageView()
+    lazy var myPageSettingView = MyPageSettingView()
     
     lazy var carDummy = Constants.currentUser
     
@@ -20,13 +21,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         super.viewDidLoad()
         view.backgroundColor = .backgroundCoustomColor
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
+        setupUI()
         
-        // MARK: - Setup
-        view.addSubview(myPageView)
-        myPageView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
-        }
         addTargetButton()
         checkCarNumberButtonAction()
         checkNickNameButtonAction()
@@ -52,13 +48,20 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     func addTargetButton() {
         myPageView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        myPageView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
+        myPageSettingView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        myPageSettingView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
+        myPageSettingView.personalRegulations.addGestureRecognizer(tap)
         //        myPageView.inquiryButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
-        myPageView.inquiryButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
+//        myPageSettingView.inquiryButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
     }
     
     // MARK: - Actions
+    @objc func tapFunction(sender: UITapGestureRecognizer) {
+        if let url = URL(string: "https://carlog.notion.site/3b018e85e94443da9a8d533525d3cf64?pvs=4") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
     
     @objc private func editButtonTapped() {
         isEditMode = !isEditMode
@@ -99,8 +102,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             //            myPageView.myWritingButton.isHidden = true
             myPageView.checkCarNumberButton.isHidden = false
             myPageView.checkCarNickNameButton.isHidden = false
-            myPageView.myPageDesignStackView.isHidden = true
-            myPageView.inquiryButton.isHidden = true
+            myPageSettingView.myPageDesignStackView.isHidden = true
+//            myPageSettingView.inquiryButton.isHidden = true
         } else {
             tabBarController?.tabBar.isHidden = false
             guard let checkCarNumber = self.myPageView.carNumberTextField.text,
@@ -125,8 +128,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             //            myPageView.myWritingButton.isHidden = false
             myPageView.checkCarNumberButton.isHidden = true
             myPageView.checkCarNickNameButton.isHidden = true
-            myPageView.myPageDesignStackView.isHidden = false
-            myPageView.inquiryButton.isHidden = false
+            myPageSettingView.myPageDesignStackView.isHidden = false
+//            myPageSettingView.inquiryButton.isHidden = false
             // ⭐ 택스트필드 6개 입력한 값들을 저장해서 파이어베이스에 넣어주기!
             guard let distanceText = myPageView.carTotalDistanceTextField.text else {
                 return
@@ -139,6 +142,19 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     private func setupUI() {
+        view.addSubview(myPageView)
+        myPageView.addSubview(myPageSettingView)
+        
+        myPageView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
+        }
+        
+        myPageSettingView.snp.makeConstraints { make in
+            make.top.equalTo(myPageView.carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 5)
+            make.leading.trailing.equalTo(view)
+        }
+        
         FirestoreService.firestoreService.loadCar { carInfoArray in
             if let index = carInfoArray?.firstIndex(where: { $0.userEmail == Constants.currentUser.userEmail }) {
                 if let car = carInfoArray?[index] {
