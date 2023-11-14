@@ -25,19 +25,6 @@ extension CommunityDetailPageViewController: UITextViewDelegate {
             textView.textColor = UIColor.lightGray
         }
     }
-
-//    func showAlert(text: String, completion: @escaping () -> Void) {
-//        let alert = UIAlertController(title: "댓글 \(text)", message: "댓글을 정말로 \(text)하시겠습니까?", preferredStyle: .alert)
-//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-//        alert.addAction(cancelAction)
-//
-//        let deleteAction = UIAlertAction(title: "확인", style: .destructive) { _ in
-//            completion()
-//        }
-//        alert.addAction(deleteAction)
-//
-//        present(alert, animated: true, completion: nil)
-//    }
 }
 
 // MARK: - Community 사진
