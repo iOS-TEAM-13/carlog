@@ -60,7 +60,6 @@
 		B8E5C19D2AFBFE4000604DE7 /* VisionFuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C19C2AFBFE4000604DE7 /* VisionFuelingView.swift */; };
 		C94DC0550E1194B30AE45F80 /* Pods_CarLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7667BEE61F719035220D9C64 /* Pods_CarLog.framework */; };
 		FB1B96A32ADF5D39003827B1 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B96A22ADF5D39003827B1 /* LoginService.swift */; };
-		FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */; };
 		FB6311C62ADCEBB80038929A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6311C52ADCEBB80038929A /* String+.swift */; };
 		FB748B202AD53B5E00CC6A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */; };
 		FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB748B212AD53B5E00CC6A1F /* SceneDelegate.swift */; };
@@ -192,7 +191,6 @@
 		EAA11E4444771AE8A4F99ACA /* Pods-CarLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarLog.release.xcconfig"; path = "Target Support Files/Pods-CarLog/Pods-CarLog.release.xcconfig"; sourceTree = "<group>"; };
 		FB1B96A22ADF5D39003827B1 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		FB1B96A42ADFCBF1003827B1 /* CarLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarLog.entitlements; sourceTree = "<group>"; };
-		FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateComponents.swift; sourceTree = "<group>"; };
 		FB6311C52ADCEBB80038929A /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		FB748B1C2AD53B5E00CC6A1F /* CarLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB748B1F2AD53B5E00CC6A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -512,7 +510,6 @@
 				139FB5392AF0A32B007B605A /* JoinupPageHelperController.swift */,
 				FBBDA7142AD7A2350031C17B /* JoinupView.swift */,
 				FBBDA7212AD7ED480031C17B /* OilModelView.swift */,
-				FB6311C32ADC0A9A0038929A /* DuplicateComponents.swift */,
 			);
 			path = JoinPage;
 			sourceTree = "<group>";
@@ -885,7 +882,6 @@
 				3BF21A4E2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift in Sources */,
 				3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */,
 				FBBDA7132AD79D440031C17B /* JoinupPageViewController.swift in Sources */,
-				FB6311C42ADC0A9A0038929A /* DuplicateComponents.swift in Sources */,
 				13EB46002AFA6D9500A1A040 /* UIView+.swift in Sources */,
 				FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,

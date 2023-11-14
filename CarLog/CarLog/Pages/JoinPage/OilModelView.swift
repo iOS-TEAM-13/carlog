@@ -3,11 +3,16 @@ import UIKit
 import SnapKit
 
 final class OilModelView: UIView {
-    let duplicateComponents = DuplicateComponents()
     let oilOptions: [String] = ["선택", "휘발유", "경유"]
     var selectedOil: String?
 
-    lazy var label = duplicateComponents.joinupLabel(text: "주종을\n선택해주세요")
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.customLabel(text: "주종을\n선택해주세요", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium), alignment: .left)
+        label.numberOfLines = 2
+        return label
+    }()
+    
     lazy var oilPickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.delegate = self

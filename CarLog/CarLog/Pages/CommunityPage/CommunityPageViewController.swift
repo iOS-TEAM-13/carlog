@@ -5,9 +5,7 @@ class CommunityPageViewController: UIViewController {
     private var posts: [Post] = [] // 커뮤니티 셀 배열
     private var comments: [String:[Comment]] = [:]
     private var banners: [String] = ["banner", "banner", "banner"] // 배너 셀 배열
-    
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
-    
     
     private lazy var bannerCollectionView = BannerCollectionView()
     private lazy var communityCollectionView = CommunityCollectionView()
@@ -28,7 +26,7 @@ class CommunityPageViewController: UIViewController {
         editFloatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         
         bannerCollectionView.dataSource = self
-                bannerCollectionView.delegate = self
+        bannerCollectionView.delegate = self
         
         communityCollectionView.dataSource = self
         communityCollectionView.delegate = self

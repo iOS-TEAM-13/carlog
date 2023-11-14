@@ -3,7 +3,6 @@ import UIKit
 import SnapKit
 
 final class JoinupView: UIView {
-    let duplicateComponents = DuplicateComponents()
     var isSecure = true
     
     let scrollView: UIScrollView = {

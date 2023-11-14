@@ -55,12 +55,6 @@ class CommunityDetailPageViewController: UIViewController {
     }
     
     private func setupUI() {
-//        view.addSubview(detailView)
-//
-//        detailView.snp.makeConstraints { make in
-//            make.top.equalToSuperview()
-//        }
-//        
         view.addSubview(detailView.communityDetailPageScrollView)
         view.addSubview(detailView.containerView)
         detailView.communityDetailPageScrollView.addSubview(detailView.communityDetailPageContentView)
@@ -70,21 +64,11 @@ class CommunityDetailPageViewController: UIViewController {
         detailView.containerView.addSubview(detailView.commentTextView)
         detailView.containerView.addSubview(detailView.button)
         
-        
-        
-        detailView.commentTableView.snp.makeConstraints { make in
-            make.height.equalTo(100)
-        }
-        
         detailView.communityDetailPageScrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalTo(detailView.containerView.snp.top).offset(-8) // 필요한 경우 scrollView와 textView 사이에 간격 추가
-        }
-        
-        detailView.emergencyButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
         detailView.communityDetailPageContentView.snp.makeConstraints { make in
