@@ -219,6 +219,9 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             alert.addAction(UIAlertAction(title: "취소", style: .destructive))
             present(alert, animated: true)
             alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
+                LoginService.loginService.deleteUser(email: Constants.currentUser.userEmail ?? "") { error in
+                    print("\(String(describing: error))")
+                }
                 LoginService.loginService.quitUser(email: Constants.currentUser.userEmail ?? "") { _ in
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {
