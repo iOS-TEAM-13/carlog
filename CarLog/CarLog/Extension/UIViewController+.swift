@@ -8,15 +8,14 @@
 import UIKit
 
 extension UIViewController {
-    func alertView(message: String, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    func showAlert(checkText: String, completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: checkText, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-            completion()
-            // self.dismiss(animated: true, completion: nil)
+          completion()
         })
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         present(alert, animated: true, completion: nil)
-    }
+      }
 
     func showAlert(message: String, completion: @escaping () -> Void) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
