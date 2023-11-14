@@ -30,7 +30,7 @@ final class NickNameView: UIView {
         return button
     }()
 
-    lazy var nextButton = largeButton(text: "다 음", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+    lazy var nextButton = LargeButtonView(title: "다 음", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
    
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide

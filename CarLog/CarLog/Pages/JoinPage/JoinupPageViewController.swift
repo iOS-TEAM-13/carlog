@@ -51,7 +51,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             self.showAlert(checkText: "회원가입을\n취소하시겠습니까?") {self.dismiss(animated: true)}
         }), for: .touchUpInside)
 
-        carNumberView.nextButton.addAction(UIAction(handler: { _ in
+        carNumberView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
                 self.showAlert(message: "중복확인을 해주세요\nex)00가0000", completion: {})
                 return
@@ -63,7 +63,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        carMakerView.nextButton.addAction(UIAction(handler: { _ in
+        carMakerView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
             self.carModelView.snp.makeConstraints { make in
@@ -71,7 +71,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        carModelView.nextButton.addAction(UIAction(handler: { _ in
+        carModelView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
             self.oilModelView.snp.makeConstraints { make in
@@ -79,7 +79,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        oilModelView.nextButton.addAction(UIAction(handler: { _ in
+        oilModelView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
             self.nickNameView.snp.makeConstraints { make in
@@ -87,7 +87,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        nickNameView.nextButton.addAction(UIAction(handler: { _ in
+        nickNameView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
                 self.showAlert(message: "중복확인을 해주세요", completion: {})
                 return
@@ -99,7 +99,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
+        totalDistanceView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
             LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
                 FirestoreService.firestoreService.saveCar(

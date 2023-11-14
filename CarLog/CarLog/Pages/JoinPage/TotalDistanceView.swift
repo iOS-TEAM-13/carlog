@@ -7,7 +7,7 @@ final class TotalDistanceView: UIView {
 
     lazy var label = duplicateComponents.joinupLabel(text: "최종 주행거리는\n얼마인가요?")
     lazy var totalDistanceTextField = duplicateComponents.joinupTextField(placeholder: "최종 주행거리 입력", keyboardType: .numberPad)
-    lazy var nextButton = largeButton(text: "완 료", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+    lazy var nextButton = LargeButtonView(title: "완 료", titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
 
     private func setupUI() {
         let safeArea = safeAreaLayoutGuide

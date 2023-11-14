@@ -13,10 +13,8 @@ class LargeButtonView: UIView {
 
     lazy var anyButton: UIButton = {
         let button = UIButton()
-        //button.backgroundColor = .lightGray
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
-        //button.setTitleColor(.gray, for: .selected)
         button.isSelected = true
         button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold)
         return button
