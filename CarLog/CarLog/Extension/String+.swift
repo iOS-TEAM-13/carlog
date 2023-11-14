@@ -15,9 +15,9 @@ extension String {
         return emailTest.evaluate(with: self)
     }
     
-    func width(of font: UIFont) -> CGFloat {
-        return (self as NSString).size(withAttributes: [.font: font]).width
-    }
+//    func width(of font: UIFont) -> CGFloat {
+//        return (self as NSString).size(withAttributes: [.font: font]).width
+//    }
     
     func toDate() -> Date? { // "yyyy-MM-dd HH:mm:ss"
         let dateFormatter = DateFormatter()
@@ -62,17 +62,17 @@ extension String {
         return true
     }
     
-    func isValidKoreanString(_ input: String) -> Bool {
-        let koreanPattern = "^[가-힣]*$" // 정규표현식 패턴: 가부터 힣까지의 문자로만 이루어져야 함
-        let regex = try! NSRegularExpression(pattern: koreanPattern)
-        let range = NSRange(location: 0, length: input.utf16.count)
-        
-        if regex.firstMatch(in: input, options: [], range: range) != nil {
-            return true // 유효한 한글 문자열
-        } else {
-            return false // 유효하지 않은 문자열
-        }
-    }
+//    func isValidKoreanString(_ input: String) -> Bool {
+//        let koreanPattern = "^[가-힣]*$" // 정규표현식 패턴: 가부터 힣까지의 문자로만 이루어져야 함
+//        let regex = try! NSRegularExpression(pattern: koreanPattern)
+//        let range = NSRange(location: 0, length: input.utf16.count)
+//
+//        if regex.firstMatch(in: input, options: [], range: range) != nil {
+//            return true // 유효한 한글 문자열
+//        } else {
+//            return false // 유효하지 않은 문자열
+//        }
+//    }
 
 //    static let dateFormatter: DateFormatter = {
 //        let f = DateFormatter()
@@ -82,14 +82,14 @@ extension String {
 //        return f
 //    }()
     
-    func addedComma() -> String {
-        let reversedStr = String(self.reversed())
-        let grouped = stride(from: 0, to: reversedStr.count, by: 3).map { index -> String in
-            let start = reversedStr.index(reversedStr.startIndex, offsetBy: index)
-            let end = reversedStr.index(start, offsetBy: 3, limitedBy: reversedStr.endIndex) ?? reversedStr.endIndex
-            return String(reversedStr[start..<end])
-        }
-        let result = grouped.joined(separator: ",").reversed()
-        return String(result)
-    }
+//    func addedComma() -> String {
+//        let reversedStr = String(self.reversed())
+//        let grouped = stride(from: 0, to: reversedStr.count, by: 3).map { index -> String in
+//            let start = reversedStr.index(reversedStr.startIndex, offsetBy: index)
+//            let end = reversedStr.index(start, offsetBy: 3, limitedBy: reversedStr.endIndex) ?? reversedStr.endIndex
+//            return String(reversedStr[start..<end])
+//        }
+//        let result = grouped.joined(separator: ",").reversed()
+//        return String(result)
+//    }
 }

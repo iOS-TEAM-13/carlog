@@ -145,11 +145,13 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func bind(userName: String?, title: String?, content: String?, image: UIImage?, spanerCount: Int?, commentCount: Int?) {
+    func bind(userName: String?, title: String?, content: String?, image: URL?, spanerCount: Int?, commentCount: Int?) {
         self.userName.text = userName
         self.titleLabel.text = title
         self.mainTextLabel.text = content
-        self.collectionViewImage.image = image
+        if let image = image {
+            self.collectionViewImage.load(image)
+        }
         self.spanerCounts.text = String(spanerCount ?? 0)
         self.commentCounts.text = String(commentCount ?? 0)
     }
