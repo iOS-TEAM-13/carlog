@@ -21,7 +21,7 @@ class VisionFuelingView: UIView {
     //안내 라벨
     lazy var visionInfoLabel: UILabel = {
         let visionInfoLabel = UILabel()
-        visionInfoLabel.customLabel(text: "영수증 사진을 선택해주세요.", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        visionInfoLabel.customLabel(text: "영수증 사진을 선택해주세요.", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return visionInfoLabel
     }()
     
@@ -34,7 +34,7 @@ class VisionFuelingView: UIView {
     
     lazy var receiptLabel: UILabel = {
         let receiptLabel = UILabel()
-        receiptLabel.customLabel(text: "영수증", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        receiptLabel.customLabel(text: "영수증", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return receiptLabel
     }()
     
@@ -66,7 +66,7 @@ class VisionFuelingView: UIView {
     //단가
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        priceLabel.customLabel(text: "단가", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return priceLabel
     }()
     
@@ -77,10 +77,10 @@ class VisionFuelingView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        visionPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 1777", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionPriceTextField.frame.size.height)), keyboardType: .decimalPad)
+        visionPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 1777", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionPriceTextField.frame.size.height)), keyboardType: .decimalPad)
         
         return visionPriceTextField
     }()
@@ -95,7 +95,7 @@ class VisionFuelingView: UIView {
     //수량
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        countLabel.customLabel(text: "수량", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return countLabel
     }()
     
@@ -106,10 +106,10 @@ class VisionFuelingView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        visionCountTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 55.555/55", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionCountTextField.frame.size.height)), keyboardType: .decimalPad)
+        visionCountTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 55.555/55", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionCountTextField.frame.size.height)), keyboardType: .decimalPad)
         
         return visionCountTextField
     }()
@@ -124,7 +124,7 @@ class VisionFuelingView: UIView {
     //금액
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "금액", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        totalPriceLabel.customLabel(text: "금액", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return totalPriceLabel
     }()
     
@@ -135,10 +135,10 @@ class VisionFuelingView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        visionTotalPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 100000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionTotalPriceTextField.frame.size.height)), keyboardType: .decimalPad)
+        visionTotalPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 100000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionTotalPriceTextField.frame.size.height)), keyboardType: .decimalPad)
         
         return visionTotalPriceTextField
     }()
@@ -165,7 +165,7 @@ class VisionFuelingView: UIView {
         addSubview(visionFuelingStackView)
 
         visionFuelingStackView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview().multipliedBy(0.7)
+            make.top.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin * 2)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin * 2)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }

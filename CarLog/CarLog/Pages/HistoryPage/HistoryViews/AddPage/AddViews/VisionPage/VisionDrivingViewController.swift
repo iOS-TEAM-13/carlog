@@ -81,7 +81,7 @@ class VisionDrivingViewController: UIViewController, UITextFieldDelegate {
     }()
     
     @objc func goToAddDrivingPage() {
-        print("비전 페이지에서 주유 추가 페이지로 뒤로간다")
+        print("비전 페이지에서 주행 추가 페이지로 뒤로간다")
         navigationController?.popViewController(animated: true)
     }
     
@@ -93,7 +93,7 @@ class VisionDrivingViewController: UIViewController, UITextFieldDelegate {
     }()
     
     @objc func goToAddDrivingPageWithData() {
-        print("비전 페이지에서 주유 추가 페이지로 뒤로간다")
+        print("비전 페이지에서 주행 추가 페이지로 뒤로간다")
         
         //add페이지로 연결할 출발 데이터
         if let departText = visionDrivingView.visionDepartTextField.text {

@@ -68,7 +68,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //visionDriving에서 오는 출발 데이터
+    //visionDriving에서 오는 도착 데이터
     @objc func handleVisionArrive(_ notification: Notification) {
         if let arriveText = notification.object as? String {
             addDrivingView.arriveDistanceTextField.text = arriveText

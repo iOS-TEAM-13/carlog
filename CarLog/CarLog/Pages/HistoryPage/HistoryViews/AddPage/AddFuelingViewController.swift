@@ -50,6 +50,41 @@ class AddFuelingViewController: UIViewController, UITextFieldDelegate {
         
         //저장, 취소 버튼 클릭 이벤트
         buttonActions()
+        
+        //visionFueling에서 오는 단가 데이터
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisionDepart(_:)), name: .visionPrice, object: nil)
+        
+        //visionFueling에서 오는 수량 데이터
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisionArrive(_:)), name: .visionCount, object: nil)
+        
+        //visionFueling에서 오는 금액 데이터
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisionDrive(_:)), name: .visionTotalPrice, object: nil)
+    }
+    
+    //visionFueling에서 오는 단가 데이터
+    @objc func handleVisionDepart(_ notification: Notification) {
+        if let priceText = notification.object as? String {
+            addFuelingView.priceTextField.text = priceText
+        }
+    }
+    
+    //visionFueling에서 오는 수량 데이터
+    @objc func handleVisionArrive(_ notification: Notification) {
+        if let countText = notification.object as? String {
+            addFuelingView.countTextField.text = countText
+        }
+    }
+    
+    //visionFueling에서 오는 금액 데이터
+    @objc func handleVisionDrive(_ notification: Notification) {
+        if let totalPriceText = notification.object as? String {
+            addFuelingView.totalPriceTextField.text = totalPriceText
+        }
+    }
+    
+    //Notification제거?
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - 주행기록 페이지 네비게이션바

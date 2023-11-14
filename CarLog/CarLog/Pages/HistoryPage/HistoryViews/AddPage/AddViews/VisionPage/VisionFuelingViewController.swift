@@ -10,16 +10,23 @@ import SnapKit
 import Vision
 import Photos
 
+//MARK: - addpage로 넘길 출발, 도착, 운행거리 자동계산
+extension Notification.Name {
+    static let visionPrice = Notification.Name("visionPrice")
+    static let visionCount = Notification.Name("visionCount")
+    static let visionTotalPrice = Notification.Name("visionTotalPrice")
+}
+
 class VisionFuelingViewController: UIViewController, UITextFieldDelegate {
     
     lazy var visionFuelingView: VisionFuelingView = {
         let visionFuelingView = VisionFuelingView()
         return visionFuelingView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .backgroundCoustomColor
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
         
@@ -47,7 +54,7 @@ class VisionFuelingViewController: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         visionFuelingView.endEditing(true)
     }
-
+    
     //MARK: - 주유 비전 페이지 네비게이션바
     func navigationUI() {
         navigationItem.title = "사진으로 인식하기"
@@ -58,6 +65,7 @@ class VisionFuelingViewController: UIViewController, UITextFieldDelegate {
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
+        self.navigationItem.rightBarButtonItem = self.okButton
     }
     
     lazy var backButton: UIBarButtonItem = {
@@ -68,6 +76,34 @@ class VisionFuelingViewController: UIViewController, UITextFieldDelegate {
     
     @objc func goToAddFuelingPage() {
         print("비전 페이지에서 주유 추가 페이지로 뒤로간다")
+        navigationController?.popViewController(animated: true)
+    }
+    
+    //네비게이션 확인 버튼
+    lazy var okButton: UIBarButtonItem = {
+        let okButton = UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .plain, target: self, action: #selector(goToAddDrivingPageWithData))
+        okButton.tintColor = .mainNavyColor
+        return okButton
+    }()
+    
+    @objc func goToAddDrivingPageWithData() {
+        print("비전 페이지에서 주행 추가 페이지로 뒤로간다")
+        
+        //add페이지로 연결할 단가 데이터
+        if let priceText = visionFuelingView.visionPriceTextField.text {
+            NotificationCenter.default.post(name: .visionPrice, object: priceText)
+        }
+        
+        //add페이지로 연결할 수량 데이터
+        if let countText = visionFuelingView.visionCountTextField.text {
+            NotificationCenter.default.post(name: .visionCount, object: countText)
+        }
+        
+        //add페이지로 연결할 금액 데이터
+        if let totalPriceText = visionFuelingView.visionTotalPriceTextField.text {
+            NotificationCenter.default.post(name: .visionTotalPrice, object: totalPriceText)
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -134,7 +170,7 @@ class VisionFuelingViewController: UIViewController, UITextFieldDelegate {
         present(alert, animated: true, completion: nil)
     }
     
- }
+}
 
 //MARK: - 이미지 선택, 선택한 이미지에서 문자 찾아서 텍스트필드에 넣기
 extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -166,56 +202,49 @@ extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINaviga
                 return
             }
             
-            var recognizedText = ""
-            
-            //
-//            for observation in observations {
-//                if let bestCandidate = observation.topCandidates(1).first {
-//                    print("Recognized Text: \(bestCandidate.string)")
-//                    recognizedText += bestCandidate.string
-//                    print("-- Recognized Text: \(recognizedText)")
-//                }
-//            }
             for observation in observations {
                 if let bestCandidate = observation.topCandidates(1).first {
                     print("Recognized Text: \(bestCandidate.string)")
+                    let recognizedText = bestCandidate.string
+                    let components = recognizedText.components(separatedBy: "X")
+                    
+                    if components.count == 2 {
+                        // 첫 번째 컴포넌트에서 숫자 부분만 추출
+                        let priceText = components[0].trimmingCharacters(in: .whitespaces)
+                        let price = priceText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+                        DispatchQueue.main.async {
+                            self?.visionFuelingView.visionPriceTextField.text = price
+                        }
+                        
+                        // 두 번째 컴포넌트에서 숫자 부분만 추출
+                        let countText = components[1]
+                        let count = countText.components(separatedBy: CharacterSet(charactersIn: "0123456789.").inverted).joined()
+                        DispatchQueue.main.async {
+                            self?.visionFuelingView.visionCountTextField.text = count
+                        }
+                        
+                        //수량에 소수점이 있다면 반올림 처리
+                        if count.range(of: ".") != nil {
+                            let count = Double(count) ?? 0
+                            let totalPriceText = round((Double(price) ?? 0) * count * 0.1) / 0.1
+                            self?.visionFuelingView.visionTotalPriceTextField.text = String(format: "%.0f", totalPriceText)
+                        
+                        //아니면 그냥 곱하기
+                        } else {
+                            let count = Int(count) ?? 0
+                            let totalPriceText = count * (Int(price) ?? 0)
+                            self?.visionFuelingView.visionTotalPriceTextField.text = String(totalPriceText)
+                        }
+                    }
                 }
             }
             
-            //
-            DispatchQueue.main.async {
-//                if let xLeftRange = recognizedText.range(of: "단가") {
-//                    let priceText = recognizedText[xLeftRange]
-//                    print("\(priceText)")
-//                    self?.visionFuelingView.visionPriceTextField.text = String(priceText)
-//                }
-//                
-//                if let xRightRange = recognizedText.range(of: "x") {
-//                    let countText = recognizedText[xRightRange]
-//                    print("\(countText)")
-//                    self?.visionFuelingView.visionCountTextField.text = String(countText)
-//                }
-                
-                if let xRange = recognizedText.range(of: "X"),
-                   let leftBound = recognizedText.index(xRange.lowerBound, offsetBy: -4, limitedBy: recognizedText.startIndex),
-                   let rightBound = recognizedText.index(xRange.upperBound, offsetBy: 5, limitedBy: recognizedText.endIndex) {
-                    
-                    let leftText = recognizedText[leftBound..<xRange.lowerBound].trimmingCharacters(in: .whitespacesAndNewlines)
-                    let rightText = recognizedText[xRange.upperBound..<rightBound].trimmingCharacters(in: .whitespacesAndNewlines)
-
-                    print("Left Text: \(leftText)")
-                    print("Right Text: \(rightText)")
-
-                    // 각각의 텍스트 필드에 할당
-                    self?.visionFuelingView.visionPriceTextField.text = leftText
-                    self?.visionFuelingView.visionCountTextField.text = rightText
-                }
-                
-                
-            }
+            
+            
+            
         }
         
-        //
+        // 여기에서 recognitionLanguages 속성을 설정해야 합니다.
         request.recognitionLanguages = ["ko"]
         
         do {
@@ -224,5 +253,4 @@ extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINaviga
             print("Error in text recognition: \(error.localizedDescription)")
         }
     }
-    
 }
