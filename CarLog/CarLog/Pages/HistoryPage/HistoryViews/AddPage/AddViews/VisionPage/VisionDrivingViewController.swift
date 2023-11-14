@@ -23,7 +23,7 @@ extension Notification.Name {
     static let visionDrive = Notification.Name("visionDrive")
 }
 
-class VisionDrivingViewController: UIViewController {
+class VisionDrivingViewController: UIViewController, UITextFieldDelegate {
     
     lazy var visionDrivingView: VisionDrivingView = {
         let visionDrivingView = VisionDrivingView()
@@ -46,6 +46,10 @@ class VisionDrivingViewController: UIViewController {
         
         //네비
         navigationUI()
+        
+        //visionDrivingView에 텍스트 필드 글자수 제한 설정 시
+        visionDrivingView.visionDepartTextField.delegate = self
+        visionDrivingView.visionArriveTextField.delegate = self
         
         //버튼액션
         visionDrivingButtonAction()
@@ -101,13 +105,21 @@ class VisionDrivingViewController: UIViewController {
             NotificationCenter.default.post(name: .visionArrive, object: arriveText)
         }
         
-        //add페이지로 연결할 도착-출발 운행 데이터 계산해서 가지고 있다 넘길거
         let depart = Int(visionDrivingView.visionDepartTextField.text ?? "") ?? 0
         let arrive = Int(visionDrivingView.visionArriveTextField.text ?? "") ?? 0
         let driveText = arrive - depart
+        print("\(driveText) = \(arrive) - \(depart)")
         NotificationCenter.default.post(name: .visionDrive, object: String(driveText))
-
+        
         navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: - 텍스트필드 글자수 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        let maxLength = 6
+        return updatedText.count <= maxLength
     }
     
     //MARK: - VisionFuelingView addImage 버튼 액션
@@ -220,10 +232,13 @@ extension VisionDrivingViewController: UIImagePickerControllerDelegate, UINaviga
                        odoRange.upperBound < kmRange.lowerBound {
                         let odoEndIndex = odoRange.upperBound
                         let kmStartIndex = kmRange.lowerBound
-                        let betweenText = recognizedText[odoEndIndex..<kmStartIndex]
+                        var betweenText = String(recognizedText[odoEndIndex..<kmStartIndex])
+                        
+                        //띄어쓰기 제거
+                        betweenText = betweenText.trimmingCharacters(in: .whitespaces)
                         
                         print("ODO와 KM 사이의 문자: \(betweenText)")
-                        self?.visionDrivingView.visionDepartTextField.text = String(betweenText)
+                        self?.visionDrivingView.visionDepartTextField.text = betweenText
                     } else {
                         print("ODO 또는 km이 인식되지 않았거나, 그 사이의 문자열을 찾을 수 없습니다.")
                         self?.visionDrivingView.visionDepartTextField.text = "다시"
@@ -235,10 +250,13 @@ extension VisionDrivingViewController: UIImagePickerControllerDelegate, UINaviga
                        odoRange.upperBound < kmRange.lowerBound {
                         let odoEndIndex = odoRange.upperBound
                         let kmStartIndex = kmRange.lowerBound
-                        let betweenText = recognizedText[odoEndIndex..<kmStartIndex]
+                        var betweenText = String(recognizedText[odoEndIndex..<kmStartIndex])
+                        
+                        //띄어쓰기 제거
+                        betweenText = betweenText.trimmingCharacters(in: .whitespaces)
                         
                         print("ODO와 KM 사이의 문자: \(betweenText)")
-                        self?.visionDrivingView.visionArriveTextField.text = String(betweenText)
+                        self?.visionDrivingView.visionArriveTextField.text = betweenText
                     } else {
                         print("ODO 또는 km이 인식되지 않았거나, 그 사이의 문자열을 찾을 수 없습니다.")
                         self?.visionDrivingView.visionArriveTextField.text = "다시"

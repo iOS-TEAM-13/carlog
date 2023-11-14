@@ -62,8 +62,7 @@ class AddFuelingViewController: UIViewController, UITextFieldDelegate {
         ]
         
         self.navigationItem.leftBarButtonItem = self.backButton
-        //주유 사진 인식 + 버튼 숨김처리 - 주말에 해라
-//        self.navigationItem.rightBarButtonItem = self.addImageButton
+        self.navigationItem.rightBarButtonItem = self.addImageButton
     }
     
     lazy var backButton: UIBarButtonItem = {

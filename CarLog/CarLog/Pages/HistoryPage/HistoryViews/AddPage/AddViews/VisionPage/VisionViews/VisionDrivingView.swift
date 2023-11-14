@@ -9,12 +9,12 @@ import UIKit
 
 class VisionDrivingView: UIView {
 
-    lazy var visionStackView: UIStackView = {
-        let visionStackView = UIStackView(arrangedSubviews: [visionInfoLabel, visionButtonTextFieldStackView])
-        visionStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
-        visionStackView.backgroundColor = .white
-        visionStackView.layer.cornerRadius = Constants.cornerRadius
-        return visionStackView
+    lazy var visionDrivingStackView: UIStackView = {
+        let visionDrivingStackView = UIStackView(arrangedSubviews: [visionInfoLabel, visionButtonTextFieldStackView])
+        visionDrivingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
+        visionDrivingStackView.backgroundColor = .white
+        visionDrivingStackView.layer.cornerRadius = Constants.cornerRadius
+        return visionDrivingStackView
     }()
     
     //안내 라벨
@@ -133,24 +133,24 @@ class VisionDrivingView: UIView {
     
     // MARK: - addVisionFueling UI 설정
     private func setupUI() {
-        addSubview(visionStackView)
+        addSubview(visionDrivingStackView)
 
-        visionStackView.snp.makeConstraints { make in
+        visionDrivingStackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview().multipliedBy(0.7)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin * 2)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }
         
         visionInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(visionStackView).offset(20)
+            make.top.equalTo(visionDrivingStackView).offset(20)
         }
         
         visionDepartTextField.snp.makeConstraints { make in
-            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
+            make.bottom.equalTo(visionDrivingStackView.snp.bottom).offset(-20)
         }
         
         visionArriveTextField.snp.makeConstraints { make in
-            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
+            make.bottom.equalTo(visionDrivingStackView.snp.bottom).offset(-20)
         }
         
         visionDepartImageButton.snp.makeConstraints { make in
