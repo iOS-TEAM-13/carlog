@@ -132,10 +132,3 @@ final class PresentationController: UIPresentationController {
         self.presentedViewController.dismiss(animated: true, completion: nil)
     }
 }
-
-class ImageCacheManager {
-    
-    static let shared = NSCache<NSString, UIImage>()
-    
-    private init() {}
-}

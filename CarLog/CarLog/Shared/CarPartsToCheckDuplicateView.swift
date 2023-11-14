@@ -12,7 +12,7 @@ class CarPartsToCheckDuplicateView: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize36, weight: .medium)
         label.textAlignment = .left
         label.numberOfLines = 2
         return label
@@ -22,7 +22,7 @@ class CarPartsToCheckDuplicateView: UIView {
         let textField = UITextField()
         textField.textColor = .black
         textField.backgroundColor = .white
-        textField.font = .spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold)
+        textField.font = .spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold)
         textField.textAlignment = .left
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height))
         textField.leftViewMode = .always
@@ -37,7 +37,7 @@ class CarPartsToCheckDuplicateView: UIView {
         configuration.imagePadding = 10
 
         let button = UIButton(configuration: configuration)
-        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
+        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .medium), titleColor: .black, backgroundColor: .clear)
         return button
     }()
 

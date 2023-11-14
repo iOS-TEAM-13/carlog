@@ -31,7 +31,7 @@ class GuideView: UIView {
     private let gasolineLabel: UILabel = {
         let label = UILabel()
         label.text = "휘발유"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium)
         label.textColor = .black
         return label
     }()
@@ -51,7 +51,7 @@ class GuideView: UIView {
     private let dieselLabel: UILabel = {
         let label = UILabel()
         label.text = "경유"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium)
         label.textColor = .black
         return label
     }()
@@ -71,7 +71,7 @@ class GuideView: UIView {
     private let carWashLabel: UILabel = {
         let label = UILabel()
         label.text = "세차장 유무"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium)
         label.textColor = .black
         return label
     }()
@@ -91,7 +91,7 @@ class GuideView: UIView {
     private let storeLabel: UILabel = {
         let label = UILabel()
         label.text = "편의점 유무"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium)
         label.textColor = .black
         return label
     }()

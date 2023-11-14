@@ -28,27 +28,6 @@ final class FirestoreService {
         }
     }
     
-    func loadUsers(completion: @escaping ([User]?) -> Void) {
-        db.collection("users").getDocuments { querySnapshot, error in
-            if let error = error {
-                print("데이터를 가져오지 못했습니다: \(error)")
-                completion(nil)
-            } else {
-                var users: [User] = []
-                for document in querySnapshot?.documents ?? [] {
-                    do {
-                        let user = try Firestore.Decoder().decode(User.self, from: document.data())
-                        users.append(user)
-                    } catch {
-                        completion(nil)
-                        return
-                    }
-                }
-                completion(users)
-            }
-        }
-    }
-    
     func checkingEmail(email: String, completion: @escaping (Bool, Error?) -> Void) {
         let usersRef = db.collection("users")
         
@@ -273,7 +252,7 @@ final class FirestoreService {
         }
     }
         
-func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, completion: @escaping ([Comment]?) -> Void) {
+    func loadComments(excludingBlockedPostsFor userEmail: String, postID: String, completion: @escaping ([Comment]?) -> Void) {
         db.collection("users").whereField("email", isEqualTo: userEmail).getDocuments { userDocSnapshot, userError in
             
             if let userError = userError {

@@ -118,7 +118,7 @@ class MyCarPageViewController: UIViewController {
     }
     
     private func setTooltip() {
-        preferences.drawing.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .regular)
+        preferences.drawing.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .regular)
         preferences.drawing.foregroundColor = .black
         preferences.drawing.backgroundColor = .buttonSkyBlueColor
         preferences.animating.dismissOnTap = true

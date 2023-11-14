@@ -19,8 +19,8 @@ class LargeButtonStackView: UIStackView {
         super.init(frame: .zero)
         secondButton.layer.cornerRadius = Constants.cornerRadius
         
-        firstButton.myPageCustomButton(text: firstButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold), titleColor: firstTitleColor, backgroundColor: firstBackgroudColor)
-        secondButton.myPageCustomButton(text: secondButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
+        firstButton.myPageCustomButton(text: firstButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .bold), titleColor: firstTitleColor, backgroundColor: firstBackgroudColor)
+        secondButton.myPageCustomButton(text: secondButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
         
         setupUI()
     }

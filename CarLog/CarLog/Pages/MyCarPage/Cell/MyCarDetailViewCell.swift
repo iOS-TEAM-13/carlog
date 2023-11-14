@@ -14,20 +14,20 @@ class MyCarDetialViewCell: UICollectionViewCell {
 
     private let replacedDateLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "수정일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), alignment: .left)
+        label.customLabel(text: "수정일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .bold), alignment: .left)
         return label
     }()
     
     // 수정일
     private let changedDateLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "변경된 날짜", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
+        label.customLabel(text: "변경된 날짜", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium), alignment: .left)
         return label
     }()
     
     private let replacedTypeLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "구분", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold), alignment: .left)
+        label.customLabel(text: "구분", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold), alignment: .left)
         return label
     }()
     

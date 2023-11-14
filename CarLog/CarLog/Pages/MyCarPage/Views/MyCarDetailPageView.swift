@@ -13,7 +13,7 @@ class MyCarDetailPageView: UIView {
     // MARK: Properties
     var selectedTitleLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), alignment: .left)
+        label.customLabel(text: "이름", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), alignment: .left)
         return label
     }()
     
@@ -27,7 +27,7 @@ class MyCarDetailPageView: UIView {
     
     var selectedIntervalLabel: UILabel = {
         var label = UILabel()
-        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
+        label.customLabel(text: "기간", textColor: .systemGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium), alignment: .left)
         return label
     }()
     

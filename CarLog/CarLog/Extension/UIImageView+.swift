@@ -8,23 +8,11 @@
 import UIKit
 
 extension UIImageView {
-//    func load(url: URL) {
-//        DispatchQueue.global().async { [weak self] in
-//            if let data = try? Data(contentsOf: url) {
-//                if let image = UIImage(data: data) {
-//                    DispatchQueue.main.async {
-//                        self?.image = image
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
     func load(url: URL) {
             
         let cacheKey = NSString(string: url.absoluteString) // 캐시에 사용될 Key 값
             
-            if let cachedImage = ImageCacheManager.shared.object(forKey: cacheKey) {
+            if let cachedImage = ImageCacheService.shared.object(forKey: cacheKey) {
                 self.image = cachedImage
                 return
             }
@@ -40,7 +28,7 @@ extension UIImageView {
                         }
                         DispatchQueue.main.async {
                             if let data = data, let image = UIImage(data: data) {
-                                ImageCacheManager.shared.setObject(image, forKey: cacheKey)
+                                ImageCacheService.shared.setObject(image, forKey: cacheKey)
                                 self.image = image
                             }
                         }

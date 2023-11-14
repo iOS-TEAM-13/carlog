@@ -27,14 +27,14 @@ class FuelingCollectionViewCell: UICollectionViewCell {
     lazy var writeDateLabel: UILabel = {
         let writeDateLabel = UILabel()
         writeDateLabel.textColor = .darkGray
-        writeDateLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        writeDateLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return writeDateLabel
     }()
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
         priceLabel.textColor = .darkGray
-        priceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        priceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return priceLabel
     }()
     
@@ -49,14 +49,14 @@ class FuelingCollectionViewCell: UICollectionViewCell {
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
         totalPriceLabel.textColor = .black
-        totalPriceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua32, weight: .medium)
+        totalPriceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize32, weight: .medium)
         return totalPriceLabel
     }()
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
         countLabel.textColor = .black
-        countLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        countLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return countLabel
     }()
     

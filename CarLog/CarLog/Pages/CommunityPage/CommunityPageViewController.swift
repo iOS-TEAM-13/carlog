@@ -21,8 +21,8 @@ class CommunityPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
-        communityCollectionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
-        communityCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
+        communityCollectionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: CommunityPageCollectionViewCell.identifier)
+        communityCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
         editFloatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         
         bannerCollectionView.dataSource = self
@@ -141,11 +141,11 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == bannerCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as! BannerCollectionViewCell
             cell.configure(with: banners[indexPath.item])
             return cell
         } else if collectionView == communityCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommunityPageCollectionViewCell.identifier, for: indexPath) as! CommunityPageCollectionViewCell
             let post = posts[indexPath.item]
             if let imageURL = post.image.first {
                 cell.bind(userName: post.userName, title: post.title, content: post.content, image: imageURL, spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: self.comments[post.id ?? ""]?.count)

@@ -28,14 +28,14 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var writeDateLabel: UILabel = {
         let writeDateLabel = UILabel()
         writeDateLabel.textColor = .darkGray
-        writeDateLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        writeDateLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return writeDateLabel
     }()
     
     lazy var drivingPurposeLabel: UILabel = {
         let drivingPurposeLabel = UILabel()
         drivingPurposeLabel.textColor = .darkGray
-        drivingPurposeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        drivingPurposeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         drivingPurposeLabel.numberOfLines = 1
         return drivingPurposeLabel
     }()
@@ -51,14 +51,14 @@ class DrivingCollectionViewCell: UICollectionViewCell {
     lazy var driveDistenceLabel: UILabel = {
         let driveDistenceLabel = UILabel()
         driveDistenceLabel.textColor = .black
-        driveDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua32, weight: .medium)
+        driveDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize32, weight: .medium)
         return driveDistenceLabel
     }()
     
     lazy var arriveTotalDistenceLabel: UILabel = {
         let arriveTotalDistenceLabel = UILabel()
         arriveTotalDistenceLabel.textColor = .black
-        arriveTotalDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        arriveTotalDistenceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return arriveTotalDistenceLabel
     }()
     

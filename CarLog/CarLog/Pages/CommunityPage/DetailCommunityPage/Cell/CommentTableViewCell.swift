@@ -10,7 +10,7 @@ import UIKit
 class CommentTableViewCell: UITableViewCell {
     lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         label.textColor = .black
         label.setContentHuggingPriority(.init(251), for: .horizontal)
         return label
@@ -19,7 +19,7 @@ class CommentTableViewCell: UITableViewCell {
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "2022.08.28"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .light)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .light)
         label.textColor = .black
         label.setContentHuggingPriority(.init(250), for: .horizontal)
         return label
@@ -34,7 +34,7 @@ class CommentTableViewCell: UITableViewCell {
     
     lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .medium)
         label.numberOfLines = 5
         label.textColor = .black
         return label

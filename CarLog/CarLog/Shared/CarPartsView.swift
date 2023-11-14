@@ -12,7 +12,7 @@ class CarPartsView: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize36, weight: .medium)
         label.textAlignment = .left
         label.numberOfLines = 2
         return label
@@ -22,7 +22,7 @@ class CarPartsView: UIView {
         let textField = UITextField()
         textField.textColor = .black
         textField.backgroundColor = .white
-        textField.font = .spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold)
+        textField.font = .spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold)
         textField.textAlignment = .left
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height))
         textField.leftViewMode = .always

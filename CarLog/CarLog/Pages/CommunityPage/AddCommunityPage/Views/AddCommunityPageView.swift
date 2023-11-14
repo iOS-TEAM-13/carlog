@@ -41,7 +41,7 @@ class AddCommunityPageView: UIView {
     lazy var numberOfSelectedImageLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         label.textColor = .white
         label.textAlignment = .center
         label.backgroundColor = .mainNavyColor
@@ -63,7 +63,7 @@ class AddCommunityPageView: UIView {
         mainTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         mainTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTextField.frame.size.height))
         mainTextField.leftViewMode = .always
-        mainTextField.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        mainTextField.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium)
         return mainTextField
     }()
     
@@ -74,9 +74,9 @@ class AddCommunityPageView: UIView {
         subTextView.backgroundColor = .white
         subTextView.layer.borderColor = UIColor.clear.cgColor
         subTextView.layer.borderWidth = 0
-        subTextView.layer.cornerRadius = 3
+        subTextView.layer.cornerRadius = Constants.cornerRadius
         subTextView.textContainerInset = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
-        subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        subTextView.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
 //        subTextView.delegate = self
         return subTextView
     }()

@@ -14,7 +14,7 @@ class MyPageSettingView: UIView {
     lazy var logoutButton: UIButton = {
         let logoutButton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .regular),
             .foregroundColor: UIColor.lightGray,
         ]
         let attributedTitle = NSAttributedString(string: "로그아웃", attributes: attributes)
@@ -34,7 +34,7 @@ class MyPageSettingView: UIView {
     lazy var quitUserButton: UIButton = {
         let quitUserButton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .regular),
             .foregroundColor: UIColor.lightGray,
         ]
         let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
@@ -54,7 +54,7 @@ class MyPageSettingView: UIView {
         let verLabel = UILabel()
         verLabel.text = "ver x.x.x"
         verLabel.textColor = .lightGray
-        verLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        verLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold)
         verLabel.textAlignment = .center
         return verLabel
     }()
@@ -63,7 +63,7 @@ class MyPageSettingView: UIView {
         let personalRegulations = UILabel()
         personalRegulations.text = "개인정보처리방침"
         personalRegulations.textColor = .lightGray
-        personalRegulations.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        personalRegulations.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold)
         personalRegulations.textAlignment = .center
         personalRegulations.isUserInteractionEnabled = true
         return personalRegulations

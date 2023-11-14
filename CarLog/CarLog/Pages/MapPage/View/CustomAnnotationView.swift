@@ -22,7 +22,7 @@ class CustomAnnotationView: MKAnnotationView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua8, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize8, weight: .bold)
         label.textColor = .black
         label.lineBreakMode = .byClipping
         label.adjustsFontSizeToFitWidth = true
@@ -52,7 +52,7 @@ class CustomAnnotationView: MKAnnotationView {
     
     private lazy var gasolinePriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold)
         label.textColor = .black
         label.text = "휘발유"
         label.textAlignment = .center
@@ -61,7 +61,7 @@ class CustomAnnotationView: MKAnnotationView {
     
     private lazy var dieselPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold)
         label.textColor = .black
         label.text = "경유"
         label.textAlignment = .center

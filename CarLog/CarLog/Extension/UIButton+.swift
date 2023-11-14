@@ -24,7 +24,7 @@ extension UIButton {
     func checkingViewButton(text: String, tag: Int) {
         self.setTitleColor(.mainNavyColor, for: .normal)
         self.setTitle(text, for: .normal)
-        self.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .semibold)
+        self.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .semibold)
         self.backgroundColor = .buttonSkyBlueColor
         self.layer.borderColor = UIColor.clear.cgColor
         self.layer.borderWidth = 0

@@ -7,16 +7,16 @@ struct Constants {
     static let verticalMargin: CGFloat = 12.0
     static let cornerRadius: CGFloat = 5.0
 
-    static let fontJua8: CGFloat = 8
-    static let fontJua10: CGFloat = 10
-    static let fontJua14: CGFloat = 14
-    static let fontJua16: CGFloat = 16
-    static let fontJua20: CGFloat = 20
-    static let fontJua24: CGFloat = 24
-    static let fontJua28: CGFloat = 28
-    static let fontJua32: CGFloat = 32
-    static let fontJua36: CGFloat = 36
-    static let fontJua40: CGFloat = 40
+    static let fontSize8: CGFloat = 8
+    static let fontSize10: CGFloat = 10
+    static let fontSize14: CGFloat = 14
+    static let fontSize16: CGFloat = 16
+    static let fontSize20: CGFloat = 20
+    static let fontSize24: CGFloat = 24
+    static let fontSize28: CGFloat = 28
+    static let fontSize32: CGFloat = 32
+    static let fontSize36: CGFloat = 36
+    static let fontSize40: CGFloat = 40
 
     static var carParts = CarPart(parts: [PartsInfo(name: .engineOil, fixHistory: []), PartsInfo(name: .missionOil, fixHistory: []), PartsInfo(name: .brakeOil, fixHistory: []), PartsInfo(name: .brakePad, fixHistory: []), PartsInfo(name: .tireRotation, fixHistory: []), PartsInfo(name: .tire, fixHistory: []), PartsInfo(name: .fuelFilter, fixHistory: []), PartsInfo(name: .wiperBlade, fixHistory: []), PartsInfo(name: .airconFilter, fixHistory: []), PartsInfo(name: .insurance, fixHistory: [])], userEmail: "")
     

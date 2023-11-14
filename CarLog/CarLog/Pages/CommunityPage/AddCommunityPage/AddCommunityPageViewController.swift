@@ -217,7 +217,7 @@ private extension AddCommunityPageViewController {
         
         if postToEdit == nil {
             let titleTextAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold),
                 .foregroundColor: UIColor.mainNavyColor
             ]
             
@@ -235,7 +235,7 @@ private extension AddCommunityPageViewController {
             )
             
             let rightBarButtontextAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold),
                 .foregroundColor: UIColor.mainNavyColor
             ]
             
@@ -245,7 +245,7 @@ private extension AddCommunityPageViewController {
             navigationItem.rightBarButtonItem = rightBarButtonItem
         } else {
             let titleTextAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold),
                 .foregroundColor: UIColor.mainNavyColor
             ]
             
@@ -263,7 +263,7 @@ private extension AddCommunityPageViewController {
             )
             
             let rightBarButtontextAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold),
+                .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold),
                 .foregroundColor: UIColor.mainNavyColor
             ]
             

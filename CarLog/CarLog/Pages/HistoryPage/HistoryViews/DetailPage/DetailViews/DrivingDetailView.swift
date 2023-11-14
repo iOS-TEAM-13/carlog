@@ -40,7 +40,7 @@ class DrivingDetailView: UIView {
     
     lazy var drivingPurposeLabel: UILabel = {
         let drivingPurposeLabel = UILabel()
-        drivingPurposeLabel.customLabel(text: "운행 목적 (15자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        drivingPurposeLabel.customLabel(text: "운행 목적 (15자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return drivingPurposeLabel
     }()
     
@@ -50,10 +50,10 @@ class DrivingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        drivingPurposeTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 드라이브, 출퇴근", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .default)
+        drivingPurposeTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 드라이브, 출퇴근", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .default)
         
         let nextTextField = UIToolbar()
         nextTextField.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
@@ -95,7 +95,7 @@ class DrivingDetailView: UIView {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적(출발) 주행거리 (6자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        totalDistanceLabel.customLabel(text: "누적(출발) 주행거리 (6자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return totalDistanceLabel
     }()
     
@@ -105,10 +105,10 @@ class DrivingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        totalDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
+        totalDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
         
         totalDistanceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
@@ -152,7 +152,7 @@ class DrivingDetailView: UIView {
     
     lazy var arriveDistanceLabel: UILabel = {
         let arriveDistanceLabel = UILabel()
-        arriveDistanceLabel.customLabel(text: "도착 주행거리 (6자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        arriveDistanceLabel.customLabel(text: "도착 주행거리 (6자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return arriveDistanceLabel
     }()
     
@@ -162,10 +162,10 @@ class DrivingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        arriveDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
+        arriveDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
         
         arriveDistanceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
@@ -201,7 +201,7 @@ class DrivingDetailView: UIView {
     
     lazy var driveDistenceLabel: UILabel = {
         let driveDistenceLabel = UILabel()
-        driveDistenceLabel.customLabel(text: "주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        driveDistenceLabel.customLabel(text: "주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return driveDistenceLabel
     }()
     
@@ -211,10 +211,10 @@ class DrivingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        driveDistenceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
+        driveDistenceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
         
         driveDistenceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
@@ -250,14 +250,14 @@ class DrivingDetailView: UIView {
     
     lazy var upDateButton: UIButton = {
         let upDateButton = UIButton()
-        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         upDateButton.layer.cornerRadius = Constants.cornerRadius
         return upDateButton
     }()
     
     lazy var removeButton: UIButton = {
         let removeButton = UIButton()
-        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         removeButton.layer.cornerRadius = Constants.cornerRadius
         return removeButton
     }()

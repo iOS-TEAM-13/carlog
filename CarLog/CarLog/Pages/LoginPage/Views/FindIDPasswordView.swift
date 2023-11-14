@@ -13,7 +13,7 @@ class FindIDPasswordView: UIView {
     lazy var passwordLabel: UILabel = {
         let label = UILabel()
         label.text = "비밀번호 재설정"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .bold)
         label.textAlignment = .center
         label.textColor = .mainNavyColor
         return label
@@ -24,8 +24,8 @@ class FindIDPasswordView: UIView {
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.selectedSegmentTintColor = .mainNavyColor
 
-        segmentedControl.setTitleTextAttributes([.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([.font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([.font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([.font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
         return segmentedControl
     }()
 
@@ -43,7 +43,7 @@ class FindIDPasswordView: UIView {
 
     lazy var emailTextField: UITextField = {
         let textField = UITextField()
-        textField.loginCustomTextField(placeholder: "이메일 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
+        textField.loginCustomTextField(placeholder: "이메일 입력", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)))
         return textField
     }()
     
