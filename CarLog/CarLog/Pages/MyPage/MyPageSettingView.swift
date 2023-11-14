@@ -66,8 +66,6 @@ class MyPageSettingView: UIView {
         personalRegulations.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
         personalRegulations.textAlignment = .center
         personalRegulations.isUserInteractionEnabled = true
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
-//        personalRegulations.addGestureRecognizer(tap)
         return personalRegulations
     }()
     

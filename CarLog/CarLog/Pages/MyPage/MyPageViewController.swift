@@ -10,6 +10,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     lazy var myPageView = MyPageView()
     lazy var myPageSettingView = MyPageSettingView()
+    lazy var inquiryButton = CustomFloatingButton(image: UIImage(named: "Context Icon"))
     
     lazy var carDummy = Constants.currentUser
     
@@ -36,8 +37,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.setupUI() // ⭐ 내 차 정보 가져오기
-        
         if isEditMode {
             toggleTextFieldsEditing(enable: false)
             editButtonChanged(editMode: false)
@@ -52,11 +51,11 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         myPageSettingView.quitUserButton.addTarget(self, action: #selector(quitUserButtonTapped), for: .touchUpInside)
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
         myPageSettingView.personalRegulations.addGestureRecognizer(tap)
-        //        myPageView.inquiryButton.addTarget(self, action: #selector(dialPhoneNumber), for: .touchUpInside)
-//        myPageSettingView.inquiryButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
+        self.inquiryButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
     }
     
     // MARK: - Actions
+    
     @objc func tapFunction(sender: UITapGestureRecognizer) {
         if let url = URL(string: "https://carlog.notion.site/3b018e85e94443da9a8d533525d3cf64?pvs=4") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -69,8 +68,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         editButtonChanged(editMode: isEditMode)
     }
     
-    @objc private func cancelButtonTapped() {
-        // 취소 버튼,현재 입력된 내용을 초기값으로 설정
+    @objc private func cancelButtonTapped() { // 취소 버튼,현재 입력된 내용을 초기값으로 설정
         myPageView.carNumberTextField.text = carDummy.number
         myPageView.carNameTextField.text = carDummy.name
         myPageView.carMakerTextField.text = carDummy.maker
@@ -84,7 +82,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         toggleTextFieldsEditing(enable: !isEditMode)
         editButtonChanged(editMode: !isEditMode)
     }
-    
     
     private func toggleTextFieldsEditing(enable: Bool) {
         [myPageView.carNumberTextField, myPageView.carNameTextField, myPageView.carMakerTextField, myPageView.carOilTypeTextField, myPageView.carNickNameTextField, myPageView.carTotalDistanceTextField].forEach {
@@ -103,7 +100,9 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             myPageView.checkCarNumberButton.isHidden = false
             myPageView.checkCarNickNameButton.isHidden = false
             myPageSettingView.myPageDesignStackView.isHidden = true
-//            myPageSettingView.inquiryButton.isHidden = true
+            myPageSettingView.verLabel.isHidden = true
+            myPageSettingView.personalRegulations.isHidden = true
+            self.inquiryButton.isHidden = true
         } else {
             tabBarController?.tabBar.isHidden = false
             guard let checkCarNumber = self.myPageView.carNumberTextField.text,
@@ -129,7 +128,9 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
             myPageView.checkCarNumberButton.isHidden = true
             myPageView.checkCarNickNameButton.isHidden = true
             myPageSettingView.myPageDesignStackView.isHidden = false
-//            myPageSettingView.inquiryButton.isHidden = false
+            myPageSettingView.verLabel.isHidden = false
+            myPageSettingView.personalRegulations.isHidden = false
+            self.inquiryButton.isHidden = false
             // ⭐ 택스트필드 6개 입력한 값들을 저장해서 파이어베이스에 넣어주기!
             guard let distanceText = myPageView.carTotalDistanceTextField.text else {
                 return
@@ -143,6 +144,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     private func setupUI() {
         view.addSubview(myPageView)
+        view.addSubview(inquiryButton)
         myPageView.addSubview(myPageSettingView)
         
         myPageView.snp.makeConstraints { make in
@@ -153,6 +155,13 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         myPageSettingView.snp.makeConstraints { make in
             make.top.equalTo(myPageView.carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 5)
             make.leading.trailing.equalTo(view)
+            make.bottom.equalTo(myPageView)
+        }
+        
+        inquiryButton.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin - 12)
+            make.bottom.equalToSuperview().offset(-102 - 12)
         }
         
         FirestoreService.firestoreService.loadCar { carInfoArray in
@@ -175,6 +184,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                         } else {
                             self.myPageView.carTotalDistanceTextField.text = "0.0"
                         }
+                        self.myPageView.updateMainTitleLabel()
                     }
                 }
             }
@@ -182,7 +192,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     @objc func logoutButtonTapped() {
-        if Constants.currentUser != nil {
+        if Auth.auth().currentUser != nil {
             let alert = UIAlertController(title: "로그아웃", message: "지금 로그아웃하시겠어요?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "취소", style: .destructive))
             present(alert, animated: true)
@@ -204,7 +214,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     @objc func quitUserButtonTapped() {
-        if Constants.currentUser != nil {
+        if Auth.auth().currentUser != nil {
             let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "취소", style: .destructive))
             present(alert, animated: true)
@@ -319,19 +329,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         }), for: .touchUpInside)
     }
     
-    //    @objc private func dialPhoneNumber() { //전화 거는 메서드
-    //        if let inquiryURL = URL(string: "tel://000-000-0000") {
-    //            if UIApplication.shared.canOpenURL(inquiryURL) {
-    //                UIApplication.shared.open(inquiryURL, options: [:], completionHandler: nil)
-    //            } else {
-    //                // 전화를 걸 수 없는 경우 오류 메세지 표시
-    //                let alert = UIAlertController(title: "오류", message: "단말기에서 전화 통화를 지원하지 않습니다.", preferredStyle: .alert)
-    //                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-    //                present(alert, animated: true, completion: nil)
-    //            }
-    //        }
-    //    }
-    
     func showSendMailErrorAlert() {
         let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "확인", style: .default) {
@@ -406,11 +403,5 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         myPageView.endEditing(true)
     }
-    
-//    func showAlert(message: String) {
-//        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-//        present(alert, animated: true, completion: nil)
-//    }
-    
+
 }
