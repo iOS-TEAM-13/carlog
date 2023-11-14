@@ -26,7 +26,7 @@ final class MyPageView: UIView {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "내 차 정보"
         mainTitleLabel.textColor = .black
-        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
+        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize28, weight: .bold)
         return mainTitleLabel
     }()
     
@@ -34,7 +34,7 @@ final class MyPageView: UIView {
 //        let mainTitleLabel = UILabel()
 //        mainTitleLabel.text = " 내 차 정보"
 //        mainTitleLabel.textColor = .white
-//        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
+//        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize28, weight: .bold)
 //        mainTitleLabel.layer.backgroundColor = UIColor.mainNavyColor.cgColor
 //        mainTitleLabel.layer.bounds.size.height = 50
 //        mainTitleLabel.layer.cornerRadius = 5
@@ -66,7 +66,7 @@ final class MyPageView: UIView {
 
     //    lazy var myWritingButton: UIButton = {
     //        let myWritingButton = UIButton()
-    //        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
+    //        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
     //        return myWritingButton
     //    }()
     
@@ -74,13 +74,13 @@ final class MyPageView: UIView {
         let carNumberLabel = UILabel()
         carNumberLabel.text = "차량 번호"
         carNumberLabel.textColor = .mainNavyColor
-        carNumberLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        carNumberLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return carNumberLabel
     }()
     
     lazy var carNumberTextField: UITextField = {
         let carNumberTextField = UITextField()
-        carNumberTextField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carNumberTextField.mypageCustomTextField(placeholder: "차량 번호 ex)00가0000", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         carNumberTextField.rightView = checkCarNumberButton
         carNumberTextField.rightViewMode = .always
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -98,7 +98,7 @@ final class MyPageView: UIView {
     
     lazy var checkCarNumberButton: UIButton = {
         let checkCarNumberButton = UIButton()
-        checkCarNumberButton.myPageCustomButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+        checkCarNumberButton.myPageCustomButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
         checkCarNumberButton.isHidden = true
         return checkCarNumberButton
     }()
@@ -107,13 +107,13 @@ final class MyPageView: UIView {
         let carNameLabel = UILabel()
         carNameLabel.text = "차 종류"
         carNameLabel.textColor = .mainNavyColor
-        carNameLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        carNameLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return carNameLabel
     }()
     
     lazy var carNameTextField: UITextField = {
         let carNameTextField = UITextField()
-        carNameTextField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carNameTextField.mypageCustomTextField(placeholder: "차 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -131,13 +131,13 @@ final class MyPageView: UIView {
         let carMakerLabel = UILabel()
         carMakerLabel.text = "제조사"
         carMakerLabel.textColor = .mainNavyColor
-        carMakerLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        carMakerLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return carMakerLabel
     }()
     
     lazy var carMakerTextField: UITextField = {
         let carMakerTextField = UITextField()
-        carMakerTextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carMakerTextField.mypageCustomTextField(placeholder: "제조사", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -155,13 +155,13 @@ final class MyPageView: UIView {
         let carOilTypeLabel = UILabel()
         carOilTypeLabel.text = "연료 종류"
         carOilTypeLabel.textColor = .mainNavyColor
-        carOilTypeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        carOilTypeLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return carOilTypeLabel
     }()
     
     lazy var carOilTypeTextField: UITextField = {
         let carOilTypeTextField = UITextField()
-        carOilTypeTextField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carOilTypeTextField.mypageCustomTextField(placeholder: "연료 종류", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -179,13 +179,13 @@ final class MyPageView: UIView {
         let carNickNameLabel = UILabel()
         carNickNameLabel.text = "차량 별명"
         carNickNameLabel.textColor = .mainNavyColor
-        carNickNameLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        carNickNameLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return carNickNameLabel
     }()
     
     lazy var carNickNameTextField: UITextField = {
         let carNickNameTextField = UITextField()
-        carNickNameTextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carNickNameTextField.mypageCustomTextField(placeholder: "차량 별명(닉네임)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         carNickNameTextField.rightView = checkCarNickNameButton
         carNickNameTextField.rightViewMode = .always
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -203,7 +203,7 @@ final class MyPageView: UIView {
     
     lazy var checkCarNickNameButton: UIButton = {
         let checkCarNickNameButton = UIButton()
-        checkCarNickNameButton.myPageCustomButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
+        checkCarNickNameButton.myPageCustomButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .bold), titleColor: .buttonSkyBlueColor, backgroundColor: .mainNavyColor)
         checkCarNickNameButton.isHidden = true
         return checkCarNickNameButton
     }()
@@ -212,13 +212,13 @@ final class MyPageView: UIView {
         let carTotalDistanceLabel = UILabel()
         carTotalDistanceLabel.text = "최종 주행거리"
         carTotalDistanceLabel.textColor = .mainNavyColor
-        carTotalDistanceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        carTotalDistanceLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return carTotalDistanceLabel
     }()
     
     lazy var carTotalDistanceTextField: UITextField = {
         let carTotalDistanceTextField = UITextField()
-        carTotalDistanceTextField.mypageCustomTextField(placeholder: "최종 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        carTotalDistanceTextField.mypageCustomTextField(placeholder: "최종 주행거리", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let toolbar = UIToolbar()
         toolbar.barStyle = .default

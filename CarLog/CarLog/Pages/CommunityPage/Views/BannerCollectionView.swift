@@ -10,7 +10,7 @@ class BannerCollectionView: UICollectionView {
         super.init(frame: .zero, collectionViewLayout: layout)
         self.isPagingEnabled = true
         self.showsHorizontalScrollIndicator = false
-        self.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
+        self.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
         
     }
 

@@ -13,7 +13,7 @@ class GasStationDetailView: UIView {
     lazy var nameLabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .bold)
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
         return label
@@ -22,7 +22,7 @@ class GasStationDetailView: UIView {
     lazy var addressLabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium)
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
         return label
@@ -32,7 +32,7 @@ class GasStationDetailView: UIView {
         let label = UILabel()
         label.text = "xxx-xxxx"
         label.textColor = .lightGray
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return label
     }()
 
@@ -40,7 +40,7 @@ class GasStationDetailView: UIView {
         let label = UILabel()
         label.text = "2023.10.14 기준"
         label.textColor = .lightGray
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium)
         return label
     }()
 
@@ -74,7 +74,7 @@ class GasStationDetailView: UIView {
         let label = UILabel()
         label.text = "경유 2000원"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium)
         return label
     }()
 
@@ -82,7 +82,7 @@ class GasStationDetailView: UIView {
         let label = UILabel()
         label.text = "휘발유 2000원"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium)
         return label
     }()
     

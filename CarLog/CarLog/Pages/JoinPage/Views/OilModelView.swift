@@ -8,7 +8,7 @@ final class OilModelView: UIView {
 
     lazy var label: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "주종을\n선택해주세요", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .medium), alignment: .left)
+        label.customLabel(text: "주종을\n선택해주세요", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize36, weight: .medium), alignment: .left)
         label.numberOfLines = 2
         return label
     }()

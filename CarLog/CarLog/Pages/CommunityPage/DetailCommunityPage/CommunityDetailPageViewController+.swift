@@ -39,7 +39,7 @@ extension CommunityDetailPageViewController: UICollectionViewDelegate, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityDetailCell", for: indexPath) as! CommunityDetailCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommunityDetailCollectionViewCell.identifier, for: indexPath) as! CommunityDetailCollectionViewCell
         guard let selectedPost = selectedPost, indexPath.item < selectedPost.image.count else { return cell }
         let imageURL = selectedPost.image[indexPath.item]
         if let url = imageURL {

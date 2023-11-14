@@ -57,7 +57,7 @@ class AddFuelingViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "주유기록 추가"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium),
             .foregroundColor: UIColor.mainNavyColor
         ]
         

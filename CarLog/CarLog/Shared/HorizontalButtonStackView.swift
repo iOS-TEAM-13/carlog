@@ -17,8 +17,8 @@ class HorizontalButtonStackView: UIStackView {
     // MARK: LifeCycle
     init(firstButtonText: String, secondButtonText: String) {
         super.init(frame: .zero)
-        firstButton.customButton(text: firstButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
-        secondButton.customButton(text: secondButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
+        firstButton.customButton(text: firstButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
+        secondButton.customButton(text: secondButtonText, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), titleColor: .white, backgroundColor: .mainNavyColor)
         setupUI()
     }
     

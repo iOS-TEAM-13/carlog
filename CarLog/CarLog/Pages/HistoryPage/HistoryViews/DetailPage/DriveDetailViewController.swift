@@ -61,7 +61,7 @@ class DriveDetailViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "주행기록"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium),
             .foregroundColor: UIColor.mainNavyColor
         ]
         

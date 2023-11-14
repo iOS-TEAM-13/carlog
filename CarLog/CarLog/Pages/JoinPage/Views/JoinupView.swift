@@ -17,7 +17,7 @@ final class JoinupView: UIView {
         return contentView
     }()
     
-    lazy var emailLabel = makeLabel(text: "이메일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+    lazy var emailLabel = makeLabel(text: "이메일", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
 
     lazy var emailTextField: UITextField = {
         let textField = makeTextField(placeholder: "sample@email.com/co.kr/net")
@@ -27,7 +27,7 @@ final class JoinupView: UIView {
         return textField
     }()
     
-    lazy var verifiedEmailButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
+    lazy var verifiedEmailButton = makeButton(text: "인증", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
   
     lazy var emailStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailTextField, verifiedEmailButton])
@@ -49,7 +49,7 @@ final class JoinupView: UIView {
     
     lazy var personalInfoStatusLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "귀하는 카로그의 서비스 이용에 필요한 최소한의 개인정보 수집·이용에 동의하지 않을 수 있으나 동의를 거부할 경우 회원제 서비스 이용이 불가합니다.", textColor: .darkGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .medium), alignment: .left)
+        label.customLabel(text: "귀하는 카로그의 서비스 이용에 필요한 최소한의 개인정보 수집·이용에 동의하지 않을 수 있으나 동의를 거부할 경우 회원제 서비스 이용이 불가합니다.", textColor: .darkGray, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .medium), alignment: .left)
         label.numberOfLines = 3
         label.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
@@ -82,13 +82,13 @@ final class JoinupView: UIView {
         configuration.imagePadding = 10
         
         let button = UIButton(configuration: configuration)
-        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
+        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .medium), titleColor: .black, backgroundColor: .clear)
         return button
     }()
     
     lazy var emailAlertLabel = makeAlertLabel(text: "이메일은 필수 입력 정보입니다", textColor: .red)
     
-    lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+    lazy var passwordLabel = makeLabel(text: "비밀번호", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
     
     lazy var passwordTextField: UITextField = {
         let textField = makeTextField(placeholder: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상", isSecure: isSecure)
@@ -101,7 +101,7 @@ final class JoinupView: UIView {
     
     lazy var passwordAlertLabel = makeAlertLabel(text: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상으로 작성하세요", textColor: .red)
 
-    lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+    lazy var confirmPasswordLabel = makeLabel(text: "비밀번호 재확인", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
     
     lazy var confirmPasswordTextField: UITextField = {
         let textField = makeTextField(placeholder: "대/소문자와 숫자, 특수문자를 조합하여 8글자 이상", isSecure: isSecure)
@@ -116,9 +116,9 @@ final class JoinupView: UIView {
 
     lazy var smtpNumberTextField: UITextField = makeTextField(placeholder: "인증번호", keyboardType: .numberPad)
 
-    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
+    lazy var smtpNumberButton: UIButton = makeButton(text: "확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), titleColor: .gray, backgroundColor: .lightGray)
     
-    lazy var smtpTimerLabel: UILabel = makeLabel(text: "대기중", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+    lazy var smtpTimerLabel: UILabel = makeLabel(text: "대기중", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
     
     lazy var smtpNumberStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [smtpNumberTextField, smtpNumberButton, smtpTimerLabel])
@@ -210,7 +210,7 @@ extension JoinupView {
         textField.loginCustomTextField(
             placeholder: placeholder,
             textColor: .black,
-            font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium),
+            font: UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .medium),
             alignment: .left,
             paddingView: UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height)
             )

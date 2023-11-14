@@ -32,7 +32,7 @@ class CommunityDetailView: UIView {
         let label = UILabel()
         label.text = "달려라 달려라~"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .medium)
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
         return label
@@ -42,7 +42,7 @@ class CommunityDetailView: UIView {
         let button = UIButton()
         button.setTitle("왕바우", for: .normal) // "게시"라는 텍스트 설정
         button.setTitleColor(.black, for: .normal) // 텍스트 색상 설정
-        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium) // 폰트와 크기 설정
+        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .medium) // 폰트와 크기 설정
         button.backgroundColor = .clear // 버튼의 배경색 설정
         return button
     }()
@@ -72,7 +72,7 @@ class CommunityDetailView: UIView {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(CommunityDetailCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityDetailCell")
+        collectionView.register(CommunityDetailCollectionViewCell.self, forCellWithReuseIdentifier: CommunityDetailCollectionViewCell.identifier)
         return collectionView
     }()
     
@@ -84,7 +84,7 @@ class CommunityDetailView: UIView {
     lazy var emergencyCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         return label
     }()
     
@@ -99,7 +99,7 @@ class CommunityDetailView: UIView {
         let label = UILabel()
         label.text = "카 \n로 \n그 \n언 \n더 \n독"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .bold)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +115,7 @@ class CommunityDetailView: UIView {
     lazy var commentUserNameLabel: UILabel = {
         let label = UILabel()
         label.text = "user1"
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -130,7 +130,7 @@ class CommunityDetailView: UIView {
     lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = "댓글..."
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         label.textColor = .black
         return label
     }()
@@ -145,7 +145,7 @@ class CommunityDetailView: UIView {
     lazy var commentTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .white
-        textView.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold)
+        textView.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold)
         textView.layer.cornerRadius = Constants.cornerRadius
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isUserInteractionEnabled = true
@@ -157,7 +157,7 @@ class CommunityDetailView: UIView {
         let button = UIButton()
         button.setTitle("게시", for: .normal) // "게시"라는 텍스트 설정
         button.setTitleColor(.mainNavyColor, for: .normal) // 텍스트 색상 설정
-        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .bold) // 폰트와 크기 설정
+        button.titleLabel?.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize14, weight: .bold) // 폰트와 크기 설정
         button.backgroundColor = .clear // 버튼의 배경색 설정
         button.layer.cornerRadius = 5 // 버튼의 모서리 둥글게 설정
         return button

@@ -20,7 +20,7 @@ class ComponentsView: UIView {
     
     let checkTitleLabel: UILabel = {
         let label = UILabel()
-        label.customLabel(text: "타이틀", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua36, weight: .bold), alignment: .center)
+        label.customLabel(text: "타이틀", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize36, weight: .bold), alignment: .center)
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5

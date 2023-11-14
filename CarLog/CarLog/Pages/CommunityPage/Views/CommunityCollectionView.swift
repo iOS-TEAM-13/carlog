@@ -9,7 +9,7 @@ class CommunityCollectionView: UICollectionView {
         self.backgroundColor = .backgroundCoustomColor
         self.layer.cornerRadius = Constants.cornerRadius
         self.clipsToBounds = true
-        self.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
+        self.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: CommunityPageCollectionViewCell.identifier)
         
     }
 

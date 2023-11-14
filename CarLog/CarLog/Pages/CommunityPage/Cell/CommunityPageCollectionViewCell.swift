@@ -61,7 +61,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "제목"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize24, weight: .medium)
         return label
     }()
     
@@ -69,7 +69,7 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "본문"
         label.textColor = .black
-        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium)
+        label.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium)
         return label
     }()
     
