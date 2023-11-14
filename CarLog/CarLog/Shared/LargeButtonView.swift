@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 class LargeButtonView: UIView {
-//    weak var delegate: ButtonTappedViewDelegate?
 
     lazy var anyButton: UIButton = {
         let button = UIButton()

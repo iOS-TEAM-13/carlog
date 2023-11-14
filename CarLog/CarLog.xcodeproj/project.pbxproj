@@ -19,6 +19,7 @@
 		13A8D8BE2AF909CF00496DCA /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */; };
 		13E478CD2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */; };
 		13E478D12B032D0B00B234B8 /* LargeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E478D02B032D0B00B234B8 /* LargeButtonView.swift */; };
+		13E478D32B034E3800B234B8 /* LargeButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E478D22B034E3800B234B8 /* LargeButtonStackView.swift */; };
 		13EB46002AFA6D9500A1A040 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EB45FF2AFA6D9500A1A040 /* UIView+.swift */; };
 		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
@@ -145,6 +146,7 @@
 		13A8D8BD2AF909CF00496DCA /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPartsToCheckDuplicateView.swift; sourceTree = "<group>"; };
 		13E478D02B032D0B00B234B8 /* LargeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButtonView.swift; sourceTree = "<group>"; };
+		13E478D22B034E3800B234B8 /* LargeButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButtonStackView.swift; sourceTree = "<group>"; };
 		13EB45FF2AFA6D9500A1A040 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				3B7EC3C52B0348A600E0005D /* CustomFloatingButton.swift */,
 				13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */,
 				13E478D02B032D0B00B234B8 /* LargeButtonView.swift */,
+				13E478D22B034E3800B234B8 /* LargeButtonStackView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				FFFFAF862AE18A5500A7677E /* Util.swift in Sources */,
 				139FB53E2AF0E9C0007B605A /* FindIDPasswordView.swift in Sources */,
 				FB6311C62ADCEBB80038929A /* String+.swift in Sources */,
+				13E478D32B034E3800B234B8 /* LargeButtonStackView.swift in Sources */,
 				FF6AC37E2AD8447C0035A6D7 /* CalendarView.swift in Sources */,
 				139FB53A2AF0A32B007B605A /* JoinupPageHelperController.swift in Sources */,
 				13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */,

@@ -11,7 +11,6 @@ func largeButton(text: String, titleColor: UIColor, backgroundColor: UIColor) ->
     let button = UIButton()
     button.customButton(text: text, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua24, weight: .medium), titleColor: titleColor, backgroundColor: backgroundColor)
     button.layer.cornerRadius = Constants.cornerRadius
-    button.layer.cornerRadius = Constants.cornerRadius
     button.heightAnchor.constraint(equalToConstant: 50).isActive = true
     return button
 }

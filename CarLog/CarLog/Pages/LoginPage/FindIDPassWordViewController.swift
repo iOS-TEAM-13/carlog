@@ -45,9 +45,9 @@ class FindIDPassWordViewController: UIViewController {
     }
     
     private func addTarget() {
-        findView.sendButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
+        findView.buttonStackView.firstButton.addTarget(self, action: #selector(sendEmailTapped), for: .touchUpInside)
         
-        findView.popButton.addAction(UIAction(handler: { _ in
+        findView.buttonStackView.secondButton.addAction(UIAction(handler: { _ in
             self.dismiss(animated: true)
         }), for: .touchUpInside)
     }
