@@ -22,6 +22,9 @@
 		13EB46002AFA6D9500A1A040 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EB45FF2AFA6D9500A1A040 /* UIView+.swift */; };
 		13EE4E382AF376B0000723B5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EE4E372AF376B0000723B5 /* StorageService.swift */; };
 		3B369D112AE6619A0084BF35 /* GasStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B369D102AE6619A0084BF35 /* GasStationList.swift */; };
+		3B7EC3C02B03265000E0005D /* BannerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EC3BF2B03265000E0005D /* BannerCollectionView.swift */; };
+		3B7EC3C22B03267400E0005D /* CommunityCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EC3C12B03267400E0005D /* CommunityCollectionView.swift */; };
+		3B7EC3C62B0348A600E0005D /* CustomFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7EC3C52B0348A600E0005D /* CustomFloatingButton.swift */; };
 		3B8620BB2AE819C700ED8757 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8620BA2AE819C700ED8757 /* Coordinate.swift */; };
 		3BA8B0F92AD955D9007C3F68 /* GasStationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA8B0F82AD955D9007C3F68 /* GasStationDetailViewController.swift */; };
 		3BF21A4E2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF21A4D2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift */; };
@@ -139,6 +142,9 @@
 		13EB45FF2AFA6D9500A1A040 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		13EE4E372AF376B0000723B5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		3B369D102AE6619A0084BF35 /* GasStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationList.swift; sourceTree = "<group>"; };
+		3B7EC3BF2B03265000E0005D /* BannerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionView.swift; sourceTree = "<group>"; };
+		3B7EC3C12B03267400E0005D /* CommunityCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCollectionView.swift; sourceTree = "<group>"; };
+		3B7EC3C52B0348A600E0005D /* CustomFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFloatingButton.swift; sourceTree = "<group>"; };
 		3B8620BA2AE819C700ED8757 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		3BA8B0F82AD955D9007C3F68 /* GasStationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasStationDetailViewController.swift; sourceTree = "<group>"; };
 		3BF21A4D2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -378,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				B85D105B2B02652A00F2C54A /* ButtonView.swift */,
+				3B7EC3C52B0348A600E0005D /* CustomFloatingButton.swift */,
 				13E478CC2B03212200B234B8 /* CarPartsToCheckDuplicateView.swift */,
 				13E478D02B032D0B00B234B8 /* LargeButtonView.swift */,
 			);
@@ -550,6 +557,8 @@
 			isa = PBXGroup;
 			children = (
 				FB748B3D2AD5724500CC6A1F /* CommunityPageViewController.swift */,
+				3B7EC3BF2B03265000E0005D /* BannerCollectionView.swift */,
+				3B7EC3C12B03267400E0005D /* CommunityCollectionView.swift */,
 				3BF32B422AF9FC5C00007122 /* DetailCommunityPage */,
 				7E7EE0C72AF1E9C400AB4151 /* AddCommunityPage */,
 				3BF21A4D2AEF7C8E0063822A /* CommunityPageCollectionViewCell.swift */,
@@ -818,6 +827,7 @@
 				3BF32B332AF22EAD00007122 /* CommunityDetailCollectionViewCell.swift in Sources */,
 				B85A0F472ADDAF22009E0A00 /* FuelingCollectionViewCell.swift in Sources */,
 				FBC712942AD6FC34006C2BB0 /* LoginView.swift in Sources */,
+				3B7EC3C22B03267400E0005D /* CommunityCollectionView.swift in Sources */,
 				FF23E3452AF3F72800626B63 /* CustomAnnotationView.swift in Sources */,
 				FB748B3E2AD5724500CC6A1F /* CommunityPageViewController.swift in Sources */,
 				7E08D8862AD948B500998E27 /* MyPageView.swift in Sources */,
@@ -855,6 +865,7 @@
 				13E478D12B032D0B00B234B8 /* LargeButtonView.swift in Sources */,
 				FF126E222ADAE67E00B2A109 /* FirebaseService.swift in Sources */,
 				FF5071722AD6BC6000713A81 /* Driving.swift in Sources */,
+				3B7EC3C62B0348A600E0005D /* CustomFloatingButton.swift in Sources */,
 				FB748B222AD53B5E00CC6A1F /* SceneDelegate.swift in Sources */,
 				FB748B402AD5725100CC6A1F /* MyPageViewController.swift in Sources */,
 				1383196A2B026C0B00009941 /* CommunityDetailView.swift in Sources */,
@@ -872,6 +883,7 @@
 				FF271BA72ADFB1E600209E61 /* MyCarDetailPageViewController.swift in Sources */,
 				FF2648762AEBA36A009CD1D7 /* UICollectionViewCell+.swift in Sources */,
 				3BF21A502AEF830D0063822A /* EditPageViewController.swift in Sources */,
+				3B7EC3C02B03265000E0005D /* BannerCollectionView.swift in Sources */,
 				FBE051792AD652D800F39E7F /* Constants.swift in Sources */,
 				3BF32B2F2AF0AE7200007122 /* BannerCollectionViewCell.swift in Sources */,
 				B85A0F382AD86A5F009E0A00 /* AddDrivingViewController.swift in Sources */,
