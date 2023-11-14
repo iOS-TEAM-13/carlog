@@ -9,8 +9,6 @@ import SnapKit
 import UIKit
 
 class CarPartsView: UIView {
-    let duplicateComponents = DuplicateComponents()
-
     lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .black
