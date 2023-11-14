@@ -268,7 +268,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.showAlert(message: "제목은 필수입니다!")
+            self.showAlert(message: "제목은 필수입니다!", completion: {})
         }
     }
     
@@ -301,7 +301,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.showAlert(message: "제목은 필수입니다!")
+            self.showAlert(message: "제목은 필수입니다!", completion: {})
         }
     }
     
@@ -430,11 +430,11 @@ private extension AddCommunityPageViewController {
         
     }
     
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+//    private func showAlert(message: String) {
+//        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//        present(alert, animated: true, completion: nil)
+//    }
 }
 
 extension AddCommunityPageViewController: PHPickerViewControllerDelegate {

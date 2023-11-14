@@ -48,17 +48,12 @@ class JoinupPageViewController: JoinupPageHelperController {
 
     private func forHiddenViews() {
         joinupView.popButton.addAction(UIAction(handler: { _ in
-            let alert = UIAlertController(title: nil, message: "회원가입을\n취소하시겠습니까?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-                self.dismiss(animated: true, completion: nil)
-            })
-            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-            self.present(alert, animated: true, completion: nil)
+            self.showAlert(checkText: "회원가입을\n취소하시겠습니까?") {self.dismiss(animated: true)}
         }), for: .touchUpInside)
 
-        carNumberView.nextButton.addAction(UIAction(handler: { _ in
+        carNumberView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             guard self.carNumberView.checkCarNumberButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "중복확인을 해주세요\nex)00가0000")
+                self.showAlert(message: "중복확인을 해주세요\nex)00가0000", completion: {})
                 return
             }
             self.view.addSubview(self.carMakerView)
@@ -68,7 +63,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        carMakerView.nextButton.addAction(UIAction(handler: { _ in
+        carMakerView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.carModelView)
             self.carMakerView.isHidden = true
             self.carModelView.snp.makeConstraints { make in
@@ -76,7 +71,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        carModelView.nextButton.addAction(UIAction(handler: { _ in
+        carModelView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.oilModelView)
             self.carModelView.isHidden = true
             self.oilModelView.snp.makeConstraints { make in
@@ -84,7 +79,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        oilModelView.nextButton.addAction(UIAction(handler: { _ in
+        oilModelView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             self.view.addSubview(self.nickNameView)
             self.oilModelView.isHidden = true
             self.nickNameView.snp.makeConstraints { make in
@@ -92,9 +87,9 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        nickNameView.nextButton.addAction(UIAction(handler: { _ in
+        nickNameView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             guard self.nickNameView.checkNickNameButton.title(for: .normal) == "가능" else {
-                self.showAlert(message: "중복확인을 해주세요")
+                self.showAlert(message: "중복확인을 해주세요", completion: {})
                 return
             }
             self.view.addSubview(self.totalDistanceView)
@@ -104,7 +99,7 @@ class JoinupPageViewController: JoinupPageHelperController {
             }
         }), for: .touchUpInside)
 
-        totalDistanceView.nextButton.addAction(UIAction(handler: { _ in
+        totalDistanceView.nextButton.anyButton.addAction(UIAction(handler: { _ in
             let selectedOilType = self.oilModelView.selectedOil
             LoginService.loginService.signUpUser(email: self.joinupView.emailTextField.text ?? "", password: self.joinupView.passwordTextField.text ?? "") {
                 FirestoreService.firestoreService.saveCar(
@@ -125,8 +120,7 @@ class JoinupPageViewController: JoinupPageHelperController {
 
     // 최종 주행거리 "완료" 버튼
     private func doneButtonTapped() {
-        let alert = UIAlertController(title: "회원가입을 완료하였습니다", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+        showAlert(message: "회원가입을 완료하였습니다") {
             LoginService.loginService.keepLogin { user in
                 if user != nil {
                     let tabBarController = Util.mainTabBarController()
@@ -138,7 +132,6 @@ class JoinupPageViewController: JoinupPageHelperController {
                     }
                 }
             }
-        }))
-        present(alert, animated: true, completion: nil)
+        }
     }
 }
