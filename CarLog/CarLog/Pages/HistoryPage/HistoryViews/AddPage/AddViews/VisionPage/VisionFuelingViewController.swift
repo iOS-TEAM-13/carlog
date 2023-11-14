@@ -209,14 +209,12 @@ extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINaviga
                     let components = recognizedText.components(separatedBy: "X")
                     
                     if components.count == 2 {
-                        // 첫 번째 컴포넌트에서 숫자 부분만 추출
                         let priceText = components[0].trimmingCharacters(in: .whitespaces)
                         let price = priceText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
                         DispatchQueue.main.async {
                             self?.visionFuelingView.visionPriceTextField.text = price
                         }
                         
-                        // 두 번째 컴포넌트에서 숫자 부분만 추출
                         let countText = components[1]
                         let count = countText.components(separatedBy: CharacterSet(charactersIn: "0123456789.").inverted).joined()
                         DispatchQueue.main.async {
@@ -238,13 +236,9 @@ extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINaviga
                     }
                 }
             }
-            
-            
-            
-            
         }
         
-        // 여기에서 recognitionLanguages 속성을 설정해야 합니다.
+        //한국어 인식
         request.recognitionLanguages = ["ko"]
         
         do {
