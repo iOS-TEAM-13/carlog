@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CarPartsToCheckDuplicateView: UIView {
+class CarPartsView: UIView {
     let duplicateComponents = DuplicateComponents()
 
     lazy var label: UILabel = {
@@ -28,19 +28,7 @@ class CarPartsToCheckDuplicateView: UIView {
         textField.textAlignment = .left
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.size.height))
         textField.leftViewMode = .always
-        textField.rightView = button
-        textField.rightViewMode = .always
         return textField
-    }()
-
-    lazy var button: UIButton = {
-        var configuration = UIButton.Configuration.tinted()
-        configuration.baseBackgroundColor = .white
-        configuration.imagePadding = 10
-
-        let button = UIButton(configuration: configuration)
-        button.customButton(text: "중복확인", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .medium), titleColor: .black, backgroundColor: .clear)
-        return button
     }()
 
     lazy var nextButton = LargeButtonStackView(firstButtonText: "다 음", firstTitleColor: .buttonSkyBlueColor, firstBackgroudColor: .mainNavyColor, secondButtonText: "")
