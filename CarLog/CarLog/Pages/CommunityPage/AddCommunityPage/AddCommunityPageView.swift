@@ -50,14 +50,11 @@ class AddCommunityPageView: UIView {
         return label
     }()
     
-//    lazy var selectedImages = [UIImage]()
-    
     lazy var mainTextField: UITextField = {
         let mainTextField = UITextField()
         mainTextField.attributedPlaceholder = NSAttributedString(string: "제목", attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.gray
         ])
-        //        mainTextField.placeholder = "제목"
         mainTextField.textColor = .black
         mainTextField.backgroundColor = .white
         mainTextField.layer.borderColor = UIColor.clear.cgColor
@@ -139,21 +136,21 @@ class AddCommunityPageView: UIView {
             make.height.equalTo(90)
         }
         
-        secondImageView.snp.makeConstraints {
-            $0.width.height.equalTo(90)
+        secondImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(90)
         }
         
-        thirdImageView.snp.makeConstraints {
-            $0.width.height.equalTo(90)
+        thirdImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(90)
         }
         
-        imagePickerButton.snp.makeConstraints {
-            $0.center.size.equalTo(imagePickerView)
+        imagePickerButton.snp.makeConstraints { make in
+            make.center.size.equalTo(imagePickerView)
         }
         
-        numberOfSelectedImageLabel.snp.makeConstraints {
-            $0.size.equalTo(24)
-            $0.top.trailing.equalTo(imagePickerView).inset(-Constants.horizontalMargin * 0.5)
+        numberOfSelectedImageLabel.snp.makeConstraints { make in
+            make.size.equalTo(24)
+            make.top.trailing.equalTo(imagePickerView).inset(-Constants.horizontalMargin * 0.5)
         }
     }
 }

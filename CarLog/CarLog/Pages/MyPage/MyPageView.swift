@@ -32,12 +32,14 @@ final class MyPageView: UIView {
     
 //    lazy var mainTitleLabel: UILabel = {
 //        let mainTitleLabel = UILabel()
-//        mainTitleLabel.text = "내 차 정보"
+//        mainTitleLabel.text = " 내 차 정보"
 //        mainTitleLabel.textColor = .white
 //        mainTitleLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua28, weight: .bold)
 //        mainTitleLabel.layer.backgroundColor = UIColor.mainNavyColor.cgColor
 //        mainTitleLabel.layer.bounds.size.height = 50
 //        mainTitleLabel.layer.cornerRadius = 5
+//        mainTitleLabel.rightView = editButton
+//        mainTitleLabel.rightViewMode = .always
 //        mainTitleLabel.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: mainTitleLabel.frame.size.height))
 //        mainTitleLabel.leftViewMode = .always
 //        return mainTitleLabel
@@ -61,9 +63,7 @@ final class MyPageView: UIView {
         cancelButton.isHidden = true
         return cancelButton
     }()
-    
-    // MARK: -
-    //    텍스트 폰트에 따른 언더라인 수정
+
     //    lazy var myWritingButton: UIButton = {
     //        let myWritingButton = UIButton()
     //        myWritingButton.customButton(text: "내가 작성한 글", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), titleColor: .mainNavyColor, backgroundColor: .buttonSkyBlueColor)
@@ -232,85 +232,6 @@ final class MyPageView: UIView {
         return carTotalDistanceTextField
     }()
     
-//    lazy var logoutButton: UIButton = {
-//        let logoutButton = UIButton()
-//        let attributes: [NSAttributedString.Key: Any] = [
-//            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
-//            .foregroundColor: UIColor.lightGray,
-//        ]
-//        let attributedTitle = NSAttributedString(string: "로그아웃", attributes: attributes)
-//        logoutButton.setAttributedTitle(attributedTitle, for: .normal)
-//        logoutButton.backgroundColor = .clear
-//        return logoutButton
-//    }()
-//    
-//    lazy var horizontalDivider: UIView = {
-//        let horizontalDivider = UIView()
-//        horizontalDivider.widthAnchor.constraint(equalToConstant: 1).isActive = true
-//        horizontalDivider.heightAnchor.constraint(equalToConstant: 15).isActive = true
-//        horizontalDivider.backgroundColor = .lightGray
-//        return horizontalDivider
-//    }()
-//    
-//    lazy var quitUserButton: UIButton = {
-//        let quitUserButton = UIButton()
-//        let attributes: [NSAttributedString.Key: Any] = [
-//            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua14, weight: .regular),
-//            .foregroundColor: UIColor.lightGray,
-//        ]
-//        let attributedTitle = NSAttributedString(string: "회원탈퇴", attributes: attributes)
-//        quitUserButton.setAttributedTitle(attributedTitle, for: .normal)
-//        quitUserButton.backgroundColor = .clear
-//        return quitUserButton
-//    }()
-    
-//    lazy var myPageDesignStackView = {
-//        let myPageDesignStackView = UIStackView(arrangedSubviews: [logoutButton, horizontalDivider, quitUserButton])
-//        myPageDesignStackView.customStackView(spacing: 5, axis: .horizontal, alignment: .center)
-//        myPageDesignStackView.distribution = .equalSpacing
-//        return myPageDesignStackView
-//    }()
-//    
-//    lazy var inquiryButton: UIButton = {
-//        let inquiryButton = UIButton()
-//        var config = UIButton.Configuration.filled()
-//        config.baseBackgroundColor = .mainNavyColor
-//        config.cornerStyle = .capsule
-//        config.image = UIImage(named: "Context Icon")
-//        inquiryButton.configuration = config
-//        inquiryButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-//        inquiryButton.layer.shadowRadius = 10
-//        inquiryButton.layer.shadowOpacity = 0.1
-//        return inquiryButton
-//    }()
-//    
-//    lazy var verLabel: UILabel = {
-//        let verLabel = UILabel()
-//        verLabel.text = "ver x.x.x"
-//        verLabel.textColor = .lightGray
-//        verLabel.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
-//        verLabel.textAlignment = .center
-//        return verLabel
-//    }()
-//    
-//    lazy var personalRegulations: UILabel = {
-//        let personalRegulations = UILabel()
-//        personalRegulations.text = "개인정보처리방침"
-//        personalRegulations.textColor = .lightGray
-//        personalRegulations.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .bold)
-//        personalRegulations.textAlignment = .center
-//        personalRegulations.isUserInteractionEnabled = true
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
-//        personalRegulations.addGestureRecognizer(tap)
-//        return personalRegulations
-//    }()
-    
-//    @objc func tapFunction(sender: UITapGestureRecognizer) {
-//        if let url = URL(string: "https://carlog.notion.site/3b018e85e94443da9a8d533525d3cf64?pvs=4") {
-//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//        }
-//    }
-    
     // CarParts 부분별 스택뷰 묶음
     lazy var carNumberStackView: UIStackView = {
         let carNumberStackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField])
@@ -358,6 +279,11 @@ final class MyPageView: UIView {
     }
     
     // MARK: -
+    func updateMainTitleLabel() {
+            mainTitleLabel.sizeToFit()
+            layoutIfNeeded()
+        }
+    
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
         
@@ -371,10 +297,6 @@ final class MyPageView: UIView {
         contentView.addSubview(carOilTypeStackView)
         contentView.addSubview(carNickNameStackView)
         contentView.addSubview(carTotalDistanceStackView)
-//        contentView.addSubview(myPageDesignStackView)
-//        contentView.addSubview(inquiryButton)
-//        contentView.addSubview(verLabel)
-//        contentView.addSubview(personalRegulations)
         scrollView.addSubview(contentView)
         addSubview(scrollView)
         
@@ -384,10 +306,6 @@ final class MyPageView: UIView {
         carOilTypeTextField.isUserInteractionEnabled = false
         carNickNameTextField.isUserInteractionEnabled = false
         carTotalDistanceTextField.isUserInteractionEnabled = false
-        
-//        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-//            verLabel.text = "Ver \(version)"
-//        }
         
         scrollView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -469,35 +387,6 @@ final class MyPageView: UIView {
             make.leading.equalTo(contentView).offset(Constants.horizontalMargin)
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
-        
-//        myPageSettingView.snp.makeConstraints { make in
-//            make.top.equalTo(carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 5)
-//            make.leading.trailing.equalTo(contentView)
-//        }
-        
-//        myPageDesignStackView.snp.makeConstraints { make in
-//            make.top.equalTo(carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 5)
-//            make.leading.equalTo(contentView.snp.leading).offset(UIScreen.main.bounds.width * 0.3)
-//            make.trailing.equalTo(contentView.snp.trailing).offset(-UIScreen.main.bounds.width * 0.3)
-//        }
-//        
-//        inquiryButton.snp.makeConstraints { make in
-//            make.top.equalTo(carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 3.5)
-//            make.width.height.equalTo(50)
-//            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin - 12)
-//        }
-//        
-//        verLabel.snp.makeConstraints { make in
-//            make.top.equalTo(myPageDesignStackView.snp.bottom).offset(7)
-//            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-//            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-//        }
-//        
-//        personalRegulations.snp.makeConstraints { make in
-//            make.top.equalTo(verLabel.snp.bottom).offset(5)
-//            make.leading.equalTo(contentView.snp.leading).offset(Constants.horizontalMargin)
-//            make.trailing.equalTo(contentView.snp.trailing).offset(-Constants.horizontalMargin)
-//        }
     }
     
     override init(frame: CGRect) {
