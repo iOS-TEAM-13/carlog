@@ -157,19 +157,6 @@ class VisionFuelingViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-    func moveToSettingAlert(reason: String, discription: String) {
-        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-        }
-        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
-        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
-        alert.addAction(cancle)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
-    
 }
 
 //MARK: - 이미지 선택, 선택한 이미지에서 문자 찾아서 텍스트필드에 넣기
