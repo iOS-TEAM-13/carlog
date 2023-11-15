@@ -50,6 +50,7 @@
 		B85A0F4F2ADEFB8F009E0A00 /* DrivingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */; };
 		B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */; };
 		B85A0F532AE00B78009E0A00 /* FuelingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */; };
+		B85D105E2B03DBE600F2C54A /* HistorySegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85D105D2B03DBE600F2C54A /* HistorySegment.swift */; };
 		B892B89A2AFA536500875CA7 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B892B8992AFA536500875CA7 /* Int+.swift */; };
 		B8E5C1962AFBFDDF00604DE7 /* VisionDrivingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */; };
 		B8E5C1982AFBFDEC00604DE7 /* VisionFuelingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */; };
@@ -177,6 +178,7 @@
 		B85A0F4E2ADEFB8F009E0A00 /* DrivingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingDetailView.swift; sourceTree = "<group>"; };
 		B85A0F502AE00B60009E0A00 /* FuelingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailViewController.swift; sourceTree = "<group>"; };
 		B85A0F522AE00B78009E0A00 /* FuelingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDetailView.swift; sourceTree = "<group>"; };
+		B85D105D2B03DBE600F2C54A /* HistorySegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySegment.swift; sourceTree = "<group>"; };
 		B892B8992AFA536500875CA7 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		B8E5C1952AFBFDDF00604DE7 /* VisionDrivingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionDrivingViewController.swift; sourceTree = "<group>"; };
 		B8E5C1972AFBFDEC00604DE7 /* VisionFuelingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFuelingViewController.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 			isa = PBXGroup;
 			children = (
 				FB748B392AD571D900CC6A1F /* HistoryPageViewController.swift */,
+				B85D105D2B03DBE600F2C54A /* HistorySegment.swift */,
 				B85A0F262AD77E65009E0A00 /* HistoryViews */,
 			);
 			path = HistoryPage;
@@ -951,6 +954,7 @@
 				B85A0F512AE00B60009E0A00 /* FuelingDetailViewController.swift in Sources */,
 				FF50716C2AD6BC4800713A81 /* Comment.swift in Sources */,
 				FBE051822AD6665300F39E7F /* UIStackView+.swift in Sources */,
+				B85D105E2B03DBE600F2C54A /* HistorySegment.swift in Sources */,
 				7E95DE062AFE02ED008F45FA /* UIImageView+.swift in Sources */,
 				FBBDA7222AD7ED480031C17B /* OilModelView.swift in Sources */,
 				FF5D5F9E2AF15A9E000AFAFD /* Address.swift in Sources */,

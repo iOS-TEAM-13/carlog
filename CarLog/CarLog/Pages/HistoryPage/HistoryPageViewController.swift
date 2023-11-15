@@ -8,14 +8,9 @@ class HistoryPageViewController: UIViewController {
     var fuelingDummy: [Fueling] = []
     
     //히스토리 페이지 상단 주행, 주유 collectionView 나눠서 보여지게하는 segmented
-    lazy var segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["주행 기록", "주유 내역"])
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
-        segmentedControl.selectedSegmentTintColor = .mainNavyColor
-        
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), .foregroundColor: UIColor.darkGray], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .bold), .foregroundColor: UIColor.white], for: .selected)
+    lazy var segmentedControl: HistorySegment = {
+        let segmentedControl = HistorySegment()
+        segmentedControl.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         return segmentedControl
     }()
     
@@ -67,7 +62,7 @@ class HistoryPageViewController: UIViewController {
         view.backgroundColor = .backgroundCoustomColor
         
         setupUI()
-        didChangeValue(segment: segmentedControl)
+        didChangeValue(segment: segmentedControl.segmentedControl)
         buttonActions()
         
         // indicator 추가
@@ -163,8 +158,8 @@ class HistoryPageViewController: UIViewController {
             let navigationController = UINavigationController(rootViewController: addFuelingViewController)
             navigationController.modalPresentationStyle = .fullScreen
             self.present(navigationController, animated: true)
-            self.segmentedControl.selectedSegmentIndex = 1
-            self.didChangeValue(segment: self.segmentedControl)
+            self.segmentedControl.segmentedControl.selectedSegmentIndex = 1
+            self.didChangeValue(segment: self.segmentedControl.segmentedControl)
             self.isActive.toggle()
         }), for: .touchUpInside)
         
@@ -173,8 +168,8 @@ class HistoryPageViewController: UIViewController {
             let navigationController = UINavigationController(rootViewController: addDrivingViewController)
             navigationController.modalPresentationStyle = .fullScreen
             self.present(navigationController, animated: true)
-            self.segmentedControl.selectedSegmentIndex = 0
-            self.didChangeValue(segment: self.segmentedControl)
+            self.segmentedControl.segmentedControl.selectedSegmentIndex = 0
+            self.didChangeValue(segment: self.segmentedControl.segmentedControl)
             self.isActive.toggle()
         }), for: .touchUpInside)
     }
