@@ -11,6 +11,8 @@ import SnapKit
 
 class MyPageSettingView: UIView {
 
+    // MARK: - Proprties
+    
     lazy var logoutButton: UIButton = {
         let logoutButton = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
@@ -68,6 +70,8 @@ class MyPageSettingView: UIView {
         personalRegulations.isUserInteractionEnabled = true
         return personalRegulations
     }()
+    
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)

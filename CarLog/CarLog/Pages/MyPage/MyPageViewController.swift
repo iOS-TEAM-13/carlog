@@ -13,7 +13,6 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     lazy var inquiryButton = CustomFloatingButton(image: UIImage(named: "Context Icon"))
     
     lazy var carDummy = Constants.currentUser
-    
     var isEditMode = false
     
     // MARK: - Life Cycle
@@ -43,6 +42,59 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         }
         
     }
+    
+    // MARK: - UI Setup
+    
+    private func setupUI() {
+        view.addSubview(myPageView)
+        view.addSubview(inquiryButton)
+        myPageView.addSubview(myPageSettingView)
+        
+        myPageView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
+        }
+        
+        myPageSettingView.snp.makeConstraints { make in
+            make.top.equalTo(myPageView.carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 5)
+            make.leading.trailing.equalTo(view)
+            make.bottom.equalTo(myPageView)
+        }
+        
+        inquiryButton.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin - 12)
+            make.bottom.equalToSuperview().offset(-102 - 12)
+        }
+        
+        FirestoreService.firestoreService.loadCar { carInfoArray in
+            if let index = carInfoArray?.firstIndex(where: { $0.userEmail == Constants.currentUser.userEmail }) {
+                if let car = carInfoArray?[index] {
+                    if let userEmail = car.userEmail {
+                        if let atIndex = userEmail.firstIndex(of: "@") {
+                            let emailPrefix = String(userEmail[..<atIndex])
+                            self.myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
+                        } else {
+                            self.myPageView.mainTitleLabel.text = "\(userEmail) 님"
+                        }
+                        self.myPageView.carNumberTextField.text = car.number
+                        self.myPageView.carMakerTextField.text = car.maker
+                        self.myPageView.carNameTextField.text = car.name
+                        self.myPageView.carOilTypeTextField.text = car.oilType
+                        self.myPageView.carNickNameTextField.text = car.nickName
+                        if let totalDistance = car.totalDistance {
+                            self.myPageView.carTotalDistanceTextField.text = String(totalDistance)
+                        } else {
+                            self.myPageView.carTotalDistanceTextField.text = "0.0"
+                        }
+                        self.myPageView.updateMainTitleLabel()
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Button Actions
     
     func addTargetButton() {
         myPageView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -142,61 +194,9 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         }
     }
     
-    private func setupUI() {
-        view.addSubview(myPageView)
-        view.addSubview(inquiryButton)
-        myPageView.addSubview(myPageSettingView)
-        
-        myPageView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
-        }
-        
-        myPageSettingView.snp.makeConstraints { make in
-            make.top.equalTo(myPageView.carTotalDistanceStackView.snp.bottom).offset(Constants.verticalMargin * 5)
-            make.leading.trailing.equalTo(view)
-            make.bottom.equalTo(myPageView)
-        }
-        
-        inquiryButton.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
-            make.rightMargin.equalToSuperview().offset(-Constants.horizontalMargin - 12)
-            make.bottom.equalToSuperview().offset(-102 - 12)
-        }
-        
-        FirestoreService.firestoreService.loadCar { carInfoArray in
-            if let index = carInfoArray?.firstIndex(where: { $0.userEmail == Constants.currentUser.userEmail }) {
-                if let car = carInfoArray?[index] {
-                    if let userEmail = car.userEmail {
-                        if let atIndex = userEmail.firstIndex(of: "@") {
-                            let emailPrefix = String(userEmail[..<atIndex])
-                            self.myPageView.mainTitleLabel.text = "\(emailPrefix) 님"
-                        } else {
-                            self.myPageView.mainTitleLabel.text = "\(userEmail) 님"
-                        }
-                        self.myPageView.carNumberTextField.text = car.number
-                        self.myPageView.carMakerTextField.text = car.maker
-                        self.myPageView.carNameTextField.text = car.name
-                        self.myPageView.carOilTypeTextField.text = car.oilType
-                        self.myPageView.carNickNameTextField.text = car.nickName
-                        if let totalDistance = car.totalDistance {
-                            self.myPageView.carTotalDistanceTextField.text = String(totalDistance)
-                        } else {
-                            self.myPageView.carTotalDistanceTextField.text = "0.0"
-                        }
-                        self.myPageView.updateMainTitleLabel()
-                    }
-                }
-            }
-        }
-    }
-    
     @objc func logoutButtonTapped() {
         if Auth.auth().currentUser != nil {
-            let alert = UIAlertController(title: "로그아웃", message: "지금 로그아웃하시겠어요?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
-            present(alert, animated: true)
-            alert.addAction(UIAlertAction(title: "로그아웃", style: .default, handler: { _ in
+            self.showAlert(checkText: "정말로 로그아웃하시겠습니까?") {
                 LoginService.loginService.logout {
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {
@@ -207,18 +207,13 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                         }
                     }
                 }
-            }))
-        } else {
-            dismiss(animated: true)
+            }
         }
     }
     
     @objc func quitUserButtonTapped() {
         if Auth.auth().currentUser != nil {
-            let alert = UIAlertController(title: "정말 탈퇴하시겠어요?", message: "탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
-            present(alert, animated: true)
-            alert.addAction(UIAlertAction(title: "탈퇴하기", style: .default, handler: { _ in
+            self.showAlert(checkText: "정말로 탈퇴하시겠습니까?") {
                 LoginService.loginService.quitUser(email: Constants.currentUser.userEmail ?? "") { _ in
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {
@@ -229,9 +224,7 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
                         }
                     }
                 }
-            }))
-        } else {
-            dismiss(animated: true)
+            }
         }
     }
     
@@ -359,16 +352,8 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
         
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        if let error = error {
-            print("Mail compose error: \(error.localizedDescription)")
-        }
-        controller.dismiss(animated: true, completion: nil)
-    }
-
-    
     // MARK: - Keyboard 관련
-
+    
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -403,5 +388,13 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         myPageView.endEditing(true)
     }
-
+    
+    // MARK: - Mail Composer Delegate
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if let error = error {
+            print("Mail compose error: \(error.localizedDescription)")
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
 }

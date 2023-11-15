@@ -10,6 +10,9 @@ import UIKit
 import SnapKit
 
 final class MyPageView: UIView {
+    
+// MARK: - Properties
+    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -20,8 +23,7 @@ final class MyPageView: UIView {
         let contentView = UIView()
         return contentView
     }()
-    
-    // MARK: -
+
     lazy var mainTitleLabel: UILabel = {
         let mainTitleLabel = UILabel()
         mainTitleLabel.text = "내 차 정보"
@@ -232,6 +234,12 @@ final class MyPageView: UIView {
         return carTotalDistanceTextField
     }()
     
+    // MARK: -
+    func updateMainTitleLabel() {
+            mainTitleLabel.sizeToFit()
+            layoutIfNeeded()
+        }
+    
     // CarParts 부분별 스택뷰 묶음
     lazy var carNumberStackView: UIStackView = {
         let carNumberStackView = UIStackView(arrangedSubviews: [/*myWritingButton,*/ carNumberLabel, carNumberTextField])
@@ -277,12 +285,8 @@ final class MyPageView: UIView {
         carNickNameTextField.resignFirstResponder()
         carTotalDistanceTextField.resignFirstResponder()
     }
-    
-    // MARK: -
-    func updateMainTitleLabel() {
-            mainTitleLabel.sizeToFit()
-            layoutIfNeeded()
-        }
+
+    // MARK: - UI Setup
     
     func setupUI() {
         let safeArea = safeAreaLayoutGuide
@@ -388,6 +392,8 @@ final class MyPageView: UIView {
             make.trailing.equalTo(contentView).offset(-Constants.horizontalMargin)
         }
     }
+    
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
