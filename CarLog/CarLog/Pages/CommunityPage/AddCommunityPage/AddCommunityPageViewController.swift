@@ -6,10 +6,11 @@ import PhotosUI
 import SnapKit
 
 class AddCommunityPageViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     lazy var addCommunityPageView = AddCommunityPageView()
-    
     lazy var selectedImages = [UIImage]()
-    
     var postToEdit: Post?
     
     // MARK: - Life Cycle
@@ -69,6 +70,7 @@ class AddCommunityPageViewController: UIViewController {
     }
     
 // MARK: - Setup
+    
     func setupUI() {
         view.addSubview(addCommunityPageView)
         
@@ -80,6 +82,7 @@ class AddCommunityPageViewController: UIViewController {
 }
 
 // MARK: - Actions
+
 extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarButtons
     @objc func didTapLeftBarButton() {
         tabBarController?.tabBar.isHidden = false

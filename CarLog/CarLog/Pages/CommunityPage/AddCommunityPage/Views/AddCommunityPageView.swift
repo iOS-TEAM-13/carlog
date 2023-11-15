@@ -8,7 +8,9 @@
 import UIKit
 
 class AddCommunityPageView: UIView {
-    // MARK: -
+    
+    // MARK: - Properties
+    
     lazy var imagePickerView: UIImageView = {
         let imagePickerView = UIImageView()
         imagePickerView.backgroundColor = .white
@@ -89,6 +91,8 @@ class AddCommunityPageView: UIView {
         return imagePickerStackView
     }()
     
+    // MARK: - Inirializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -100,6 +104,7 @@ class AddCommunityPageView: UIView {
     }
 
     // MARK: - Setup
+    
     func setupUI() {
         [
             mainTextField,
@@ -109,8 +114,7 @@ class AddCommunityPageView: UIView {
             imagePickerButton,
             numberOfSelectedImageLabel
         ].forEach { self.addSubview($0) }
-        
-        // MARK: - Snap kit 제약 잡기
+
         mainTextField.snp.makeConstraints { make in
             make.top.equalTo(self).offset(Constants.horizontalMargin)
             make.leading.equalTo(self.snp.leading).offset(Constants.horizontalMargin)
