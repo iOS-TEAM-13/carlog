@@ -348,14 +348,17 @@
 
 ### ⚙️ Tech Stack
 
-- iOS 15 버전으로 개발
-- 스토리보드 없이
 - SnapKit
-- Firebase Auth
+- Alamofire
+- Firebase Authentication
 - Firebase FireStore
+- Firebase Storage
 - URLsession
 - MapKit
 - UserDefaults
+- Lottie
+- Vision
+- iNavy SDK
 
 ### 📚 Library
 
@@ -367,6 +370,8 @@
 * Firebase FireStore
 * inavi-maps-sdk
 * EasyTipView
+* Lottie
+* Vision
 
 // 내부 라이브러리
 * MapKit
