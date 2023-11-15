@@ -125,52 +125,70 @@
 
 **개인 분담**
 <table>
-   <tr>
-      <td width="350">
-         ✔️MyCarPage UI 구현<br/>
-         ✔️부품 교체 시기 백그라운드 알림 구현<br/>
-         ✔️MapPage UI 및 기능구현<br/>
-         ✔️Model 변수명 및 재구현<br/>
-      </td>
-      <td width="350">
-         ✔️Login & Join Page UI 구현 <br/>
-         ✔️Firebase Auth 기능 <br/>
-         ✔️SMTP 이메일 인증 구현 <br/>
-         ✔️회원가입 유효성 검사 구현 <br/>
-         ✔️회원가입 유효성 검사 구현 <br/>
-      </td>
-      <td width="350">
-         ✔️HistoryPage UI 구현<br>
-         ✔️FireStore 연결 및 서비스구현<br>
-      </td>
-      <td width="350">
-         ✔️MyPage UI 구현 <br>
-         ✔️FireStore에서 Car 정보 가져오기 <br>
-         ✔️LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
-         ✔️문의 전화 버튼 구현 <br>
-      </td>
-      <td width="350">
-         ✔️MapPage UI 구현 <br>
-         ✔️주유소 <br>
-      </td>
-   </tr>
-   <tr align="center">
-      <td>
-         최진훈
-      </td>
-      <td>
-         김은경
-      </td>
-       <td>
-         김지훈
-      </td>
-     <td>
-         이동건
-      </td>
-     <td>
-         조재민
-      </td>
-   </tr>
+  <tr>
+    <td>
+      최진훈
+    </td>
+    <td width="1000">
+       ✔️MyCarPage UI 구현<br/>
+       ✔️부품 교체 시기 백그라운드 알림 구현<br/>
+       ✔️MapPage UI 및 기능구현<br/>
+       ✔️Model 변수명 및 재구현<br/>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      김은경
+    </td>
+    <td width="1000">
+       ✔️Login & Join Page UI 구현 <br/>
+       ✔️Firebase Auth 기능 <br/>
+       ✔️SMTP 이메일 인증 구현 <br/>
+       ✔️회원가입 유효성 검사 구현 <br/>
+       ✔️회원가입 유효성 검사 구현 <br/>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      김지훈
+    </td>
+    <td width="1000">
+       ✔️HistoryPage UI 구현<br>
+       ✔️FireStore 연결 및 서비스구현<br>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      이동건
+    </td>
+    <td width="1000">
+      ✔️MyPage UI 구현 <br>
+     ✔️FireStore에서 Car 정보 가져오기 <br>
+     ✔️LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
+     ✔️문의 전화 버튼 구현 <br>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      조재민
+    </td>
+    <td width="1000">
+       ✔️MapPage UI 구현 <br>
+       ✔️주유소 <br>
+    </td>
+  </tr>
 </table>
 
 ## 🖥️ UI 화면구성
