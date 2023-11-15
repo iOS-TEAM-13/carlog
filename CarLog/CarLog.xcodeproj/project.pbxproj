@@ -619,12 +619,6 @@
 			isa = PBXGroup;
 			children = (
 				FF31E3AE2B0273670098B29C /* MyCarPageView.swift */,
-				FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */,
-				FF0287E82AD7C9A4006657C1 /* ComponentsView.swift */,
-				FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */,
-				FF31E3B12B02764B0098B29C /* MyCarDetailPageView.swift */,
-				FF31E3B52B0280D90098B29C /* MyCarDetailPageCollectionView.swift */,
-				FF31E3B72B02872E0098B29C /* DatePickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -708,11 +702,33 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		FF8746D92B03A81000F08056 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF31E3B72B02872E0098B29C /* DatePickerView.swift */,
+				FF31E3B12B02764B0098B29C /* MyCarDetailPageView.swift */,
+				FF31E3B52B0280D90098B29C /* MyCarDetailPageCollectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF8746DA2B03A83500F08056 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
+				FF6AC37D2AD8447C0035A6D7 /* CalendarView.swift */,
+				FF0287E82AD7C9A4006657C1 /* ComponentsView.swift */,
+				FF126E1E2AD8DCC700B2A109 /* InsuranceView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FFD5F74E2ADFBEBE00A06771 /* DetailPage */ = {
 			isa = PBXGroup;
 			children = (
 				FF271BA62ADFB1E600209E61 /* MyCarDetailPageViewController.swift */,
 				FFB0CC4D2AE7F13A00F108BF /* ModifiedDatePickerViewController.swift */,
+				FF8746D92B03A81000F08056 /* Views */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";
@@ -721,7 +737,7 @@
 			isa = PBXGroup;
 			children = (
 				FF0287E12AD789B0006657C1 /* MyCarCheckViewController.swift */,
-				FF6AF59B2ADDA55D0067960E /* PageViewController.swift */,
+				FF8746DA2B03A83500F08056 /* Views */,
 			);
 			path = CheckingPage;
 			sourceTree = "<group>";

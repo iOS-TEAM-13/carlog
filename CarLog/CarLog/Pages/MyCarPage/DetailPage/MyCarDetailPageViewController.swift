@@ -109,7 +109,10 @@ class MyCarDetailPageViewController: UIViewController {
     }
     
     private func completedButtonTapped() {
-        showAlert()
+        self.showAlert(checkText: "교체 완료 하셨나요?") {
+            self.addHistory(date: Date(), currentTime: Date(), type: .isFixedParts)
+        }
+//        showAlert()
     }
     
     private func updateSelectParts() {
@@ -137,18 +140,18 @@ class MyCarDetailPageViewController: UIViewController {
         NotificationCenter.default.post(name: Notification.Name("completedModified"), object: nil)
     }
     
-    private func showAlert() {
-        let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
-        let sucess = UIAlertAction(title: "확인", style: .default) { _ in
-            self.addHistory(date: Date(), currentTime: Date(), type: .isFixedParts)
-        }
-        let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
-            print("취소 버튼이 눌렸습니다.")
-        }
-        alert.addAction(sucess)
-        alert.addAction(cancel)
-        present(alert, animated: true)
-    }
+//    private func showAlert() {
+//        let alert = UIAlertController(title: "교체 완료 하셨나요?", message: "", preferredStyle: .alert)
+//        let sucess = UIAlertAction(title: "확인", style: .default) { _ in
+//            self.addHistory(date: Date(), currentTime: Date(), type: .isFixedParts)
+//        }
+//        let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
+//            print("취소 버튼이 눌렸습니다.")
+//        }
+//        alert.addAction(sucess)
+//        alert.addAction(cancel)
+//        present(alert, animated: true)
+//    }
     
     // MARK: @Objc
 
