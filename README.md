@@ -326,9 +326,9 @@
       <td width="250">
          <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/b5f0d7f6-daee-4f20-9088-6c123a9af16b" />
       </td>
-      <td>
+      <td width="250">
          <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/0e21e7c1-da43-486b-bc74-704fbf52b2d0" />
-      </td width="250">
+      </td>
    </tr>
    <tr align="center"> 
       <td>
