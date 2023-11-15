@@ -214,6 +214,9 @@ class MyPageViewController: UIViewController, MFMailComposeViewControllerDelegat
     @objc func quitUserButtonTapped() {
         if Auth.auth().currentUser != nil {
             self.showAlert(checkText: "정말로 탈퇴하시겠습니까?") {
+                LoginService.loginService.deleteUser(email: Constants.currentUser.userEmail ?? "") { error in
+                    print("\(String(describing: error))")
+                }
                 LoginService.loginService.quitUser(email: Constants.currentUser.userEmail ?? "") { _ in
                     let loginViewController = LoginPageViewController()
                     self.dismiss(animated: true) {

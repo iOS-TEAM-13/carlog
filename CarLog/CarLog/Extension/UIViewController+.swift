@@ -24,4 +24,16 @@ extension UIViewController {
         })
         present(alert, animated: true, completion: nil)
     }
+    
+    func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        alert.addAction(cancle)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
 }

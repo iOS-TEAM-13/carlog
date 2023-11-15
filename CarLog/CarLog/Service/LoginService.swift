@@ -68,10 +68,8 @@ final class LoginService {
             print("로그아웃 실패: \(error.localizedDescription)")
         }
     }
- 
-    // 회원탈퇴
-    func quitUser(email: String, completion: @escaping (Error?) -> Void) {
-        // 1. Firebase Authentication에서 사용자 삭제
+
+    func deleteUser(email: String, completion: @escaping (Error?) -> Void) {
         if let user = Auth.auth().currentUser {
             user.delete { error in
                 if let error = error {
@@ -96,92 +94,29 @@ final class LoginService {
                             }
                         }
                     }
-                    self.db.collection("carParts").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
-                        if let error = error {
-                            // 에러 처리
-                            completion(error)
-                        } else {
-                            for document in querySnapshot!.documents {
-                                document.reference.delete { error in
-                                    if let error = error {
-                                        completion(error)
-                                    } else {
-                                        // 성공
-                                        completion(nil)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    self.db.collection("cars").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
-                        if let error = error {
-                            // 에러 처리
-                            completion(error)
-                        } else {
-                            for document in querySnapshot!.documents {
-                                document.reference.delete { error in
-                                    if let error = error {
-                                        completion(error)
-                                    } else {
-                                        // 성공
-                                        completion(nil)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    self.db.collection("drivings").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
-                        if let error = error {
-                            // 에러 처리
-                            completion(error)
-                        } else {
-                            for document in querySnapshot!.documents {
-                                document.reference.delete { error in
-                                    if let error = error {
-                                        completion(error)
-                                    } else {
-                                        // 성공
-                                        completion(nil)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    self.db.collection("fuelings").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
-                        if let error = error {
-                            // 에러 처리
-                            completion(error)
-                        } else {
-                            for document in querySnapshot!.documents {
-                                document.reference.delete { error in
-                                    if let error = error {
-                                        completion(error)
-                                    } else {
-                                        // 성공
-                                        completion(nil)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    self.db.collection("posts").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
-                        if let error = error {
-                            // 에러 처리
-                            completion(error)
-                        } else {
-                            for document in querySnapshot!.documents {
-                                document.reference.delete { error in
-                                    if let error = error {
-                                        completion(error)
-                                    } else {
-                                        // 성공
-                                        completion(nil)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    self.db.collection("comments").whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
+                }
+            }
+        }
+    }
+
+    // 회원탈퇴
+    func quitUser(email: String, completion: @escaping (Error?) -> Void) {
+        guard let user = Auth.auth().currentUser else {
+            // 사용자가 로그인되어 있지 않음
+            completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "사용자가 로그인되어 있지 않습니다."]))
+            return
+        }
+        // 1. Firebase Authentication에서 사용자 삭제
+        user.delete { error in
+            if let error = error {
+                // 에러 처리
+                completion(error)
+            } else {
+                // 2. Firestore에서 사용자 관련 데이터 삭제
+                let collections = ["carParts", "cars", "drivings", "fuelings", "posts", "comments"]
+                
+                for collection in collections {
+                    self.db.collection(collection).whereField("userEmail", isEqualTo: email).getDocuments { querySnapshot, error in
                         if let error = error {
                             // 에러 처리
                             completion(error)
@@ -199,11 +134,8 @@ final class LoginService {
                         }
                     }
                 }
+                UserDefaults.standard.removeObject(forKey: user.email ?? "")
             }
-            UserDefaults.standard.removeObject(forKey: Auth.auth().currentUser?.email ?? "")
-        } else {
-            // 사용자가 로그인되어 있지 않음
-            completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "사용자가 로그인되어 있지 않습니다."]))
         }
     }
 }
