@@ -114,82 +114,110 @@
 
 ### 👨‍💻 역할분담 및 프로젝트 주요기능
 
-**팀 공통**
+**팀 전체**
 
-- 프로젝트 기획
-- S.A 작성 [TEAM Notion](https://spot-catcher-1ac.notion.site/TEAM13_Underdog-a7ef66f63bba4178ba2004866bf8c641?pvs=4)
-- 기능구현 및 역할분담 나누기
-- 와이어 프레임 [Figma](https://www.figma.com/file/gq9vtYUeLoWkuYZRnqUbrb/Underdog?type=design&node-id=0%3A1&mode=design&t=Ax4f08eMbMFsxK4c-1)
-- DB 설계 및 구성 
+✔️프로젝트 기획 <br/>
+✔️S.A 작성 [TEAM Notion](https://spot-catcher-1ac.notion.site/TEAM13_Underdog-a7ef66f63bba4178ba2004866bf8c641?pvs=4) <br/>
+✔️기능구현 및 역할분담 나누기 <br/>
+✔️와이어 프레임 [Figma](https://www.figma.com/file/gq9vtYUeLoWkuYZRnqUbrb/Underdog?type=design&node-id=0%3A1&mode=design&t=Ax4f08eMbMFsxK4c-1) <br/>
+✔️DB 설계 및 구성 
 
-**최진훈**
+<table width="100">
+   <tr>
+      <td>
+         ✔️MyCarPage UI 구현<br/>
+         ✔️MapPage UI 및 기능구현<br/>
+         ✔️Model 변수명 및 재구현<br/>
+      </td>
+      <td>
+         ✔️Login & Join Page UI 구현 <br/>
+         ✔️Firebase Auth 기능 <br/>
+         ✔️SMTP 이메일 인증 구현 <br/>
+         ✔️회원가입 유효성 검사 구현 <br/>
+         ✔️회원가입 유효성 검사 구현 <br/>
+      </td>
+      <td>
+         ✔️HistoryPage UI 구현<br>
+         ✔️FireStore 연결 및 서비스구현<br>
+      </td>
+      <td>
+         ✔️MyPage UI 구현 <br>
+         ✔️FireStore에서 Car 정보 가져오기 <br>
+         ✔️LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
+         ✔️문의 전화 버튼 구현 <br>
+      </td>
+      <td>
+         ✔️MapPage UI 구현 <br>
+         ✔️주유소 <br>
+      </td>
+   </tr>
+   <tr align="center">
+      <td>
+         최진훈
+      </td>
+      <td>
+         김은경
+      </td>
+       <td>
+         김지훈
+      </td>
+     <td>
+         이동건
+      </td>
+     <td>
+         조재민
+      </td>
+   </tr>
+</table>
 
-- MyCarPage UI 구현
-- Model 변수명 및 재구현
-
-**김은경**
-
+## UI 화면구성
+**로그인/회원가입**
 <table>
-  <tr>
-    <td>
-      - Login & Join Page UI 구현 <br/>
-      - Firebase Auth (회원가입, 로그인, 로그인 유지, 로그아웃, 회원탈퇴 서비스 구현) 기능 <br/>
-      - SMTP : 이메일 인증 구현 <br/>
-      - 회원가입시, 필요한 에러처리 기능 구현 <br/>
-    </td>
-    <td>
-      이미지 넣기
-      <img src="" />
-    </td>
-  </tr>
+   <tr>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/35b7d751-03b3-4595-b17d-c67ec951e391" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/a43df5a2-a51f-46c9-ad32-3238169f9109" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/69585b4e-d619-4b16-9f4b-214e58e6b96c" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/fac8459d-56b5-41d0-b73d-626f7821e2ad" />
+      </td>
+   </tr>
+   <tr align="center"> 
+      <td>
+         로그인
+      </td>
+      <td>
+         회원가입
+      </td>
+      <td>
+        주종 선택
+      </td>
+       <td>
+        차량번호 입력<br>
+        제조사 입력<br>
+        차량명 입력<br>
+        닉네임 입력<br>
+        최종 주행거리 입력<br>
+      </td>
+   </tr>
 </table>
 
 
-**김지훈**
-<table>
-  <tr>
-    <td>
-     - HistoryPage UI 구현 <br>
-     - Firebase FireStore 연결 Service 구현 <br>
-    </td>
-    <td>
-      이미지 넣기
-      <img src="" />
-    </td>
-  </tr>
-</table>
 
+**MyCarPage**
 
-**이동건**
-<table width=1000>
-  <tr>
-    <td>
-    - MyPage UI 구현 <br>
-    - FireStore에서 Car 정보 가져오기 <br>
-    - LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
-    - 문의 전화 버튼 구현 <br>
-    </td>
-    <td>
-      이미지 넣기
-      <img src="" />
-    </td>
-  </tr>
-</table>
+**HistoryPage**
 
-**조재민**
+**MapPage**
 
-<table width = "1000">
-  <tr>
-    <td>
-    - MapPage UI 구현 <br>
-    - 주유소 <br>
-    </td>
-    <td>
-      이미지 넣기
-      <img src="" />
-    </td>
-  </tr>
-</table>
+**CommunityPage**
+
+**MyPage**
 
 ### ⚙️ Tech Stack
 
