@@ -122,31 +122,32 @@
 ✔️와이어 프레임 [Figma](https://www.figma.com/file/gq9vtYUeLoWkuYZRnqUbrb/Underdog?type=design&node-id=0%3A1&mode=design&t=Ax4f08eMbMFsxK4c-1) <br/>
 ✔️DB 설계 및 구성 
 
-<table width="100">
+<table>
    <tr>
-      <td>
+      <td width="350">
          ✔️MyCarPage UI 구현<br/>
+         ✔️부품 교체 시기 백그라운드 알림 구현<br/>
          ✔️MapPage UI 및 기능구현<br/>
          ✔️Model 변수명 및 재구현<br/>
       </td>
-      <td>
+      <td width="350">
          ✔️Login & Join Page UI 구현 <br/>
          ✔️Firebase Auth 기능 <br/>
          ✔️SMTP 이메일 인증 구현 <br/>
          ✔️회원가입 유효성 검사 구현 <br/>
          ✔️회원가입 유효성 검사 구현 <br/>
       </td>
-      <td>
+      <td width="350">
          ✔️HistoryPage UI 구현<br>
          ✔️FireStore 연결 및 서비스구현<br>
       </td>
-      <td>
+      <td width="350">
          ✔️MyPage UI 구현 <br>
          ✔️FireStore에서 Car 정보 가져오기 <br>
          ✔️LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
          ✔️문의 전화 버튼 구현 <br>
       </td>
-      <td>
+      <td width="350">
          ✔️MapPage UI 구현 <br>
          ✔️주유소 <br>
       </td>
@@ -170,7 +171,7 @@
    </tr>
 </table>
 
-## UI 화면구성
+## 🖥️ UI 화면구성
 **로그인/회원가입**
 <table>
    <tr>
@@ -198,26 +199,146 @@
         주종 선택
       </td>
        <td>
-        차량번호 입력<br>
-        제조사 입력<br>
-        차량명 입력<br>
-        닉네임 입력<br>
-        최종 주행거리 입력<br>
+        자동차 정보 입력
       </td>
    </tr>
 </table>
 
-
-
 **MyCarPage**
+<table>
+   <tr>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/b054fcc8-995a-4571-8956-e6318f298b83" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/a4c96d60-a3f7-4697-ab19-e9510addca01" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/c0bf9dae-f596-4d3b-af3b-a623795d0274" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/44f0a0c0-aa83-4d34-9ecb-60c3190da34c" />
+      </td>
+   </tr>
+   <tr align="center"> 
+      <td>
+        자동차부품 교체시기 선택
+      </td>
+      <td>
+        부품교체 날짜관리
+      </td>
+      <td>
+        날짜 변경
+      </td>
+       <td>
+         날짜 수정 및 교체 완료
+      </td>
+   </tr>
+</table>
 
 **HistoryPage**
+<table>
+   <tr>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/46c58491-a5c7-4236-bcfa-4dbfb7ae41f8" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/71246ab4-3dff-49c9-b55d-76d75ec6a53e" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/eb0135e5-0c2f-4eed-a66b-915dc3b48a32" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/00d23355-c93a-4234-9b43-5ba8eb0c8d8a" />
+      </td>
+   </tr>
+   <tr align="center"> 
+      <td>
+        주행기록
+      </td>
+      <td>
+        주유기록
+      </td>
+      <td>
+        영수증인식
+      </td>
+       <td>
+        기록페이지 -> 워딩바꾸기
+      </td>
+   </tr>
+</table>
 
 **MapPage**
+<table>
+   <tr>
+      <td width="250">
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/bfcd1ff3-94f0-46ec-982d-d47106f240c9" />
+      </td>
+      <td width="250">
+        <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/f8e89ca9-4076-4003-a33a-e1c5ce5872b6" />
+      </td>
+   </tr>
+   <tr align="center"> 
+      <td>
+        주변 주유소 표시
+      </td>
+      <td>
+        세부 정보 표시
+      </td>
+   </tr>
+</table>
 
 **CommunityPage**
+<table>
+   <tr>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/2e5b5f61-4208-4b95-a0e9-aa3cccb3cb51" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/42e778c9-66ee-4537-8c8c-2bb074d29187" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/a971673b-1ea5-4651-9dbd-88b913048a36" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/9e508f0f-53df-455e-af29-130735beaa8e" />
+      </td>
+   </tr>
+   <tr align="center"> 
+      <td>
+        게시판
+      </td>
+      <td>
+        게시글 작성 및 수정
+      </td>
+      <td>
+        게시글 및 댓글
+      </td>
+     <td>
+        차단 및 삭제
+      </td>
+   </tr>
+</table>
 
 **MyPage**
+<table>
+   <tr>
+      <td width="250">
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/b5f0d7f6-daee-4f20-9088-6c123a9af16b" />
+      </td>
+      <td>
+         <img src= "https://github.com/underdog-FinalProject/carlog/assets/93186591/0e21e7c1-da43-486b-bc74-704fbf52b2d0" />
+      </td width="250">
+   </tr>
+   <tr align="center"> 
+      <td>
+        내 정보
+      </td>
+      <td>
+        내 정보 수정
+      </td>
+   </tr>
+</table>
 
 ### ⚙️ Tech Stack
 
@@ -240,6 +361,8 @@
 * Firebase
 * Firebase Auth
 * Firebase FireStore
+* inavi-maps-sdk
+* EasyTipView
 
 // 내부 라이브러리
 * MapKit
