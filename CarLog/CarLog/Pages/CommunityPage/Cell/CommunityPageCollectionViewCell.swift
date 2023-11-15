@@ -100,6 +100,8 @@ class CommunityPageCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.collectionViewImage.image = UIImage(named: "defaultImage")
+        self.titleLabel.text = ""
+        self.mainTextLabel.text = ""
     }
     
     private func setupUI() {

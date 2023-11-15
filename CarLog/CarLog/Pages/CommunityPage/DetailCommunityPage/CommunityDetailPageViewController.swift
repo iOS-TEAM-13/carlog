@@ -16,6 +16,12 @@ class CommunityDetailPageViewController: UIViewController {
         }
     }
     
+    private lazy var indicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.style = .large
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
@@ -335,6 +341,7 @@ class CommunityDetailPageViewController: UIViewController {
 
 extension CommunityDetailPageViewController {
     @objc func changedPost(notification: Notification) {
+        indicator.startAnimating()
         if let updatedPost = notification.object as? Post {
             selectedPost = updatedPost
             loadPost()
@@ -361,6 +368,7 @@ extension CommunityDetailPageViewController {
             detailView.dateLabel.text = post.timeStamp
             detailView.mainText.text = post.content
         }
+        indicator.stopAnimating()
     }
     
     private func loadComments() {
