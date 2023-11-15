@@ -356,25 +356,6 @@
 - Vision
 - iNavy SDK
 
-### 📚 Library
-
-```swift
-// 외부 라이브러리
-* SnapKit
-* Firebase
-* Firebase Auth
-* Firebase FireStore
-* inavi-maps-sdk
-* EasyTipView
-* Lottie
-* Vision
-
-// 내부 라이브러리
-* MapKit
-* URLSession
-* UserDefaults
-```
-
 ### 🔥 Project Issue
 
 [🚨MyCarPage에서 tableview의 contentView 문제🚨](https://github.com/underdog-FinalProject/carlog/issues/16)
