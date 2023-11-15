@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 import WebKit
 
 class WebViewController: UIViewController, WKNavigationDelegate {
@@ -15,18 +16,27 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         webView = WKWebView()
         webView.navigationDelegate = self
-        view.addSubview(webView)
         
         if let url = url {
             let request = URLRequest(url: url)
             webView.load(request)
         }
+        
+        setupUI()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        webView.frame = view.bounds
+    private func setupUI() {
+        view.addSubview(webView)
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
     }
+
 }

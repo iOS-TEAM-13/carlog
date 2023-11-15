@@ -4,8 +4,10 @@ import UIKit
 class CommunityPageViewController: UIViewController {
     private var posts: [Post] = [] // 커뮤니티 셀 배열
     private var comments: [String:[Comment]] = [:]
-    private var bannerURL: [String] = ["https://www.notion.so/4d52324046a445ad91b8f515063ec805", "https://www.notion.so/c7b3cc988dfe4127961be318895c0b28", "https://www.notion.so/40dac37e14b04a588f9de36bfe60b89a"] // 배너 셀 배열
-    private var bannerImages: [String] = ["banner", "banner", "banner"]
+    //배너 URL
+    private var bannerURL: [String] = ["https://luttoli.notion.site/1318cb2f60214cb2ba100740583ac602?pvs=4", "https://luttoli.notion.site/4041e205c36549b5a99ceb938741353c?pvs=4", "https://luttoli.notion.site/3a4a85d672b84685a7fefbd288f6e889?pvs=4"]
+    //배너이미지
+    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving"]
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
     private lazy var bannerCollectionView = BannerCollectionView()
