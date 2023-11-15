@@ -4,7 +4,8 @@ import UIKit
 class CommunityPageViewController: UIViewController {
     private var posts: [Post] = [] // 커뮤니티 셀 배열
     private var comments: [String:[Comment]] = [:]
-    private var banners: [String] = ["banner", "banner", "banner"] // 배너 셀 배열
+    private var bannerURL: [String] = ["https://www.notion.so/4d52324046a445ad91b8f515063ec805", "https://www.notion.so/c7b3cc988dfe4127961be318895c0b28", "https://www.notion.so/40dac37e14b04a588f9de36bfe60b89a"] // 배너 셀 배열
+    private var bannerImages: [String] = ["banner", "banner", "banner"]
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
     private lazy var bannerCollectionView = BannerCollectionView()
@@ -132,7 +133,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bannerCollectionView {
-            return banners.count
+            return bannerURL.count
         } else if collectionView == communityCollectionView {
             return posts.count
         }
@@ -142,7 +143,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == bannerCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as! BannerCollectionViewCell
-            cell.configure(with: banners[indexPath.item])
+            cell.configure(with: bannerImages[indexPath.item])
             return cell
         } else if collectionView == communityCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommunityPageCollectionViewCell.identifier, for: indexPath) as! CommunityPageCollectionViewCell
@@ -182,6 +183,14 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             detailViewController.selectedPost = selectedPost
             
             navigationController?.pushViewController(detailViewController, animated: true)
+        } else if collectionView == bannerCollectionView {
+            let webViewController = WebViewController()
+            if indexPath.item < bannerURL.count {
+                if let url = URL(string: bannerURL[indexPath.item]) {
+                    webViewController.url = url
+                    navigationController?.pushViewController(webViewController, animated: true)
+                }
+            }
         }
     }
 }
