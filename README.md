@@ -123,17 +123,18 @@
 ✔️와이어 프레임 [Figma](https://www.figma.com/file/gq9vtYUeLoWkuYZRnqUbrb/Underdog?type=design&node-id=0%3A1&mode=design&t=Ax4f08eMbMFsxK4c-1) <br/>
 ✔️DB 설계 및 구성 
 
-**개인 분담**
+**담당 작업**
 <table>
   <tr>
     <td>
       최진훈
     </td>
     <td width="1000">
-       ✔️MyCarPage UI 구현<br/>
-       ✔️부품 교체 시기 백그라운드 알림 구현<br/>
-       ✔️MapPage UI 및 기능구현<br/>
-       ✔️Model 변수명 및 재구현<br/>
+       ✔️부품 교체 시기 툴팁 및 알림 구현<br/>
+       ✔️지도 API 통신 메소드 구현<br/>
+       ✔️커스텀 어노테이션 및 주유소 디테일뷰 구현<br/>
+       ✔️Model 변경 및 개선<br/>
+       ✔️이미지 캐싱 구현<br/>
     </td>
   </tr>
 </table>
@@ -144,11 +145,11 @@
       김은경
     </td>
     <td width="1000">
-       ✔️Login & Join Page UI 구현 <br/>
-       ✔️Firebase Auth 기능 <br/>
-       ✔️SMTP 이메일 인증 구현 <br/>
-       ✔️회원가입 유효성 검사 구현 <br/>
-       ✔️회원가입 유효성 검사 구현 <br/>
+       ✔️로그인 & 회원가입 UI 및 기능 구현<br/>
+       ✔️Firebase Auth & Firestore 연동<br/>
+       ✔️SMTP 이메일 인증 구현<br/>
+       ✔️커뮤니티 데이터 로드와 유저 및 게시글 차단 기능구현<br/>
+       ✔️커뮤니티 댓글 CRD 구현<br/>
     </td>
   </tr>
 </table>
@@ -159,8 +160,11 @@
       김지훈
     </td>
     <td width="1000">
-       ✔️HistoryPage UI 구현<br>
-       ✔️FireStore 연결 및 서비스구현<br>
+       ✔️HistoryPage UI 및 로직 구현<br>
+       ✔️FireStore CRUD 연결 및 서비스구현<br>
+       ✔️주행거리, 주유계산 자동화로직 구현<br/>
+       ✔️Vision 텍스트 인식 후 자동입력 구현<br/>
+       ✔️배너 데이터 및 연결<br/>
     </td>
   </tr>
 </table>
@@ -172,9 +176,10 @@
     </td>
     <td width="1000">
       ✔️MyPage UI 구현 <br>
-     ✔️FireStore에서 Car 정보 가져오기 <br>
-     ✔️LoginService 파일에 구현해둔 메서드 사용해서 로그아웃 회원탈퇴 기능 처리 구현 <br>
-     ✔️문의 전화 버튼 구현 <br>
+      ✔️MyPage 정보 Firebase와 연결 기능 구현<br>
+      ✔️MyPage 문의 이메일 연결기능 구현<br>
+      ✔️커뮤니티 Post UI 구현<br/>
+      ✔️커뮤니티 Post 사진 업로드 구현<br/>
     </td>
   </tr>
 </table>
@@ -185,8 +190,10 @@
       조재민
     </td>
     <td width="1000">
-       ✔️MapPage UI 구현 <br>
-       ✔️주유소 <br>
+       ✔️MapPage 초기 UI 구현 <br>
+       ✔️커뮤니티 UI 구현<br>
+       ✔️커뮤니티 게시글 UI 구현<br>
+       ✔️커뮤니티 댓글 차단기능 구현<br>
     </td>
   </tr>
 </table>
