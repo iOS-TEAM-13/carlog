@@ -205,10 +205,15 @@ extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINaviga
                         let countText = components[1]
                         let countRegex = try! NSRegularExpression(pattern: "[0-9]+(\\.[0-9]+)?", options: [])
                         let countMatches = countRegex.matches(in: countText, options: [], range: NSRange(location: 0, length: countText.utf16.count))
-                        
+
                         if let countMatch = countMatches.first {
                             let countRange = countMatch.range
-                            let count = (countText as NSString).substring(with: countRange)
+                            var count = (countText as NSString).substring(with: countRange)
+                            
+                            if count.hasSuffix(".000") {
+                                count = String(count.dropLast(4))
+                            }
+                            
                             DispatchQueue.main.async {
                                 self?.visionFuelingView.visionCountTextField.text = count
                             }
