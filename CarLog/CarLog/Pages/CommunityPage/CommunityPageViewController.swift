@@ -9,10 +9,11 @@ class CommunityPageViewController: UIViewController {
         "https://luttoli.notion.site/1318cb2f60214cb2ba100740583ac602?pvs=4",
         "https://luttoli.notion.site/4041e205c36549b5a99ceb938741353c?pvs=4",
         "https://luttoli.notion.site/3a4a85d672b84685a7fefbd288f6e889?pvs=4",
-        "https://comfortable-polyanthus-e65.notion.site/3-9bd71c5e295c4545a3b329cd53dafa4f?pvs=4"
+        "https://comfortable-polyanthus-e65.notion.site/Tip-9f32a81e39be49e4a2ee3e924c88e7fe",
+        "https://comfortable-polyanthus-e65.notion.site/3-9bd71c5e295c4545a3b329cd53dafa4f"
     ]
     //배너이미지
-    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving", "beginnerTips"]
+    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving", "beginnerTips", "traffic"]
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
     private lazy var bannerCollectionView = BannerCollectionView()
