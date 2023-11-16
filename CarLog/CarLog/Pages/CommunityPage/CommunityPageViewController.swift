@@ -39,6 +39,7 @@ class CommunityPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadPostFromFireStore()
+        NotificationCenter.default.addObserver(self, selector: #selector(addedPost(notification:)), name: Notification.Name("addedPost"), object: nil)
     }
     
     func setupUI() {
@@ -78,14 +79,13 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
+        indicator.startAnimating()
+
         guard let userEmail = Constants.currentUser.userEmail else {
             print("사용자 이메일 정보가 없습니다.")
-            indicator.stopAnimating()
             return
         }
-             
-        indicator.startAnimating()
-        FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
+            FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
             guard let self = self else { return }
             if let posts = posts {
                 self.posts = posts
@@ -123,6 +123,14 @@ class CommunityPageViewController: UIViewController {
         let editPage = AddCommunityPageViewController(post: nil)
         navigationController?.pushViewController(editPage, animated: true)
     }
+    
+    @objc func addedPost(notification: Notification) {
+        indicator.startAnimating()
+        if let updatedPost = notification.object as? Post {
+            loadPostFromFireStore()
+            communityCollectionView.reloadData()
+        }
+    }
 }
 
 extension CommunityPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -149,6 +157,8 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             let post = posts[indexPath.item]
             if let imageURL = post.image.first {
                 cell.bind(userName: post.userName, title: post.title, content: post.content, image: imageURL, spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: self.comments[post.id ?? ""]?.count)
+            } else {
+                cell.bind(userName: post.userName, title: post.title, content: post.content, image: nil, spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: self.comments[post.id ?? ""]?.count)
             }
             return cell
         }

@@ -27,6 +27,12 @@ class MyCarPageView: UIView {
         return view
     }()
     
+    lazy var indicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.style = .large
+        return view
+    }()
+    
     // MARK: LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)

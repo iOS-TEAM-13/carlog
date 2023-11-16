@@ -84,10 +84,12 @@ class MyCarPageViewController: UIViewController {
     }
     
     private func loadData() {
+        myCarPageView.indicator.startAnimating()
         FirestoreService.firestoreService.loadCarPart { data in
             if let data = data {
                 self.carParts = data
                 self.myCarPageView.myCarCollectionView.reloadData()
+                self.myCarPageView.indicator.stopAnimating()
             } else {
                 let vc = MyCarCheckViewController()
                 self.navigationController?.pushViewController(vc, animated: true)

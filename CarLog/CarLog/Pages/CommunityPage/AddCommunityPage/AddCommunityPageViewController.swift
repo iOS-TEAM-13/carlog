@@ -112,6 +112,7 @@ extension AddCommunityPageViewController { // ⭐️ Navigation Left,Right BarBu
             dispatchGroup.notify(queue: .main) { [self] in
                 let post = Post(id: UUID().uuidString, title: addCommunityPageView.mainTextField.text, content: addCommunityPageView.subTextView.text, image: imageURLs, userEmail: Constants.currentUser.userEmail, userName: Constants.currentUser.nickName, timeStamp: timeStamp, emergency: [:])
                 FirestoreService.firestoreService.savePosts(post: post) { error in
+                    NotificationCenter.default.post(name: Notification.Name("addedPost"), object: post)
                     print("err: \(String(describing: error?.localizedDescription))")
                 }
             }
