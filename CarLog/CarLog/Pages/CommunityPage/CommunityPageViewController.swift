@@ -5,9 +5,14 @@ class CommunityPageViewController: UIViewController {
     private var posts: [Post] = [] // 커뮤니티 셀 배열
     private var comments: [String:[Comment]] = [:]
     //배너 URL
-    private var bannerURL: [String] = ["https://luttoli.notion.site/1318cb2f60214cb2ba100740583ac602?pvs=4", "https://luttoli.notion.site/4041e205c36549b5a99ceb938741353c?pvs=4", "https://luttoli.notion.site/3a4a85d672b84685a7fefbd288f6e889?pvs=4"]
+    private var bannerURL: [String] = [
+        "https://luttoli.notion.site/1318cb2f60214cb2ba100740583ac602?pvs=4",
+        "https://luttoli.notion.site/4041e205c36549b5a99ceb938741353c?pvs=4",
+        "https://luttoli.notion.site/3a4a85d672b84685a7fefbd288f6e889?pvs=4",
+        "https://comfortable-polyanthus-e65.notion.site/3-9bd71c5e295c4545a3b329cd53dafa4f?pvs=4"
+    ]
     //배너이미지
-    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving"]
+    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving", "beginnerTips"]
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
     private lazy var bannerCollectionView = BannerCollectionView()
