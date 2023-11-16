@@ -40,7 +40,7 @@ class FuelingDetailView: UIView {
     
     lazy var totalDistanceLabel: UILabel = {
         let totalDistanceLabel = UILabel()
-        totalDistanceLabel.customLabel(text: "누적 주행거리 (6자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        totalDistanceLabel.customLabel(text: "누적 주행거리 (6자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return totalDistanceLabel
     }()
     
@@ -50,10 +50,10 @@ class FuelingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        totalDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: AddDrivingView().drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
+        totalDistanceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: AddDrivingView().drivingPurposeTextField.frame.size.height)), keyboardType: .decimalPad)
         
         totalDistanceTextField.rightView?.addSubview(UILabel.kmUnitLabel())
         
@@ -98,7 +98,7 @@ class FuelingDetailView: UIView {
     
     lazy var priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.customLabel(text: "단가 (4자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        priceLabel.customLabel(text: "단가 (4자리 숫자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return priceLabel
     }()
     
@@ -108,10 +108,10 @@ class FuelingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        priceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
+        priceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
         
         priceTextField.rightView?.addSubview(UILabel.wonUnitLabel())
         
@@ -156,7 +156,7 @@ class FuelingDetailView: UIView {
     
     lazy var countLabel: UILabel = {
         let countLabel = UILabel()
-        countLabel.customLabel(text: "수량 (소수점 포함 6자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        countLabel.customLabel(text: "수량 (소수점 포함 6자)", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return countLabel
     }()
     
@@ -166,10 +166,10 @@ class FuelingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        countTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
+        countTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
         
         countTextField.rightView?.addSubview(UILabel.literUnitLabel())
         
@@ -206,7 +206,7 @@ class FuelingDetailView: UIView {
     
     lazy var totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
-        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .left)
+        totalPriceLabel.customLabel(text: "총액", textColor: .black, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .left)
         return totalPriceLabel
     }()
     
@@ -216,10 +216,10 @@ class FuelingDetailView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        totalPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
+        totalPriceTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10010", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: UILabel.kmUnitLabel().intrinsicContentSize.width + Constants.horizontalMargin, height: totalDistanceTextField.frame.size.height)), keyboardType: .decimalPad)
         
         totalPriceTextField.rightView?.addSubview(UILabel.wonUnitLabel())
         
@@ -256,14 +256,14 @@ class FuelingDetailView: UIView {
     
     lazy var upDateButton: UIButton = {
         let upDateButton = UIButton()
-        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        upDateButton.customButton(text: "수정", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         upDateButton.layer.cornerRadius = Constants.cornerRadius
         return upDateButton
     }()
     
     lazy var removeButton: UIButton = {
         let removeButton = UIButton()
-        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
+        removeButton.customButton(text: "삭제", font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), titleColor: .white, backgroundColor: .mainNavyColor)
         removeButton.layer.cornerRadius = Constants.cornerRadius
         return removeButton
     }()

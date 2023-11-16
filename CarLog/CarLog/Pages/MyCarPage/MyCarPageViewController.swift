@@ -8,23 +8,7 @@ import SwiftUI
 class MyCarPageViewController: UIViewController {
     // MARK: Properties
     
-    private let flowLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        return layout
-    }()
-    
-    private lazy var myCarCollectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
-        view.isScrollEnabled = true
-        view.showsVerticalScrollIndicator = true
-        view.backgroundColor = .backgroundCoustomColor
-        view.clipsToBounds = true
-        view.dataSource = self
-        view.delegate = self
-        view.register(MyCarCollectionViewCell.self, forCellWithReuseIdentifier: MyCarCollectionViewCell.identifier)
-        return view
-    }()
+    private let myCarPageView = MyCarPageView()
     
     let backButton: UIBarButtonItem = {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: nil, action: nil)
@@ -38,11 +22,9 @@ class MyCarPageViewController: UIViewController {
     
     private let tooltipList = [("6개월", "3"), ("2년", "6"), ("2년", "6"), ("1년", "3"), ("1년", "3"), ("3년", "12"), ("1년", "3"), ("1년", "3"), ("1년", "3"), ("1년", "3")]
 
-    var firstInterval = ""
-    var secondInterval = ""
-    var progress = 0.0
+    private var progress = 0.0
     
-    var preferences = EasyTipView.Preferences()
+    private var preferences = EasyTipView.Preferences()
     
     private var currentTooltip: EasyTipView?
     
@@ -80,27 +62,17 @@ class MyCarPageViewController: UIViewController {
     // MARK: Method
     
     private func setupUI() {
-        view.addSubview(myCarCollectionView)
+        myCarPageView.myCarCollectionView.delegate = self
+        myCarPageView.myCarCollectionView.dataSource = self
         
-        myCarCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-        }
+        view.addSubview(myCarPageView)
+        
+        myCarPageView.snp.makeConstraints {
+                    $0.top.equalTo(view.safeAreaLayoutGuide)
+                    $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.verticalMargin)
+                    $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+                }
     }
-    
-    func moveToSettingAlert(reason: String, discription: String) {
-        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-        }
-        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
-        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
-        alert.addAction(cancle)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
-    
     
     private func checkFirst() {
         let userDefaults = UserDefaults.standard
@@ -112,10 +84,12 @@ class MyCarPageViewController: UIViewController {
     }
     
     private func loadData() {
+        myCarPageView.indicator.startAnimating()
         FirestoreService.firestoreService.loadCarPart { data in
             if let data = data {
                 self.carParts = data
-                self.myCarCollectionView.reloadData()
+                self.myCarPageView.myCarCollectionView.reloadData()
+                self.myCarPageView.indicator.stopAnimating()
             } else {
                 let vc = MyCarCheckViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
@@ -133,7 +107,7 @@ class MyCarPageViewController: UIViewController {
     }
     
     private func setTooltip() {
-        preferences.drawing.font = UIFont.spoqaHanSansNeo(size: Constants.fontJua10, weight: .regular)
+        preferences.drawing.font = UIFont.spoqaHanSansNeo(size: Constants.fontSize10, weight: .regular)
         preferences.drawing.foregroundColor = .black
         preferences.drawing.backgroundColor = .buttonSkyBlueColor
         preferences.animating.dismissOnTap = true
@@ -196,6 +170,6 @@ extension MyCarPageViewController: EasyTipViewDelegate {
     }
     
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
-        myCarCollectionView.visibleCells.forEach { $0.isUserInteractionEnabled = true }
+        myCarPageView.myCarCollectionView.visibleCells.forEach { $0.isUserInteractionEnabled = true }
     }
 }

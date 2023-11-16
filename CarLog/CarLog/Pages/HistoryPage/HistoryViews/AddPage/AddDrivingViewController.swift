@@ -68,7 +68,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //visionDriving에서 오는 출발 데이터
+    //visionDriving에서 오는 도착 데이터
     @objc func handleVisionArrive(_ notification: Notification) {
         if let arriveText = notification.object as? String {
             addDrivingView.arriveDistanceTextField.text = arriveText
@@ -92,7 +92,7 @@ class AddDrivingViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "주행기록 추가"
         
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium),
             .foregroundColor: UIColor.mainNavyColor
         ]
         

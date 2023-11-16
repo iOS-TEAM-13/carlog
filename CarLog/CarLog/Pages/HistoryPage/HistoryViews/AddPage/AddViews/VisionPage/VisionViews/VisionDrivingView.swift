@@ -9,18 +9,18 @@ import UIKit
 
 class VisionDrivingView: UIView {
 
-    lazy var visionStackView: UIStackView = {
-        let visionStackView = UIStackView(arrangedSubviews: [visionInfoLabel, visionButtonTextFieldStackView])
-        visionStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
-        visionStackView.backgroundColor = .white
-        visionStackView.layer.cornerRadius = Constants.cornerRadius
-        return visionStackView
+    lazy var visionDrivingStackView: UIStackView = {
+        let visionDrivingStackView = UIStackView(arrangedSubviews: [visionInfoLabel, visionButtonTextFieldStackView])
+        visionDrivingStackView.customStackView(spacing: 20, axis: .vertical, alignment: .center)
+        visionDrivingStackView.backgroundColor = .white
+        visionDrivingStackView.layer.cornerRadius = Constants.cornerRadius
+        return visionDrivingStackView
     }()
     
     //안내 라벨
     lazy var visionInfoLabel: UILabel = {
         let visionInfoLabel = UILabel()
-        visionInfoLabel.customLabel(text: "출발, 도착 주행거리를 선택해주세요.", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        visionInfoLabel.customLabel(text: "출발, 도착 주행거리를 선택해주세요.", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return visionInfoLabel
     }()
     
@@ -40,7 +40,7 @@ class VisionDrivingView: UIView {
     
     lazy var departLabel: UILabel = {
         let departLabel = UILabel()
-        departLabel.customLabel(text: "출발", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        departLabel.customLabel(text: "출발", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return departLabel
     }()
     
@@ -61,10 +61,10 @@ class VisionDrivingView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        visionDepartTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionDepartTextField.frame.size.height)), keyboardType: .decimalPad)
+        visionDepartTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10000", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionDepartTextField.frame.size.height)), keyboardType: .decimalPad)
         
         return visionDepartTextField
     }()
@@ -85,7 +85,7 @@ class VisionDrivingView: UIView {
     
     lazy var arriveLabel: UILabel = {
         let arriveLabel = UILabel()
-        arriveLabel.customLabel(text: "도착", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontJua16, weight: .medium), alignment: .center)
+        arriveLabel.customLabel(text: "도착", textColor: .mainNavyColor, font: UIFont.spoqaHanSansNeo(size: Constants.fontSize16, weight: .medium), alignment: .center)
         return arriveLabel
     }()
     
@@ -106,10 +106,10 @@ class VisionDrivingView: UIView {
         //customTextField 수정
         let placeholderColor: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemGray,
-            .font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium),
+            .font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium),
         ]
         
-        visionArriveTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10020", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontJua20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionArriveTextField.frame.size.height)), keyboardType: .decimalPad)
+        visionArriveTextField.historyNewCustomTextField(placeholder: NSAttributedString(string: "ex) 10020", attributes: placeholderColor), font: UIFont.spoqaHanSansNeo(size: Constants.fontSize20, weight: .medium), textColor: .black, alignment: .right, paddingView: UIView(frame: CGRect(x: 0, y: 0, width: Constants.horizontalMargin, height: visionArriveTextField.frame.size.height)), keyboardType: .decimalPad)
         
         return visionArriveTextField
     }()
@@ -133,24 +133,24 @@ class VisionDrivingView: UIView {
     
     // MARK: - addVisionFueling UI 설정
     private func setupUI() {
-        addSubview(visionStackView)
+        addSubview(visionDrivingStackView)
 
-        visionStackView.snp.makeConstraints { make in
+        visionDrivingStackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview().multipliedBy(0.7)
             make.leading.equalTo(safeAreaLayoutGuide).offset(Constants.horizontalMargin * 2)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-Constants.horizontalMargin * 2)
         }
         
         visionInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(visionStackView).offset(20)
+            make.top.equalTo(visionDrivingStackView).offset(20)
         }
         
         visionDepartTextField.snp.makeConstraints { make in
-            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
+            make.bottom.equalTo(visionDrivingStackView.snp.bottom).offset(-20)
         }
         
         visionArriveTextField.snp.makeConstraints { make in
-            make.bottom.equalTo(visionStackView.snp.bottom).offset(-20)
+            make.bottom.equalTo(visionDrivingStackView.snp.bottom).offset(-20)
         }
         
         visionDepartImageButton.snp.makeConstraints { make in

@@ -2,47 +2,23 @@ import SnapKit
 import UIKit
 
 class CommunityPageViewController: UIViewController {
-    private var items: [Post] = [] // 커뮤니티 셀 배열
-    
-    private var banners: [String] = ["banner", "banner", "banner"] // 배너 셀 배열
-    
+    private var posts: [Post] = [] // 커뮤니티 셀 배열
+    private var comments: [String:[Comment]] = [:]
+    //배너 URL
+    private var bannerURL: [String] = [
+        "https://luttoli.notion.site/1318cb2f60214cb2ba100740583ac602?pvs=4",
+        "https://luttoli.notion.site/4041e205c36549b5a99ceb938741353c?pvs=4",
+        "https://luttoli.notion.site/3a4a85d672b84685a7fefbd288f6e889?pvs=4",
+        "https://comfortable-polyanthus-e65.notion.site/Tip-9f32a81e39be49e4a2ee3e924c88e7fe",
+        "https://comfortable-polyanthus-e65.notion.site/3-9bd71c5e295c4545a3b329cd53dafa4f"
+    ]
+    //배너이미지
+    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving", "beginnerTips", "traffic"]
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
-    private lazy var editFloatingButton: UIButton = {
-        let floatingButton = UIButton()
-        let editImage = UIImage(named: "edit")
-        floatingButton.setImage(editImage, for: .normal)
-        floatingButton.backgroundColor = .mainNavyColor
-        floatingButton.layer.cornerRadius = 25
-        floatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
-        return floatingButton
-    }()
-    
-    private lazy var communityColletionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.isScrollEnabled = true
-        view.backgroundColor = .backgroundCoustomColor
-        view.layer.cornerRadius = Constants.cornerRadius
-        view.clipsToBounds = true
-        view.dataSource = self
-        view.delegate = self
-        return view
-    }()
-    
-    private lazy var bannerCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 360, height: 80) // 배너의 너비를 뷰의 너비로 설정
-        layout.minimumLineSpacing = 0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
-        return collectionView
-    }()
+    private lazy var bannerCollectionView = BannerCollectionView()
+    private lazy var communityCollectionView = CommunityCollectionView()
+    private lazy var editFloatingButton = CustomFloatingButton(image: UIImage(named: "edit"))
     
     private lazy var indicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
@@ -54,11 +30,15 @@ class CommunityPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundCoustomColor
         navigationController?.navigationBar.barTintColor = .backgroundCoustomColor
-        communityColletionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: "CommunityCell")
-        communityColletionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
+        communityCollectionView.register(CommunityPageCollectionViewCell.self, forCellWithReuseIdentifier: CommunityPageCollectionViewCell.identifier)
+        communityCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
+        editFloatingButton.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         
-        communityColletionView.dataSource = self
-        communityColletionView.delegate = self
+        bannerCollectionView.dataSource = self
+        bannerCollectionView.delegate = self
+        
+        communityCollectionView.dataSource = self
+        communityCollectionView.delegate = self
         
         setupUI()
         loadPostFromFireStore()
@@ -68,10 +48,11 @@ class CommunityPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadPostFromFireStore()
+        NotificationCenter.default.addObserver(self, selector: #selector(addedPost(notification:)), name: Notification.Name("addedPost"), object: nil)
     }
     
     func setupUI() {
-        view.addSubview(communityColletionView)
+        view.addSubview(communityCollectionView)
         view.addSubview(editFloatingButton)
         view.addSubview(bannerCollectionView)
         view.addSubview(indicator)
@@ -84,7 +65,7 @@ class CommunityPageViewController: UIViewController {
             make.height.equalTo(80) // 원하는 높이 설정
         }
         
-        communityColletionView.snp.makeConstraints { make in
+        communityCollectionView.snp.makeConstraints { make in
             // make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.top.equalTo(bannerCollectionView.snp.bottom).offset(Constants.verticalMargin)
             make.left.equalToSuperview()
@@ -92,7 +73,7 @@ class CommunityPageViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
         // 커뮤니티 마지막 셀 safearea 마진
-        communityColletionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.horizontalMargin, right: 0)
+        communityCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.horizontalMargin, right: 0)
         
         editFloatingButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
@@ -107,27 +88,33 @@ class CommunityPageViewController: UIViewController {
     }
     
     private func loadPostFromFireStore() {
+        indicator.startAnimating()
+
         guard let userEmail = Constants.currentUser.userEmail else {
             print("사용자 이메일 정보가 없습니다.")
-            indicator.stopAnimating()
             return
         }
-             
-        indicator.startAnimating()
-        FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
+            FirestoreService.firestoreService.loadPosts(excludingBlockedPostsFor: userEmail) { [weak self] posts in
             guard let self = self else { return }
             if let posts = posts {
-                self.items = posts
-                DispatchQueue.main.async {
-                    self.communityColletionView.reloadData()
-                    self.indicator.stopAnimating()
+                self.posts = posts
+                for post in posts {
+                    self.loadComment(email: userEmail,id: post.id ?? "") {
+                        self.communityCollectionView.reloadData()
+                        self.indicator.stopAnimating()
+                    }
                 }
             } else {
                 print("데이터를 가져오는 중 오류 발생")
-                DispatchQueue.main.async {
                     self.indicator.stopAnimating()
-                }
             }
+        }
+    }
+
+    private func loadComment(email: String, id: String, completion: @escaping () -> Void) {
+        FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: email , postID: id) { comments in
+            self.comments[id] = comments
+            completion()
         }
     }
     
@@ -145,6 +132,14 @@ class CommunityPageViewController: UIViewController {
         let editPage = AddCommunityPageViewController(post: nil)
         navigationController?.pushViewController(editPage, animated: true)
     }
+    
+    @objc func addedPost(notification: Notification) {
+        indicator.startAnimating()
+        if let updatedPost = notification.object as? Post {
+            loadPostFromFireStore()
+            communityCollectionView.reloadData()
+        }
+    }
 }
 
 extension CommunityPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -154,42 +149,26 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bannerCollectionView {
-            return banners.count
-        } else if collectionView == communityColletionView {
-            return items.count
+            return bannerURL.count
+        } else if collectionView == communityCollectionView {
+            return posts.count
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == bannerCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
-            cell.configure(with: banners[indexPath.item])
-            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as! BannerCollectionViewCell
+            cell.configure(with: bannerImages[indexPath.item])
             return cell
-        } else if collectionView == communityColletionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommunityCell", for: indexPath) as! CommunityPageCollectionViewCell
-            let post = items[indexPath.item]
-          
-            FirestoreService.firestoreService.loadComments(excludingBlockedPostsFor: Constants.currentUser.userEmail ?? "", postID: post.id ?? "") { comment in
-                if let imageURL = post.image.first, let imageUrl = imageURL {
-                    // 이미지를 비동기적으로 가져오기
-                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                        if let data = data {
-                            DispatchQueue.main.async {
-                                cell.bind(userName: post.userName, title: post.title, content: post.content, image: UIImage(data: data), spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: comment?.count)
-//                                    self.indicator.stopAnimating()
-                            }
-                        }
-                    }.resume()
-                } else {
-                    // 이미지 URL이 없으면 기본 이미지 설정
-                    DispatchQueue.main.async {
-                        cell.bind(userName: post.userName, title: post.title, content: post.content, image: UIImage(named: "defaultImage"), spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: comment?.count)
-                    }
-                }
+        } else if collectionView == communityCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommunityPageCollectionViewCell.identifier, for: indexPath) as! CommunityPageCollectionViewCell
+            let post = posts[indexPath.item]
+            if let imageURL = post.image.first {
+                cell.bind(userName: post.userName, title: post.title, content: post.content, image: imageURL, spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: self.comments[post.id ?? ""]?.count)
+            } else {
+                cell.bind(userName: post.userName, title: post.title, content: post.content, image: nil, spanerCount: post.emergency?.filter { $0.value == true }.count, commentCount: self.comments[post.id ?? ""]?.count)
             }
-            
             return cell
         }
         return UICollectionViewCell()
@@ -198,7 +177,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCollectionView {
             return CGSize(width: collectionView.frame.width, height: 80)
-        } else if collectionView == communityColletionView {
+        } else if collectionView == communityCollectionView {
             return CGSize(width: collectionView.bounds.width - Constants.horizontalMargin * 4, height: 321)
         }
         return CGSize.zero
@@ -206,7 +185,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     // 커뮤니티 컬렉션 뷰 셀 사이의 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == communityColletionView {
+        if collectionView == communityCollectionView {
             return 12 // 커뮤니티 컬렉션 뷰 셀 사이의 간격을 12로 설정
         }
         return 0 // 다른 컬렉션 뷰에 대해서는 0 또는 원하는 값으로 설정
@@ -214,14 +193,22 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     // 셀 클릭 시 화면 전환
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == communityColletionView {
+        if collectionView == communityCollectionView {
             let detailViewController = CommunityDetailPageViewController()
             
             // 선택한 포스트를 가져와서 detailViewController에 설정
-            let selectedPost = items[indexPath.item]
+            let selectedPost = posts[indexPath.item]
             detailViewController.selectedPost = selectedPost
             
             navigationController?.pushViewController(detailViewController, animated: true)
+        } else if collectionView == bannerCollectionView {
+            let webViewController = WebViewController()
+            if indexPath.item < bannerURL.count {
+                if let url = URL(string: bannerURL[indexPath.item]) {
+                    webViewController.url = url
+                    navigationController?.pushViewController(webViewController, animated: true)
+                }
+            }
         }
     }
 }

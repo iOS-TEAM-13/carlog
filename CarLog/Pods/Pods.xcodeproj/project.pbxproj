@@ -16,72 +16,93 @@
 			dependencies = (
 			);
 			name = "inavi-maps-sdk";
-			productName = "inavi-maps-sdk";
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		6FF654F5E8435F3379AD9F27A5567434 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		885061465F7477DD3E4860C292F139AF /* Pods-CarLog-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5001FA2CCE20922AD17FE24EA5F783 /* Pods-CarLog-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F677146443750E2FC173E80EFD0EEB9D /* Pods-CarLog-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFBD3A847588E65DED8289BE559C031 /* Pods-CarLog-dummy.m */; };
+		00F7DF0BAB4166CEB0E8D2C7F9EBAD67 /* Pods-CarLog-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5001FA2CCE20922AD17FE24EA5F783 /* Pods-CarLog-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4671398F69B53D5989414A6CEE1D8C30 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA4D84FE101B898D32F32D3658ACFA /* UIKitExtensions.swift */; };
+		63C315A43130FEE6286741C0E4B34B06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		659B1F8EA25E1E0117966342E2B65C07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		A069AF9C517173F45DF10743C7CB70D9 /* Pods-CarLog-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFBD3A847588E65DED8289BE559C031 /* Pods-CarLog-dummy.m */; };
+		A1B74155626A3DA480C9316AF3FF8DC0 /* EasyTipView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4556B90FCC0AFC8C7C68E853FBDB4208 /* EasyTipView-dummy.m */; };
+		D09341A5DADC4D6C7BAE2E892B48E111 /* EasyTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C40E614C348F01A4C66DB93037A447 /* EasyTipView.swift */; };
+		E344296D5F4DB09A8FACA769581D644D /* EasyTipView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9209102BB7F9079D241287D7E2D337 /* EasyTipView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		400943B8604DDB3B47F1EC03BB8D4FEC /* PBXContainerItemProxy */ = {
+		3927F93DCE1B420C2788B629D590BFB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FA81E3B1A044A105C40C8FB408AADD3B;
 			remoteInfo = "inavi-maps-sdk";
 		};
+		FF8E0B133FA336B581217381389912DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 048D21E3C8151CD23D428D38093E1538;
+			remoteInfo = EasyTipView;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		05E5A0E7D083F9666F94F2322FAEE1AD /* Pods_CarLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		12A294EDF570EC6B5D4A054EA2748381 /* inavi-maps-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "inavi-maps-sdk.release.xcconfig"; sourceTree = "<group>"; };
-		3E6D3E4A99DBD076DD012A53AAFDDFF5 /* iNaviMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = iNaviMaps.xcframework; path = framework/iNaviMaps.xcframework; sourceTree = "<group>"; };
+		05E5A0E7D083F9666F94F2322FAEE1AD /* Pods-CarLog */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CarLog"; path = Pods_CarLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		07C07D2A996EE842C76670B5D1F62083 /* iNaviMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = iNaviMaps.xcframework; path = framework/iNaviMaps.xcframework; sourceTree = "<group>"; };
+		131985C664DF246FC38D04F150619E1F /* EasyTipView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyTipView.debug.xcconfig; sourceTree = "<group>"; };
+		1B9209102BB7F9079D241287D7E2D337 /* EasyTipView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyTipView-umbrella.h"; sourceTree = "<group>"; };
+		2DEA4D84FE101B898D32F32D3658ACFA /* UIKitExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIKitExtensions.swift; path = Sources/EasyTipView/UIKitExtensions.swift; sourceTree = "<group>"; };
+		42CE0FB48FFE950A93146E8C187E1708 /* inavi-maps-sdk-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "inavi-maps-sdk-xcframeworks.sh"; sourceTree = "<group>"; };
+		4556B90FCC0AFC8C7C68E853FBDB4208 /* EasyTipView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EasyTipView-dummy.m"; sourceTree = "<group>"; };
 		49048259CE08512FAC95DAF8CC25FC04 /* Pods-CarLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CarLog.release.xcconfig"; sourceTree = "<group>"; };
 		669688335C83A9AC9B1E5DCDC1483091 /* Pods-CarLog.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CarLog.modulemap"; sourceTree = "<group>"; };
+		69C40E614C348F01A4C66DB93037A447 /* EasyTipView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EasyTipView.swift; path = Sources/EasyTipView/EasyTipView.swift; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		7921A27F7EC2BC579A80DA948808DF52 /* EasyTipView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyTipView-prefix.pch"; sourceTree = "<group>"; };
+		83CDA7670826E2C8BB3217B441831058 /* EasyTipView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = EasyTipView.modulemap; sourceTree = "<group>"; };
+		8A63F6AA6A1D241970B6D28C2970A8B9 /* EasyTipView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = EasyTipView; path = EasyTipView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FD5237564D6856D5FC8783BA1E646B3 /* inavi-maps-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "inavi-maps-sdk.release.xcconfig"; sourceTree = "<group>"; };
 		9CFBD3A847588E65DED8289BE559C031 /* Pods-CarLog-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CarLog-dummy.m"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A07DAFE249289BAEBC0193AB73D89D48 /* EasyTipView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyTipView.release.xcconfig; sourceTree = "<group>"; };
 		A1DA02539B261159EBDDAF08640CB06C /* Pods-CarLog-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CarLog-frameworks.sh"; sourceTree = "<group>"; };
+		ADD6921A26BB3F4AFA341D3D2D68EFA1 /* inavi-maps-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "inavi-maps-sdk.debug.xcconfig"; sourceTree = "<group>"; };
 		B42FEBE1A0D34339591D778599A1AEEA /* Pods-CarLog-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CarLog-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C1D065E1EDEDF939B410BC0B920499F7 /* EasyTipView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EasyTipView-Info.plist"; sourceTree = "<group>"; };
 		CBA5D989523F11A3720BB0CE6D69DA59 /* Pods-CarLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CarLog.debug.xcconfig"; sourceTree = "<group>"; };
 		CD5001FA2CCE20922AD17FE24EA5F783 /* Pods-CarLog-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CarLog-umbrella.h"; sourceTree = "<group>"; };
 		D4BD331460ACF6D8D054E7DFC28AB63D /* Pods-CarLog-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CarLog-Info.plist"; sourceTree = "<group>"; };
-		D568D25413181BED8D79D583A2B13215 /* inavi-maps-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "inavi-maps-sdk.debug.xcconfig"; sourceTree = "<group>"; };
-		E56DC4792ACE030DFC5B5AFEC08C53E1 /* inavi-maps-sdk-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "inavi-maps-sdk-xcframeworks.sh"; sourceTree = "<group>"; };
 		F8677983F2D562C42EA965999D10DE88 /* Pods-CarLog-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CarLog-acknowledgements.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		56C4E369903A62834D931C7C4C95A489 /* Frameworks */ = {
+		3DA5F848E2B7F13DFDC18959516C9CA7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FF654F5E8435F3379AD9F27A5567434 /* Foundation.framework in Frameworks */,
+				63C315A43130FEE6286741C0E4B34B06 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0DB0AD3A45F6A519361F3DF7B08CA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				659B1F8EA25E1E0117966342E2B65C07 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13677E093DCF771A91C9FE11CC1AD933 /* inavi-maps-sdk */ = {
+		203B0147ACE4C7ED12417C549CA876EE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2ADDE8AECB7117330B9239A023A4878D /* Frameworks */,
-				D5ADE55A9EFD03C40DA01C6B21FC0ED3 /* Support Files */,
+				8A63F6AA6A1D241970B6D28C2970A8B9 /* EasyTipView */,
+				05E5A0E7D083F9666F94F2322FAEE1AD /* Pods-CarLog */,
 			);
-			path = "inavi-maps-sdk";
-			sourceTree = "<group>";
-		};
-		2ADDE8AECB7117330B9239A023A4878D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3E6D3E4A99DBD076DD012A53AAFDDFF5 /* iNaviMaps.xcframework */,
-			);
-			name = Frameworks;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3E216F7C94BA5A932740E2D8F074F07E /* Pods-CarLog */ = {
@@ -101,10 +122,11 @@
 			path = "Target Support Files/Pods-CarLog";
 			sourceTree = "<group>";
 		};
-		446049B3662D86D282D86D4B37B94ACB /* Pods */ = {
+		4A24A821B4EE7394D2CAB36B9D265F9A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				13677E093DCF771A91C9FE11CC1AD933 /* inavi-maps-sdk */,
+				8E747FC43B599EBE0C03B19268E6325C /* EasyTipView */,
+				9DC04A60BFBD1190C225FD21DFA24C13 /* inavi-maps-sdk */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -117,12 +139,44 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		58CD97C6873E159BC5E29227254CD5AB /* Products */ = {
+		6CE5DA4F73F053A780A00DCE03344A80 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				05E5A0E7D083F9666F94F2322FAEE1AD /* Pods_CarLog.framework */,
+				42CE0FB48FFE950A93146E8C187E1708 /* inavi-maps-sdk-xcframeworks.sh */,
+				ADD6921A26BB3F4AFA341D3D2D68EFA1 /* inavi-maps-sdk.debug.xcconfig */,
+				8FD5237564D6856D5FC8783BA1E646B3 /* inavi-maps-sdk.release.xcconfig */,
 			);
-			name = Products;
+			name = "Support Files";
+			path = "../Target Support Files/inavi-maps-sdk";
+			sourceTree = "<group>";
+		};
+		8E747FC43B599EBE0C03B19268E6325C /* EasyTipView */ = {
+			isa = PBXGroup;
+			children = (
+				69C40E614C348F01A4C66DB93037A447 /* EasyTipView.swift */,
+				2DEA4D84FE101B898D32F32D3658ACFA /* UIKitExtensions.swift */,
+				BD77F2298A2E576E41A5AED95A822335 /* Support Files */,
+			);
+			name = EasyTipView;
+			path = EasyTipView;
+			sourceTree = "<group>";
+		};
+		9B89E9269B63C5D69CEC801C86B3560A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				07C07D2A996EE842C76670B5D1F62083 /* iNaviMaps.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9DC04A60BFBD1190C225FD21DFA24C13 /* inavi-maps-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				9B89E9269B63C5D69CEC801C86B3560A /* Frameworks */,
+				6CE5DA4F73F053A780A00DCE03344A80 /* Support Files */,
+			);
+			name = "inavi-maps-sdk";
+			path = "inavi-maps-sdk";
 			sourceTree = "<group>";
 		};
 		B08BE9A36300C003E1E9B23A0FEFACFC /* Targets Support Files */ = {
@@ -133,13 +187,28 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		BD77F2298A2E576E41A5AED95A822335 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				83CDA7670826E2C8BB3217B441831058 /* EasyTipView.modulemap */,
+				4556B90FCC0AFC8C7C68E853FBDB4208 /* EasyTipView-dummy.m */,
+				C1D065E1EDEDF939B410BC0B920499F7 /* EasyTipView-Info.plist */,
+				7921A27F7EC2BC579A80DA948808DF52 /* EasyTipView-prefix.pch */,
+				1B9209102BB7F9079D241287D7E2D337 /* EasyTipView-umbrella.h */,
+				131985C664DF246FC38D04F150619E1F /* EasyTipView.debug.xcconfig */,
+				A07DAFE249289BAEBC0193AB73D89D48 /* EasyTipView.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/EasyTipView";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				446049B3662D86D282D86D4B37B94ACB /* Pods */,
-				58CD97C6873E159BC5E29227254CD5AB /* Products */,
+				4A24A821B4EE7394D2CAB36B9D265F9A /* Pods */,
+				203B0147ACE4C7ED12417C549CA876EE /* Products */,
 				B08BE9A36300C003E1E9B23A0FEFACFC /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -152,48 +221,64 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D5ADE55A9EFD03C40DA01C6B21FC0ED3 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				E56DC4792ACE030DFC5B5AFEC08C53E1 /* inavi-maps-sdk-xcframeworks.sh */,
-				D568D25413181BED8D79D583A2B13215 /* inavi-maps-sdk.debug.xcconfig */,
-				12A294EDF570EC6B5D4A054EA2748381 /* inavi-maps-sdk.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/inavi-maps-sdk";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		EAD514D6327436300C61E74D73768E2C /* Headers */ = {
+		4D018EBCBC20D588F77BD33B2045E7A7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				885061465F7477DD3E4860C292F139AF /* Pods-CarLog-umbrella.h in Headers */,
+				E344296D5F4DB09A8FACA769581D644D /* EasyTipView-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6183A064F3FB3FECC59F10C31A64823D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00F7DF0BAB4166CEB0E8D2C7F9EBAD67 /* Pods-CarLog-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		AE2246810B256D7ECD0AB6055614B1B9 /* Pods-CarLog */ = {
+		048D21E3C8151CD23D428D38093E1538 /* EasyTipView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8B63C580D44EF16E96730BABD89A95DA /* Build configuration list for PBXNativeTarget "Pods-CarLog" */;
+			buildConfigurationList = 6B2DAEC38B1D5BB734E7DF77F6E6B63C /* Build configuration list for PBXNativeTarget "EasyTipView" */;
 			buildPhases = (
-				EAD514D6327436300C61E74D73768E2C /* Headers */,
-				692665808E9BAE2793F02079FA6FB637 /* Sources */,
-				56C4E369903A62834D931C7C4C95A489 /* Frameworks */,
-				419F50B7B01AE46EBAB915523B159B2B /* Resources */,
+				4D018EBCBC20D588F77BD33B2045E7A7 /* Headers */,
+				6C29ED58712A5B957601500677FF85D4 /* Sources */,
+				D0DB0AD3A45F6A519361F3DF7B08CA01 /* Frameworks */,
+				8D6B9181EEC1D0D2A85D54FE1C01FEBE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6A642E6B7956ECE71BCEE6A9806F11FC /* PBXTargetDependency */,
+			);
+			name = EasyTipView;
+			productName = EasyTipView;
+			productReference = 8A63F6AA6A1D241970B6D28C2970A8B9 /* EasyTipView */;
+			productType = "com.apple.product-type.framework";
+		};
+		AE2246810B256D7ECD0AB6055614B1B9 /* Pods-CarLog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10622D8B9C807FEC6ECC052B3BEF5638 /* Build configuration list for PBXNativeTarget "Pods-CarLog" */;
+			buildPhases = (
+				6183A064F3FB3FECC59F10C31A64823D /* Headers */,
+				AC1C9C6380053715E9C3FF623C7FDFF0 /* Sources */,
+				3DA5F848E2B7F13DFDC18959516C9CA7 /* Frameworks */,
+				65C5E51D4AF7A2E8851F2E3D4976B295 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A18D947B88D74CFB1EB768F6C018F54 /* PBXTargetDependency */,
+				FC36E09EA53989A3173569F464D9DBC1 /* PBXTargetDependency */,
 			);
 			name = "Pods-CarLog";
 			productName = Pods_CarLog;
-			productReference = 05E5A0E7D083F9666F94F2322FAEE1AD /* Pods_CarLog.framework */;
+			productReference = 05E5A0E7D083F9666F94F2322FAEE1AD /* Pods-CarLog */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -202,8 +287,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -214,10 +299,11 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 58CD97C6873E159BC5E29227254CD5AB /* Products */;
+			productRefGroup = 203B0147ACE4C7ED12417C549CA876EE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				048D21E3C8151CD23D428D38093E1538 /* EasyTipView */,
 				FA81E3B1A044A105C40C8FB408AADD3B /* inavi-maps-sdk */,
 				AE2246810B256D7ECD0AB6055614B1B9 /* Pods-CarLog */,
 			);
@@ -225,7 +311,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		419F50B7B01AE46EBAB915523B159B2B /* Resources */ = {
+		65C5E51D4AF7A2E8851F2E3D4976B295 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D6B9181EEC1D0D2A85D54FE1C01FEBE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -255,29 +348,45 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		692665808E9BAE2793F02079FA6FB637 /* Sources */ = {
+		6C29ED58712A5B957601500677FF85D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F677146443750E2FC173E80EFD0EEB9D /* Pods-CarLog-dummy.m in Sources */,
+				D09341A5DADC4D6C7BAE2E892B48E111 /* EasyTipView.swift in Sources */,
+				A1B74155626A3DA480C9316AF3FF8DC0 /* EasyTipView-dummy.m in Sources */,
+				4671398F69B53D5989414A6CEE1D8C30 /* UIKitExtensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC1C9C6380053715E9C3FF623C7FDFF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A069AF9C517173F45DF10743C7CB70D9 /* Pods-CarLog-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6A642E6B7956ECE71BCEE6A9806F11FC /* PBXTargetDependency */ = {
+		3A18D947B88D74CFB1EB768F6C018F54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = EasyTipView;
+			target = 048D21E3C8151CD23D428D38093E1538 /* EasyTipView */;
+			targetProxy = FF8E0B133FA336B581217381389912DC /* PBXContainerItemProxy */;
+		};
+		FC36E09EA53989A3173569F464D9DBC1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "inavi-maps-sdk";
 			target = FA81E3B1A044A105C40C8FB408AADD3B /* inavi-maps-sdk */;
-			targetProxy = 400943B8604DDB3B47F1EC03BB8D4FEC /* PBXContainerItemProxy */;
+			targetProxy = 3927F93DCE1B420C2788B629D590BFB2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		05D387852E9FA3390CA4514890B925B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D568D25413181BED8D79D583A2B13215 /* inavi-maps-sdk.debug.xcconfig */;
+			baseConfigurationReference = ADD6921A26BB3F4AFA341D3D2D68EFA1 /* inavi-maps-sdk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -292,9 +401,45 @@
 			};
 			name = Debug;
 		};
+		25FF11868C9E16D275DDAC52EB5AB92B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A07DAFE249289BAEBC0193AB73D89D48 /* EasyTipView.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/EasyTipView/EasyTipView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/EasyTipView/EasyTipView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/EasyTipView/EasyTipView.modulemap";
+				PRODUCT_MODULE_NAME = EasyTipView;
+				PRODUCT_NAME = EasyTipView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		2D34E1692D9DA1339EC81F479AF89727 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 12A294EDF570EC6B5D4A054EA2748381 /* inavi-maps-sdk.release.xcconfig */;
+			baseConfigurationReference = 8FD5237564D6856D5FC8783BA1E646B3 /* inavi-maps-sdk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,7 +455,79 @@
 			};
 			name = Release;
 		};
-		4BF8D9B86FB8EE69087B30C89F6212F8 /* Release */ = {
+		3C823A8B3CD48784A0CA28EC390FA292 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 131985C664DF246FC38D04F150619E1F /* EasyTipView.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/EasyTipView/EasyTipView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/EasyTipView/EasyTipView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/EasyTipView/EasyTipView.modulemap";
+				PRODUCT_MODULE_NAME = EasyTipView;
+				PRODUCT_NAME = EasyTipView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5D06532C60900C16BA9AF65BAD6D8975 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CBA5D989523F11A3720BB0CE6D69DA59 /* Pods-CarLog.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-CarLog/Pods-CarLog-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CarLog/Pods-CarLog.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8274B731E6B2941379B1A947E759BA16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 49048259CE08512FAC95DAF8CC25FC04 /* Pods-CarLog.release.xcconfig */;
 			buildSettings = {
@@ -347,43 +564,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		630EDC6B5566F4E5EC66E303CE264ABB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CBA5D989523F11A3720BB0CE6D69DA59 /* Pods-CarLog.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-CarLog/Pods-CarLog-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-CarLog/Pods-CarLog.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -516,6 +696,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		10622D8B9C807FEC6ECC052B3BEF5638 /* Build configuration list for PBXNativeTarget "Pods-CarLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D06532C60900C16BA9AF65BAD6D8975 /* Debug */,
+				8274B731E6B2941379B1A947E759BA16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -534,11 +723,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8B63C580D44EF16E96730BABD89A95DA /* Build configuration list for PBXNativeTarget "Pods-CarLog" */ = {
+		6B2DAEC38B1D5BB734E7DF77F6E6B63C /* Build configuration list for PBXNativeTarget "EasyTipView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				630EDC6B5566F4E5EC66E303CE264ABB /* Debug */,
-				4BF8D9B86FB8EE69087B30C89F6212F8 /* Release */,
+				3C823A8B3CD48784A0CA28EC390FA292 /* Debug */,
+				25FF11868C9E16D275DDAC52EB5AB92B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
