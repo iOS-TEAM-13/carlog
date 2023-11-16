@@ -198,6 +198,15 @@
   </tr>
 </table>
 
+## Architecture
+<table>
+  <tr align="center">
+    <td width="1000" height="300">
+      <img src="https://github.com/underdog-FinalProject/carlog/assets/93186591/feb24d47-ecb7-4f31-9d55-e89f71f154fe" />
+    </td>
+  </tr>
+</table>
+
 ## 🖥️ UI 화면구성
 **로그인/회원가입**
 <table>
