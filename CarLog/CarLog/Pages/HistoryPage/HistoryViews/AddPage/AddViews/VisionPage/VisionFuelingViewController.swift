@@ -203,22 +203,27 @@ extension VisionFuelingViewController: UIImagePickerControllerDelegate, UINaviga
                         }
                         
                         let countText = components[1]
-                        let count = countText.components(separatedBy: CharacterSet(charactersIn: "0123456789.").inverted).joined()
-                        DispatchQueue.main.async {
-                            self?.visionFuelingView.visionCountTextField.text = count
-                        }
+                        let countRegex = try! NSRegularExpression(pattern: "[0-9]+(\\.[0-9]+)?", options: [])
+                        let countMatches = countRegex.matches(in: countText, options: [], range: NSRange(location: 0, length: countText.utf16.count))
                         
-                        //수량에 소수점이 있다면 반올림 처리
-                        if count.range(of: ".") != nil {
-                            let count = Double(count) ?? 0
-                            let totalPriceText = round((Double(price) ?? 0) * count * 0.1) / 0.1
-                            self?.visionFuelingView.visionTotalPriceTextField.text = String(format: "%.0f", totalPriceText)
-                        
-                        //아니면 그냥 곱하기
-                        } else {
-                            let count = Int(count) ?? 0
-                            let totalPriceText = count * (Int(price) ?? 0)
-                            self?.visionFuelingView.visionTotalPriceTextField.text = String(totalPriceText)
+                        if let countMatch = countMatches.first {
+                            let countRange = countMatch.range
+                            let count = (countText as NSString).substring(with: countRange)
+                            DispatchQueue.main.async {
+                                self?.visionFuelingView.visionCountTextField.text = count
+                            }
+                            
+                            //수량에 소수점이 있다면 반올림 처리
+                            if count.range(of: ".") != nil {
+                                let count = Double(count) ?? 0
+                                let totalPriceText = round((Double(price) ?? 0) * count * 0.1) / 0.1
+                                self?.visionFuelingView.visionTotalPriceTextField.text = String(format: "%.0f", totalPriceText)
+                            } else {
+                                //아니면 그냥 곱하기
+                                let count = Int(count) ?? 0
+                                let totalPriceText = count * (Int(price) ?? 0)
+                                self?.visionFuelingView.visionTotalPriceTextField.text = String(totalPriceText)
+                            }
                         }
                     }
                 }
