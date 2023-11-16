@@ -4,7 +4,16 @@ import UIKit
 class CommunityPageViewController: UIViewController {
     private var posts: [Post] = [] // 커뮤니티 셀 배열
     private var comments: [String:[Comment]] = [:]
-    private var banners: [String] = ["banner", "banner", "banner"] // 배너 셀 배열
+    //배너 URL
+    private var bannerURL: [String] = [
+        "https://luttoli.notion.site/1318cb2f60214cb2ba100740583ac602?pvs=4",
+        "https://luttoli.notion.site/4041e205c36549b5a99ceb938741353c?pvs=4",
+        "https://luttoli.notion.site/3a4a85d672b84685a7fefbd288f6e889?pvs=4",
+        "https://comfortable-polyanthus-e65.notion.site/Tip-9f32a81e39be49e4a2ee3e924c88e7fe",
+        "https://comfortable-polyanthus-e65.notion.site/3-9bd71c5e295c4545a3b329cd53dafa4f"
+    ]
+    //배너이미지
+    private var bannerImages: [String] = ["beginner", "Fuelefficiency", "winterDriving", "beginnerTips", "traffic"]
     private var timer: Timer? // 배너 일정 시간 지날때 자동으로 바뀜
     
     private lazy var bannerCollectionView = BannerCollectionView()
@@ -140,7 +149,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bannerCollectionView {
-            return banners.count
+            return bannerURL.count
         } else if collectionView == communityCollectionView {
             return posts.count
         }
@@ -150,7 +159,7 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == bannerCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as! BannerCollectionViewCell
-            cell.configure(with: banners[indexPath.item])
+            cell.configure(with: bannerImages[indexPath.item])
             return cell
         } else if collectionView == communityCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommunityPageCollectionViewCell.identifier, for: indexPath) as! CommunityPageCollectionViewCell
@@ -192,6 +201,14 @@ extension CommunityPageViewController: UICollectionViewDelegate, UICollectionVie
             detailViewController.selectedPost = selectedPost
             
             navigationController?.pushViewController(detailViewController, animated: true)
+        } else if collectionView == bannerCollectionView {
+            let webViewController = WebViewController()
+            if indexPath.item < bannerURL.count {
+                if let url = URL(string: bannerURL[indexPath.item]) {
+                    webViewController.url = url
+                    navigationController?.pushViewController(webViewController, animated: true)
+                }
+            }
         }
     }
 }
