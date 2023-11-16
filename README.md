@@ -393,6 +393,10 @@
 
 [🚨회원가입 페이지에 있는 이메일 인증 버튼 중첩 클릭 시, 시간 감소 중첩되는 이슈 등록🚨](https://github.com/underdog-FinalProject/carlog/issues/93)
 
+[🚨회원가입 중복체크 ISSUE 발생🚨](https://github.com/underdog-FinalProject/carlog/issues/191)
+
+[🚨iOS 17 이상에서 발생하는 MapKit의 Zoom 기능 문제🚨](https://github.com/underdog-FinalProject/carlog/issues/192)
+
 ### 🍰 추후 목표
 
 - 
