@@ -1,5 +1,7 @@
 # Final Project - CarLog
 
+![앱표지small](https://github.com/underdog-FinalProject/carlog/assets/61182499/5cf8fe30-6e99-416a-8947-3d3245416dc8)
+
 ### 🍎 CarLog
 
 > 스파르타코딩 iOS_7기 iOS 최종 프로젝트 `언더독` 입니다
